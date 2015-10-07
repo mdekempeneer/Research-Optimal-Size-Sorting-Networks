@@ -7,11 +7,10 @@
 	Voltooid:
 		- Paper [1] gelezen
 
-	Te doen tegen de volgende bijeenkomst:
-		- (aan te vullen door Vincent)
-		- 
-		-
-		-
+	Te doen tegen de volgende bijeenkomst (14/10):
+		- Programma dat een visuele representatie van een netwerk "tekent".
+		- Programma dat test of een netwerk een Sorting Network is.
+		- Programma dat alle mogelijke netwerken voor n channels en k comparators genereert.
 		- Referenties uit paper [1] opzoeken en meebrengen naar de volgende bijeenkomst.
 
 
