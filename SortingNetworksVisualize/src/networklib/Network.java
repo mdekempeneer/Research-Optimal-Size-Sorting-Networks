@@ -50,6 +50,7 @@ public class Network {
     /**
      * Get the {@link ArrayList} of {@link Comparator}s in this {@link Network}.
      * <b>Changes will effect this network.</b>
+     *
      * @return The {@link ArrayList} of current {@link Comparator}s.
      */
     public ArrayList<Comparator> getComparators() {
@@ -91,10 +92,60 @@ public class Network {
     }
 
     /**
-     * Returns a string representation of this {@link Comparator}.
+     * Parse the line to create a {@link Network}. The format of the line should
+     * follow: <i>N K (a,b)(c,d)(g,k)</i> <br>With N being the amount of
+     * channels. K being the amount of comparators Followed by the string
+     * representation of K {@link Comparator}s.</br>
+     *
+     * @param line The line which to parse into a {@link Network}.
+     *
+     * @throws IllegalArgumentException When line doesn't match the format.
+     * @throws NumberFormatException When Integer.parseInt(String) fails to
+     * parse the channel numbers.
+     *
+     * @see {@link Network#getNbChannels()}, {@link Network#getNbComparators()},
+     * {@link Comparator#toString())}
+     */
+    public static Network stringToNetwork(String line) throws IllegalArgumentException, NumberFormatException {
+        Network network;
+        int nbChannels;
+        int nbComp;
+        String[] splitLine = line.split(" ");
+
+        if (splitLine.length == 3) {
+            /* Parse initial parameters N K */
+            nbChannels = Integer.parseInt(splitLine[0]);
+            nbComp = Integer.parseInt(splitLine[1]);
+            network = new Network(nbChannels, nbComp);
+
+            /* Parse comparators */
+            String[] splitComp = splitLine[2].split("(");
+            for (String comp : splitComp) { //a,b)
+                String[] channel = comp.replace(")", "").split(",");
+                if (channel.length == 2) {
+                    int channel1 = Integer.parseInt(channel[0]);
+                    int channel2 = Integer.parseInt(channel[1]);
+
+                    network.addComparator(channel1, channel2);
+                } else {
+                    throw new IllegalArgumentException("Invalid format for stringToNetwork. Format: N K (a,b)(c,d)(g,k)");
+                }
+            }
+        } else {
+            throw new IllegalArgumentException("Invalid format for stringToNetwork. Format: N K (a,b)(c,d)(g,k)");
+        }
+
+        return network;
+    }
+
+    /**
+     * Returns a string representation of this {@link Comparator}. Example of 5
+     * channels and 3 comparators: <i>5 3 (1,2)(2,3)(5,1)</i>
+     *
      *
      * @return The amount of channels followed by the amount of comparators and
      * a sequence of comparators.
+     * @see Comparator#toString()
      */
     @Override
     public String toString() {
