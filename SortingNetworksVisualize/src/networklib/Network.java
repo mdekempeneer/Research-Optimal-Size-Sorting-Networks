@@ -98,6 +98,7 @@ public class Network {
      * representation of K {@link Comparator}s.</br>
      *
      * @param line The line which to parse into a {@link Network}.
+     * @return The created network.
      *
      * @throws IllegalArgumentException When line doesn't match the format.
      * @throws NumberFormatException When Integer.parseInt(String) fails to
@@ -135,6 +136,8 @@ public class Network {
      * {@link Network}.
      * @param compLine The String which contains the {@link Comparator}s.
      *
+     * @return The created network.
+     *
      * @throws IllegalArgumentException When line doesn't match the format.
      * @throws NumberFormatException When Integer.parseInt(String) fails to
      * parse the channel numbers.
@@ -144,9 +147,10 @@ public class Network {
      */
     public static Network stringToNetwork(int nbChannels, int nbComp, String compLine) throws IllegalArgumentException {
         Network network = new Network(nbChannels, nbComp);
-        String[] splitComp = compLine.split("(");
-        for (String comp : splitComp) { //a,b)
-            String[] channel = comp.replace(")", "").split(",");
+        String[] splitComp = compLine.split("\\(");
+        for (int i = 1; i < splitComp.length; i++) { //a,b)
+            String comp = splitComp[i].replaceAll("\\)", "");
+            String[] channel = comp.split(",");
             if (channel.length == 2) {
                 int channel1 = Integer.parseInt(channel[0]);
                 int channel2 = Integer.parseInt(channel[1]);
