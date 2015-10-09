@@ -116,23 +116,44 @@ public class Network {
             /* Parse initial parameters N K */
             nbChannels = Integer.parseInt(splitLine[0]);
             nbComp = Integer.parseInt(splitLine[1]);
-            network = new Network(nbChannels, nbComp);
-
-            /* Parse comparators */
-            String[] splitComp = splitLine[2].split("(");
-            for (String comp : splitComp) { //a,b)
-                String[] channel = comp.replace(")", "").split(",");
-                if (channel.length == 2) {
-                    int channel1 = Integer.parseInt(channel[0]);
-                    int channel2 = Integer.parseInt(channel[1]);
-
-                    network.addComparator(channel1, channel2);
-                } else {
-                    throw new IllegalArgumentException("Invalid format for stringToNetwork. Format: N K (a,b)(c,d)(g,k)");
-                }
-            }
+            network = stringToNetwork(nbChannels, nbComp, splitLine[2]);
         } else {
             throw new IllegalArgumentException("Invalid format for stringToNetwork. Format: N K (a,b)(c,d)(g,k)");
+        }
+
+        return network;
+    }
+
+    /**
+     * Creates a {@link Network} by parsing the compLine and retrieving the
+     * {@link Comparator}s. The format of the line should follow: <i>
+     * (a,b)(c,d)(g,k)</i> . Which is the String representation of K
+     * {@link Comparator}s.
+     *
+     * @param nbChannels The amount of channels in the {@link Network}.
+     * @param nbComp The maximum amount of {@link Comparator} in the
+     * {@link Network}.
+     * @param compLine The String which contains the {@link Comparator}s.
+     *
+     * @throws IllegalArgumentException When line doesn't match the format.
+     * @throws NumberFormatException When Integer.parseInt(String) fails to
+     * parse the channel numbers.
+     *
+     * @see {@link Network#getNbChannels()}, {@link Network#getNbComparators()},
+     * {@link Comparator#toString())}
+     */
+    public static Network stringToNetwork(int nbChannels, int nbComp, String compLine) throws IllegalArgumentException {
+        Network network = new Network(nbChannels, nbComp);
+        String[] splitComp = compLine.split("(");
+        for (String comp : splitComp) { //a,b)
+            String[] channel = comp.replace(")", "").split(",");
+            if (channel.length == 2) {
+                int channel1 = Integer.parseInt(channel[0]);
+                int channel2 = Integer.parseInt(channel[1]);
+                network.addComparator(channel1, channel2);
+            } else {
+                throw new IllegalArgumentException("Invalid format for stringToNetwork. Format: N K (a,b)(c,d)(g,k)");
+            }
         }
 
         return network;
