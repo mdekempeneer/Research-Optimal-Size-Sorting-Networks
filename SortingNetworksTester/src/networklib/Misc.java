@@ -9,12 +9,28 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import tester.Bit;
 
 /**
  *
  * @author Admin
  */
 public class Misc {
+
+    /**
+     * Checks if a bit list is sorted.
+     *
+     * @param input an array of {@link Bit}s to check
+     * @return true if sorted
+     */
+    public static boolean isSorted(Bit[] input) {
+        for (int i = 1; i < input.length; i++) {
+            if (input[1].getValue() < input[0].getValue()) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     /**
      * Read the first line of a given path.
@@ -32,8 +48,7 @@ public class Misc {
             }
         } catch (FileNotFoundException exc) {
             System.err.println("File not found exception " + path);
-        }
-        catch (IOException exc) {
+        } catch (IOException exc) {
             System.err.println("IO Exception" + exc.toString());
         }
 
