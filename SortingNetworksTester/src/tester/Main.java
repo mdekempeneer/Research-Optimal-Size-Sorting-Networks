@@ -5,6 +5,7 @@
  */
 package tester;
 
+import java.util.Arrays;
 import java.util.BitSet;
 import networklib.Misc;
 import networklib.Network;
@@ -23,37 +24,35 @@ public class Main {
             input[i] = new Bit(0);
         }
 
-        for (int i = 0; i < nbChannels; i++) {
-            input[i].setValue(1); //TODO 000 moeten we checken
+        /* Loop trough combinations */
+        for (int i = -1; i < nbChannels - 1; i++) {
+            //Flip the next bit in line.
+            if (i != -1) {
+                input[i].setValue(1);
+            }
 
-            //test j = i+1
-            
-            for (int j = i + 2; j < nbChannels; j++) {
-                input[j - 1].setValue(0);
+            //Perform test.
+            if (!Misc.isSorted(network.getOutput(input))) {
+                System.out.println("Sort failed for " + Arrays.toString(input));
+                return false;
+            }
+            //Inner loop; performs on inner bits.
+            for (int j = i + 1; j < nbChannels; j++) {
                 input[j].setValue(1);
-
-                System.out.println("");
-                for (Bit b : input) {
-                    System.out.print(b.getValue());
-                }
-
-                Bit[] output = network.getOutput(input);
-                if (Misc.isSorted(output) == false) {
+                //Perform test.
+                if (!Misc.isSorted(network.getOutput(input))) {
+                    System.out.println("Sort failed for " + Arrays.toString(input));
                     return false;
                 }
-
+                //reset the bit changed.
+                input[j].setValue(0);
             }
         }
-
         return true;
-
     }
 
     public static void main(String[] args) {
         Network network = null;
-        BitSet input = new BitSet(5);
-        input.set(2, true);
-        System.out.println(input.get(2));
 
         if (args.length >= 1) {
             if (args[0].equals("-f")) {
@@ -69,6 +68,12 @@ public class Main {
         }
 
         if (network != null) {
+
+            if (isSortingNetwork(network)) {
+                System.out.println("Sorting network.");
+            } else {
+                System.out.println("Not a sorting network.");
+            }
 
         }
     }
