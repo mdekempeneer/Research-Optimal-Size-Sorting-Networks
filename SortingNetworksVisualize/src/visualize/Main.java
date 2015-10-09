@@ -2,6 +2,7 @@ package visualize;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import networklib.Misc;
 import networklib.Network;
 
 /**
@@ -13,32 +14,25 @@ public class Main {
     /**
      * Execute the program.
      *
-     * @param args
+     * @param args Analyse Args -f filePath || -n n k (a,b)(c,d)
      */
     public static void main(String args[]) {
         /* Analyse Args */
-        //TODO: Analyse Args (-f filePath || -n n k (a,b)(c,d)(
-        if (args.length > 1) {
-            
-        }
-        /* Parse & create Network */
+        Network network = null;
         
-        /*try (BufferedReader br = new BufferedReader(new FileReader("file.txt"))) { //TODO: Change to inputFile
-            StringBuilder sb = new StringBuilder();
-            String line = br.readLine();
-
-            if (line != null) {
-                Parser.parse(line);
+        if (args.length >= 1) {
+            if (args[0].equals("-f")) {
+                //File
+               String line = Misc.readFile(args[1]);
+               network = Network.stringToNetwork(line);
             }
-        }*/
-
-        //Test Input
-        Network network = new Network(4, 8);
-        network.addComparator(1, 2);
-        network.addComparator(3, 4);
-        network.addComparator(2, 3);
-        network.addComparator(1, 2);
-        network.addComparator(3, 4);
+            else if (args[0].equals("-n")) {
+                //Args
+                int nbChannel = Integer.parseInt(args[1]);
+                int nbComp = Integer.parseInt(args[2]);
+                network = Network.stringToNetwork(nbChannel, nbComp, args[3]);
+            }
+        }
 
         /* Initialize Frame */
         JNetwork jNetwork = new JNetwork(network);
