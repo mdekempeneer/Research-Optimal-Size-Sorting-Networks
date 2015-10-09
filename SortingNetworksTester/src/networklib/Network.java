@@ -1,6 +1,7 @@
 package networklib;
 
 import java.util.ArrayList;
+import tester.Bit;
 
 /**
  * A {@link Network} consisting of a certain amount of channels and
@@ -186,4 +187,21 @@ public class Network {
         return sb.toString();
     }
 
+    /**
+     * Get the result of propagating the input trough this network.
+     * @param input The input that has to propagate trough the network.
+     * @return The resulting output.
+     */
+    public Bit[] getOutput(Bit[] input) {
+        Bit[] result = new Bit[input.length];
+        for (int i = 0; i < input.length; i++) {
+            result[i] = new Bit(input[i].getValue());
+        }
+
+        for(Comparator comp : getComparators()) {
+            comp.swap(result);
+        }
+        
+        return result;
+    }
 }
