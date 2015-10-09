@@ -22,6 +22,14 @@ public class Bit {
     }
     
     /**
+     * Create a bit
+     * @param value 1 if true, 0 if false.
+     */
+    public Bit(int value) {
+        this.value = (value != 0);
+    }
+    
+    /**
      * Get the value of the bit.
      * @return 1 if true, 0 if false.
      */
