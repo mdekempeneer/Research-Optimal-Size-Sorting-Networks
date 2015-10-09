@@ -16,6 +16,15 @@ import networklib.Network;
  */
 public class Main {
 
+    /**
+     * Check if the {@link Network} provided is a sorting network. This is done
+     * by propagating every possible combination trough the channel and
+     * comparators and testing for non-sorted outputs.
+     *
+     * @param network The {@link Network} to check.
+     * @return Whether the {@link Network} is a sorting network aka gives a
+     * sorted output for every input.
+     */
     public static boolean isSortingNetwork(Network network) {
         /* Create input */
         int nbChannels = network.getNbChannels();
@@ -51,9 +60,14 @@ public class Main {
         return true;
     }
 
+    /**
+     * Tests the sorting property of a given {@link Network} .
+     * @param args -f filePath if the network is stored in a file. <br>-n n k (a,b)(c,d) for input as arguments.</br>
+     */
     public static void main(String[] args) {
         Network network = null;
 
+        /* Retrieve Network */
         if (args.length >= 1) {
             if (args[0].equals("-f")) {
                 //File
@@ -67,14 +81,13 @@ public class Main {
             }
         }
 
+        /* Test Network */
         if (network != null) {
-
             if (isSortingNetwork(network)) {
                 System.out.println("Sorting network.");
             } else {
                 System.out.println("Not a sorting network.");
             }
-
         }
     }
 }
