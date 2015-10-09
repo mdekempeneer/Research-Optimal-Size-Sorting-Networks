@@ -1,7 +1,5 @@
 package visualize;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import networklib.Misc;
 import networklib.Network;
 
@@ -14,7 +12,7 @@ public class Main {
     /**
      * Execute the program.
      *
-     * @param args Analyse Args -f filePath || -n n k (a,b)(c,d)
+     * @param args -f filePath || -n n k (a,b)(c,d)
      */
     public static void main(String args[]) {
         /* Analyse Args */
