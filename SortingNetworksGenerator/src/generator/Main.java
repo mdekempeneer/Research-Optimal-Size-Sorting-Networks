@@ -1,6 +1,7 @@
 package generator;
 
 import java.io.File;
+import java.io.FileWriter;
 import javax.swing.JFileChooser;
 import networklib.Comparator;
 
