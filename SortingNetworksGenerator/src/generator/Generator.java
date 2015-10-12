@@ -1,5 +1,10 @@
 package generator;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import networklib.Comparator;
 
 /**
@@ -11,6 +16,7 @@ public class Generator {
     private final int nbChannels;
     private final int nbComp;
     private final String outputPath;
+    private BufferedWriter bw = null;
 
     /**
      * Create a {@link Generator} which can write all possible {@link Network}
@@ -38,6 +44,13 @@ public class Generator {
         for (int number1 = 1; number1 <= nbChannels - 1; number1++) {
             for (int number2 = number1 + 1; number2 <= nbChannels; number2++) {
                 generate_sub(comps, new Comparator((short) number1, (short) number2), 0);
+            }
+        }
+        if (bw != null) {
+            try {
+                bw.close();
+            } catch (IOException ex) {
+                Logger.getLogger(Generator.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -77,15 +90,23 @@ public class Generator {
      */
     public void writeList(Comparator[] list) {
         StringBuilder sb = new StringBuilder();
+        sb.append(nbChannels);
+        sb.append(" ");
+        sb.append(nbComp);
+        sb.append(" ");
         for (Comparator comp : list) {
             sb.append(comp.toString());
         }
 
-        System.out.println("Stored: " + sb.toString());
-        
-        /*
-        TODO: Write to file
-        */
+        try {
+            if (bw == null) {
+                bw = new BufferedWriter(new FileWriter(outputPath));
+            }
+            bw.write(sb.toString());
+            bw.newLine();
+        } catch (IOException ex) {
+            Logger.getLogger(Generator.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
