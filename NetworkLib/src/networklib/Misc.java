@@ -24,7 +24,7 @@ public class Misc {
      */
     public static boolean isSorted(Bit[] input) {
         for (int i = 1; i < input.length; i++) {
-            if (input[1].getValue() < input[0].getValue()) {
+            if (input[i].getValue() < input[i-1].getValue()) {
                 return false;
             }
         }
