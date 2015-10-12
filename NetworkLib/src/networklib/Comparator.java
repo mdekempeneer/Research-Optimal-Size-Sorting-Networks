@@ -6,7 +6,7 @@ package networklib;
  *
  * @author Admin
  */
-public class Comparator {
+public class Comparator implements Cloneable {
 
     private short nbChannel1;
     private short nbChannel2;
@@ -53,6 +53,12 @@ public class Comparator {
             bit1.setValue(bit2.getValue());
             bit2.setValue(tmp);
         }
+    }
+    
+    
+    @Override
+    public Object clone() {
+        return new Comparator(this.getChannel1(), this.getChannel2());
     }
     
     /**
