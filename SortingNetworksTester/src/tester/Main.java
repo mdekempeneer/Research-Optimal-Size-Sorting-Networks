@@ -8,6 +8,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
+import javax.swing.JFileChooser;
 import networklib.*;
 
 /**
@@ -76,6 +77,16 @@ public class Main {
                 int nbComp = Integer.parseInt(args[2]);
                 network = Network.stringToNetwork(nbChannel, nbComp, args[3]);
             }
+        } else {
+            JFileChooser jfc = new JFileChooser();
+            jfc.setCurrentDirectory(new File(System.getProperty("user.home")));
+            int result = jfc.showOpenDialog(null);
+            if (result == JFileChooser.APPROVE_OPTION) {
+                /* Parse Networks */
+                parseNetworks(jfc.getSelectedFile().getAbsolutePath());
+            } else {
+                System.out.println("Failed chosing a file.");
+            }
         }
 
         /* Test Network */
@@ -89,7 +100,6 @@ public class Main {
     }
 
     private static void parseNetworks(String inputPath) {
-        StringBuilder sb = new StringBuilder();
         String line;
         Network network;
         BufferedWriter bw;
