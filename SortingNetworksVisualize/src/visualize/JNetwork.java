@@ -20,11 +20,11 @@ public class JNetwork extends JComponent {
 
     /* Variables for painting */
     //The position where the channels begin painting (upper left)
-    private static final Point CHANNELS_BEGIN = new Point(50, 50);
+    public static final Point CHANNELS_BEGIN = new Point(20, 20);
     //The x-space between comparators.
-    private static final short SPACE_PER_COMP = 20;
+    public static final short SPACE_PER_COMP = 20;
     //The y-space between channels.
-    private static final short SPACE_PER_CHANNEL = 30;
+    public static final short SPACE_PER_CHANNEL = 30;
     //The size of the oval used at the endings of a comparator line.
     private static final short SIZE_COMP_POINT = 4;
 

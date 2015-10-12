@@ -1,7 +1,10 @@
 package visualize;
 
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import javax.swing.JFrame;
 
 /**
@@ -15,9 +18,9 @@ public class Frame extends JFrame {
     /**
      * The {@link JNetwork} providing the visual representation.
      */
-    private JNetwork jNetwork;
-
-    private final Dimension FRAME_DIM = new Dimension(1000, 500);
+    private final JNetwork jNetwork;
+    private final Dimension networkDim;
+    private final Dimension imgDim;
 
     /**
      * Create a {@link JFrame} holding a certain {@link JNetwork} to display.
@@ -26,7 +29,33 @@ public class Frame extends JFrame {
      */
     public Frame(JNetwork jNetwork) {
         this.jNetwork = jNetwork;
+
+        //Calculate dimension
+        int channels = jNetwork.getNetwork().getNbChannels();
+        int comps = jNetwork.getNetwork().getNbComparators();
+
+        int height = JNetwork.SPACE_PER_CHANNEL * channels;
+        int width = JNetwork.SPACE_PER_COMP * (comps + 2);
+        this.imgDim = new Dimension(width, height);
+
+        height += 2 * JNetwork.CHANNELS_BEGIN.y + 50;
+        width += 2 * JNetwork.CHANNELS_BEGIN.x + 50;
+        this.networkDim = new Dimension(width, height);
+
         initComponents();
+    }
+
+    /**
+     * Create a {@link JFrame} holding a certain {@link JNetwork} to display.
+     *
+     * @param jNetwork The {@link JNetwork} to display.
+     * @param isSorted Whether the network is a sorting network.
+     */
+    public Frame(JNetwork jNetwork, boolean isSorted) {
+        this(jNetwork);
+        if (isSorted) {
+            this.getContentPane().setBackground(Color.YELLOW);
+        }
     }
 
     /**
@@ -43,7 +72,20 @@ public class Frame extends JFrame {
 
         //Finish layout
         pack();
-        this.setSize(FRAME_DIM);
+        this.setSize(networkDim);
+    }
+
+    /**
+     * Get a screenshot of the JFrame.
+     *
+     * @return The screenshot.
+     */
+    public BufferedImage getScreenShot() {
+        BufferedImage bi = new BufferedImage(imgDim.width, imgDim.height, BufferedImage.TYPE_INT_RGB);
+        Graphics2D g = bi.createGraphics();
+        g.translate(-25, -40);
+        this.paint(g);
+        return bi;
     }
 
 }
