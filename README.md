@@ -1,6 +1,6 @@
 # WV_SortingNetworks
 
-07/10/2015 - Bijeenkomst 1
+07/10/2015 - Bijeenkomst 1 </br>
 	Te doen tegen de bijeenkomst:
 		- Paper lezen: http://arxiv.org/abs/1405.5754 [1]
 
