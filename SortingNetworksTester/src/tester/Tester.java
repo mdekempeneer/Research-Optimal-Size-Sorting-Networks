@@ -15,7 +15,7 @@ import networklib.*;
  *
  * @author Mathias
  */
-public class Main {
+public class Tester {
 
     /**
      * Check if the {@link Network} provided is a sorting network. This is done
@@ -128,6 +128,5 @@ public class Main {
         } catch (IOException exc) {
             System.err.println("IO Exception" + exc.toString());
         }
-        // network = Network.stringToNetwork(line);
     }
 }
