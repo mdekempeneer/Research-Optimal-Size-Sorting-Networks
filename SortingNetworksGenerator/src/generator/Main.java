@@ -1,9 +1,7 @@
 package generator;
 
 import java.io.File;
-import java.io.FileWriter;
 import javax.swing.JFileChooser;
-import networklib.Comparator;
 
 /**
  *
@@ -24,7 +22,7 @@ public class Main {
             /* JFileChooser to choose the outputPath */
             JFileChooser jfc = new JFileChooser();
             jfc.setCurrentDirectory(new File(System.getProperty("user.home")));
-            int result = jfc.showOpenDialog(null);
+            int result = jfc.showSaveDialog(null);
             if (result == JFileChooser.APPROVE_OPTION) {
                 /* Generate */
                 outputPath = jfc.getSelectedFile().getAbsolutePath();
