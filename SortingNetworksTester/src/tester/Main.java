@@ -33,11 +33,6 @@ public class Main {
                 input[i].setValue(1);
             }
 
-            //Perform test.
-//            if (!Misc.isSorted(network.getOutput(input))) {
-//                System.out.println("Sort failed for " + Arrays.toString(input));
-//                return false;
-//            }
             //Inner loop; performs on inner bits.
             for (int j = i + 1; j < nbChannels; j++) {
                 input[j].setValue(1);
@@ -57,7 +52,9 @@ public class Main {
 
     /**
      * Tests the sorting property of a given {@link Network} .
-     * @param args -f filePath if the network is stored in a file. <br>-n n k (a,b)(c,d) for input as arguments.</br>
+     *
+     * @param args -f filePath if the network is stored in a file. <br>-n n k
+     * (a,b)(c,d) for input as arguments.</br>
      */
     public static void main(String[] args) {
         Network network = null;
