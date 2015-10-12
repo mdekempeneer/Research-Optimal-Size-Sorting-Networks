@@ -113,7 +113,7 @@ public class Network {
         int nbComp;
         String[] splitLine = line.split(" ");
 
-        if (splitLine.length == 3) {
+        if (splitLine.length >= 3) {
             /* Parse initial parameters N K */
             nbChannels = Integer.parseInt(splitLine[0]);
             nbComp = Integer.parseInt(splitLine[1]);
