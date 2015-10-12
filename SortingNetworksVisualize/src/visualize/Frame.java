@@ -18,31 +18,52 @@ public class Frame extends JFrame {
     /**
      * The {@link JNetwork} providing the visual representation.
      */
-    private final JNetwork jNetwork;
-    private final Dimension networkDim;
-    private final Dimension imgDim;
+    private JNetwork jNetwork;
+    private Dimension networkDim;
+    private Dimension imgDim;
+    
+    public Frame() {
+        initComponents();
+    }
 
     /**
-     * Create a {@link JFrame} holding a certain {@link JNetwork} to display.
+     * Set a new current {@link JNetwork} and adjust dimensions.
      *
-     * @param jNetwork The {@link JNetwork} to display.
+     * @param jNetwork The new jNetwork to display.
      */
-    public Frame(JNetwork jNetwork) {
+    public final void setJNetwork(JNetwork jNetwork, boolean sorted) {
+        if (this.jNetwork != null) {
+            this.remove(this.jNetwork);
+        }
         this.jNetwork = jNetwork;
+        this.add(this.jNetwork);
+        
+        if (sorted) {
+            this.getContentPane().setBackground(Color.YELLOW);
+        }
+        
+        updateDimensions();
+        repaint();
+    }
 
-        //Calculate dimension
-        int channels = jNetwork.getNetwork().getNbChannels();
-        int comps = jNetwork.getNetwork().getNbComparators();
-
-        int height = JNetwork.SPACE_PER_CHANNEL * channels;
-        int width = JNetwork.SPACE_PER_COMP * (comps + 2);
-        this.imgDim = new Dimension(width, height);
-
-        height += 2 * JNetwork.CHANNELS_BEGIN.y + 50;
-        width += 2 * JNetwork.CHANNELS_BEGIN.x + 50;
-        this.networkDim = new Dimension(width, height);
-
-        initComponents();
+    /**
+     * Update the image and frame dimensions using the current network.
+     */
+    private void updateDimensions() {
+        if (jNetwork != null) {
+            int channels = jNetwork.getNetwork().getNbChannels();
+            int comps = jNetwork.getNetwork().getNbComparators();
+            
+            int height = JNetwork.SPACE_PER_CHANNEL * channels;
+            int width = JNetwork.SPACE_PER_COMP * (comps + 2);
+            this.imgDim = new Dimension(width, height);
+            
+            height += 2 * JNetwork.CHANNELS_BEGIN.y + 50;
+            width += 2 * JNetwork.CHANNELS_BEGIN.x + 50;
+            this.networkDim = new Dimension(width, height);
+            
+            this.setSize(networkDim);
+        }
     }
 
     /**
@@ -52,12 +73,10 @@ public class Frame extends JFrame {
      * @param isSorted Whether the network is a sorting network.
      */
     public Frame(JNetwork jNetwork, boolean isSorted) {
-        this(jNetwork);
-        if (isSorted) {
-            this.getContentPane().setBackground(Color.YELLOW);
-        }
-    }
-
+        initComponents();
+        setJNetwork(jNetwork, isSorted);
+     }
+    
     /**
      * Initialize the components.
      */
@@ -68,24 +87,27 @@ public class Frame extends JFrame {
 
         //Add components
         this.setLayout(new CardLayout());
-        this.add(jNetwork);
 
         //Finish layout
         pack();
-        this.setSize(networkDim);
+        this.setSize(new Dimension(800, 500));
     }
 
     /**
      * Get a screenshot of the JFrame.
      *
-     * @return The screenshot.
+     * @return The screenshot, null if there is no jNetwork set.
      */
     public BufferedImage getScreenShot() {
-        BufferedImage bi = new BufferedImage(imgDim.width, imgDim.height, BufferedImage.TYPE_INT_RGB);
-        Graphics2D g = bi.createGraphics();
-        g.translate(-25, -40);
-        this.paint(g);
-        return bi;
+        if (imgDim != null) {
+            BufferedImage bi = new BufferedImage(imgDim.width, imgDim.height, BufferedImage.TYPE_INT_RGB);
+            Graphics2D g = bi.createGraphics();
+            g.translate(-25, -40);
+            this.paint(g);
+            return bi;
+        } else {
+            return null;
+        }
     }
-
+    
 }
