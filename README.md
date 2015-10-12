@@ -28,7 +28,7 @@
 	<UL>
 	<LI>
 	</UL>
-<DD>Te doen tegen de volgende bijeenkomst (14/10):
+<DD>Te doen tegen de volgende bijeenkomst (??/10):
 	<UL>
 	<LI>
 	</UL>
