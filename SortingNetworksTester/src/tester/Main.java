@@ -44,8 +44,6 @@ public class Main {
             for (int j = i + 1; j < nbChannels; j++) {
                 input[j].setValue(1);
                 //Perform test.
-                System.out.println("T " + Arrays.toString(input) + " " + Arrays.toString(network.getOutput(input)));
-
                 if (!Misc.isSorted(network.getOutput(input))) {
                     System.out.println("Sort failed for " + Arrays.toString(input));
                     return false;
