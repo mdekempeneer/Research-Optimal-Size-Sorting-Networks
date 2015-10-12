@@ -15,3 +15,8 @@
 
 
 14/10/2015 - Bijeenkomst 2
+
+
+
+09/11/2015 - Presentatie 1 (15.40-16.10)
+	Als je met twee bent, zou je presentatie een 23-25 minuten moeten duren, dan is er ook nog 5-7 min om vragen te stellen 	(en te beantwoorden). Bedoeling is om een verhaal, een overzicht een inleiding tot het onderwerp te brengen. Daarbij mag 	je selecteren uit je papers ... Elke student volgt een viertal presentaties.
