@@ -1,5 +1,12 @@
 package tester;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Arrays;
 import networklib.*;
 
@@ -60,11 +67,11 @@ public class Main {
         Network network = null;
 
         /* Retrieve Network */
-        if (args.length >= 1) {
+        if (args.length >= 2) {
             if (args[0].equals("-f")) {
                 //File
-                String line = Misc.readFile(args[1]);
-                network = Network.stringToNetwork(line);
+                parseNetworks(args[1]);
+
             } else if (args[0].equals("-n")) {
                 //Args
                 int nbChannel = Integer.parseInt(args[1]);
@@ -81,5 +88,38 @@ public class Main {
                 System.out.println("Not a sorting network.");
             }
         }
+    }
+
+    private static void parseNetworks(String inputPath) {
+        StringBuilder sb = new StringBuilder();
+        String line;
+        Network network;
+        BufferedWriter bw;
+        try (BufferedReader br = new BufferedReader(new FileReader(inputPath))) {
+            File outputFile = new File(inputPath + "2");
+            bw = new BufferedWriter(new FileWriter(outputFile));
+            while ((line = br.readLine()) != null) {
+                network = Network.stringToNetwork(line);
+                if (isSortingNetwork(network)) {
+                    line = line + " s";
+                    bw.write(line);
+                    bw.newLine();
+                } else {
+                    line = line + " u";
+                    bw.write(line);
+                    bw.newLine();
+                }
+            }
+            bw.close();
+            br.close();
+            if (new File(inputPath).delete()) {
+                outputFile.renameTo(new File(inputPath));
+            }
+        } catch (FileNotFoundException exc) {
+            System.err.println("File not found exception " + inputPath);
+        } catch (IOException exc) {
+            System.err.println("IO Exception" + exc.toString());
+        }
+        // network = Network.stringToNetwork(line);
     }
 }
