@@ -16,41 +16,66 @@
 	<LI>Programma dat test of een netwerk een Sorting Network is.
 	<LI>Programma dat alle mogelijke netwerken voor n channels en k comparators genereert.
 	<LI>Referenties uit paper [1] opzoeken en meebrengen naar de volgende bijeenkomst.
+	<LI>Untangling procedure kennen/kunnen.
+	<LI>Printout van alle mogelijke networks met n = 4, k = 5.
 	</UL>
 
 
 <DT>14/10/2015 - Bijeenkomst 2
 <DD>Te doen tegen de bijeenkomst:
 	<UL>
-	<LI>
+	<LI>Programma dat een visuele representatie van een netwerk "tekent".
+	<LI>Programma dat test of een netwerk een Sorting Network is.
+	<LI>Programma dat alle mogelijke netwerken voor n channels en k comparators genereert.
+	<LI>Referenties uit paper [1] opzoeken en meebrengen naar de volgende bijeenkomst.
+	<LI>Untangling procedure kennen/kunnen.
+	<LI>Printout van alle mogelijke networks met n = 4, k = 5.
 	</UL>
 <DD>Voltooid:
 	<UL>
-	<LI>
-	</UL>
-<DD>Te doen tegen de volgende bijeenkomst (??/10):
-	<UL>
-	<LI>
-	</UL>
-<!--	
-<DT>??/10/2015 - Bijeenkomst 3
-<DD>Te doen tegen de bijeenkomst:
-	<UL>
-	<LI>
-	</UL>
-<DD>Voltooid:
-	<UL>
-	<LI>
-	</UL>
-<DD>Te doen tegen de volgende bijeenkomst (??/10):
-	<UL>
-	<LI>
+	<LI>Programma dat een visuele representatie van een netwerk "tekent".
+	<LI>Programma dat test of een netwerk een Sorting Network is. --> BUG blijkbaar.
+	<LI>Programma dat alle mogelijke netwerken voor n channels en k comparators genereert.
+	<LI>Referenties uit paper [1] opzoeken en meebrengen naar de volgende bijeenkomst.
+	<LI>Untangling procedure kennen/kunnen.
+	<LI>Printout van alle mogelijke networks met n = 4, k = 5.
 	</UL>
 	
-<DT>??/10/2015 - Bijeenkomst 4
+<DD>Te doen tegen de volgende bijeenkomst (21/10):
+	<UL>
+	<LI> Fix Tester bug; Het geeft unsorted als sorted.
+	<LI> Meet tijd voor 1 test isSortingNetwork (en maal #theoretische networks bij brute force)
+	<LI> Gooi dubbels weg. (2x zelfde comparator na elkaar = delete)
+	<LI> Begrijpen bewijs paper p 5 bovenaan (zie ref [3] lemma 7).
+	<LI> De 3 equivalentie-eigenschappen nagaan voor equivalentie (reflex, trans, symm); zie paper.
+	</UL>
+<DD>Te doen tegen bijeenkomst (28/10):
+	<UL>
+	<LI> Eerste ontwerp van de literatuurstudie presentatie
+	</UL>
+	
+<DT>21/10/2015 - Bijeenkomst 3
 <DD>Te doen tegen de bijeenkomst:
 	<UL>
+	<LI> Fix Tester bug; Het geeft unsorted als sorted.
+	<LI> Meet tijd voor 1 test isSortingNetwork (en maal #theoretische networks bij brute force)
+	<LI> Gooi dubbels weg. (2x zelfde comparator na elkaar = delete)
+	<LI> Begrijpen bewijs paper p 5 bovenaan (zie ref [3] lemma 7).
+	<LI> De 3 equivalentie-eigenschappen nagaan voor equivalentie (reflex, trans, symm); zie paper.
+	</UL>
+<DD>Voltooid:
+	<UL>
 	<LI>
+	</UL>
+<DD>Te doen tegen de volgende bijeenkomst (??/10):
+	<UL>
+	<LI>
+	</UL>
+<!--
+<DT>28/10/2015 - Bijeenkomst 4
+<DD>Te doen tegen de bijeenkomst:
+	<UL>
+	<LI> Eerste ontwerp van de literatuurstudie presentatie
 	</UL>
 <DD>Voltooid:
 	<UL>
