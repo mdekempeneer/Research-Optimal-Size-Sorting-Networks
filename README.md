@@ -80,17 +80,16 @@
 <DD>Als je met twee bent, zou je presentatie een 23-25 minuten moeten duren, dan is er ook nog 5-7 min om vragen te stellen (en te beantwoorden). Bedoeling is om een verhaal, een overzicht een inleiding tot het onderwerp te brengen. Daarbij mag je selecteren uit je papers ... Elke student volgt een viertal presentaties.
 
 
-::TODO Add HTML tags.
-Instructies
-('argName' : arg : comment) (/i)
+<DT>Instructies </br>
+<i>('argName' : arg : comment)</i>
 
-SortingNetworksGenerator:
-'JFileChooser' : <n> <k> : n = #channels, k = #comparators
+<DD>SortingNetworksGenerator:</br>
+'JFileChooser' : <n> <k> : n = #channels, k = #comparators </br>
 'path' : <n> <k> <path> : n = #channels, k = #comparators, path = path to output saveFile
 
-SortingNetworksTester:
-'File' : -f <path> : path = path to input loadFile (results append behind each network line.)
-'Network Arg' : -n <n> <k> (<channel1_1>, <channel2_1>)(<channel1_2>,<channel2_2)... : n = #channels, n = #comparators, channel1_1 = first channel of comparator 1, channel2_1 = second channel of comparator 1,...
+<DD>SortingNetworksTester: </br>
+'File' : -f <path> : path = path to input loadFile (results append behind each network line.) </br>
+'Network Arg' : -n <n> <k> (<channel1_1>, <channel2_1>)(<channel1_2>,<channel2_2)... : n = #channels, n = #comparators, channel1_1 = first channel of comparator 1, channel2_1 = second channel of comparator 1,... </br>
 'JFileChooser' : : Chose file to test using FileChooser
 
 
