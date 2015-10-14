@@ -4,7 +4,7 @@
 <DT>07/10/2015 - Bijeenkomst 1
 	<DD>Te doen tegen de bijeenkomst:
 		<UL>
-		<LI>Paper lezen: http://arxiv.org/abs/1405.5754 [1]
+		<LI><span type="color: 007700">Paper lezen: http://arxiv.org/abs/1405.5754 [1]</span>
 		</UL>
 
 	<DD>Te doen tegen de volgende bijeenkomst (14/10):
