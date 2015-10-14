@@ -44,6 +44,7 @@ public class Tester {
             //Inner loop; performs on inner bits.
             for (int j = i + 1; j < nbChannels; j++) {
                 input[j].setValue(1);
+                System.out.println(Arrays.toString(input));
                 //Perform test.
                 if (!Misc.isSorted(network.getOutput(input))) {
                     System.out.println("Sort failed for " + Arrays.toString(input));
