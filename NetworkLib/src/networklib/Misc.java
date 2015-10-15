@@ -11,6 +11,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  *
@@ -35,11 +36,14 @@ public class Misc {
 
     public static void printBin(ArrayList list, Bit[] soFar, int iterations) {
         if (iterations == 0) {
-            list.add(soFar);
+            list.add(soFar.clone());
             System.out.println(Arrays.toString(soFar)); //TODO remove 
         } else {
+            // 0
             soFar[iterations - 1].setValue(0);
             printBin(list, soFar, iterations - 1);
+            
+            // 1
             soFar[iterations - 1].setValue(1);
             printBin(list, soFar, iterations - 1);
         }
