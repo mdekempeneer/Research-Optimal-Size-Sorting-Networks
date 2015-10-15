@@ -9,6 +9,8 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  *
@@ -23,12 +25,24 @@ public class Misc {
      * @return true if sorted
      */
     public static boolean isSorted(Bit[] input) {
-        for (int i = 1; i < input.length; i++) {
-            if (input[i].getValue() < input[i - 1].getValue()) {
+        for (int i = 0; i < input.length - 1; i++) {
+            if (input[i].getValue() > input[i + 1].getValue()) {
                 return false;
             }
         }
         return true;
+    }
+
+    public static void printBin(ArrayList list, Bit[] soFar, int iterations) {
+        if (iterations == 0) {
+            list.add(soFar);
+            System.out.println(Arrays.toString(soFar)); //TODO remove 
+        } else {
+            soFar[iterations - 1].setValue(0);
+            printBin(list, soFar, iterations - 1);
+            soFar[iterations - 1].setValue(1);
+            printBin(list, soFar, iterations - 1);
+        }
     }
 
     /**

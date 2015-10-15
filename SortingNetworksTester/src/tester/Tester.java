@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import javax.swing.JFileChooser;
 import networklib.*;
@@ -27,6 +28,8 @@ public class Tester {
      * sorted output for every input.
      */
     public static boolean isSortingNetwork(Network network) {
+        ArrayList list = new ArrayList();
+
         /* Create input */
         int nbChannels = network.getNbChannels();
         Bit[] input = new Bit[nbChannels];
@@ -34,26 +37,34 @@ public class Tester {
             input[i] = new Bit(0);
         }
 
-        /* Loop trough combinations */
-        for (int i = -1; i < nbChannels - 1; i++) {
-            //Flip the next bit in line.
-            if (i != -1) {
-                input[i].setValue(1);
-            }
-
-            //Inner loop; performs on inner bits.
-            for (int j = i + 1; j < nbChannels; j++) {
-                input[j].setValue(1);
-                System.out.println(Arrays.toString(input));
-                //Perform test.
-                if (!Misc.isSorted(network.getOutput(input))) {
-                    System.out.println("Sort failed for " + Arrays.toString(input));
-                    return false;
-                }
-                //reset the bit changed.
-                input[j].setValue(0);
+        Misc.printBin(list, input, nbChannels);
+        
+        for (Object elem : list) {
+            System.out.println(Arrays.toString((Bit[]) elem));
+            if (!Misc.isSorted(network.getOutput((Bit[]) elem))) {
+                return false;
             }
         }
+
+//        /* Loop trough combinations */
+//        for (int i = -1; i < nbChannels - 1; i++) {
+//            //Flip the next bit in line.
+//            if (i != -1) {
+//                input[i].setValue(1);
+//            }
+//
+//            //Inner loop; performs on inner bits.
+//            for (int j = i + 1; j < nbChannels; j++) {
+//                input[j].setValue(1);
+//                //Perform test.
+//                if (!Misc.isSorted(network.getOutput(input))) {
+//                    System.out.println("Sort failed for " + Arrays.toString(input));
+//                    return false;
+//                }
+//                //reset the bit changed.
+//                input[j].setValue(0);
+//            }
+//        }
         return true;
     }
 
