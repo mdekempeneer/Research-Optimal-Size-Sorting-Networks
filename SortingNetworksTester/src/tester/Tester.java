@@ -28,7 +28,7 @@ public class Tester {
      * sorted output for every input.
      */
     public static boolean isSortingNetwork(Network network) {
-        ArrayList list = new ArrayList();
+        ArrayList<Bit[]> list = new ArrayList<>();
 
         /* Create input */
         int nbChannels = network.getNbChannels();
@@ -38,10 +38,10 @@ public class Tester {
         }
 
         Misc.printBin(list, input, nbChannels);
-        
-        for (Object elem : list) {
-            System.out.println(Arrays.toString((Bit[]) elem));
-            if (!Misc.isSorted(network.getOutput((Bit[]) elem))) {
+        System.out.println(list);
+        for (Bit[] elem : list) {
+            System.out.println(Arrays.toString(elem));
+            if (!Misc.isSorted(network.getOutput(elem))) {
                 return false;
             }
         }
