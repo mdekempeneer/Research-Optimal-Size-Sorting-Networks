@@ -7,8 +7,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import javax.swing.JFileChooser;
 import networklib.*;
 
@@ -17,6 +15,39 @@ import networklib.*;
  * @author Mathias
  */
 public class Tester {
+
+    /**
+     * Test if a network is sorted when giving a certain input and a certain
+     * index to construct all possible permutations from that index.
+     *
+     * Note: When giving an input consisting of only zero's and index =
+     * input.length -1 it will check all permutations possible and return if it
+     * is a sorting network or not.
+     *
+     * @param network The network to check for s
+     * @param input The input that is constructed so far to check with.
+     * @param index The index for the phase of the construction.
+     * @return Whether or not the network sorts all inputs that are constructed
+     * provided with input and the index.
+     */
+    private static boolean isSorted(Network network, Bit[] input, int index) {
+        if (index >= 0) {
+            //Set 0
+            input[index].setValue(0);
+            if (!isSorted(network, input, index - 1)) {
+                return false;
+            }
+            //Set 1
+            input[index].setValue(1);
+            if (!isSorted(network, input, index - 1)) {
+                return false;
+            }
+        } else {
+            //System.out.println("Testing " + Arrays.toString(input));
+            return Misc.isSorted(network.getOutput(input));
+        }
+        return true;
+    }
 
     /**
      * Check if the {@link Network} provided is a sorting network. This is done
@@ -28,8 +59,6 @@ public class Tester {
      * sorted output for every input.
      */
     public static boolean isSortingNetwork(Network network) {
-        ArrayList<Bit[]> list = new ArrayList<>();
-
         /* Create input */
         int nbChannels = network.getNbChannels();
         Bit[] input = new Bit[nbChannels];
@@ -37,35 +66,20 @@ public class Tester {
             input[i] = new Bit(0);
         }
 
-        Misc.printBin(list, input, nbChannels);
-        System.out.println(list);
-        for (Bit[] elem : list) {
-            System.out.println(Arrays.toString(elem));
-            if (!Misc.isSorted(network.getOutput(elem))) {
-                return false;
-            }
-        }
+        return isSorted(network, input, input.length - 1);
 
-//        /* Loop trough combinations */
-//        for (int i = -1; i < nbChannels - 1; i++) {
-//            //Flip the next bit in line.
-//            if (i != -1) {
-//                input[i].setValue(1);
-//            }
-//
-//            //Inner loop; performs on inner bits.
-//            for (int j = i + 1; j < nbChannels; j++) {
-//                input[j].setValue(1);
-//                //Perform test.
-//                if (!Misc.isSorted(network.getOutput(input))) {
-//                    System.out.println("Sort failed for " + Arrays.toString(input));
-//                    return false;
-//                }
-//                //reset the bit changed.
-//                input[j].setValue(0);
-//            }
-//        }
-        return true;
+        /*
+        Old code - could be useful later on.
+         ArrayList<Bit[]> list = new ArrayList<>();
+         Misc.printBin(list, input, nbChannels);
+         System.out.println(list);
+         for (Bit[] elem : list) {
+         System.out.println(Arrays.toString(elem));
+         if (!Misc.isSorted(network.getOutput(elem))) {
+         return false;
+         }
+         }
+         return true;*/
     }
 
     /**
@@ -111,6 +125,13 @@ public class Tester {
         }
     }
 
+    /**
+     * Parse all networks from a file with the given inputPath. This will load
+     * all networks from the file and append a 's' when the network is a sorting
+     * network. 'u' otherwise.
+     *
+     * @param inputPath The path to the file where to load from.
+     */
     private static void parseNetworks(String inputPath) {
         String line;
         Network network;
