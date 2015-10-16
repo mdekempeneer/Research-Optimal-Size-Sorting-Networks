@@ -1,8 +1,11 @@
 package visualize;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import javax.swing.JComponent;
 import networklib.Comparator;
@@ -17,6 +20,11 @@ import networklib.Network;
 public class JNetwork extends JComponent {
 
     private Network network;
+
+    /**
+     * The dimension of the image of the JNetwork.
+     */
+    private final Dimension imgDim;
 
     /* Variables for painting */
     //The position where the channels begin painting (upper left)
@@ -35,6 +43,10 @@ public class JNetwork extends JComponent {
      */
     public JNetwork(Network network) {
         this.network = network;
+
+        int height = JNetwork.SPACE_PER_CHANNEL * network.getNbChannels();
+        int width = JNetwork.SPACE_PER_COMP * (network.getNbComparators() + 2);
+        this.imgDim = new Dimension(width, height);
     }
 
     /**
@@ -91,7 +103,28 @@ public class JNetwork extends JComponent {
             g.fillOval(begin.x - halfPointSpace, begin.y - halfPointSpace, SIZE_COMP_POINT, SIZE_COMP_POINT);
             g.fillOval(end.x - halfPointSpace, end.y - halfPointSpace, SIZE_COMP_POINT, SIZE_COMP_POINT);
         }
-
     }
 
+    /**
+     * Return a {@link BufferedImage} which has a {@link JNetwork} painted on.
+     *
+     * @param isSorted Whether this network is a sorting network.
+     *
+     * @return A BufferedImage containing the JNetwork's image.
+     */
+    public BufferedImage getpaintedJNetwork(boolean isSorted) {
+        BufferedImage bi = new BufferedImage(imgDim.width, imgDim.height, BufferedImage.TYPE_INT_RGB);
+        Graphics2D g = bi.createGraphics();
+        g.translate(-16, -16);
+        if (isSorted) {
+            g.setColor(Color.YELLOW);
+        } else {
+            g.setColor(Color.WHITE);
+        }
+        g.fillRect(0, 0, imgDim.width, imgDim.height);
+        g.setColor(Color.BLACK);
+        paintComponent(g);
+
+        return bi;
+    }
 }
