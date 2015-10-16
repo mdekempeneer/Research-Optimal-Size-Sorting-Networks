@@ -3,8 +3,6 @@ package visualize;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import javax.swing.JFrame;
 
 /**
@@ -20,7 +18,6 @@ public class Frame extends JFrame {
      */
     private JNetwork jNetwork;
     private Dimension networkDim;
-    private Dimension imgDim;
 
     public Frame() {
         initComponents();
@@ -58,7 +55,6 @@ public class Frame extends JFrame {
 
             int height = JNetwork.SPACE_PER_CHANNEL * channels;
             int width = JNetwork.SPACE_PER_COMP * (comps + 2);
-            this.imgDim = new Dimension(width, height);
 
             height += 2 * JNetwork.CHANNELS_BEGIN.y + 50;
             width += 2 * JNetwork.CHANNELS_BEGIN.x + 50;
@@ -95,42 +91,12 @@ public class Frame extends JFrame {
         this.setSize(new Dimension(800, 500));
     }
 
+    /**
+     * Get the currently used {@link JNetwork}.
+     * @return The {@link JNetwork} currently in use.
+     */
     public JNetwork getJNetwork() {
         return this.jNetwork;
-    }
-
-    /**
-     * Get a screenshot of the JFrame.
-     *
-     * @return The screenshot, null if there is no jNetwork set.
-     */
-    public BufferedImage getScreenShot() {
-        if (imgDim != null) {
-            BufferedImage bi = new BufferedImage(imgDim.width, imgDim.height, BufferedImage.TYPE_INT_RGB);
-            Graphics2D g = bi.createGraphics();
-            g.translate(-25, -40);
-            this.paint(g);
-            return bi;
-        } else {
-            return null;
-        }
-    }
-
-    /**
-     * Get a screenshot of the JFrame.
-     *
-     * @return The screenshot, null if there is no jNetwork set.
-     */
-    public BufferedImage getScreenShot(JNetwork jNetwork) {
-        if (imgDim != null) {
-            BufferedImage bi = new BufferedImage(imgDim.width, imgDim.height, BufferedImage.TYPE_INT_RGB);
-            Graphics2D g = bi.createGraphics();
-            g.translate(-25, -40);
-            jNetwork.paint(g);
-            return bi;
-        } else {
-            return null;
-        }
     }
 
 }
