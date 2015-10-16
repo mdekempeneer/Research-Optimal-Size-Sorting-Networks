@@ -1,5 +1,6 @@
 package visualize;
 
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -15,9 +16,9 @@ import networklib.Network;
  * @author Admin
  */
 public class Main {
-    
+
     private static Frame frame;
-    
+
     private static void setFrame(Frame frame) {
         Main.frame = frame;
     }
@@ -37,10 +38,15 @@ public class Main {
                 Main.setFrame(frame);
             }
         });
-        
+
         /* Analyse Args */
+        BufferedImage img = null;
         Network network = null;
+        JNetwork jNetwork = null;
         boolean isSorted = false;
+
+        long begin = 0;
+        long end = 0;
 
         if (args.length >= 1) {
             if (args[0].startsWith("-f")) {
@@ -59,6 +65,7 @@ public class Main {
                     pathParent = new File(path).getParent();
                 }
 
+                begin = System.nanoTime();  //DEBUGGER: Timer
                 /* Iterate over all lines/networks */
                 try (BufferedReader br = new BufferedReader(new FileReader(args[1]))) {
                     while ((line = br.readLine()) != null) {
@@ -77,14 +84,11 @@ public class Main {
 
                         /* Add Network and take a screenshot if required. */
                         network = Network.stringToNetwork(line);
+                        jNetwork = new JNetwork(network);
                         frame.setJNetwork(new JNetwork(network), isSorted);
-                        try { //TODO: Add something concrete to wait on instead of a random guessed 5 ms.
-                            Thread.sleep(5);
-                        } catch (InterruptedException ex) {
-                            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+
                         if (args[0].contains("p")) {
-                            ImageIO.write(frame.getScreenShot(), "jpg", new File(newPath));
+                            ImageIO.write(jNetwork.getpaintedJNetwork(isSorted), "jpg", new File(newPath));
                         }
                         counter++;
                     }
@@ -94,31 +98,29 @@ public class Main {
                 } catch (IOException ex) {
                     Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                end = System.nanoTime(); //DEBUGGER: Timer
             } else if (args[0].startsWith("-n")) {
                 /* Arguments - 1 Network */
                 int nbChannel = Integer.parseInt(args[1]);
                 int nbComp = Integer.parseInt(args[2]);
                 network = Network.stringToNetwork(nbChannel, nbComp, args[3]);
-                JNetwork jNetwork = new JNetwork(network);
+                jNetwork = new JNetwork(network);
 
                 /* Check if Sorted */
-                if (args.length >= 5 && args[4].toLowerCase().startsWith("s")) {
-                    frame.setJNetwork(jNetwork, true);
-                } else {
-                    frame.setJNetwork(jNetwork, false);
-                }
+                isSorted = args.length >= 5 && args[4].toLowerCase().startsWith("s");
 
                 /* Take Screenshot */
                 if (args[0].contains("p")) {
                     String path = askSavePath();
                     try {
-                        ImageIO.write(frame.getScreenShot(), "jpg", new File(path));
+                        ImageIO.write(jNetwork.getpaintedJNetwork(isSorted), "jpg", new File(path));
                     } catch (IOException ex) {
                         Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
         }
+        System.out.println("Took:" + (end - begin) + " nanoseconds.");
     }
 
     /**
