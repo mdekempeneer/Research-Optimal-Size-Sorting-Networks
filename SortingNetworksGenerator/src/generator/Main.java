@@ -40,7 +40,7 @@ public class Main {
             Generator gen = new Generator(nbChannels, nbComp, outputPath);
             gen.generate();
         } else {
-            System.out.println("Format is: n k");
+            System.out.println("Format is: n k or n k outputPath");
         }
     }
 }
