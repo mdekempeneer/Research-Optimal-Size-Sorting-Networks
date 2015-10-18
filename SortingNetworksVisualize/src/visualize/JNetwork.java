@@ -113,7 +113,7 @@ public class JNetwork extends JComponent {
      * @return A BufferedImage containing the JNetwork's image.
      */
     public BufferedImage getpaintedJNetwork(boolean isSorted) {
-        BufferedImage bi = new BufferedImage(imgDim.width, imgDim.height, BufferedImage.TYPE_INT_RGB);
+        BufferedImage bi = new BufferedImage(imgDim.width-16, imgDim.height-16, BufferedImage.TYPE_INT_RGB);
         Graphics2D g = bi.createGraphics();
         g.translate(-16, -16);
         if (isSorted) {
