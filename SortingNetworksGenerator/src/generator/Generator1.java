@@ -42,12 +42,15 @@ public class Generator1 {
     public void generate() {
         Comparator[] comps = new Comparator[nbComp];
 
+        long begin = System.nanoTime(); //DEBUG - TIMING
         //Iterate  over all comparator combinations
         for (int number1 = 1; number1 <= nbChannels - 1; number1++) {
             for (int number2 = number1 + 1; number2 <= nbChannels; number2++) {
                 generate_sub(comps, new Comparator((short) number1, (short) number2), 0);
             }
         }
+        long end = System.nanoTime(); //DEBUG - TIMING
+        System.out.println("Generate took " + (end-begin) + " nanoseconds."); //DEBUG - TIMING
         if (bw != null) {
             try {
                 bw.close();
