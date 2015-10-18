@@ -109,7 +109,10 @@ public class Tester {
             int result = jfc.showOpenDialog(null);
             if (result == JFileChooser.APPROVE_OPTION) {
                 /* Parse Networks */
+                long begin = System.nanoTime(); //DEBUG - TIMINGS
                 parseNetworks(jfc.getSelectedFile().getAbsolutePath());
+                long end = System.nanoTime(); //DEBUG - TIMINGS
+                System.out.println("Test took " +  (end-begin) + " nanoseconds."); //DEBUG - TIMINGS
             } else {
                 System.out.println("Failed chosing a file.");
             }
