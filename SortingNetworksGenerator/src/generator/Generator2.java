@@ -131,7 +131,7 @@ public class Generator2 {
         return result;
     }
 
-    public static Network getUniqueParallelForm(Network network) {
-        
-    }
+//    public static Network getUniqueParallelForm(Network network) {
+//        
+//    }
 }
