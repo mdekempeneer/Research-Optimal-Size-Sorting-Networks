@@ -94,7 +94,6 @@ public class Main {
                     }
 
                     br.close();
-                    System.out.println(frame.getJNetwork());
                 } catch (IOException ex) {
                     Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
                 }

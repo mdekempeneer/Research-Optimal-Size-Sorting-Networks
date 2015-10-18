@@ -70,5 +70,17 @@ public class Comparator implements Cloneable {
     public String toString() {
         return ("(" + getChannel1() + "," + getChannel2() + ")");
     }
+    
+    /**
+     * Check if this comparator is equal to comp2.
+     * This means both channels are the same.
+     * @param comp2 The {@link Comparator} to check with.
+     * @return Whether comp2 is equal to this.
+     * @see getChannel1()
+     * @see getChannel2()
+     */
+    public boolean isEqual(Comparator comp2) {
+        return getChannel1() == comp2.getChannel1() && getChannel2() == comp2.getChannel2();
+    }
 
 }
