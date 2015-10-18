@@ -11,7 +11,7 @@ import networklib.Comparator;
  *
  * @author Admin
  */
-public class Generator {
+public class Generator2 {
 
     private final int nbChannels;
     private final int nbComp;
@@ -26,7 +26,7 @@ public class Generator {
      * @param nbComp The amount of {@link Comparator}s of the {@link Network}.
      * @param outputPath The path to the file to write the output to.
      */
-    public Generator(int nbChannels, int nbComp, String outputPath) {
+    public Generator2(int nbChannels, int nbComp, String outputPath) {
         this.nbChannels = nbChannels;
         this.nbComp = nbComp;
         this.outputPath = outputPath;
@@ -50,7 +50,7 @@ public class Generator {
             try {
                 bw.close();
             } catch (IOException ex) {
-                Logger.getLogger(Generator.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Generator2.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -105,7 +105,7 @@ public class Generator {
             bw.write(sb.toString());
             bw.newLine();
         } catch (IOException ex) {
-            Logger.getLogger(Generator.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Generator2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

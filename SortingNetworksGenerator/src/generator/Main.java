@@ -26,7 +26,7 @@ public class Main {
             if (result == JFileChooser.APPROVE_OPTION) {
                 /* Generate */
                 outputPath = jfc.getSelectedFile().getAbsolutePath();
-                Generator gen = new Generator(nbChannels, nbComp, outputPath);
+                Generator1 gen = new Generator1(nbChannels, nbComp, outputPath);
                 gen.generate();
             } else {
                 System.out.println("Failed chosing a file.");
@@ -37,7 +37,7 @@ public class Main {
             String outputPath = args[2];
 
             /* Generate */
-            Generator gen = new Generator(nbChannels, nbComp, outputPath);
+            Generator1 gen = new Generator1(nbChannels, nbComp, outputPath);
             gen.generate();
         } else {
             System.out.println("Format is: n k or n k outputPath");
