@@ -8,6 +8,8 @@ import java.util.logging.Logger;
 import networklib.Comparator;
 
 /**
+ * Makes all possible combinations of all comparators G excluding the ones who
+ * are parallel to one in G defined by getUniqueParallelForm.
  *
  * @author Admin
  */
@@ -129,4 +131,7 @@ public class Generator2 {
         return result;
     }
 
+    public static Network getUniqueParallelForm(Network network) {
+        
+    }
 }
