@@ -25,6 +25,7 @@
 		<LI> Gooi dubbels weg. (2x zelfde comparator na elkaar = delete)
 		<LI> Begrijpen bewijs paper p 5 bovenaan (zie ref [3] lemma 7).
 		<LI> De 3 equivalentie-eigenschappen nagaan voor equivalentie (reflex, trans, symm); zie paper.
+		<LI> Verbeteren van de image visualizer.
 		</UL>
 	<DD>Te doen tegen bijeenkomst 4 (28/10):
 		<UL>
