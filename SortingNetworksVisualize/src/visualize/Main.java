@@ -5,6 +5,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -29,15 +30,20 @@ public class Main {
      * @param args -fp filePath || -np n k (a,b)(c,d)
      */
     public static void main(String args[]) {
-        /* Create Frame */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                Frame frame = new Frame();
-                frame.setVisible(true);
-                Main.setFrame(frame);
-            }
-        });
+        try {
+            /* Create Frame */
+            java.awt.EventQueue.invokeAndWait(new Runnable() {
+                @Override
+                public void run() {
+                    Frame frame = new Frame();
+                    frame.setVisible(true);
+                    Main.setFrame(frame);
+                }
+            });
+        } catch (InterruptedException | InvocationTargetException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
 
         /* Analyse Args */
         BufferedImage img = null;
@@ -107,7 +113,8 @@ public class Main {
 
                 /* Check if Sorted */
                 isSorted = args.length >= 5 && args[4].toLowerCase().startsWith("s");
-
+                frame.setJNetwork(jNetwork, isSorted);
+                
                 /* Take Screenshot */
                 if (args[0].contains("p")) {
                     String path = askSavePath();
