@@ -35,14 +35,13 @@
 <DT>21/10/2015 - Bijeenkomst 3
 	<DD>Te doen tegen de volgende bijeenkomst (28/10):
 		<UL>
-		<LI>
+		<LI> Permutaties vinden voor overgangen van 3 sorted networks bij n=4.
+		<LI> Primitieve datatypes gebruiken en minder objecten in de code.
+		<LI> &lt,&gt (min, max) regels uitwerken.
+		<LI> Beginnen aan de presentatie.
 		</UL>
 
 <DT>28/10/2015 - Bijeenkomst 4
-	<DD>Te doen tegen de bijeenkomst:
-		<UL>
-		<LI> Eerste ontwerp van de literatuurstudie presentatie
-		</UL>
 	<DD>Te doen tegen de volgende bijeenkomst (??/10):
 		<UL>
 		<LI>
