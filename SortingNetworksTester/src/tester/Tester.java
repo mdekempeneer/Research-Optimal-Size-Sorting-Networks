@@ -16,6 +16,8 @@ import networklib.*;
  */
 public class Tester {
 
+    static long time; //DEBUG - TIMINGS
+
     /**
      * Test if a network is sorted when giving a certain input and a certain
      * index to construct all possible permutations from that index.
@@ -69,7 +71,7 @@ public class Tester {
         return isSorted(network, input, input.length - 1);
 
         /*
-        Old code - could be useful later on.
+         Old code - could be useful later on.
          ArrayList<Bit[]> list = new ArrayList<>();
          Misc.printBin(list, input, nbChannels);
          System.out.println(list);
@@ -109,10 +111,8 @@ public class Tester {
             int result = jfc.showOpenDialog(null);
             if (result == JFileChooser.APPROVE_OPTION) {
                 /* Parse Networks */
-                long begin = System.nanoTime(); //DEBUG - TIMINGS
                 parseNetworks(jfc.getSelectedFile().getAbsolutePath());
-                long end = System.nanoTime(); //DEBUG - TIMINGS
-                System.out.println("Test took " +  (end-begin) + " nanoseconds."); //DEBUG - TIMINGS
+                System.out.println("Test took " + time + " nanoseconds."); //DEBUG - TIMINGS
             } else {
                 System.out.println("Failed chosing a file.");
             }
@@ -144,7 +144,10 @@ public class Tester {
             bw = new BufferedWriter(new FileWriter(outputFile));
             while ((line = br.readLine()) != null) {
                 network = Network.stringToNetwork(line);
-                if (isSortingNetwork(network)) {
+                long begin = System.nanoTime(); //DEBUG - TIMINGS
+                boolean isSortNetwork = isSortingNetwork(network);
+                time += (System.nanoTime() - begin); //DEBUG - TIMINGS
+                if (isSortNetwork) {
                     line = line + " s";
                     bw.write(line);
                     bw.newLine();
