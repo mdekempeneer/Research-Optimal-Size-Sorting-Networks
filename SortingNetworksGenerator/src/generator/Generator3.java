@@ -1,5 +1,6 @@
 package generator;
 
+import java.io.BufferedOutputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -21,7 +22,7 @@ import networklib.Comparator;
  *
  * 3 0's between; n-5 shifts 010001 = 17 100010
  *
- * 4 0's between: n-6 shifts 100001 = 33
+ * 4 0's between; n-6 shifts 100001 = 33
  *
  * @author Admin
  */
@@ -55,20 +56,18 @@ public class Generator3 {
         short[] network = new short[nbComp];
         int index = 0;
 
-        long begin = System.nanoTime(); //DEBUG - TIMING
         int maxX = ((1 << (nbChannels - 1)) | 1); // | 1 of + 1 ??? TODO test
-        short acc = 2; //n-acc shifts
+        int maxShifts = nbChannels - 2; //# shifts
+        int y;
 
+        long begin = System.nanoTime(); //DEBUG - TIMING
         //Iterate  over all comparator combinations
-        for (int x = 3; x <= maxX; x = (x << 1) - 1) { //x = number we shift.
-            int maxShifts = nbChannels - acc;
-            for (short nShift = 0; nShift <= maxShifts; nShift++) {
-                short comp = (short) (x << nShift);
-                generate_sub(nbChannels, maxX, network, comp, index);
+        for (int x = 3; x <= maxX; x = (x << 1) - 1, maxShifts--) { //x = number we shift.
+            y = x;
+            for (int nShift = 0; nShift <= maxShifts; nShift++, y = y << 1) {
+                generate_sub(nbChannels, maxX, network, (short) y, index);
             }
-            acc++;
         }
-
         long end = System.nanoTime(); //DEBUG - TIMING
         System.out.println("Generate took " + (end - begin) + " nanoseconds."); //DEBUG - TIMING
 
@@ -85,21 +84,20 @@ public class Generator3 {
      */
     private void generate_sub(int nbChannels, int maxX, short[] network, short comp, int index) {
         int max = network.length;
+        int maxShifts = nbChannels - 2; //# opschuiven
+        int nextIndex = index + 1;
+        int y;
+
+        //Add to index
         network[index] = comp;
-        int acc = 2; //n-acc opschuiven
-        int maxShifts;
-        short nextComp;
-        int nextIndex = index+1;
 
         //Continue adding
         if (nextIndex < max) {
             //Iterate over all comparator combinations
-            for (int x = 3; x <= maxX; x = (x << 1) - 1) { //x*2 - 1
-                maxShifts = nbChannels - acc;
-                acc++;
-                for (short nShift = 0; nShift <= maxShifts; nShift++) { //shift n-2, n-3, ... keer
-                    nextComp = (short) (x << nShift);
-                    generate_sub(nbChannels, maxX, network, nextComp, nextIndex);
+            for (int x = 3; x <= maxX; x = (x << 1) - 1, maxShifts--) { //x*2 - 1
+                y = x;
+                for (short nShift = 0; nShift <= maxShifts; nShift++, y = y << 1) { //shift n-2, n-3, ... keer
+                    generate_sub(nbChannels, maxX, network, (short) y, nextIndex);
                 }
             }
         } else {
@@ -118,7 +116,7 @@ public class Generator3 {
     public void writeNetwork(int nbChannels, short[] network) {
         try {
             if (dos == null) {
-                dos = new DataOutputStream(new FileOutputStream(new File(this.outputPath)));
+                dos = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(new File(this.outputPath))));
             }
 
             dos.writeInt(nbChannels);
