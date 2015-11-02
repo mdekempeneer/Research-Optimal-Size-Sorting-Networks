@@ -12,7 +12,7 @@ import networklib.Comparator;
 
 /**
  * Makes all possible combinations of all possible comparators (= all possible
- * combinations of channels).
+ * combinations of channels; stored as shorts).
  *
  * The idea: 0 0's between; n-2 shifts 000011 = 3 000110 001100 011000 110000
  *
