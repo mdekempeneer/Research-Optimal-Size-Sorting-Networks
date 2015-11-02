@@ -42,25 +42,18 @@
 		</UL>
 
 <DT>28/10/2015 - Bijeenkomst 4
-	<DD>Te doen tegen de volgende bijeenkomst (??/10):
+	<DD>Te doen tegen de volgende bijeenkomst (06/11):
+		<UL>
+		<LI> Presentatie afwerken.
+		<LI> Primitieve datatypes gebruiken en minder objecten in de code.
+		</UL>
+
+<DT>06/11/2015 - Bijeenkomst 5
+	<DD>Te doen tegen de bijeenkomst:
 		<UL>
 		<LI>
 		</UL>
-<!--
-<DT>??/10/2015 - Bijeenkomst 5
-<DD>Te doen tegen de bijeenkomst:
-	<UL>
-	<LI>
-	</UL>
-<DD>Voltooid:
-	<UL>
-	<LI>
-	</UL>
-<DD>Te doen tegen de volgende bijeenkomst (??/10):
-	<UL>
-	<LI>
-	</UL>
--->
+	
 
 <DT>09/11/2015 - Presentatie 1 (15.40-16.10)
 	<DD>Als je met twee bent, zou je presentatie een 23-25 minuten moeten duren, dan is er ook nog 5-7 min om vragen te stellen (en te beantwoorden). Bedoeling is om een verhaal, een overzicht een inleiding tot het onderwerp te brengen. Daarbij mag je selecteren uit je papers ... Elke student volgt een viertal presentaties.
