@@ -83,29 +83,39 @@ public class Generator3 {
      * @param index The current index to which to add the comp.
      */
     private void generate_sub(int nbChannels, int maxX, short[] network, short comp, int index) {
-        int max = network.length;
-        int maxShifts = nbChannels - 2; //# opschuiven
         int nextIndex = index + 1;
-        int y;
 
-        //Add to index
-        network[index] = comp;
+        if (nextIndex < network.length) {
+            int maxShifts = nbChannels - 2; //# opschuiven
+            int y;
 
-        //Continue adding
-        if (nextIndex < max) {
-            //Iterate over all comparator combinations
-            for (int x = 3; x <= maxX; x = (x << 1) - 1, maxShifts--) { //x*2 - 1
-                y = x;
-                for (short nShift = 0; nShift <= maxShifts; nShift++, y = y << 1) { //shift n-2, n-3, ... keer
-                    generate_sub(nbChannels, maxX, network, (short) y, nextIndex);
+            int number;
+            int outerShift;
+            int innerShift;
+            int outerNumber = 2;
+
+            //Add to index
+            network[index] = comp;
+
+            //Continue adding
+            for (innerShift = 1; innerShift < nbChannels; innerShift++, outerNumber <<= 1) {
+                number = (outerNumber | 1);
+                for (outerShift = 0; outerShift < nbChannels - innerShift; outerShift++, number <<= 1) {
+                    generate_sub(nbChannels, maxX, network, (short) number, nextIndex);
                 }
             }
+
+            /*for (number = 3; number <= maxX; number = (number << 1) - 1, maxShifts--) { //x*2 - 1
+             y = number;
+             for (outerShift = 0; outerShift <= maxShifts; outerShift++, y <<= 1) { //shift n-2, n-3, ... keer
+             generate_sub(nbChannels, maxX, network, (short) y, nextIndex);
+             }
+             }*/
         } else {
-            writeNetwork(nbChannels, network);
+            //writeNetwork(nbChannels, network);
         }
     }
 
-    //TODO: Instead of saving shorts; save the last nbChannel bits of the short.
     /**
      * Write the given network to the outputPath. format: Int(nbChannels),
      * Int(network.length), Short(network[0]), Short(network[1]),...
@@ -128,7 +138,7 @@ public class Generator3 {
             Logger.getLogger(Generator3.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
     /**
      * Close the {@link OutputStream} used for saving.
      */
