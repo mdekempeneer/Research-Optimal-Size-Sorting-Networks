@@ -1,5 +1,6 @@
 package networklib.tools;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedWriter;
 import java.io.DataInputStream;
 import java.io.File;
@@ -34,7 +35,7 @@ public class BinaryToText {
 
     public void convert() {
         try {
-            dis = new DataInputStream(new FileInputStream(new File(inputPath)));
+            dis = new DataInputStream(new BufferedInputStream(new FileInputStream(new File(inputPath))));
 
             while (dis.available() > 0) {
                 int nbChannels = dis.readInt();
