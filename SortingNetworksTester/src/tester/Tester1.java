@@ -7,16 +7,15 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import javax.swing.JFileChooser;
 import networklib.*;
 
 /**
  *
  * @author Mathias
  */
-public class Tester {
+public class Tester1 {
 
-    static long time; //DEBUG - TIMINGS
+    public static long time; //DEBUG - TIMINGS
 
     /**
      * Test if a network is sorted when giving a certain input and a certain
@@ -45,10 +44,24 @@ public class Tester {
                 return false;
             }
         } else {
-            //System.out.println("Testing " + Arrays.toString(input));
             return Misc.isSorted(network.getOutput(input));
         }
         return true;
+    }
+    
+    /**
+     * Check if the {@link Network} provided is a sorting network. This is done
+     * by propagating every possible combination trough the channel and
+     * comparators and testing for non-sorted outputs.
+     *
+     * @param nbChannels Ignored, used for polymorphism.
+     * @param network The {@link Network} to check.
+     * @return Whether the {@link Network} is a sorting network a.k.a gives a
+     * sorted output for every input.
+     * @see isSortingNetwork(Network)
+     */
+    public boolean isSortingNetwork(int nbChannels, Network network) {
+        return isSortingNetwork(network);
     }
 
     /**
@@ -83,49 +96,15 @@ public class Tester {
          }
          return true;*/
     }
-
+    
     /**
-     * Tests the sorting property of a given {@link Network} .
-     *
-     * @param args -f filePath if the network is stored in a file. <br>-n n k
-     * (a,b)(c,d) for input as arguments.</br>
+     * Parse all networks from a file with the given inputPath. This will load
+     * all networks from the file and append a 's' when the network is a sorting
+     * network. 'u' otherwise.
+     * @param inputPath 
      */
-    public static void main(String[] args) {
-        Network network = null;
-
-        /* Retrieve Network */
-        if (args.length >= 2) {
-            if (args[0].equals("-f")) {
-                //File
-                parseNetworks(args[1]);
-
-            } else if (args[0].equals("-n")) {
-                //Args
-                int nbChannel = Integer.parseInt(args[1]);
-                int nbComp = Integer.parseInt(args[2]);
-                network = Network.stringToNetwork(nbChannel, nbComp, args[3]);
-            }
-        } else {
-            JFileChooser jfc = new JFileChooser();
-            jfc.setCurrentDirectory(new File(System.getProperty("user.home")));
-            int result = jfc.showOpenDialog(null);
-            if (result == JFileChooser.APPROVE_OPTION) {
-                /* Parse Networks */
-                parseNetworks(jfc.getSelectedFile().getAbsolutePath());
-                System.out.println("Test took " + time + " nanoseconds."); //DEBUG - TIMINGS
-            } else {
-                System.out.println("Failed chosing a file.");
-            }
-        }
-
-        /* Test Network */
-        if (network != null) {
-            if (isSortingNetwork(network)) {
-                System.out.println("Sorting network.");
-            } else {
-                System.out.println("Not a sorting network.");
-            }
-        }
+    public void processFile(String inputPath) {
+        processFile(inputPath, null);
     }
 
     /**
@@ -134,19 +113,22 @@ public class Tester {
      * network. 'u' otherwise.
      *
      * @param inputPath The path to the file where to load from.
+     * @param outputPath The path where to save the output to.
      */
-    private static void parseNetworks(String inputPath) {
+    public void processFile(String inputPath, String outputPath) {
         String line;
         Network network;
         BufferedWriter bw;
-        try (BufferedReader br = new BufferedReader(new FileReader(inputPath))) {
-            File outputFile = new File(inputPath + "2");
+        try (BufferedReader br = new BufferedReader(new FileReader(inputPath))) { 
+            File outputFile = (outputPath == null) ? new File(inputPath + "2") : new File(outputPath);
             bw = new BufferedWriter(new FileWriter(outputFile));
             while ((line = br.readLine()) != null) {
                 network = Network.stringToNetwork(line);
+                
                 long begin = System.nanoTime(); //DEBUG - TIMINGS
                 boolean isSortNetwork = isSortingNetwork(network);
                 time += (System.nanoTime() - begin); //DEBUG - TIMINGS
+                
                 if (isSortNetwork) {
                     line = line + " s";
                     bw.write(line);
@@ -159,13 +141,24 @@ public class Tester {
             }
             bw.close();
             br.close();
-            if (new File(inputPath).delete()) {
+            if (outputPath == null && new File(inputPath).delete()) {
                 outputFile.renameTo(new File(inputPath));
             }
         } catch (FileNotFoundException exc) {
-            System.err.println("File not found exception " + inputPath);
+            System.err.println("File not found exception: " + exc.toString());
         } catch (IOException exc) {
             System.err.println("IO Exception" + exc.toString());
         }
     }
+    
+    /**
+     * Get the Network from a String.
+     * @param sNetwork The network in string format.
+     * @return The Network found.
+     * @see Network#stringToNetwork(java.lang.String)
+     */
+    public Network parseNetwork(String sNetwork) {
+        return Network.stringToNetwork(sNetwork);
+    }
+    
 }
