@@ -63,7 +63,7 @@ public class Generator3 {
         long begin = System.nanoTime(); //DEBUG - TIMING
         //Iterate  over all comparator combinations
         for (int x = 3; x <= maxX; x = (x << 1) - 1, maxShifts--) { //x = number we shift.
-            y = x;
+            y = x; //TODO: Move this in the 3rd arg of the forloop?
             for (int nShift = 0; nShift <= maxShifts; nShift++, y = y << 1) {
                 generate_sub(nbChannels, maxX, network, (short) y, index);
             }
@@ -84,7 +84,9 @@ public class Generator3 {
      */
     private void generate_sub(int nbChannels, int maxX, short[] network, short comp, int index) {
         int nextIndex = index + 1;
+        network[index] = comp;
 
+        /* Add Next Comp OR Write to file */
         if (nextIndex < network.length) {
             int maxShifts = nbChannels - 2; //# opschuiven
             int y;
@@ -93,9 +95,6 @@ public class Generator3 {
             int outerShift;
             int innerShift;
             int outerNumber = 2;
-
-            //Add to index
-            network[index] = comp;
 
             //Continue adding
             for (innerShift = 1; innerShift < nbChannels; innerShift++, outerNumber <<= 1) {
@@ -112,7 +111,7 @@ public class Generator3 {
              }
              }*/
         } else {
-            //writeNetwork(nbChannels, network);
+            writeNetwork(nbChannels, network);
         }
     }
 
@@ -138,7 +137,7 @@ public class Generator3 {
             Logger.getLogger(Generator3.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     /**
      * Close the {@link OutputStream} used for saving.
      */
