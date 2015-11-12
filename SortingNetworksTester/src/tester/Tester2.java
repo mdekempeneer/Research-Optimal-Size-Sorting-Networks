@@ -119,10 +119,10 @@ public class Tester2 {
     }
 
     /**
-     *
-     * @param input
-     * @param comp
-     * @return
+     * Get the output of the comparator comp given the input.
+     * @param input The input to give the comparator.
+     * @param comp The comparator to get the output from.
+     * @return The result by switching the bits in the input according to comp.
      */
     private static short swapCompare(short input, short comp) {
         int pos1 = 31 - Integer.numberOfLeadingZeros(comp & 0xFFFF);
@@ -135,10 +135,10 @@ public class Tester2 {
     }
 
     /**
-     *
-     * @param input
-     * @param comp
-     * @return
+     * Get the output of the comparator comp given the input.
+     * @param input The input to give the comparator.
+     * @param comp The comparator to get the output from.
+     * @return The result by switching the bits in the input according to comp.
      */
     private static short swapOptCompare(short input, short comp) {
         int pos1 = 31 - Integer.numberOfLeadingZeros(comp & 0xFFFF);
@@ -149,12 +149,12 @@ public class Tester2 {
     }
 
     /**
-     * Write the given network to the outputPath. format: Int(nbChannels),
+     * Write the given network to dos. format: Int(nbChannels),
      * Int(network.length), Short(network[0]), Short(network[1]),...
      *
      * @param dos The DataOutputStream used to write to.
      * @param nbChannels The amount of channels of the network.
-     * @param network The network.
+     * @param network The network formed by comparators.
      */
     public void writeNetwork(DataOutputStream dos, int nbChannels, short[] network) {
         try {
@@ -171,8 +171,8 @@ public class Tester2 {
     /**
      * Print the given network.
      *
-     * @param nbChannels
-     * @param network
+     * @param nbChannels The amount of channels.
+     * @param network The comparators forming the network.
      */
     public static void printShortNetwork(int nbChannels, short[] network) {
         StringBuilder sb = new StringBuilder();
