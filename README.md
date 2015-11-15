@@ -49,15 +49,25 @@
 		</UL>
 
 <DT>06/11/2015 - Bijeenkomst 5
-	<DD>Te doen tegen de bijeenkomst:
+	<DD>Te doen tegen de presentatie:
+		<UL>
+		<LI>Nakijken van de consistentie.
+		<LI>Logische volgorde voor de slides bekijken.
+		<LI>Aantal suggesties doorvoeren.
+		</UL>
+	<DD>Te doen tegen de volgende bijeenkomst (18/11):
+		<UL>
+		<LI>Generate en Prune algoritme uit de hoofdpaper implementeren.
+		</UL>
+
+<DT>09/11/2015 - Presentatie 1 (16.50-17.20)
+	<DD>Als je met twee bent, zou je presentatie een 23-25 minuten moeten duren, dan is er ook nog 5-7 min om vragen te stellen (en te beantwoorden). Bedoeling is om een verhaal, een overzicht een inleiding tot het onderwerp te brengen. Daarbij mag je selecteren uit je papers ... Elke student volgt een viertal presentaties.
+
+<DT>18/11/2015 - Bijeenkomst 6
+	<DD>Te doen tegen de volgende bijeenkomst (.../...):
 		<UL>
 		<LI>
 		</UL>
-	
-
-<DT>09/11/2015 - Presentatie 1 (15.40-16.10)
-	<DD>Als je met twee bent, zou je presentatie een 23-25 minuten moeten duren, dan is er ook nog 5-7 min om vragen te stellen (en te beantwoorden). Bedoeling is om een verhaal, een overzicht een inleiding tot het onderwerp te brengen. Daarbij mag je selecteren uit je papers ... Elke student volgt een viertal presentaties.
-
 
 <DT>Instructies
 	<DD><i>('argName' : arg : comment)</i>
