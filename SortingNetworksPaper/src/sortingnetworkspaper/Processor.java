@@ -1,8 +1,5 @@
 package sortingnetworkspaper;
 
-import org.paukov.combinatorics.Factory;
-import org.paukov.combinatorics.combination.simple.SimpleCombinationGenerator;
-
 /**
  *
  * For information on permutations: http://alexbowe.com/popcount-permutations/
