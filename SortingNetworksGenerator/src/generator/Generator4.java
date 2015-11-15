@@ -62,9 +62,9 @@ public class Generator4 {
 
         long begin = System.nanoTime(); //DEBUG - TIMING
         //Iterate  over all comparator combinations
-        for (int x = 3; x <= maxX; x = (x << 1) - 1, maxShifts--) { //x = number we shift.
-            y = x;
-            for (int nShift = 0; nShift <= maxShifts; nShift++, y = y << 1) {
+        for (int number = 3; number <= maxX; number = (number << 1) - 1, maxShifts--) { //x = number we shift.
+            y = number;
+            for (int outerShift = 0; outerShift <= maxShifts; outerShift++, y <<= 1) {
                 generate_sub(nbChannels, maxX, network, (short) y, index);
             }
         }
@@ -83,17 +83,18 @@ public class Generator4 {
      * @param index The current index to which to add the comp.
      */
     private void generate_sub(int nbChannels, int maxX, short[] network, short comp, int index) {
-        //TODO: Delete maxX or use the old methode?
         int nextIndex = index + 1;
 
-        //Same comp as before -> stop
-        if (index != 0 && network[index - 1] == comp) {
-            return;
-        }
+        if (index != 0) {
+            //Same comp as before -> stop
+            if (network[index - 1] == comp) {
+                return;
+            }
 
-        //Can be 'converted' to better parallel kind.
-        if (index != 0 && isSwapRequired(network[index - 1], comp)) {
-            return;
+            //Can be 'converted' to better parallel kind.
+            if (isSwapRequired(network[index - 1], comp)) {
+                return;
+            }
         }
 
         /* Add the comparator */
@@ -103,17 +104,14 @@ public class Generator4 {
         if (nextIndex < network.length) {
             int maxShifts = nbChannels - 2; //# opschuiven
             int y;
-
             int number;
             int outerShift;
-            int innerShift;
-            int outerNumber = 2;
 
             //Continue adding
-            for (innerShift = 1; innerShift < nbChannels; innerShift++, outerNumber <<= 1) {
-                number = (outerNumber | 1);
-                for (outerShift = 0; outerShift < nbChannels - innerShift; outerShift++, number <<= 1) {
-                    generate_sub(nbChannels, maxX, network, (short) number, nextIndex);
+            for (number = 3; number <= maxX; number = (number << 1) - 1, maxShifts--) { //x*2 - 1
+                y = number;
+                for (outerShift = 0; outerShift <= maxShifts; outerShift++, y <<= 1) { //shift n-2, n-3, ... keer
+                    generate_sub(nbChannels, maxX, network, (short) y, nextIndex);
                 }
             }
         } else {

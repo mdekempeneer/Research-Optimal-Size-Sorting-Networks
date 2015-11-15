@@ -56,15 +56,15 @@ public class Generator3 {
         short[] network = new short[nbComp];
         int index = 0;
 
-        int maxX = ((1 << (nbChannels - 1)) | 1); // | 1 of + 1 ??? TODO test
+        int maxX = ((1 << (nbChannels - 1)) | 1);
         int maxShifts = nbChannels - 2; //# shifts
         int y;
 
         long begin = System.nanoTime(); //DEBUG - TIMING
         //Iterate  over all comparator combinations
-        for (int x = 3; x <= maxX; x = (x << 1) - 1, maxShifts--) { //x = number we shift.
-            y = x; //TODO: Move this in the 3rd arg of the forloop?
-            for (int nShift = 0; nShift <= maxShifts; nShift++, y = y << 1) {
+        for (int number = 3; number <= maxX; number = (number << 1) - 1, maxShifts--) { //x = number we shift.
+            y = number; //TODO: Move this in the 3rd arg of the forloop?
+            for (int outerShift = 0; outerShift <= maxShifts; outerShift++, y <<= 1) {
                 generate_sub(nbChannels, maxX, network, (short) y, index);
             }
         }
@@ -93,23 +93,23 @@ public class Generator3 {
 
             int number;
             int outerShift;
-            int innerShift;
+            /*int innerShift;
             int outerNumber = 2;
 
-            //Continue adding
             for (innerShift = 1; innerShift < nbChannels; innerShift++, outerNumber <<= 1) {
-                number = (outerNumber | 1);
-                for (outerShift = 0; outerShift < nbChannels - innerShift; outerShift++, number <<= 1) {
-                    generate_sub(nbChannels, maxX, network, (short) number, nextIndex);
-                }
-            }
-
-            /*for (number = 3; number <= maxX; number = (number << 1) - 1, maxShifts--) { //x*2 - 1
-             y = number;
-             for (outerShift = 0; outerShift <= maxShifts; outerShift++, y <<= 1) { //shift n-2, n-3, ... keer
-             generate_sub(nbChannels, maxX, network, (short) y, nextIndex);
+             number = (outerNumber | 1);
+             for (outerShift = 0; outerShift < nbChannels - innerShift; outerShift++, number <<= 1) {
+             generate_sub(nbChannels, maxX, network, (short) number, nextIndex);
              }
              }*/
+            
+            //Continue adding
+            for (number = 3; number <= maxX; number = (number << 1) - 1, maxShifts--) { //x*2 - 1
+                y = number;
+                for (outerShift = 0; outerShift <= maxShifts; outerShift++, y <<= 1) { //shift n-2, n-3, ... keer
+                    generate_sub(nbChannels, maxX, network, (short) y, nextIndex);
+                }
+            }
         } else {
             writeNetwork(nbChannels, network);
         }
