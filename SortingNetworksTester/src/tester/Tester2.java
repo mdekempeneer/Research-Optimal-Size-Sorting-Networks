@@ -16,7 +16,7 @@ import java.util.logging.Logger;
  * @author Admin
  */
 public class Tester2 {
-    
+
     public static long time;
 
     /**
@@ -72,7 +72,7 @@ public class Tester2 {
                 }
             }
             dis.close();
-            if(dos != null) {
+            if (dos != null) {
                 dos.flush();
                 dos.close();
             }
@@ -92,21 +92,16 @@ public class Tester2 {
         int finalInput = (1 << nbChannels) - 1;
         short currInput;
         int result;
-        int nextSortedInput = 3;
 
         //test inputs 2..1111110
         for (short input = 2; input < finalInput; input++) {
-            if(input == nextSortedInput) { //Already sorted | TODO: Weggegooid door TODO check here for sorted? (binnen for)
-                nextSortedInput = (nextSortedInput << 1 ) | 1;
-                continue;
-            }
-            
             currInput = input;
             result = (1 << Integer.bitCount(currInput)) - 1; //Kunnen ook look-up tabel bijhouden.
-            
+
             for (short comp : network) {
-                currInput = swapOptCompare(currInput, comp); //TODO: Test swapCompare vs Opt
-                //TODO: Check here for sorted?
+                if ((currInput = swapOptCompare(currInput, comp)) == result) {
+                    break;
+                }
             }
 
             if (currInput != result) {
@@ -120,30 +115,17 @@ public class Tester2 {
 
     /**
      * Get the output of the comparator comp given the input.
-     * @param input The input to give the comparator.
-     * @param comp The comparator to get the output from.
-     * @return The result by switching the bits in the input according to comp.
-     */
-    private static short swapCompare(short input, short comp) {
-        int pos1 = 31 - Integer.numberOfLeadingZeros(comp & 0xFFFF);
-        int pos2 = Integer.numberOfTrailingZeros(comp & 0xFFFF);
-
-        int frontBit = (input >> pos1) & 1;// bit at pos1
-        int backBit = (input >> pos2) & 1;// bit at pos2
-
-        return (frontBit <= backBit) ? input : (short) (input ^ comp);
-    }
-
-    /**
-     * Get the output of the comparator comp given the input.
+     *
      * @param input The input to give the comparator.
      * @param comp The comparator to get the output from.
      * @return The result by switching the bits in the input according to comp.
      */
     private static short swapOptCompare(short input, short comp) {
-        int pos1 = 31 - Integer.numberOfLeadingZeros(comp & 0xFFFF);
-        //TODO: Check & 0xFFFF in aparte int = 1x uitvoeren?
-        int pos2 = Integer.numberOfTrailingZeros(comp & 0xFFFF);
+        int pos1 = 31 - Integer.numberOfLeadingZeros(comp);
+        int pos2 = Integer.numberOfTrailingZeros(comp);
+        
+        //(input >> pos1) & 1 = first (front bit)
+        //(input >> pos2) & 1 = 2nd (back bit)
 
         return (((input >> pos1) & 1) <= ((input >> pos2) & 1)) ? input : (short) (input ^ comp);// TADAM!!!
     }
