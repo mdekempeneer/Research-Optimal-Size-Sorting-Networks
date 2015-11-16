@@ -35,10 +35,14 @@ public class Processor {
     public short[] process() {
         /* Initialize inputs */
         short[][] inputs = getOriginalInputs(upperBound);
+        int counter = 1;
         firstTimeGenerate(inputs);
         
-        //While (upperBound niet bereikt en Size(N) != 1: GENERATE & PRUNE
-
+        while (N.size64() > 1 && counter < upperBound) { //While (upperBound niet bereikt en Size(N) != 1: GENERATE & PRUNE
+            generate(counter);
+            prune();
+            counter++;
+        }
         return null;
     }
 
@@ -71,8 +75,10 @@ public class Processor {
     /**
      * Processes the data for the new comparator. Adding the comparator to the
      * data[0] is assumed to be done already.
+     * @param data      The network
+     * @param newComp   The comparator to process the data on.
      */
-    private void processData(short[][] data, short newComp) {
+    public static void processData(short[][] data, short newComp) {
         ShortOpenHashSet set = new ShortOpenHashSet();
         
         for (int i = 1; i < data.length; i++) { //For all #1'en
@@ -84,10 +90,14 @@ public class Processor {
         }
     }
 
-    private void generate() {
-
+    private void generate(int counter) {
+        
     }
 
+    private void prune() {
+        
+    }
+    
     /**
      *
      * @param outputPath
@@ -227,4 +237,9 @@ public class Processor {
             System.out.println(input);
         }
     }
+    
+    public int getNbChannels() {
+        return nbChannels;
+    }
+    
 }
