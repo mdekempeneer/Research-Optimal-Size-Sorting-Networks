@@ -58,6 +58,7 @@
 	<DD>Te doen tegen de volgende bijeenkomst (18/11):
 		<UL>
 		<LI>Generate en Prune algoritme uit de hoofdpaper implementeren.
+		<LI>Boek van Knuth consulteren: het genereren van alle mogelijke sequenties van comparators.
 		</UL>
 
 <DT>09/11/2015 - Presentatie 1 (16.50-17.20)
