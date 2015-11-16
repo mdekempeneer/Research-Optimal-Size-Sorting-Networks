@@ -13,8 +13,8 @@ public class GenerateThread implements Runnable {
     private final Processor p;
     private final int maxX;
     private int maxShifts;
-    private int startIndex;
-    private int endIndex;
+    private long startIndex;
+    private long endIndex;
 
     GenerateThread(Processor p) {
         partN = new ObjectBigArrayBigList();
