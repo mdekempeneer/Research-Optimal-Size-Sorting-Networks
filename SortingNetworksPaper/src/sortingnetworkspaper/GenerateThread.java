@@ -28,14 +28,16 @@ public class GenerateThread implements Runnable {
         int number;
         int outerShift;
         int comp;
-
+        ObjectBigArrayBigList<short[][]> N = p.getN();
+        long index = startIndex;
+        ObjectBigListIterator<short[][]> iter = N.listIterator(index);
+        
         partN.clear();
-        ObjectBigListIterator<short[][]> iterator = partN.listIterator(startIndex);
         short[][] network;
         short[][] tempNetwork;
-        while (iterator.hasNext()) {
-            network = iterator.next();
-            //Continue adding
+        while (iter.hasNext() && index < endIndex) { //For all networks
+            network = iter.next();
+            //For all comps
             for (number = 3; number <= maxX; number = (number << 1) - 1, maxShifts--) { //x*2 - 1
                 comp = number;
                 for (outerShift = 0; outerShift <= maxShifts; outerShift++, comp <<= 1) { //shift n-2, n-3, ... keer
@@ -45,10 +47,11 @@ public class GenerateThread implements Runnable {
                     partN.add(tempNetwork);
                 }
             }
+            index++;
         }
     }
 
-    public void setIndex(int startIndex, int endIndex) {
+    public void setIndex(long startIndex, long endIndex) {
         this.startIndex = startIndex;
         this.endIndex = endIndex;
     }
