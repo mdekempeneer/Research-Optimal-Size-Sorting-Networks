@@ -2,6 +2,10 @@ package sortingnetworkspaper;
 
 import it.unimi.dsi.fastutil.objects.ObjectBigArrayBigList;
 import it.unimi.dsi.fastutil.shorts.ShortOpenHashSet;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -15,33 +19,59 @@ public class Processor {
     private final short nbChannels;
     private final int upperBound;
     private ObjectBigArrayBigList<short[][]> N;
+    private ObjectBigArrayBigList<short[][]> newN;
+    private ExecutorService executors;
+    private GenerateThread[] genWorkers;
+    int nbThreads;
 
-    
     /**
-     * 
+     *
      * @param nbChannels
-     * @param upperBound 
+     * @param upperBound
      */
     public Processor(short nbChannels, int upperBound) {
         this.nbChannels = nbChannels;
         this.upperBound = upperBound;
         this.N = new ObjectBigArrayBigList();
+        nbThreads = Runtime.getRuntime().availableProcessors();
+        executors = Executors.newFixedThreadPool(nbThreads);
+        genWorkers = new GenerateThread[nbThreads];
     }
 
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public short[] process() {
         /* Initialize inputs */
         short[][] inputs = getOriginalInputs(upperBound);
+        int counter = 1;
         firstTimeGenerate(inputs);
         
-        //While (upperBound niet bereikt en Size(N) != 1: GENERATE & PRUNE
-
+        while (N.size64() > 1 && counter < upperBound) {
+            generate(counter);
+            prune();
+            counter++;
+        }
+        executors.shutdown();
         return null;
     }
 
+    private void updateIndices() {
+        long setLength = (long) Math.ceil(N.size64() / nbThreads);
+        long prevEnd = 0;
+        long start;
+        long end;
+        
+        for (GenerateThread genWorker : genWorkers) {
+            start = prevEnd;
+            end = Math.min(start+setLength, N.size64());
+            genWorker.setIndex(start, end);
+            prevEnd = end;
+        }
+    }
+    
+    
     /**
      * Add all networks consisting of 1 comparator to N.
      */
@@ -62,7 +92,7 @@ public class Processor {
                 data[0] = new short[upperBound];
                 data[0][0] = comp;
                 processData(data, comp);
-                
+
                 N.add(data);
             }
         }
@@ -71,23 +101,42 @@ public class Processor {
     /**
      * Processes the data for the new comparator. Adding the comparator to the
      * data[0] is assumed to be done already.
+     *
+     * @param data The network
+     * @param newComp The comparator to process the data on.
      */
-    private void processData(short[][] data, short newComp) {
+    public static void processData(short[][] data, short newComp) {
         ShortOpenHashSet set = new ShortOpenHashSet();
-        
+
         for (int i = 1; i < data.length; i++) { //For all #1'en
             set.clear();
-            for(int j = 0; j < data[i].length; j++) {
+            for (int j = 0; j < data[i].length; j++) {
                 set.add(swapCompare(data[i][j], newComp)); //Add comp(output)
             }
             data[i] = set.toShortArray();
         }
     }
 
-    private void generate() {
+    private void generate(int counter) {
+        newN = new ObjectBigArrayBigList();
+        updateIndices();
+        for (GenerateThread gen : genWorkers) {
+            executors.execute(gen);
+        }
+        //TODO Wait for all tasks to be completed.
+        N = newN;
+    }
+
+    private void prune() {
 
     }
 
+    public synchronized void addToNewN(ObjectBigArrayBigList<short[][]> partN) {
+        for (short[][] network: partN) {
+            newN.add(network);
+        }
+    }
+    
     /**
      *
      * @param outputPath
@@ -226,5 +275,13 @@ public class Processor {
         for (short input : inputs) {
             System.out.println(input);
         }
+    }
+
+    public int getNbChannels() {
+        return nbChannels;
+    }
+
+    public ObjectBigArrayBigList<short[][]> getN() {
+        return this.N;
     }
 }

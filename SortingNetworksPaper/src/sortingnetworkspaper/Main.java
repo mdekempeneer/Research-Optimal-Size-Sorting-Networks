@@ -1,10 +1,5 @@
 package sortingnetworkspaper;
 
-import it.unimi.dsi.fastutil.BigArrays;
-import it.unimi.dsi.fastutil.BigList;
-import it.unimi.dsi.fastutil.objects.ObjectBigArrayBigList;
-import it.unimi.dsi.fastutil.objects.ObjectBigList;
-import it.unimi.dsi.fastutil.shorts.ShortOpenHashSet;
 import javax.swing.JOptionPane;
 
 /**
