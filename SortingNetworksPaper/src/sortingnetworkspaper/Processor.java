@@ -4,6 +4,8 @@ import it.unimi.dsi.fastutil.objects.ObjectBigArrayBigList;
 import it.unimi.dsi.fastutil.shorts.ShortOpenHashSet;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -17,6 +19,7 @@ public class Processor {
     private final short nbChannels;
     private final int upperBound;
     private ObjectBigArrayBigList<short[][]> N;
+    private ObjectBigArrayBigList<short[][]> newN;
     private ExecutorService executors;
     private GenerateThread[] genWorkers;
     int nbThreads;
@@ -115,17 +118,25 @@ public class Processor {
     }
 
     private void generate(int counter) {
+        newN = new ObjectBigArrayBigList();
         updateIndices();
         for (GenerateThread gen : genWorkers) {
             executors.execute(gen);
         }
-        
+        //TODO Wait for all tasks to be completed.
+        N = newN;
     }
 
     private void prune() {
 
     }
 
+    public synchronized void addToNewN(ObjectBigArrayBigList<short[][]> partN) {
+        for (short[][] network: partN) {
+            newN.add(network);
+        }
+    }
+    
     /**
      *
      * @param outputPath
