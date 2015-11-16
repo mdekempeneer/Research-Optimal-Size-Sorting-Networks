@@ -49,6 +49,7 @@ public class GenerateThread implements Runnable {
             }
             index++;
         }
+        p.addToNewN(partN);
     }
 
     public void setIndex(long startIndex, long endIndex) {
