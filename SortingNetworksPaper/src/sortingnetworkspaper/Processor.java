@@ -4,8 +4,7 @@ import it.unimi.dsi.fastutil.objects.ObjectBigArrayBigList;
 import it.unimi.dsi.fastutil.shorts.ShortOpenHashSet;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  *
@@ -20,12 +19,13 @@ public class Processor {
     private final int upperBound;
     private ObjectBigArrayBigList<short[][]> N;
     private ObjectBigArrayBigList<short[][]> newN;
-    private ExecutorService executors;
+    private ThreadPoolExecutor executors;
     private GenerateThread[] genWorkers;
-    int nbThreads;
+    private int nbThreads;
 
     /**
-     *
+     * Create a Processor which can, for a given nbChannels and upperBound
+     * find a minimal sorting network if there is one with less than upperBound.
      * @param nbChannels
      * @param upperBound
      */
@@ -34,8 +34,24 @@ public class Processor {
         this.upperBound = upperBound;
         this.N = new ObjectBigArrayBigList();
         nbThreads = Runtime.getRuntime().availableProcessors();
-        executors = Executors.newFixedThreadPool(nbThreads);
+        executors = (ThreadPoolExecutor) Executors.newFixedThreadPool(nbThreads);
         genWorkers = new GenerateThread[nbThreads];
+    }
+
+    /**
+     * Get the amount of channels these networks have.
+     * @return The amount of channels these networks have.
+     */
+    public int getNbChannels() {
+        return nbChannels;
+    }
+
+    /**
+     * Get the current 'main' N list.
+     * @return The list of networks before or right after the generate step.
+     */
+    public ObjectBigArrayBigList<short[][]> getN() {
+        return this.N;
     }
 
     /**
@@ -45,33 +61,18 @@ public class Processor {
     public short[] process() {
         /* Initialize inputs */
         short[][] inputs = getOriginalInputs(upperBound);
-        int counter = 1;
+        short nbComp = 1;
         firstTimeGenerate(inputs);
-        
-        while (N.size64() > 1 && counter < upperBound) {
-            generate(counter);
+
+        while (N.size64() > 1 && nbComp < upperBound) {
+            generate(nbComp);
             prune();
-            counter++;
+            nbComp++;
         }
         executors.shutdown();
         return null;
     }
 
-    private void updateIndices() {
-        long setLength = (long) Math.ceil(N.size64() / nbThreads);
-        long prevEnd = 0;
-        long start;
-        long end;
-        
-        for (GenerateThread genWorker : genWorkers) {
-            start = prevEnd;
-            end = Math.min(start+setLength, N.size64());
-            genWorker.setIndex(start, end);
-            prevEnd = end;
-        }
-    }
-    
-    
     /**
      * Add all networks consisting of 1 comparator to N.
      */
@@ -117,13 +118,31 @@ public class Processor {
         }
     }
 
-    private void generate(int counter) {
+    /**
+     *
+     * @param nbComp The index of the comparator (data[0]) to start working on.
+     */
+    private void generate(short nbComp) {
+        /* Setup environment */
         newN = new ObjectBigArrayBigList();
-        updateIndices();
+        updateIndicesAndCompCount(nbComp);
+
+        /* Start Generate work */
         for (GenerateThread gen : genWorkers) {
             executors.execute(gen);
         }
-        //TODO Wait for all tasks to be completed.
+
+        /* Wait for all to be finished */
+        synchronized (this) { //TODO: Test.
+            while (executors.getTaskCount() != executors.getCompletedTaskCount()) {
+                try {
+                    wait();
+                } catch (InterruptedException ex) {
+                }
+            }
+        }
+
+        /* Point to new reference */
         N = newN;
     }
 
@@ -131,12 +150,15 @@ public class Processor {
 
     }
 
+    /**
+     * Add the networks from partN to the newN list in a synchronized way.
+     *
+     * @param partN The list of networks from where to add to.
+     */
     public synchronized void addToNewN(ObjectBigArrayBigList<short[][]> partN) {
-        for (short[][] network: partN) {
-            newN.add(network);
-        }
+        newN.addAll(partN); //TODO: System.arraycopy ??
     }
-    
+
     /**
      *
      * @param outputPath
@@ -153,6 +175,27 @@ public class Processor {
      */
     public void process(String outputPath, String logPath, boolean log) {
 
+    }
+
+    /**
+     * Update the indices for all GenerateThreads (genWorker) and sets the
+     * nbComp to compCount. Assures all genWorkers are working in an almost
+     * equal sized set and work on the compCount's comperator.
+     */
+    private void updateIndicesAndCompCount(short compCount) {
+        long setLength = (long) Math.ceil(N.size64() / nbThreads);
+        long prevEnd = 0;
+        long start;
+        long end;
+
+        for (GenerateThread genWorker : genWorkers) {
+            start = prevEnd;
+            end = Math.min(start + setLength, N.size64());
+            prevEnd = end;
+
+            genWorker.setIndex(start, end);
+            genWorker.setNbComp(compCount);
+        }
     }
 
     /**
@@ -188,7 +231,6 @@ public class Processor {
     private static short swapCompare(short input, short comp) {
         int pos1 = 31 - Integer.numberOfLeadingZeros(comp);
         int pos2 = Integer.numberOfTrailingZeros(comp);
-
         //(input >> pos1) & 1 = first (front bit)
         //(input >> pos2) & 1 = 2nd (back bit)
         return (((input >> pos1) & 1) <= ((input >> pos2) & 1)) ? input : (short) (input ^ comp);// TADAM!!!
@@ -219,17 +261,20 @@ public class Processor {
      * (2^maxBits)-1
      */
     public static short[] getPermutations(short start, short maxBits) {
+        //Calculate length
         int beginNbOnes = Integer.bitCount(start);
         float temp = factorial(maxBits) / factorial(beginNbOnes); //TODO: Could get more efficient
         temp /= factorial(maxBits - beginNbOnes);
-
         int length = (int) Math.ceil(temp);
-        short[] result = new short[length];
 
+        //Variables
+        short[] result = new short[length];
         int value = start;
         int max = (1 << maxBits) - 1;
         int t;
         int index = 0;
+
+        //Get all permutations.
         do {
             result[index] = (short) value;
             System.out.println(Integer.toBinaryString(value));
@@ -237,6 +282,8 @@ public class Processor {
             value = (t + 1) | (((~t & -~t) - 1) >> (Integer.numberOfTrailingZeros(value) + 1));
             index++;
         } while (value < max);
+        
+        //TODO: Test if array is full (length correctly) if(index != result.length) problem.
         return result;
     }
 
@@ -246,13 +293,13 @@ public class Processor {
      * @param data The data to deep clone.
      * @return A deep clone performed on the given data.
      */
-    private short[][] cloneData(short[][] data) {
+    /*private short[][] cloneData(short[][] data) {
         short[][] result = new short[data.length][];
         for (int index = 0; index < result.length; index++) {
             result[index] = cloneShortArr(data[index]);
         }
         return result;
-    }
+    }*/
 
     /**
      * Get a deep clone of the array.
@@ -262,7 +309,7 @@ public class Processor {
      */
     private short[] cloneShortArr(short[] array) {
         short[] clone = new short[array.length];
-        System.arraycopy(array, 0, clone, 0, clone.length);
+        System.arraycopy(array, 0, clone, 0, clone.length); //Clone or arraycopy?
         return clone;
     }
 
@@ -275,13 +322,5 @@ public class Processor {
         for (short input : inputs) {
             System.out.println(input);
         }
-    }
-
-    public int getNbChannels() {
-        return nbChannels;
-    }
-
-    public ObjectBigArrayBigList<short[][]> getN() {
-        return this.N;
     }
 }
