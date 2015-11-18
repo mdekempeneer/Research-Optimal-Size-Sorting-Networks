@@ -22,10 +22,12 @@ public class Processor {
     private ThreadPoolExecutor executors;
     private GenerateThread[] genWorkers;
     private int nbThreads;
+    private short[] allPosComp;
 
     /**
-     * Create a Processor which can, for a given nbChannels and upperBound
-     * find a minimal sorting network if there is one with less than upperBound.
+     * Create a Processor which can, for a given nbChannels and upperBound find
+     * a minimal sorting network if there is one with less than upperBound.
+     *
      * @param nbChannels
      * @param upperBound
      */
@@ -33,6 +35,7 @@ public class Processor {
         this.nbChannels = nbChannels;
         this.upperBound = upperBound;
         this.N = new ObjectBigArrayBigList();
+        this.allPosComp = getAllPosComps();
         //nbThreads = Runtime.getRuntime().availableProcessors();
         nbThreads = 1;
         executors = (ThreadPoolExecutor) Executors.newFixedThreadPool(nbThreads);
@@ -41,6 +44,7 @@ public class Processor {
 
     /**
      * Get the amount of channels these networks have.
+     *
      * @return The amount of channels these networks have.
      */
     public int getNbChannels() {
@@ -49,6 +53,7 @@ public class Processor {
 
     /**
      * Get the current 'main' N list.
+     *
      * @return The list of networks before or right after the generate step.
      */
     public ObjectBigArrayBigList<short[][]> getN() {
@@ -65,25 +70,25 @@ public class Processor {
         short nbComp = 1;
         initiateGenWorkers();
         firstTimeGenerate(inputs);
-        System.out.println(N.size64());
 
         while (N.size64() > 1 && nbComp < upperBound) {
+            //    long begin = System.nanoTime();
             generate(nbComp);
+            //    System.out.println("Tussentijd: " + (System.nanoTime() - begin));
             prune();
             nbComp++;
-            System.out.println(N.size64());
         }
         executors.shutdown();
         return null;
     }
-    
+
     /**
-     * Initialize the GenerateWorkers ({@link GenerateThread}).
-     * This uses 'this' so shouldn't be used in the constructor.
+     * Initialize the GenerateWorkers ({@link GenerateThread}). This uses 'this'
+     * so shouldn't be used in the constructor.
      */
     private void initiateGenWorkers() {
-        for(int i = 0; i < nbThreads; i++) {
-            genWorkers[i] = new GenerateThread(this);
+        for (int i = 0; i < nbThreads; i++) {
+            genWorkers[i] = new GenerateThread(this, allPosComp);
         }
     }
 
@@ -93,24 +98,33 @@ public class Processor {
     private void firstTimeGenerate(short[][] inputs) {
         int maxX = ((1 << (nbChannels - 1)) | 1);
         int maxShifts = nbChannels - 2; //# opschuiven
-        short comp;
         int number;
         int outerShift;
 
         /* For all comparators */
-        for (number = 3; number <= maxX; number = (number << 1) - 1, maxShifts--) { //x*2 - 1
-            comp = (short) number;
-            for (outerShift = 0; outerShift <= maxShifts; outerShift++, comp <<= 1) { //shift n-2, n-3, ... keer
-                //new Network (via clone)
-                short[][] data = inputs.clone();
-                //Fill
-                data[0] = new short[upperBound];
-                data[0][0] = comp;
-                processData(data, comp);
+        for (short comp : allPosComp) {
+            //new Network (via clone)
+            short[][] data = inputs.clone();
+            //Fill
+            data[0] = new short[upperBound];
+            data[0][0] = comp;
+            processData(data, comp);
 
-                N.add(data);
-            }
+            N.add(data);
         }
+//        for (number = 3; number <= maxX; number = (number << 1) - 1, maxShifts--) { //x*2 - 1
+//            comp = (short) number;
+//            for (outerShift = 0; outerShift <= maxShifts; outerShift++, comp <<= 1) { //shift n-2, n-3, ... keer
+//                //new Network (via clone)
+//                short[][] data = inputs.clone();
+//                //Fill
+//                data[0] = new short[upperBound];
+//                data[0][0] = comp;
+//                processData(data, comp);
+//
+//                N.add(data);
+//            }
+//        }
     }
 
     /**
@@ -154,6 +168,9 @@ public class Processor {
                 } catch (InterruptedException ex) {
                 }
             }
+ //           System.out.print(executors.getTaskCount() + " ");
+            //           System.out.print(executors.getCompletedTaskCount() + " ");
+            //           System.out.println(N.size64());
         }
 
         /* Point to new reference */
@@ -166,11 +183,13 @@ public class Processor {
 
     /**
      * Add the networks from partN to the newN list in a synchronized way.
+     * Notifies this.
      *
      * @param partN The list of networks from where to add to.
      */
     public synchronized void addToNewN(ObjectBigArrayBigList<short[][]> partN) {
         newN.addAll(partN); //TODO: System.arraycopy ??
+        this.notify();
     }
 
     /**
@@ -291,13 +310,33 @@ public class Processor {
         //Get all permutations.
         do {
             result[index] = (short) value;
-            //ystem.out.println(Integer.toBinaryString(value)); -- DEBUG!
+            //System.out.println(Integer.toBinaryString(value)); -- DEBUG!
             t = value | (value - 1);
             value = (t + 1) | (((~t & -~t) - 1) >> (Integer.numberOfTrailingZeros(value) + 1));
             index++;
         } while (value < max);
-        
+
         //TODO: Test if array is full (length correctly) if(index != result.length) problem.
+        return result;
+    }
+
+    private short[] getAllPosComps() {
+        short[] result = new short[nbChannels * (nbChannels - 1) / 2];
+        int maxX = ((1 << (nbChannels - 1)) | 1);
+        int maxShifts = nbChannels - 2; //# opschuiven
+        short comp;
+        int number;
+        int outerShift;
+        int index = 0;
+
+        /* For all comparators */
+        for (number = 3; number <= maxX; number = (number << 1) - 1, maxShifts--) { //x*2 - 1
+            comp = (short) number;
+            for (outerShift = 0; outerShift <= maxShifts; outerShift++, comp <<= 1) { //shift n-2, n-3, ... keer
+                result[index] = comp;
+                index++;
+            }
+        }
         return result;
     }
 
@@ -308,13 +347,12 @@ public class Processor {
      * @return A deep clone performed on the given data.
      */
     /*private short[][] cloneData(short[][] data) {
-        short[][] result = new short[data.length][];
-        for (int index = 0; index < result.length; index++) {
-            result[index] = cloneShortArr(data[index]);
-        }
-        return result;
-    }*/
-
+     short[][] result = new short[data.length][];
+     for (int index = 0; index < result.length; index++) {
+     result[index] = cloneShortArr(data[index]);
+     }
+     return result;
+     }*/
     /**
      * Get a deep clone of the array.
      *
