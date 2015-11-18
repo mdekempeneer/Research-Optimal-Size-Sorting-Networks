@@ -33,7 +33,8 @@ public class Processor {
         this.nbChannels = nbChannels;
         this.upperBound = upperBound;
         this.N = new ObjectBigArrayBigList();
-        nbThreads = Runtime.getRuntime().availableProcessors();
+        //nbThreads = Runtime.getRuntime().availableProcessors();
+        nbThreads = 1;
         executors = (ThreadPoolExecutor) Executors.newFixedThreadPool(nbThreads);
         genWorkers = new GenerateThread[nbThreads];
     }
@@ -62,15 +63,28 @@ public class Processor {
         /* Initialize inputs */
         short[][] inputs = getOriginalInputs(upperBound);
         short nbComp = 1;
+        initiateGenWorkers();
         firstTimeGenerate(inputs);
+        System.out.println(N.size64());
 
         while (N.size64() > 1 && nbComp < upperBound) {
             generate(nbComp);
             prune();
             nbComp++;
+            System.out.println(N.size64());
         }
         executors.shutdown();
         return null;
+    }
+    
+    /**
+     * Initialize the GenerateWorkers ({@link GenerateThread}).
+     * This uses 'this' so shouldn't be used in the constructor.
+     */
+    private void initiateGenWorkers() {
+        for(int i = 0; i < nbThreads; i++) {
+            genWorkers[i] = new GenerateThread(this);
+        }
     }
 
     /**
@@ -124,7 +138,7 @@ public class Processor {
      */
     private void generate(short nbComp) {
         /* Setup environment */
-        newN = new ObjectBigArrayBigList();
+        newN = new ObjectBigArrayBigList(); //TODO: Clear instead of new?
         updateIndicesAndCompCount(nbComp);
 
         /* Start Generate work */
@@ -134,7 +148,7 @@ public class Processor {
 
         /* Wait for all to be finished */
         synchronized (this) { //TODO: Test.
-            while (executors.getTaskCount() != executors.getCompletedTaskCount()) {
+            while (executors.getTaskCount() != executors.getCompletedTaskCount()) { //TODO: Use getActiveCount()
                 try {
                     wait();
                 } catch (InterruptedException ex) {
@@ -277,7 +291,7 @@ public class Processor {
         //Get all permutations.
         do {
             result[index] = (short) value;
-            System.out.println(Integer.toBinaryString(value));
+            //ystem.out.println(Integer.toBinaryString(value)); -- DEBUG!
             t = value | (value - 1);
             value = (t + 1) | (((~t & -~t) - 1) >> (Integer.numberOfTrailingZeros(value) + 1));
             index++;
