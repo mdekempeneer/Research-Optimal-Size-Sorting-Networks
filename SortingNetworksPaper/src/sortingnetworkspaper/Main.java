@@ -25,7 +25,9 @@ public class Main {
         }
 
         Processor processor = new Processor((short) nbChannels, upperBound);
+        long begin = System.nanoTime();
         processor.process();
+        System.out.println("Took " + (System.nanoTime() - begin) + " ns");
     }
 
     /**
