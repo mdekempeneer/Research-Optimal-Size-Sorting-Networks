@@ -152,6 +152,7 @@ public class SingleProcessor implements Processor {
                 comp = (short) number;
                 for (outerShift = 0; outerShift <= cMaxShifts; outerShift++, comp <<= 1) { //shift n-2, n-3, ... keer
                     //new Network (via clone)
+                    //TODO test redundant comparator
                     short[][] data = network.clone();
                     //Fill
                     data[0] = data[0].clone();
@@ -238,7 +239,7 @@ public class SingleProcessor implements Processor {
         // Try to confirm a permutation
         for(short perm : allPerms) {
             while(index < nbChannels) {
-                perms[index] = 
+                //perms[index] = 
                 
             }
               
