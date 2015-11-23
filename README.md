@@ -75,6 +75,12 @@
 		<UL>
 		<LI>
 		</UL>
+		
+<DT>07/12/2015 - Presentatie 2 (16.10-16.25)
+	<DD>Een korte voorstelling van je probleemstelling (wat wil je doen?, waarom? en hoe ga je het aanpakken en evalueren?)
+	</br>Max 5 slides / 5 minuten, informeel en dan een open discussie.
+	
+
 
 <DT>Instructies
 	<DD><i>('argName' : arg : comment)</i>
