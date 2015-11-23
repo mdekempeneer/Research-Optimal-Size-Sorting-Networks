@@ -65,6 +65,12 @@
 	<DD>Als je met twee bent, zou je presentatie een 23-25 minuten moeten duren, dan is er ook nog 5-7 min om vragen te stellen (en te beantwoorden). Bedoeling is om een verhaal, een overzicht een inleiding tot het onderwerp te brengen. Daarbij mag je selecteren uit je papers ... Elke student volgt een viertal presentaties.
 
 <DT>18/11/2015 - Bijeenkomst 6
+	<DD>Te doen tegen de volgende bijeenkomst (25/11):
+		<UL>
+		<LI>Generate en Prune algoritme uit de hoofdpaper implementeren.
+		</UL>
+		
+<DT>25/11/2015 - Bijeenkomst 7
 	<DD>Te doen tegen de volgende bijeenkomst (.../...):
 		<UL>
 		<LI>
