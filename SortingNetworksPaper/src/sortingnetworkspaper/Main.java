@@ -19,15 +19,28 @@ public class Main {
             System.err.println("Algorithm/Datastructures can only handle 2-16 channels.");
             return;
         }
-        
-        if(upperBound < 1) {
+
+        if (upperBound < 1) {
             System.err.println("Less than 1 comparator makes no sense.");
         }
 
-        Processor processor = new Processor((short) nbChannels, upperBound);
+        int nbCase = 1;
+        int cCase = 0;
         long begin = System.nanoTime();
-        processor.process();
-        System.out.println("Took " + (System.nanoTime() - begin) + " ns");
+        long total = 0;
+        long caseTime = 0;
+        while (nbCase > cCase) {
+            //Processor processor = new ParallelProcessor((short) nbChannels, upperBound);
+            Processor processor = new SingleProcessor((short) nbChannels, upperBound);
+            processor.process();
+            
+            cCase++;
+            caseTime = System.nanoTime() - begin;
+            System.out.println("Took " + caseTime + " ns");
+            total += caseTime;
+            begin = System.nanoTime();
+        }
+        System.out.println("Total: " + total + " avg: " + total / nbCase + " ms");
     }
 
     /**

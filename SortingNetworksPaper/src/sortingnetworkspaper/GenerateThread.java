@@ -45,7 +45,7 @@ public class GenerateThread implements Runnable {
                 tempNetwork = network.clone();
                 tempNetwork[0] = network[0].clone();
                 tempNetwork[0][nbComp] = (short) comp; //TODO: 1 Cast better?
-                Processor.processData(tempNetwork, (short) comp);
+                p.processData(tempNetwork, (short) comp);
                 partN.add(tempNetwork);
             }
 //            //For all comps
