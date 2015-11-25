@@ -68,13 +68,13 @@ public class SingleProcessor implements Processor {
         short[][] inputs = getOriginalInputs(upperBound);
         short nbComp = 1;
         firstTimeGenerate(inputs);
-        System.out.println(N.size64());
+        //System.out.println(N.size64());
 
         while (N.size64() > 1 && nbComp < upperBound) {
             generate(nbComp);
             prune();
             nbComp++;
-            System.out.println(N.size64());
+            //System.out.println(N.size64());
         }
 
         /* Return result */
@@ -237,13 +237,13 @@ public class SingleProcessor implements Processor {
         
         
         // Try to confirm a permutation
-        for(short perm : allPerms) {
-            while(index < nbChannels) {
-                //perms[index] = 
-                
-            }
-              
-        }
+//        for(short perm : allPerms) {
+//            while(index < nbChannels) {
+//                //perms[index] = 
+//                
+//            }
+//              
+//        }
 
         
         // t = value | (value - 1);
