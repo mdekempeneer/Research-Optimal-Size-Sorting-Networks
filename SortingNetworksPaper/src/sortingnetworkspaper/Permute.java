@@ -9,7 +9,7 @@ public class Permute {
      * possiblities are exhausted *
      */
     private final short[] arrIdxs;
-    private final short[] arr; //TODO change to byte/short
+    private final short[] arr; //TODO change to byte !!!
     private final short length;
 
     /**
@@ -17,10 +17,10 @@ public class Permute {
      * Get The network permuted with the next permutation.
      *
      * @param data The network to permute.
-     * 
+     *
      * @return The permuted network data.
      */
-    public short[] get_next(short[][] data) {
+    public short[][] get_next(short[][] data) {
         short[] ret = new short[arr.length];
         for (int idx = 0; idx < arrIdxs.length; idx++) {
             ret[idx] = arr[arrIdxs[idx]]; //Permute integer based array indexes, which can be used to get permuted array in return
@@ -29,11 +29,20 @@ public class Permute {
         short[][] permData = data.clone();
 
         for (int nbOnes = 1; nbOnes < data.length; nbOnes++) {
+            permData[nbOnes] = new short[data[nbOnes].length];
+            
             for (int innerIndex = 0; innerIndex < data[nbOnes].length; innerIndex++) {
                 int output = 0;
-                permData[nbOnes] = new short[data[nbOnes].length];
 
                 /* Compute permuted */
+                /* 
+                 * Potentionally faster due ret being unncessary but due to memory swap
+                 * possibly inefficient.
+                 for (short idx = 0; idx < arrIdxs.length; idx++) {
+                 output <<= 1;
+                 output |= ((data[nbOnes][innerIndex] >> arr[arrIdxs[idxs]]) & 1);
+                 } 
+                 */
                 for (short permIndex : ret) {
                     output <<= 1;
                     output |= ((data[nbOnes][innerIndex] >> permIndex) & 1);
@@ -43,7 +52,7 @@ public class Permute {
             }
         }
 
-        return ret;
+        return permData;
     }
 
     /**
@@ -60,17 +69,19 @@ public class Permute {
      * @param length The length of the array.
      */
     public Permute(short[] arr, short length) {
-        this.arr = new short[arr.length];
-        System.arraycopy(arr, 0, this.arr, 0, arr.length);
+        this.arr = arr; //Since arr is never changed.
+        //new short[arr.length];
+        //System.arraycopy(arr, 0, this.arr, 0, arr.length);
         arrIdxs = new short[arr.length];
+        System.arraycopy(arr, 0, this.arr, 0, arr.length);
         this.length = length;
-
-        //Set indexes lexicographically minimal value;
-        for (short i = 0; i < this.length; i++) {
-            this.arrIdxs[i] = i;
-        }
     }
 
+    /**
+     * Prepares for the next permutation and returns if the next one is set.
+     *
+     * @return Whether the next permutation is set(=exists).
+     */
     public boolean next_permutation() {
         int i, j, l;
 
