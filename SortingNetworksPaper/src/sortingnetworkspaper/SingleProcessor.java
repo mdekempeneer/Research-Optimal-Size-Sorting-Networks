@@ -17,17 +17,21 @@ public class SingleProcessor implements Processor {
 
     private final short nbChannels;
     private final int upperBound;
+
     private ObjectBigArrayBigList<short[][]> N;
     private ObjectBigArrayBigList<short[][]> newN;
+
     private final int maxX;
     private final int maxShifts;
+    private final short[] identityElement;
 
     /**
      * Create a Processor which can, for a given nbChannels and upperBound find
-     * a minimal sorting network if there is one with less than upperBound.
+     * a minimal sorting network if there is one with less than or equal to
+     * upperBound.
      *
-     * @param nbChannels
-     * @param upperBound
+     * @param nbChannels The amount of channels for the networks.
+     * @param upperBound The maximum amount of comparators to use.
      */
     public SingleProcessor(short nbChannels, int upperBound) {
         this.nbChannels = nbChannels;
@@ -36,6 +40,7 @@ public class SingleProcessor implements Processor {
         this.newN = new ObjectBigArrayBigList();
         this.maxX = ((1 << (nbChannels - 1)) | 1);
         this.maxShifts = nbChannels - 2;
+        this.identityElement = getIdentityElement(nbChannels);
     }
 
     /**
@@ -169,86 +174,72 @@ public class SingleProcessor implements Processor {
     }
 
     /**
-     * Prune the current N by removing what does not prevent us from getting
-     * 1 minimal sorting network for the given amount of channels.
+     * Prune the current N by removing what does not prevent us from getting 1
+     * minimal sorting network for the given amount of channels.
      */
     private void prune() {
         ObjectBigListIterator<short[][]> iter;
 
-        for(int index = 0; index < N.size64()-1; index++) {
+        for (int index = 0; index < N.size64() - 1; index++) {
             iter = N.listIterator(index);
-            while(iter.hasNext()) {
-                if(subsumes(N.get(index), iter.next())) {
+            while (iter.hasNext()) {
+                if (subsumes(N.get(index), iter.next())) {
                     iter.remove();
                 }
             }
         }
     }
-    
+
     /**
-     * Check whether perm is a valid permutation for data to say that data subsumes compareData.
-     * 
-     * @param data The network to perform the permutation on.
-     * @param compareData The network to compare with.
-     * @param perm The permutation to perform on the data.
-     * @return Whether perm(outputs(data)) is equal to or part of outputs(compareData).
+     * Check whether the output of network1 is a part of or equal to the output
+     * of network2.
+     *
+     * @param network1 The first network.
+     * @param network2 The second network.
+     * @return Whether outputs(network1) is equal to or part of
+     * outputs(network2).
      */
-    private boolean isValidPermutation(short[][] data, short[][] compareData, short[] perm) {
-        //TODO: Build into the subsumes method so we can use work of p = (1 2) for p = (1 2)(3 4).
+    private boolean isValidPermutation(short[][] network1, short[][] network2) {
         /*  Reduce work: Lemma 6:
-            C1 subsumes C2 => P(w(C1, x, k)) C= w(C2, x, k)
-        */
-        
-        
-        
+         C1 subsumes C2 => P(w(C1, x, k)) C= w(C2, x, k)
+         */
+
         //TODO: Implement isValidPermutation
         return false;
     }
-    
+
     /**
-     * Checks if network1 subsumes network2.
-     * Subsumes: E(permutation p): p(outputs(network1)) part of or equal to outputs(network2).
-     * "Outputs of network1 can be converted (permutation) to or as part of the outputs of network2."
-     * 
+     * Checks if network1 subsumes network2. Subsumes: E(permutation p):
+     * p(outputs(network1)) part of or equal to outputs(network2). "Outputs of
+     * network1 can be converted (permutation) to or as part of the outputs of
+     * network2."
+     *
      * @param network1 The first network as part of network1 subsumes? network2
      * @param network2 The second network as part of network1 subsumes? network2
      * @return Whether network1 subsumes network2.
      */
     private boolean subsumes(short[][] network1, short[][] network2) {
         /* First check: Lemma 4: 
-        If E(k) such that the data1[k].length > data2[k].length => data1 NOT subesumes data2 
-        */
-        
-        /* Second check: Lemma 5:
-        If for x = {0,1} and 0 < k <= n |w(C1, x, k)| > |w(C2, x, k)| => C1 NOT subesume C2
-        */
-        
-        short[] allPerms = null; //Del
-        short[] perms = new short[nbChannels];
-        int index = 0;
-        short begin = 3;
-        int last = 3 << (nbChannels-2);
-        
-        /* Initial */
-        perms[0] = 3;
-        for(int i = 1; i < perms.length; i++) {
-            perms[i] = 0;
-        }
-        
-        
-        // Try to confirm a permutation
-//        for(short perm : allPerms) {
-//            while(index < nbChannels) {
-//                //perms[index] = 
-//                
-//            }
-//              
-//        }
+         If E(k) such that the data1[k].length > data2[k].length => data1 NOT subesumes data2 
+         */
 
-        
-        // t = value | (value - 1);
-        // value = (t + 1) | (((~t & -~t) - 1) >> (Integer.numberOfTrailingZeros(value) + 1));
-        
+        /* Second check: Lemma 5:
+         If for x = {0,1} and 0 < k <= n |w(C1, x, k)| > |w(C2, x, k)| => C1 NOT subesume C2
+         */
+        short[] initPerm = this.identityElement;
+        Permute permutor = new Permute(initPerm, (short) nbChannels);
+
+        if (isValidPermutation(network1, network2)) {
+            return true;
+        }
+
+        while (permutor.next_permutation()) {
+            short[][] permData = permutor.get_next(network1);
+            if (isValidPermutation(permData, network2)) {
+                return true;
+            }
+        }
+
         return false;
     }
 
@@ -301,7 +292,6 @@ public class SingleProcessor implements Processor {
 //       for (int numberOfOnes = 1; numberOfOnes < nbChannels; numberOfOnes++) {
 //            data[numberOfOnes] = getPermutations((short) (start = (start << 1) | 1), nbChannels);
 //       }
-
         for (int numberOfOnes = 1; numberOfOnes < nbChannels; numberOfOnes++) {
             data[numberOfOnes] = getPermutations((short) ((1 << numberOfOnes) - 1), nbChannels);
         }
@@ -323,13 +313,15 @@ public class SingleProcessor implements Processor {
         //(input >> pos2) & 1 = 2nd (back bit)
         return (((input >> pos1) & 1) <= ((input >> pos2) & 1)) ? input : (short) (input ^ comp);// TADAM!!!
     }
-    
+
     /**
-     * Get the output of the permutation on the input, perm(input). 
+     * Get the output of the permutation on the input, perm(input).
      *
      * @param input The input to perform the permutation on.
-     * @param perm The permutation, the bits that are swapped are the two that are 1.
-     * @return The result by switching the bits in the input according to the permutation.
+     * @param perm The permutation, the bits that are swapped are the two that
+     * are 1.
+     * @return The result by switching the bits in the input according to the
+     * permutation.
      */
     private static short swapBits(short input, short perm) {
         int pos1 = 31 - Integer.numberOfLeadingZeros(perm);
@@ -443,5 +435,20 @@ public class SingleProcessor implements Processor {
         for (short input : inputs) {
             System.out.println(input);
         }
+    }
+
+    /**
+     * Get the Identity element for the permutation of nbChannels.
+     *
+     * @param nbChannels The amount of channels of the network.
+     * @return The Identity element which for a permutation returns the same as
+     * the input.
+     */
+    private static short[] getIdentityElement(int nbChannels) {
+        short[] result = new short[nbChannels];
+        for (short i = 0; i < nbChannels; i++) {
+            result[i] = i;
+        }
+        return result;
     }
 }
