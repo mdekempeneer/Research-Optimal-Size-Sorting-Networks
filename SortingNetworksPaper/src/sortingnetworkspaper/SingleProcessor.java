@@ -73,14 +73,15 @@ public class SingleProcessor implements Processor {
         short[][] inputs = getOriginalInputs(upperBound);
         short nbComp = 1;
         firstTimeGenerate(inputs);
+        prune();
         //System.out.println(N.size64());
 
-        while (N.size64() > 1 && nbComp < upperBound) {
+        do {
             generate(nbComp);
             prune();
             nbComp++;
-            //System.out.println(N.size64());
-        }
+            //    System.out.println(N.size64());
+        } while (N.size64() > 1 && nbComp < upperBound);
 
         /* Return result */
         if (N.size64() >= 1) {
@@ -180,14 +181,24 @@ public class SingleProcessor implements Processor {
     private void prune() {
         ObjectBigListIterator<short[][]> iter;
 
+        System.out.println("Prunestap begin: " + N.size64());
         for (int index = 0; index < N.size64() - 1; index++) {
-            iter = N.listIterator(index);
+            iter = N.listIterator(index + 1);
             while (iter.hasNext()) {
-                if (subsumes(N.get(index), iter.next())) {
+                short[][] network2 = iter.next();
+
+                if (subsumes(N.get(index), network2)) {
                     iter.remove();
+                } else {
+                    if (subsumes(network2, N.get(index))) {
+                        N.remove(index);
+                        index--;
+                        break;
+                    }
                 }
             }
         }
+        System.out.println("Prunestap eind: " + N.size64());
     }
 
     /**
@@ -204,8 +215,23 @@ public class SingleProcessor implements Processor {
          C1 subsumes C2 => P(w(C1, x, k)) C= w(C2, x, k)
          */
 
-        //TODO: Implement isValidPermutation
-        return false;
+        for (int nbOnes = 1; nbOnes < network1.length; nbOnes++) {
+            for (short output : network1[nbOnes]) {
+                boolean found = false;
+
+                for (short output2 : network2[nbOnes]) {
+                    if (output == output2) {
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (found == false) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     /**
@@ -219,6 +245,7 @@ public class SingleProcessor implements Processor {
      * @return Whether network1 subsumes network2.
      */
     private boolean subsumes(short[][] network1, short[][] network2) {
+        //TODO Check if performing isValidPermutation within subsumes (inline) is more efficient.
         /* First check: Lemma 4: 
          If E(k) such that the data1[k].length > data2[k].length => data1 NOT subesumes data2 
          */
