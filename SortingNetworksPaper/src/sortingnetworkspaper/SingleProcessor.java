@@ -127,12 +127,12 @@ public class SingleProcessor implements Processor {
     public void processData(short[][] data, short newComp) {
         ShortOpenHashSet set = new ShortOpenHashSet(); //TODO: Don't use HashSet. Time!
 
-        for (int i = 1; i < data.length; i++) { //For all #1'en
+        for (int nbOnes = 1; nbOnes < data.length; nbOnes++) {
             set.clear();
-            for (int j = 0; j < data[i].length; j++) {
-                set.add(swapCompare(data[i][j], newComp)); //Add comp(output)
+            for (int j = 0; j < data[nbOnes].length; j++) {
+                set.add(swapCompare(data[nbOnes][j], newComp)); //Add comp(output)
             }
-            data[i] = set.toShortArray();
+            data[nbOnes] = set.toShortArray();
         }
     }
 
@@ -159,13 +159,15 @@ public class SingleProcessor implements Processor {
                 for (outerShift = 0; outerShift <= cMaxShifts; outerShift++, comp <<= 1) { //shift n-2, n-3, ... keer
                     //new Network (via clone)
                     //TODO test redundant comparator
-                    short[][] data = network.clone();
-                    //Fill
-                    data[0] = data[0].clone();
-                    data[0][nbComp] = comp;
-                    processData(data, comp);
+                    if (!isRedundantComp(network, comp)) {
+                        short[][] data = network.clone();
+                        //Fill
+                        data[0] = data[0].clone();
+                        data[0][nbComp] = comp;
+                        processData(data, comp);
 
-                    newN.add(data);
+                        newN.add(data);
+                    }
                 }
             }
         }
@@ -181,7 +183,7 @@ public class SingleProcessor implements Processor {
     private void prune() {
         ObjectBigListIterator<short[][]> iter;
 
-        System.out.println("Prunestap begin: " + N.size64());
+        //System.out.println("Prunestap begin: " + N.size64());
         for (int index = 0; index < N.size64() - 1; index++) {
             iter = N.listIterator(index + 1);
             while (iter.hasNext()) {
@@ -198,7 +200,7 @@ public class SingleProcessor implements Processor {
                 }
             }
         }
-        System.out.println("Prunestap eind: " + N.size64());
+        //System.out.println("Prunestap eind: " + N.size64());
     }
 
     /**
@@ -477,5 +479,18 @@ public class SingleProcessor implements Processor {
             result[i] = i;
         }
         return result;
+    }
+
+    private boolean isRedundantComp(short[][] data, short comp) {
+        ShortOpenHashSet set = new ShortOpenHashSet(); //TODO: Don't use HashSet. Time!
+
+        for (int nbOnes = 1; nbOnes < data.length; nbOnes++) {
+            for (int innerIndex = 0; innerIndex < data[nbOnes].length; innerIndex++) {
+                if (data[nbOnes][innerIndex] != swapCompare(data[nbOnes][innerIndex], comp)) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }
