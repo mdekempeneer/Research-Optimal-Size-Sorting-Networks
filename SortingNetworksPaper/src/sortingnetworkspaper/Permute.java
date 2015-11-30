@@ -21,7 +21,7 @@ public class Permute {
      * @return The permuted network data.
      */
     public short[][] get_next(short[][] data) {
-        short[] ret = new short[arr.length];
+        short[] ret = new short[arr.length]; //TODO Remove ret and only use arrIdxs since it's the same
         for (int idx = 0; idx < arrIdxs.length; idx++) {
             ret[idx] = arr[arrIdxs[idx]]; //Permute integer based array indexes, which can be used to get permuted array in return
         }
@@ -43,7 +43,7 @@ public class Permute {
                  output |= ((data[nbOnes][innerIndex] >> arr[arrIdxs[idxs]]) & 1);
                  } 
                  */
-                for (short permIndex : ret) {
+                for (short permIndex : ret) { //TODO ret -> arrIdxs
                     output <<= 1;
                     output |= ((data[nbOnes][innerIndex] >> permIndex) & 1);
                 }
@@ -73,7 +73,7 @@ public class Permute {
         //new short[arr.length];
         //System.arraycopy(arr, 0, this.arr, 0, arr.length);
         arrIdxs = new short[arr.length];
-        System.arraycopy(arr, 0, this.arr, 0, arr.length);
+        System.arraycopy(arr, 0, this.arrIdxs, 0, arr.length);
         this.length = length;
     }
 
