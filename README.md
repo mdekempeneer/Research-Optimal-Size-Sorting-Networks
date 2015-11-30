@@ -71,15 +71,21 @@
 		</UL>
 		
 <DT>25/11/2015 - Bijeenkomst 7
-	<DD>Te doen tegen de volgende bijeenkomst (.../...):
+	<DD>Te doen tegen de volgende bijeenkomst (07/12):
 		<UL>
-		<LI>
+		<LI>Generate en Prune algoritme uit de hoofdpaper implementeren.
+		<LI>Afwerken van de tweede presentatie in verband met de probleemstelling.
 		</UL>
 		
 <DT>07/12/2015 - Presentatie 2 (16.10-16.25)
 	<DD>Een korte voorstelling van je probleemstelling (wat wil je doen?, waarom? en hoe ga je het aanpakken en evalueren?)
 	</br>Max 5 slides / 5 minuten, informeel en dan een open discussie.
 	
+<DT>07/12/2015 - Bijeenkomst 8
+	<DD>Te doen tegen de volgende bijeenkomst (.../...)
+		<UL>
+		<LI>
+		</UL>
 
 
 <DT>Instructies
