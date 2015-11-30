@@ -26,10 +26,11 @@ public class Main {
 
         int nbCase = 1;
         int cCase = 0;
-        long begin = System.nanoTime();
+        long begin;
         long total = 0;
         long caseTime = 0;
         while (nbCase > cCase) {
+            begin = System.nanoTime();
             //Processor processor = new ParallelProcessor((short) nbChannels, upperBound);
             Processor processor = new SingleProcessor((short) nbChannels, upperBound);
             processor.process();
@@ -38,9 +39,9 @@ public class Main {
             caseTime = System.nanoTime() - begin;
             System.out.println("Took " + caseTime + " ns");
             total += caseTime;
-            begin = System.nanoTime();
+            
         }
-        System.out.println("Total: " + total + " avg: " + total / nbCase + " ms");
+        System.out.println("Total: " + total + " avg: " + total / nbCase + " ns");
     }
 
     /**
