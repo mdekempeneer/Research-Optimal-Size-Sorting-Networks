@@ -188,7 +188,7 @@ public class SingleProcessor implements Processor {
     private void prune() {
         ObjectBigListIterator<short[][]> iter;
 
-        System.out.println("Prunestap begin: " + N.size64());
+        //System.out.println("Prunestap begin: " + N.size64());
         for (int index = 0; index < N.size64() - 1; index++) {
             iter = N.listIterator(index + 1);
             while (iter.hasNext()) {
@@ -205,7 +205,7 @@ public class SingleProcessor implements Processor {
                 }
             }
         }
-        //System.out.println("Prunestap eind: " + N.size64());
+        System.out.println("Prunestap eind: " + N.size64());
     }
 
     /**
@@ -256,6 +256,11 @@ public class SingleProcessor implements Processor {
         /* First check: Lemma 4: 
          If E(k) such that the data1[k].length > data2[k].length => data1 NOT subesumes data2 
          */
+        for (int innerIndex = 1; innerIndex < network1.length; innerIndex++) {
+            if (network1[innerIndex].length > network2[innerIndex].length) {
+                return false;
+            }
+        }
 
         /* Second check: Lemma 5:
          If for x = {0,1} and 0 < k <= n |w(C1, x, k)| > |w(C2, x, k)| => C1 NOT subesume C2
