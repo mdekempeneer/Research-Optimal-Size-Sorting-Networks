@@ -23,7 +23,7 @@ public class SingleProcessor implements Processor {
 
     private final int maxX;
     private final int maxShifts;
-    private final short[] identityElement;
+    private final byte[] identityElement;
 
     /**
      * Create a Processor which can, for a given nbChannels and upperBound find
@@ -40,7 +40,7 @@ public class SingleProcessor implements Processor {
         this.newN = new ObjectBigArrayBigList();
         this.maxX = ((1 << (nbChannels - 1)) | 1);
         this.maxShifts = nbChannels - 2;
-        this.identityElement = getIdentityElement(nbChannels);
+        this.identityElement = getIdentityElement((byte) nbChannels);
     }
 
     /**
@@ -79,7 +79,6 @@ public class SingleProcessor implements Processor {
         do {
             generate(nbComp);
             prune();
-            System.gc();
             nbComp++;
             //System.out.println(N.size64());
         } while (N.size64() > 1 && nbComp < upperBound);
@@ -138,8 +137,12 @@ public class SingleProcessor implements Processor {
     }
 
     /**
+     * Generate networks. Adds all possible comparators to every network in N
+     * and replaces N with the result. (Redundant comparators are neglected,
+     * isRedundantComp)
      *
-     * @param nbComp The index of the comparator (data[0]) to start working on.
+     * @param nbComp The index of the comparator (data[0][nbComp]) to start working on.
+     * @see #isRedundantComp(short[][], short)
      */
     private void generate(short nbComp) {
         /* Setup environment */
@@ -159,7 +162,6 @@ public class SingleProcessor implements Processor {
                 comp = (short) number;
                 for (outerShift = 0; outerShift <= cMaxShifts; outerShift++, comp <<= 1) { //shift n-2, n-3, ... keer
                     //new Network (via clone)
-                    //TODO test redundant comparator
                     //if ((nbComp == 0 || network[0][nbComp - 1] != comp) && !isRedundantComp(network, comp)) {
                     if (!isRedundantComp(network, comp)) {
                         short[][] data = network.clone();
@@ -257,16 +259,17 @@ public class SingleProcessor implements Processor {
         /* Second check: Lemma 5:
          If for x = {0,1} and 0 < k <= n |w(C1, x, k)| > |w(C2, x, k)| => C1 NOT subesume C2
          */
-        short[] initPerm = this.identityElement;
-        Permute permutor = new Permute(initPerm, (short) nbChannels);
-
         if (isValidPermutation(network1, network2)) {
+            //TODO: Test if this is ever true; if not delete.
+            //System.err.println("It was true");
             return true;
         }
 
-        while (permutor.next_permutation()) {
-            short[][] permData = permutor.get_next(network1);
-            if (isValidPermutation(permData, network2)) {
+        byte[] currPerm = new byte[this.identityElement.length];
+        System.arraycopy(this.identityElement, 0, currPerm, 0, nbChannels);
+
+        while ((currPerm = Permute.getNextPermutation(currPerm)) != null) {
+            if (isValidPermutation(Permute.getPermutedData(currPerm, network1), network2)) {
                 return true;
             }
         }
@@ -398,6 +401,7 @@ public class SingleProcessor implements Processor {
 
     /**
      * Get an array of all possible comparators.
+     *
      * @return The array of all possible comparators.
      */
     private short[] getAllComps() {
@@ -449,9 +453,9 @@ public class SingleProcessor implements Processor {
      * @return The Identity element which for a permutation returns the same as
      * the input.
      */
-    private static short[] getIdentityElement(int nbChannels) {
-        short[] result = new short[nbChannels];
-        for (short i = 0; i < nbChannels; i++) {
+    private static byte[] getIdentityElement(byte nbChannels) {
+        byte[] result = new byte[nbChannels];
+        for (byte i = 0; i < nbChannels; i++) {
             result[i] = i;
         }
         return result;
@@ -459,9 +463,11 @@ public class SingleProcessor implements Processor {
 
     /**
      * Check if the given comp is redundant given the data present.
+     *
      * @param data The date before the comp would be added.
      * @param comp The comp that would be added.
-     * @return True if adding the comparator does not change any output. False otherwise.
+     * @return True if adding the comparator does not change any output. False
+     * otherwise.
      */
     private boolean isRedundantComp(short[][] data, short comp) {
         for (int nbOnes = 1; nbOnes < data.length; nbOnes++) {
@@ -473,5 +479,5 @@ public class SingleProcessor implements Processor {
         }
         return true;
     }
-    
+
 }

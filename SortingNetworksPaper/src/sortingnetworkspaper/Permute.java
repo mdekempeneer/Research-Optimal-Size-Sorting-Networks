@@ -1,36 +1,36 @@
 package sortingnetworkspaper;
 
+/**
+ * Implementation of
+ * http://en.wikipedia.org/wiki/Permutation#Systematic_generation_of_all_permutations
+ * Algorithm to effeciently generate permutations of a sequence until all
+ * possiblities are exhausted
+ *
+ * @author Admin
+ */
 public class Permute {
-
-    /**
-     * Implementation of
-     * http://en.wikipedia.org/wiki/Permutation#Systematic_generation_of_all_permutations
-     * Algorithm to effeciently generate permutations of a sequence until all
-     * possiblities are exhausted *
-     */
-    private final short[] arrIdxs;
-    private final short[] arr; //TODO change to byte !!!
-    private final short length;
 
     /**
      *
      * Get The network permuted with the next permutation.
      *
+     * @param permutor The array of shorts used to permute. (elements of {0, ..,
+     * nbChannels-1})
      * @param data The network to permute.
      *
      * @return The permuted network data.
      */
-    public short[][] get_next(short[][] data) {
+    public static short[][] getPermutedData(byte[] permutor, short[][] data) {
         short[][] permData = data.clone();
 
         for (int nbOnes = 1; nbOnes < data.length; nbOnes++) {
             permData[nbOnes] = new short[data[nbOnes].length];
-            
+
             for (int innerIndex = 0; innerIndex < data[nbOnes].length; innerIndex++) {
                 int output = 0;
 
                 /* Compute permuted */
-                for (short permIndex : arrIdxs) {
+                for (byte permIndex : permutor) {
                     output <<= 1;
                     output |= ((data[nbOnes][innerIndex] >> permIndex) & 1);
                 }
@@ -43,72 +43,60 @@ public class Permute {
     }
 
     /**
-     *
-     * @param arr
+     * Can't be instantiated.
      */
-    public Permute(short[] arr) {
-        this(arr, (short) arr.length);
+    private Permute() {
     }
-
+    
     /**
+     * Get the next permutation given the current permutation. The current
+     * permutation will be altered in-place, clone beforehand if required.
+     * Returns null when there is no next permutation.
      *
-     * @param arr The array [1,2,3...]
-     * @param length The length of the array.
+     * @return null if there is no next permutation, the next permutation
+     * otherwise.
      */
-    public Permute(short[] arr, short length) {
-        this.arr = arr; //Since arr is never changed.
-        //new short[arr.length];
-        //System.arraycopy(arr, 0, this.arr, 0, arr.length);
-        arrIdxs = new short[arr.length];
-        System.arraycopy(arr, 0, this.arrIdxs, 0, arr.length);
-        this.length = length;
-    }
-
-    /**
-     * Prepares for the next permutation and returns if the next one is set.
-     *
-     * @return Whether the next permutation is set(=exists).
-     */
-    public boolean next_permutation() {
+    public static byte[] getNextPermutation(byte[] currPerm) {
         int i, j, l;
 
         //get maximum index j for which arr[j+1] > arr[j]
-        for (j = this.length - 2; j >= 0; j--) {
-            if (arrIdxs[j + 1] > arrIdxs[j]) {
+        for (j = currPerm.length - 2; j >= 0; j--) {
+            if (currPerm[j + 1] > currPerm[j]) {
                 break;
             }
         }
 
         //has reached it's lexicographic maximum value, No more permutations left 
         if (j == -1) {
-            return false;
+            return null;
         }
 
         //get maximum index l for which arr[l] > arr[j]
-        for (l = this.length - 1; l > j; l--) {
-            if (arrIdxs[l] > arrIdxs[j]) {
+        for (l = currPerm.length - 1; l > j; l--) {
+            if (currPerm[l] > currPerm[j]) {
                 break;
             }
         }
 
         //Swap arr[i],arr[j]
-        short swap = arrIdxs[j];
-        arrIdxs[j] = arrIdxs[l];
-        arrIdxs[l] = swap;
+        byte swap = currPerm[j];
+        currPerm[j] = currPerm[l];
+        currPerm[l] = swap;
 
         //reverse array present after index : j+1 
-        for (i = j + 1; i < arrIdxs.length; i++) {
-            if (i > arrIdxs.length - i + j) {
+        for (i = j + 1; i < currPerm.length; i++) {
+            if (i > currPerm.length - i + j) {
                 break;
             }
-            swap = arrIdxs[i];
-            arrIdxs[i] = arrIdxs[arrIdxs.length - i + j];
-            arrIdxs[arrIdxs.length - i + j] = swap;
+            swap = currPerm[i];
+            currPerm[i] = currPerm[currPerm.length - i + j];
+            currPerm[currPerm.length - i + j] = swap;
         }
 
-        return true;
+        return currPerm;
     }
 
+    //TODO: Schrijf Tester voor Permute
     /*    public static void main(String[] args) {
      short[] test_arr = {0, 1, 2, 3, 4, 5, 6, 7, 8};
 

@@ -63,6 +63,4 @@ public class Main {
 
         return result;
     }
-    
-    //TODO: Schrijf Tester voor Permute
 }
