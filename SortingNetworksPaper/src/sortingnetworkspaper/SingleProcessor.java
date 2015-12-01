@@ -141,7 +141,8 @@ public class SingleProcessor implements Processor {
      * and replaces N with the result. (Redundant comparators are neglected,
      * isRedundantComp)
      *
-     * @param nbComp The index of the comparator (data[0][nbComp]) to start working on.
+     * @param nbComp The index of the comparator (data[0][nbComp]) to start
+     * working on.
      * @see #isRedundantComp(short[][], short)
      */
     private void generate(short nbComp) {
