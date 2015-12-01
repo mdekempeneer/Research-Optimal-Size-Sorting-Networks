@@ -70,17 +70,18 @@ public class SingleProcessor implements Processor {
     @Override
     public short[] process() {
         /* Initialize inputs */
-        short[][] inputs = getOriginalInputs(upperBound);
-        short nbComp = 1;
-        firstTimeGenerate(inputs);
+        //TODO: Replace firstTimeGenerate & Prune with just the network (1 2) ??
+        firstTimeGenerate(getOriginalInputs(upperBound));
+        short nbComp = 1; //TODO: Move to global variables
         prune();
         //System.out.println(N.size64());
 
         do {
             generate(nbComp);
             prune();
+            System.gc();
             nbComp++;
-            //    System.out.println(N.size64());
+            //System.out.println(N.size64());
         } while (N.size64() > 1 && nbComp < upperBound);
 
         /* Return result */
@@ -159,6 +160,7 @@ public class SingleProcessor implements Processor {
                 for (outerShift = 0; outerShift <= cMaxShifts; outerShift++, comp <<= 1) { //shift n-2, n-3, ... keer
                     //new Network (via clone)
                     //TODO test redundant comparator
+                    //if ((nbComp == 0 || network[0][nbComp - 1] != comp) && !isRedundantComp(network, comp)) {
                     if (!isRedundantComp(network, comp)) {
                         short[][] data = network.clone();
                         //Fill
@@ -344,23 +346,6 @@ public class SingleProcessor implements Processor {
     }
 
     /**
-     * Get the output of the permutation on the input, perm(input).
-     *
-     * @param input The input to perform the permutation on.
-     * @param perm The permutation, the bits that are swapped are the two that
-     * are 1.
-     * @return The result by switching the bits in the input according to the
-     * permutation.
-     */
-    private static short swapBits(short input, short perm) {
-        int pos1 = 31 - Integer.numberOfLeadingZeros(perm);
-        int pos2 = Integer.numberOfTrailingZeros(perm);
-        //(input >> pos1) & 1 = first (front bit)
-        //(input >> pos2) & 1 = 2nd (back bit)
-        return (((input >> pos1) & 1) == ((input >> pos2) & 1)) ? input : (short) (input ^ perm);// TADAM!!!
-    }
-
-    /**
      * TODO: Possible to optimize
      *
      * @param n
@@ -411,6 +396,10 @@ public class SingleProcessor implements Processor {
         return result;
     }
 
+    /**
+     * Get an array of all possible comparators.
+     * @return The array of all possible comparators.
+     */
     private short[] getAllComps() {
         short[] result = new short[nbChannels * (nbChannels - 1) / 2];
         int cMaxShifts;
@@ -430,19 +419,6 @@ public class SingleProcessor implements Processor {
         return result;
     }
 
-    /**
-     * Get a deep clone of data.
-     *
-     * @param data The data to deep clone.
-     * @return A deep clone performed on the given data.
-     */
-    /*private short[][] cloneData(short[][] data) {
-     short[][] result = new short[data.length][];
-     for (int index = 0; index < result.length; index++) {
-     result[index] = cloneShortArr(data[index]);
-     }
-     return result;
-     }*/
     /**
      * Get a deep clone of the array.
      *
@@ -481,9 +457,13 @@ public class SingleProcessor implements Processor {
         return result;
     }
 
+    /**
+     * Check if the given comp is redundant given the data present.
+     * @param data The date before the comp would be added.
+     * @param comp The comp that would be added.
+     * @return True if adding the comparator does not change any output. False otherwise.
+     */
     private boolean isRedundantComp(short[][] data, short comp) {
-        ShortOpenHashSet set = new ShortOpenHashSet(); //TODO: Don't use HashSet. Time!
-
         for (int nbOnes = 1; nbOnes < data.length; nbOnes++) {
             for (int innerIndex = 0; innerIndex < data[nbOnes].length; innerIndex++) {
                 if (data[nbOnes][innerIndex] != swapCompare(data[nbOnes][innerIndex], comp)) {
@@ -493,4 +473,5 @@ public class SingleProcessor implements Processor {
         }
         return true;
     }
+    
 }
