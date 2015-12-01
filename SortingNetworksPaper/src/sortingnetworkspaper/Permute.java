@@ -47,12 +47,13 @@ public class Permute {
      */
     private Permute() {
     }
-    
+
     /**
      * Get the next permutation given the current permutation. The current
      * permutation will be altered in-place, clone beforehand if required.
      * Returns null when there is no next permutation.
      *
+     * @param currPerm The current permutation
      * @return null if there is no next permutation, the next permutation
      * otherwise.
      */
