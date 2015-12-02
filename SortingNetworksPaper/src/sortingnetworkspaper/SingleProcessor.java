@@ -7,7 +7,9 @@ package sortingnetworkspaper;
 
 import it.unimi.dsi.fastutil.objects.ObjectBigArrayBigList;
 import it.unimi.dsi.fastutil.objects.ObjectBigListIterator;
+import it.unimi.dsi.fastutil.shorts.ShortArrayList;
 import it.unimi.dsi.fastutil.shorts.ShortOpenHashSet;
+import java.util.ArrayList;
 
 /**
  *
@@ -125,15 +127,47 @@ public class SingleProcessor implements Processor {
      */
     @Override
     public void processData(short[][] data, short newComp) {
-        ShortOpenHashSet set = new ShortOpenHashSet(); //TODO: Don't use HashSet. Time!
+        //TODO: Test timings for ShortOpenHashSet, Arrays, ShortArrayList
+        //ShortOpenHashSet set = new ShortOpenHashSet(); //TODO: Don't use HashSet. Time!
+        
+        //ShortArrayList arr;
+        short[] processed;
+        int counter;
+        boolean found;
 
         for (int nbOnes = 1; nbOnes < data.length; nbOnes++) {
-            set.clear();
-            for (int j = 0; j < data[nbOnes].length; j++) {
-                set.add(swapCompare(data[nbOnes][j], newComp)); //Add comp(output)
+            processed = new short[data[nbOnes].length];
+            counter = 0;
+            //arr = new ShortArrayList();
+            //set.clear();
+            for (int innerIndex = 0; innerIndex < data[nbOnes].length; innerIndex++) {
+                //processed[innerIndex] = swapCompare(data[nbOnes][innerIndex], newComp);
+                //set.add(swapCompare(data[nbOnes][innerIndex], newComp)); //Add comp(output)
+                short value = swapCompare(data[nbOnes][innerIndex], newComp);
+                /*if (!arr.contains(value)) {
+                    arr.add(value);
+                }*/
+                
+                found = false;
+                for(int i = counter-1; i >= 0; i--) {
+                    if(processed[i] == value) {
+                        found = true;
+                        break;
+                    }
+                }
+                if(!found) {
+                    processed[counter] = value;
+                    counter++;
+                }
             }
-            data[nbOnes] = set.toShortArray();
+
+            //System.out.println("size: " + processed.length);
+            short[] temp = new short[counter];
+            System.arraycopy(processed, 0, temp, 0, counter);
+            data[nbOnes] = temp;
+            //data[nbOnes] = arr.toShortArray();
         }
+
     }
 
     /**
@@ -141,7 +175,8 @@ public class SingleProcessor implements Processor {
      * and replaces N with the result. (Redundant comparators are neglected,
      * isRedundantComp)
      *
-     * @param nbComp The index of the comparator (data[0][nbComp]) to start working on.
+     * @param nbComp The index of the comparator (data[0][nbComp]) to start
+     * working on.
      * @see #isRedundantComp(short[][], short)
      */
     private void generate(short nbComp) {
@@ -187,7 +222,7 @@ public class SingleProcessor implements Processor {
     private void prune() {
         ObjectBigListIterator<short[][]> iter;
 
-        System.out.println("Prunestap begin: " + N.size64());
+        //System.out.println("Prunestap begin: " + N.size64());
         for (int index = 0; index < N.size64() - 1; index++) {
             iter = N.listIterator(index + 1);
             while (iter.hasNext()) {
@@ -204,7 +239,7 @@ public class SingleProcessor implements Processor {
                 }
             }
         }
-        //System.out.println("Prunestap eind: " + N.size64());
+        System.out.println("Prunestap eind: " + N.size64());
     }
 
     /**
