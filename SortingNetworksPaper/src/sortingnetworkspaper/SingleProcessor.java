@@ -128,44 +128,57 @@ public class SingleProcessor implements Processor {
     @Override
     public void processData(short[][] data, short newComp) {
         //TODO: Test timings for ShortOpenHashSet, Arrays, ShortArrayList
-        //ShortOpenHashSet set = new ShortOpenHashSet(); //TODO: Don't use HashSet. Time!
-        
-        //ShortArrayList arr;
-        short[] processed;
-        int counter;
-        boolean found;
 
+        //1 - HashSet
+//        ShortOpenHashSet set = new ShortOpenHashSet(); //TODO: Don't use HashSet. Time!
+        //2 - ArrayList
+        ShortArrayList arr;
+
+        //3 - Array
+//        short[] processed;
+//        int counter;
+//        boolean found;
         for (int nbOnes = 1; nbOnes < data.length; nbOnes++) {
-            processed = new short[data[nbOnes].length];
-            counter = 0;
-            //arr = new ShortArrayList();
-            //set.clear();
+            //1 - HashSet
+//            set.clear();
+
+            //2 - ArrayList
+            arr = new ShortArrayList();
+
+            //3 - Array
+//            processed = new short[data[nbOnes].length];
+//            counter = 0;
             for (int innerIndex = 0; innerIndex < data[nbOnes].length; innerIndex++) {
-                //processed[innerIndex] = swapCompare(data[nbOnes][innerIndex], newComp);
-                //set.add(swapCompare(data[nbOnes][innerIndex], newComp)); //Add comp(output)
                 short value = swapCompare(data[nbOnes][innerIndex], newComp);
-                /*if (!arr.contains(value)) {
+                //1 - HashSet
+//                set.add(swapCompare(data[nbOnes][innerIndex], newComp));
+
+                //2 - ArrayList
+                if (!arr.contains(value)) {
                     arr.add(value);
-                }*/
-                
-                found = false;
-                for(int i = counter-1; i >= 0; i--) {
-                    if(processed[i] == value) {
-                        found = true;
-                        break;
-                    }
                 }
-                if(!found) {
-                    processed[counter] = value;
-                    counter++;
-                }
+
+                //3 - Array
+//                processed[innerIndex] = swapCompare(data[nbOnes][innerIndex], newComp);
+//                found = false;
+//                 for(int i = counter-1; i >= 0; i--) {
+//                 if(processed[i] == value) {
+//                 found = true;
+//                 break;
+//                 }
+//                 }
+//                 if(!found) {
+//                 processed[counter] = value;
+//                 counter++;
+//                 }
             }
 
-            //System.out.println("size: " + processed.length);
-            short[] temp = new short[counter];
-            System.arraycopy(processed, 0, temp, 0, counter);
-            data[nbOnes] = temp;
-            //data[nbOnes] = arr.toShortArray();
+            //1 & 2 - HashSet & ArrayList
+            data[nbOnes] = arr.toShortArray();
+            //3 - Array
+//            short[] temp = new short[counter];
+//             System.arraycopy(processed, 0, temp, 0, counter);
+//             data[nbOnes] = temp;
         }
 
     }
@@ -239,7 +252,7 @@ public class SingleProcessor implements Processor {
                 }
             }
         }
-        System.out.println("Prunestap eind: " + N.size64());
+        //System.out.println("Prunestap eind: " + N.size64());
     }
 
     /**
@@ -290,8 +303,9 @@ public class SingleProcessor implements Processor {
         /* First check: Lemma 4: 
          If E(k) such that the data1[k].length > data2[k].length => data1 NOT subesumes data2 
          */
-        for (int innerIndex = 1; innerIndex < network1.length; innerIndex++) {
-            if (network1[innerIndex].length > network2[innerIndex].length) {
+
+        for (int nbOnes = 1; nbOnes < network1.length; nbOnes++) {
+            if (network1[nbOnes].length > network2[nbOnes].length) {
                 return false;
             }
         }
