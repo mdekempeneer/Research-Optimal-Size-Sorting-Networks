@@ -132,53 +132,52 @@ public class SingleProcessor implements Processor {
         //1 - HashSet
 //        ShortOpenHashSet set = new ShortOpenHashSet(); //TODO: Don't use HashSet. Time!
         //2 - ArrayList
-        ShortArrayList arr;
-
+//        ShortArrayList arr;
         //3 - Array
-//        short[] processed;
-//        int counter;
-//        boolean found;
+        short[] processed;
+        int counter;
+        boolean found;
+
         for (int nbOnes = 1; nbOnes < data.length; nbOnes++) {
             //1 - HashSet
 //            set.clear();
 
             //2 - ArrayList
-            arr = new ShortArrayList();
-
+//            arr = new ShortArrayList();
             //3 - Array
-//            processed = new short[data[nbOnes].length];
-//            counter = 0;
+            processed = new short[data[nbOnes].length];
+            counter = 0;
+
             for (int innerIndex = 0; innerIndex < data[nbOnes].length; innerIndex++) {
                 short value = swapCompare(data[nbOnes][innerIndex], newComp);
                 //1 - HashSet
 //                set.add(swapCompare(data[nbOnes][innerIndex], newComp));
 
                 //2 - ArrayList
-                if (!arr.contains(value)) {
-                    arr.add(value);
-                }
-
+//                if (!arr.contains(value)) {
+//                    arr.add(value);
+//                }
                 //3 - Array
-//                processed[innerIndex] = swapCompare(data[nbOnes][innerIndex], newComp);
-//                found = false;
-//                 for(int i = counter-1; i >= 0; i--) {
-//                 if(processed[i] == value) {
-//                 found = true;
-//                 break;
-//                 }
-//                 }
-//                 if(!found) {
-//                 processed[counter] = value;
-//                 counter++;
-//                 }
+                processed[innerIndex] = swapCompare(data[nbOnes][innerIndex], newComp);
+                found = false;
+                for (int i = counter - 1; i >= 0; i--) {
+                    if (processed[i] == value) {
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) {
+                    processed[counter] = value;
+                    counter++;
+                }
             }
 
             //1 & 2 - HashSet & ArrayList
-            data[nbOnes] = arr.toShortArray();
+//            data[nbOnes] = set.toShortArray();
             //3 - Array
-//            short[] temp = new short[counter];
-//             System.arraycopy(processed, 0, temp, 0, counter);
-//             data[nbOnes] = temp;
+            short[] temp = new short[counter];
+            System.arraycopy(processed, 0, temp, 0, counter);
+            data[nbOnes] = temp;
         }
 
     }
