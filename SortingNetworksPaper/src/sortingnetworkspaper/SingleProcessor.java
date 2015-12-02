@@ -290,6 +290,11 @@ public class SingleProcessor implements Processor {
         /* First check: Lemma 4: 
          If E(k) such that the data1[k].length > data2[k].length => data1 NOT subesumes data2 
          */
+        for (int innerIndex = 1; innerIndex < network1.length; innerIndex++) {
+            if (network1[innerIndex].length > network2[innerIndex].length) {
+                return false;
+            }
+        }
 
         /* Second check: Lemma 5:
          If for x = {0,1} and 0 < k <= n |w(C1, x, k)| > |w(C2, x, k)| => C1 NOT subesume C2
