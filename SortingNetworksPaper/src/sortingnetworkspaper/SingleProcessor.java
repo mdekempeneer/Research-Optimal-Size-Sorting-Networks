@@ -251,7 +251,7 @@ public class SingleProcessor implements Processor {
                 }
             }
         }
-        //System.out.println("Prunestap eind: " + N.size64());
+        System.out.println("Prunestap eind: " + N.size64());
     }
 
     /**
