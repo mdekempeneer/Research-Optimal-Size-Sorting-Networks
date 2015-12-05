@@ -12,8 +12,8 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        int nbChannels = getAnswerFromUser("Amount of channels?", 4);
-        int upperBound = getAnswerFromUser("Expected upperBound?", 5);
+        int nbChannels = getAnswerFromUser("Amount of channels?", 6);
+        int upperBound = getAnswerFromUser("Expected upperBound?", 12);
 
         if (nbChannels <= 1 || nbChannels > 16) {
             System.err.println("Algorithm/Datastructures can only handle 2-16 channels.");
