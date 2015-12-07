@@ -82,7 +82,15 @@
 	</br>Max 5 slides / 5 minuten, informeel en dan een open discussie.
 	
 <DT>07/12/2015 - Bijeenkomst 8
-	<DD>Te doen tegen de volgende bijeenkomst (.../...)
+	<DD>Te doen voor de Kerstvakantie
+		<UL>
+		<LI>Generate en Prune algoritme uit de hoofdpaper implementeren. <br>(implementeren van lemma 5 en 6)
+		<LI>Profile (hotspot) bekijken van onze implementatie
+		<LI>Verwachtte tijdsbesteding voor sorting networks met 8 en 9 kanalen berekenen.
+		</UL>
+		
+<DT>??/??/201? - Bijeenkomst 9
+	<DD>Te doen tegen de volgende bijeenkomst (??/??):
 		<UL>
 		<LI>
 		</UL>
