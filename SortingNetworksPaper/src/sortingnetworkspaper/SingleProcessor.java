@@ -112,7 +112,8 @@ public class SingleProcessor implements Processor {
                 data[0] = new short[upperBound];
                 data[0][0] = comp;
                 processData(data, comp);
-
+                
+                
                 N.add(data);
             }
         }
@@ -251,7 +252,7 @@ public class SingleProcessor implements Processor {
                 }
             }
         }
-        System.out.println("Prunestap eind: " + N.size64());
+        //System.out.println("Prunestap eind: " + N.size64());
     }
 
     /**
@@ -264,10 +265,6 @@ public class SingleProcessor implements Processor {
      * outputs(network2).
      */
     private boolean isValidPermutation(short[][] network1, short[][] network2) {
-        /*  Reduce work: Lemma 6:
-         C1 subsumes C2 => P(w(C1, x, k)) C= w(C2, x, k)
-         */
-
         for (int nbOnes = 1; nbOnes < network1.length; nbOnes++) {
             for (short output : network1[nbOnes]) {
                 boolean found = false;
@@ -312,8 +309,15 @@ public class SingleProcessor implements Processor {
         /* Second check: Lemma 5:
          If for x = {0,1} and 0 < k <= n |w(C1, x, k)| > |w(C2, x, k)| => C1 NOT subesume C2
          */
+        
+        
+        /*  Reduce work: Lemma 6:
+         C1 subsumes C2 => P(w(C1, x, k)) C= w(C2, x, k)
+         */
+
+        
+        
         if (isValidPermutation(network1, network2)) {
-            //TODO: Test if this is ever true; if not delete.
             //System.err.println("It was true");
             return true;
         }
