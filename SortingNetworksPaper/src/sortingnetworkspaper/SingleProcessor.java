@@ -320,6 +320,15 @@ public class SingleProcessor implements Processor {
         /*  Reduce work: Lemma 6:
          C1 subsumes C2 => P(getLengthOfW(C1, x, k)) C= getLengthOfW(C2, x, k)
          */
+        for (int nbOnes = 1; nbOnes < network1.length; nbOnes++) {
+            if (checkPermutationPartOf(network1, network2, 0, nbOnes)) {
+                return false;
+            }
+            if (checkPermutationPartOf(network1, network2, 1, nbOnes)) {
+                return false;
+            }
+        }
+
         if (isValidPermutation(network1, network2)) {
             //System.err.println("It was true");
             return true;
@@ -544,8 +553,12 @@ public class SingleProcessor implements Processor {
      * @return
      */
     private byte getLengthOfW(short[][] network, int k, int nbOnes) {
-        
+
         return 0;
+    }
+
+    private boolean checkPermutationPartOf(short[][] network1, short[][] network2, int i, int nbOnes) {
+        return false;
     }
 
 }
