@@ -82,6 +82,7 @@ public class SingleProcessor implements Processor {
             generate(nbComp);
             prune();
             nbComp++;
+            this.printInputs(N.get(0)[0]);
             //System.out.println(N.size64());
         } while (N.size64() > 1 && nbComp < upperBound);
 
@@ -498,10 +499,18 @@ public class SingleProcessor implements Processor {
      *
      * @param inputs The inputs to print.
      */
-    private void printInputs(short[] inputs) {
+    private void printLnInputs(short[] inputs) {
         for (short input : inputs) {
             System.out.println(input);
         }
+    }
+    
+    private void printInputs(short[] inputs) {
+        for(short input : inputs) {
+            System.out.print(input);
+            System.out.print(" ");
+        }
+                System.out.println("");
     }
 
     /**
