@@ -257,7 +257,7 @@ public class SingleProcessor implements Processor {
                 }
             }
         }
-        System.out.println("Prunestap eind: " + N.size64());
+        //System.out.println("Prunestap eind: " + N.size64());
     }
 
     /**
@@ -270,10 +270,6 @@ public class SingleProcessor implements Processor {
      * outputs(network2).
      */
     private boolean isValidPermutation(short[][] network1, short[][] network2) {
-        /*  Reduce work: Lemma 6:
-         C1 subsumes C2 => P(w(C1, x, k)) C= w(C2, x, k)
-         */
-
         for (int nbOnes = 1; nbOnes < network1.length; nbOnes++) {
             for (short output : network1[nbOnes]) {
                 boolean found = false;
@@ -316,10 +312,30 @@ public class SingleProcessor implements Processor {
         }
 
         /* Second check: Lemma 5:
-         If for x = {0,1} and 0 < k <= n |w(C1, x, k)| > |w(C2, x, k)| => C1 NOT subesume C2
+         If for x = {0,1} and 0 < k <= n |getLengthOfW(C1, x, k)| > |getLengthOfW(C2, x, k)| => C1 NOT subesume C2
          */
+        for (int nbOnes = 1; nbOnes < network1.length; nbOnes++) {
+            if (getLengthOfW(network1, 0, nbOnes) > getLengthOfW(network2, 0, nbOnes)) {
+                return false;
+            }
+            if (getLengthOfW(network1, 1, nbOnes) > getLengthOfW(network2, 1, nbOnes)) {
+                return false;
+            }
+        }
+
+        /*  Reduce work: Lemma 6:
+         C1 subsumes C2 => P(getLengthOfW(C1, x, k)) C= getLengthOfW(C2, x, k)
+         */
+        for (int nbOnes = 1; nbOnes < network1.length; nbOnes++) {
+            if (checkPermutationPartOf(network1, network2, 0, nbOnes)) {
+                return false;
+            }
+            if (checkPermutationPartOf(network1, network2, 1, nbOnes)) {
+                return false;
+            }
+        }
+
         if (isValidPermutation(network1, network2)) {
-            //TODO: Test if this is ever true; if not delete.
             //System.err.println("It was true");
             return true;
         }
@@ -380,11 +396,6 @@ public class SingleProcessor implements Processor {
         short[][] data = new short[nbChannels][];
         data[0] = new short[upperBound];
 
-        //TODO: Test faster?
-//       int start = 0; 
-//       for (int numberOfOnes = 1; numberOfOnes < nbChannels; numberOfOnes++) {
-//            data[numberOfOnes] = getPermutations((short) (start = (start << 1) | 1), nbChannels);
-//       }
         for (int numberOfOnes = 1; numberOfOnes < nbChannels; numberOfOnes++) {
             data[numberOfOnes] = getPermutations((short) ((1 << numberOfOnes) - 1), nbChannels);
         }
@@ -545,6 +556,23 @@ public class SingleProcessor implements Processor {
             }
         }
         return true;
+    }
+
+    /**
+     * Get the length of w.
+     *
+     * @param network
+     * @param i
+     * @param nbOnes
+     * @return
+     */
+    private byte getLengthOfW(short[][] network, int k, int nbOnes) {
+
+        return 0;
+    }
+
+    private boolean checkPermutationPartOf(short[][] network1, short[][] network2, int i, int nbOnes) {
+        return false;
     }
 
 }
