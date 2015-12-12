@@ -239,7 +239,7 @@ public class SingleProcessor implements Processor {
     private void prune() {
         ObjectBigListIterator<short[][]> iter;
 
-        //System.out.println("Prunestap begin: " + N.size64());
+        System.out.println("Prunestap begin: " + N.size64());
         for (int index = 0; index < N.size64() - 1; index++) {
             iter = N.listIterator(index + 1);
             while (iter.hasNext()) {
@@ -256,7 +256,7 @@ public class SingleProcessor implements Processor {
                 }
             }
         }
-        //System.out.println("Prunestap eind: " + N.size64());
+        System.out.println("Prunestap eind: " + N.size64());
     }
 
     /**
@@ -313,7 +313,7 @@ public class SingleProcessor implements Processor {
         /* Second check: Lemma 5:
          If for x = {0,1} and 0 < k <= n |getLengthOfW(C1, x, k)| > |getLengthOfW(C2, x, k)| => C1 NOT subesume C2
          */
-        for (int nbOnes = 1; nbOnes < nbChannels; nbOnes++) {
+        /*for (int nbOnes = 1; nbOnes < nbChannels; nbOnes++) {
             if(network1[nbChannels][(nbOnes << 2) - 3] > network2[nbChannels][(nbOnes << 2) - 3]) {
             //if (getLengthOfW(network1, 0, nbOnes) > getLengthOfW(network2, 0, nbOnes)) {
                 return false;
@@ -322,7 +322,7 @@ public class SingleProcessor implements Processor {
             //if (getLengthOfW(network1, 1, nbOnes) > getLengthOfW(network2, 1, nbOnes)) {
                 return false;
             }
-        }
+        }*/
 
         /*  Reduce work: Lemma 6:
          C1 subsumes C2 => P(getLengthOfW(C1, x, k)) C= getLengthOfW(C2, x, k)
