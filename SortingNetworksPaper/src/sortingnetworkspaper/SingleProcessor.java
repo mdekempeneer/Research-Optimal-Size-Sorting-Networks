@@ -138,7 +138,7 @@ public class SingleProcessor implements Processor {
         int counter;
         boolean found;
 
-        for (int nbOnes = 1; nbOnes < data.length; nbOnes++) {
+        for (int nbOnes = 1; nbOnes < nbChannels; nbOnes++) {
             //1 - HashSet
 //            set.clear();
 
@@ -198,24 +198,29 @@ public class SingleProcessor implements Processor {
         short comp;
         int number;
         int outerShift;
+        int oShifts;
         ObjectBigListIterator<short[][]> iter = N.iterator();
 
         /* Start Generate work */
         /* For all comparators */
         while (iter.hasNext()) {
             short[][] network = iter.next();
+            number = 3;
 
             for (number = 3, cMaxShifts = maxShifts; number <= maxX; number = (number << 1) - 1, cMaxShifts--) { //x*2 - 1
+                //for (oShifts = 1, cMaxShifts = maxShifts; oShifts < nbChannels; number = (1 << ++oShifts) + 1,  cMaxShifts--) {
                 comp = (short) number;
                 for (outerShift = 0; outerShift <= cMaxShifts; outerShift++, comp <<= 1) { //shift n-2, n-3, ... keer
+                    //System.out.println("Comparator: " + comp);
+
                     //new Network (via clone)
-                    //if ((nbComp == 0 || network[0][nbComp - 1] != comp) && !isRedundantComp(network, comp)) {
                     if (!isRedundantComp(network, comp)) {
                         short[][] data = network.clone();
                         //Fill
                         data[0] = data[0].clone();
                         data[0][nbComp] = comp;
                         processData(data, comp);
+                        processW(data, comp);
 
                         newN.add(data);
                     }
@@ -308,11 +313,13 @@ public class SingleProcessor implements Processor {
         /* Second check: Lemma 5:
          If for x = {0,1} and 0 < k <= n |getLengthOfW(C1, x, k)| > |getLengthOfW(C2, x, k)| => C1 NOT subesume C2
          */
-        for (int nbOnes = 1; nbOnes < network1.length; nbOnes++) {
-            if (getLengthOfW(network1, 0, nbOnes) > getLengthOfW(network2, 0, nbOnes)) {
+        for (int nbOnes = 1; nbOnes < nbChannels; nbOnes++) {
+            if(network1[nbChannels][(nbOnes << 2) - 3] > network2[nbChannels][(nbOnes << 2) - 3]) {
+            //if (getLengthOfW(network1, 0, nbOnes) > getLengthOfW(network2, 0, nbOnes)) {
                 return false;
             }
-            if (getLengthOfW(network1, 1, nbOnes) > getLengthOfW(network2, 1, nbOnes)) {
+            if(network1[nbChannels][(nbOnes << 2) - 1] > network2[nbChannels][(nbOnes << 2) - 1]) {
+            //if (getLengthOfW(network1, 1, nbOnes) > getLengthOfW(network2, 1, nbOnes)) {
                 return false;
             }
         }
@@ -320,15 +327,14 @@ public class SingleProcessor implements Processor {
         /*  Reduce work: Lemma 6:
          C1 subsumes C2 => P(getLengthOfW(C1, x, k)) C= getLengthOfW(C2, x, k)
          */
-        for (int nbOnes = 1; nbOnes < network1.length; nbOnes++) {
-            if (checkPermutationPartOf(network1, network2, 0, nbOnes)) {
-                return false;
-            }
-            if (checkPermutationPartOf(network1, network2, 1, nbOnes)) {
-                return false;
-            }
-        }
-
+        /*for (int nbOnes = 1; nbOnes < network1.length; nbOnes++) {
+         if (checkPermutationPartOf(network1, network2, 0, nbOnes)) {
+         return false;
+         }
+         if (checkPermutationPartOf(network1, network2, 1, nbOnes)) {
+         return false;
+         }
+         }*/
         if (isValidPermutation(network1, network2)) {
             //System.err.println("It was true");
             return true;
@@ -377,21 +383,32 @@ public class SingleProcessor implements Processor {
     /**
      * Get all original inputs excluding the already sorted ones.
      *
+     * @param upperBound
      * @return range from 2 to (2^nbChannels-1) excluding all sorted (binary)
      * ones.
      */
-    private short[][] getOriginalInputs(int upperBound) {
+    public short[][] getOriginalInputs(int upperBound) {
         /* 
          data[0] holds the lengths of the other shorts.
          data[1] holds outputs with 1 '1's.
          data[2] holds outputs with 2 '1's.
          ...
+         data[n] nbChannels holds W(C,x,k) info.
          */
-        short[][] data = new short[nbChannels][];
+        short[][] data = new short[nbChannels + 1][];
+        //short[][] data = new short[nbChannels][]; //TODO: Delete
         data[0] = new short[upperBound];
+        data[nbChannels] = new short[(nbChannels - 1) << 2];
+        int wIndexCounter;
 
-        for (int numberOfOnes = 1; numberOfOnes < nbChannels; numberOfOnes++) {
-            data[numberOfOnes] = getPermutations((short) ((1 << numberOfOnes) - 1), nbChannels);
+        for (int nbOnes = 1; nbOnes < nbChannels; nbOnes++) {
+            data[nbOnes] = getPermutations((short) ((1 << nbOnes) - 1), nbChannels);
+            wIndexCounter = (nbOnes - 1) << 2;
+
+            data[nbChannels][wIndexCounter] = (short) ((1 << nbChannels) - 1);
+            data[nbChannels][wIndexCounter + 1] = nbChannels;
+            data[nbChannels][wIndexCounter + 2] = (short) ((1 << nbChannels) - 1);
+            data[nbChannels][wIndexCounter + 3] = nbChannels;
         }
 
         return data;
@@ -559,6 +576,49 @@ public class SingleProcessor implements Processor {
 
     private boolean checkPermutationPartOf(short[][] network1, short[][] network2, int i, int nbOnes) {
         return false;
+    }
+
+    //TODO: Write Testcases
+    public void processW(short[][] data, short comp) {
+        int wIndexCounter;
+        boolean foundL;
+        boolean foundP;
+
+        for (int nbOnes = 1; nbOnes < nbChannels; nbOnes++) {
+            wIndexCounter = (nbOnes - 1) << 2;
+            foundL = false;
+            foundP = false;
+
+            int P = (comp ^ ((1 << nbChannels) - 1)) & data[nbChannels][wIndexCounter];
+            int L = (comp ^ ((1 << nbChannels) - 1)) & data[nbChannels][wIndexCounter + 2];
+
+            for (short output : data[nbOnes]) {
+                //if( !foundL) { //TODO: Time of beter met if.
+                L = L | (output & comp);
+                if ((L & comp) == comp) {
+                    //if((L & comp) ^ comp == 0)
+                    foundL = true;
+                }
+                //}
+
+                //if (! foundP) { //TODO: Time of beter met if.
+                P = P | ((output ^ ((1 << nbChannels) - 1)) & comp);
+                if ((P & comp) == comp) {
+                    //if((P & comp) ^ comp == 0)
+                    foundP = true;
+                }
+                //}
+
+                /* Break; found both */
+                if (foundP && foundL) {
+                    break;
+                }
+            }
+            data[nbChannels][wIndexCounter] = (short) P;
+            data[nbChannels][wIndexCounter + 1] = (short) Integer.bitCount(P);
+            data[nbChannels][wIndexCounter + 2] = (short) L;
+            data[nbChannels][wIndexCounter + 3] = (short) Integer.bitCount(L);
+        }
     }
 
 }
