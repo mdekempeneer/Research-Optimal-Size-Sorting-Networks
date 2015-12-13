@@ -23,7 +23,7 @@ public class Permute {
     public static short[][] getPermutedData(byte[] permutor, short[][] data) {
         short[][] permData = data.clone();
 
-        for (int nbOnes = 1; nbOnes < data.length; nbOnes++) {
+        for (int nbOnes = 1; nbOnes < data.length-1; nbOnes++) {
             permData[nbOnes] = new short[data[nbOnes].length];
 
             for (int innerIndex = 0; innerIndex < data[nbOnes].length; innerIndex++) {
