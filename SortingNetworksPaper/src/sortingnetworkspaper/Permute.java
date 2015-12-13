@@ -20,12 +20,26 @@ public class Permute {
      *
      * @return The permuted network data.
      */
-    public static short[][] getPermutedData(byte[] permutor, short[][] data) {
+    public static short[][] getPermutedData(byte[] permutor, short[][] data, short nbChannels) {
         short[][] permData = data.clone();
+        permData[nbChannels] = new short[data[nbChannels].length];
 
-        for (int nbOnes = 1; nbOnes < data.length; nbOnes++) {
+        for (int nbOnes = 1; nbOnes < nbChannels; nbOnes++) {
+            /* Permute W */
+            int P = 0;
+            int L = 0;
+
+            for (byte permIndex : permutor) {
+                P <<= 1;
+                L <<= 1;
+                P |= ((data[nbChannels][(nbOnes - 1) << 2] >> permIndex) & 1);
+                L |= ((data[nbChannels][(nbOnes << 2) - 2] >> permIndex) & 1);
+            }
+            permData[nbChannels][(nbOnes - 1) << 2] = (short) P;
+            permData[nbChannels][(nbOnes << 2) - 2] = (short) L;
+            
+            /* Permute outputs */
             permData[nbOnes] = new short[data[nbOnes].length];
-
             for (int innerIndex = 0; innerIndex < data[nbOnes].length; innerIndex++) {
                 int output = 0;
 
