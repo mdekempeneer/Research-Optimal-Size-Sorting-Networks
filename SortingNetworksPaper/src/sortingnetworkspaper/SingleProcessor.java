@@ -246,7 +246,7 @@ public class SingleProcessor implements Processor {
     private void prune() {
         ObjectBigListIterator<short[][]> iter;
 
-        System.out.println("Prunestap begin: " + N.size64());
+        //System.out.println("Prunestap begin: " + N.size64());
         for (int index = 0; index < N.size64() - 1; index++) {
             iter = N.listIterator(index + 1);
             while (iter.hasNext()) {
@@ -263,7 +263,7 @@ public class SingleProcessor implements Processor {
                 }
             }
         }
-        System.out.println("Prunestap eind: " + N.size64());
+        //System.out.println("Prunestap eind: " + N.size64());
     }
 
     /**
@@ -301,6 +301,60 @@ public class SingleProcessor implements Processor {
                 }
             }
         }
+        return true;
+    }
+
+    private boolean isValidPermutation(short[][] network1, short[][] network2, byte[] permutor) {
+        /*  Reduce work: Lemma 6:
+         C1 subsumes C2 => P(w(C1, x, k)) C= w(C2, x, k)
+         */
+        /* Permute & Check W */
+        
+        for (int nbOnes = 1; nbOnes < nbChannels; nbOnes++) {
+            /* Permute W */
+            int P1 = 0;
+            int L1 = 0;
+
+            for (byte permIndex : permutor) {
+                P1 <<= 1;
+                L1 <<= 1;
+                P1 |= ((network1[nbChannels][(nbOnes - 1) << 2] >> permIndex) & 1);
+                L1 |= ((network1[nbChannels][(nbOnes << 2) - 2] >> permIndex) & 1);
+            }
+
+            //Test
+            if (((network2[nbChannels][(nbOnes - 1) << 2] ^ ((1 << nbChannels) - 1)) & P1) != 0
+                    || ((network2[nbChannels][(nbOnes << 2) - 2] ^ ((1 << nbChannels) - 1)) & L1) != 0) {
+                return false;
+            }
+        }
+
+        /* Permute & Check outputs */
+        for (int nbOnes = 1; nbOnes < nbChannels; nbOnes++) {
+            for (int innerIndex = 0; innerIndex < network1[nbOnes].length; innerIndex++) {
+                int output = 0;
+                boolean found = false;
+
+                /* Compute permuted */
+                for (byte permIndex : permutor) {
+                    output <<= 1;
+                    output |= ((network1[nbOnes][innerIndex] >> permIndex) & 1);
+                }
+
+                /* Check if output is partof network2 */
+                for (short output2 : network2[nbOnes]) {
+                    if (output == output2) {
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (!found) {
+                    return false;
+                }
+            }
+        }
+
         return true;
     }
 
@@ -352,7 +406,8 @@ public class SingleProcessor implements Processor {
             //TODO: getPermutedData inbouwen in isValidPermutation zodat we niet
             //Onnodige permutaties gaan doen gezien het bv eerste permuted output
             //reeds faalt -> false. (same voor checkPermutationPartOf
-            if (isValidPermutation(Permute.getPermutedData(currPerm, network1, nbChannels), network2)) {
+            //if (isValidPermutation(Permute.getPermutedData(currPerm, network1, nbChannels), network2)) {
+            if (isValidPermutation(network1, network2, currPerm)) {
                 return true;
             }
         }
