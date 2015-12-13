@@ -5,6 +5,7 @@ package sortingnetworkspaper;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import java.util.Arrays;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -133,4 +134,66 @@ public class SingleProcessorTest {
 
         assertEquals(data[nbChannels].length, first.length);
     }
+
+    @Test
+    public void testCheckPermutationPartOfTrivialTrue() {
+        SingleProcessor processor = new SingleProcessor((short) 4, 5);
+
+        short[] comps = {12, 3, 10, 5, 6};
+        short[][] data = processor.getOriginalInputs(5);
+
+        for (int i = 0; i < comps.length; i++) {
+            processor.processData(data, comps[i]);
+            processor.processW(data, comps[i]);
+        }
+
+        assertTrue(processor.checkPermutationPartOf(data, data));
+    }
+
+    @Test
+    public void testCheckPermutationPartOfTrue() {
+        SingleProcessor processor = new SingleProcessor((short) 4, 5);
+        short[][] data1 = new short[5][];
+        short[][] data2 = new short[5][];
+        //00
+        //01
+        //11
+        short[] w1 = {0, 0, 0, 0, 
+                    1, 0, 1, 0,
+                    1, 0, 1, 0};
+        short[] w2 = {0, 0, 1, 0,
+                    1, 0, 1, 0,
+                    1, 0, 1, 0};
+                            
+        data1[4] = w1;
+        data2[4] = w2;
+        assertTrue(processor.checkPermutationPartOf(data1, data2));
+    }
+    
+       @Test
+    public void testCheckPermutationPartOfFalse() {
+        SingleProcessor processor = new SingleProcessor((short) 4, 5);
+        short[][] data1 = new short[5][];
+        short[][] data2 = new short[5][];
+        //00
+        //01
+        //11
+        //10
+        short[] w1 = {0, 0, 0, 0, 
+                    1, 0, 1, 0,
+                    1, 0, 1, 0};
+        short[] w2 = {0, 0, 1, 0,
+                    1, 0, 1, 0,
+                    1, 0, 0, 0};
+                            
+        data1[4] = w1;
+        data2[4] = w2;
+        assertFalse(processor.checkPermutationPartOf(data1, data2));
+    }
+    
+    
+    
+    
+    
+
 }
