@@ -82,7 +82,7 @@ public class SingleProcessor implements Processor {
             generate(nbComp);
             prune();
             nbComp++;
-            this.printInputs(N.get(0)[0]);
+            //this.printInputs(N.get(0)[0]);
             //System.out.println(N.size64());
         } while (N.size64() > 1 && nbComp < upperBound);
 
@@ -257,7 +257,7 @@ public class SingleProcessor implements Processor {
                 }
             }
         }
-        //System.out.println("Prunestap eind: " + N.size64());
+        System.out.println("Prunestap eind: " + N.size64());
     }
 
     /**
