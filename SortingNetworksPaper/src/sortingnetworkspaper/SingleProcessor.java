@@ -23,7 +23,7 @@ public class SingleProcessor implements Processor {
     private ObjectBigArrayBigList<short[][]> N;
     private ObjectBigArrayBigList<short[][]> newN;
 
-    private final int maxX;
+    private final int maxOuterComparator;
     private final int maxShifts;
     private final byte[] identityElement;
 
@@ -40,7 +40,7 @@ public class SingleProcessor implements Processor {
         this.upperBound = upperBound;
         this.N = new ObjectBigArrayBigList();
         this.newN = new ObjectBigArrayBigList();
-        this.maxX = ((1 << (nbChannels - 1)) | 1);
+        this.maxOuterComparator = ((1 << (nbChannels - 1)) | 1);
         this.maxShifts = nbChannels - 2;
         this.identityElement = getIdentityElement((byte) nbChannels);
     }
@@ -104,7 +104,7 @@ public class SingleProcessor implements Processor {
         int outerShift;
 
         /* For all comparators */
-        for (number = 3; number <= maxX; number = (number << 1) - 1, cMaxShifts--) { //x*2 - 1
+        for (number = 3; number <= maxOuterComparator; number = (number << 1) - 1, cMaxShifts--) { //x*2 - 1
             comp = (short) number;
             for (outerShift = 0; outerShift <= cMaxShifts; outerShift++, comp <<= 1) { //shift n-2, n-3, ... keer
                 //new Network (via clone)
@@ -214,7 +214,7 @@ public class SingleProcessor implements Processor {
             short[][] network = iter.next();
             //number = 3;
 
-            for (number = 3, cMaxShifts = maxShifts; number <= maxX; number = (number << 1) - 1, cMaxShifts--) { //x*2 - 1
+            for (number = 3, cMaxShifts = maxShifts; number <= maxOuterComparator; number = (number << 1) - 1, cMaxShifts--) { //x*2 - 1
                 //for (oShifts = 1, cMaxShifts = maxShifts; oShifts < nbChannels; number = (1 << ++oShifts) + 1,  cMaxShifts--) {
                 comp = (short) number;
                 for (outerShift = 0; outerShift <= cMaxShifts; outerShift++, comp <<= 1) { //shift n-2, n-3, ... keer
@@ -309,7 +309,6 @@ public class SingleProcessor implements Processor {
          C1 subsumes C2 => P(w(C1, x, k)) C= w(C2, x, k)
          */
         /* Permute & Check W */
-        
         for (int nbOnes = 1; nbOnes < nbChannels; nbOnes++) {
             /* Permute W */
             int P1 = 0;
@@ -322,7 +321,7 @@ public class SingleProcessor implements Processor {
                 L1 |= ((network1[nbChannels][(nbOnes << 2) - 2] >> permIndex) & 1);
             }
 
-            //Test
+            //Test      
             if (((network2[nbChannels][(nbOnes - 1) << 2] ^ ((1 << nbChannels) - 1)) & P1) != 0
                     || ((network2[nbChannels][(nbOnes << 2) - 2] ^ ((1 << nbChannels) - 1)) & L1) != 0) {
                 return false;
@@ -330,7 +329,7 @@ public class SingleProcessor implements Processor {
         }
 
         /* Permute & Check outputs */
-        for (int nbOnes = 1; nbOnes < nbChannels; nbOnes++) {
+        for (int nbOnes = 1; nbOnes < nbChannels; nbOnes++) {    
             for (int innerIndex = 0; innerIndex < network1[nbOnes].length; innerIndex++) {
                 int output = 0;
                 boolean found = false;
@@ -557,7 +556,7 @@ public class SingleProcessor implements Processor {
         int index = 0;
 
         /* For all comparators */
-        for (number = 3, cMaxShifts = maxShifts; number <= maxX; number = (number << 1) - 1, cMaxShifts--) { //x*2 - 1
+        for (number = 3, cMaxShifts = maxShifts; number <= maxOuterComparator; number = (number << 1) - 1, cMaxShifts--) { //x*2 - 1
             comp = (short) number;
             for (outerShift = 0; outerShift <= cMaxShifts; outerShift++, comp <<= 1) { //shift n-2, n-3, ... keer
                 result[index] = comp;
