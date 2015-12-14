@@ -260,7 +260,7 @@ public class SingleProcessor implements Processor {
                 }
             }
         }
-        System.out.println("Prunestap eind: " + N.size64());
+        //System.out.println("Prunestap eind: " + N.size64());
     }
 
     /**
@@ -351,35 +351,6 @@ public class SingleProcessor implements Processor {
             }
         }
 
-        return true;
-    }
-
-    public boolean subsumesLemma4(short[][] network1, short[][] network2) {
-        /* First check: Lemma 4: 
-         If E(k) such that the data1[k].length > data2[k].length => data1 NOT subesumes data2 
-         */
-        for (int nbOnes = 1; nbOnes < nbChannels; nbOnes++) {
-            if (network1[nbOnes].length > network2[nbOnes].length) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public boolean subsumesLemma5(short[][] network1, short[][] network2) {
-        /* Second check: Lemma 5:
-         If for x = {0,1} and 0 < k <= n |getLengthOfW(C1, x, k)| > |getLengthOfW(C2, x, k)| => C1 NOT subesume C2
-         */
-        for (int nbOnes = 1; nbOnes < nbChannels; nbOnes++) {
-            if (network1[nbChannels][(nbOnes << 2) - 3] > network2[nbChannels][(nbOnes << 2) - 3]) {
-                //if (getLengthOfW(network1, 0, nbOnes) > getLengthOfW(network2, 0, nbOnes)) {
-                return false;
-            }
-            if (network1[nbChannels][(nbOnes << 2) - 1] > network2[nbChannels][(nbOnes << 2) - 1]) {
-                //if (getLengthOfW(network1, 1, nbOnes) > getLengthOfW(network2, 1, nbOnes)) {
-                return false;
-            }
-        }
         return true;
     }
 
