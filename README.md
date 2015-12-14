@@ -89,12 +89,17 @@
 		<LI>Verwachtte tijdsbesteding voor sorting networks met 8 en 9 kanalen berekenen.
 		</UL>
 		
-<DT>??/??/201? - Bijeenkomst 9
+<DT>16/12/2015 - Bijeenkomst 9
 	<DD>Te doen tegen de volgende bijeenkomst (??/??):
 		<UL>
 		<LI>
 		</UL>
 
+<DT>??/??/201? - Bijeenkomst 10
+	<DD>Te doen tegen de volgende bijeenkomst (??/??):
+		<UL>
+		<LI>
+		</UL>
 
 <DT>Instructies
 	<DD><i>('argName' : arg : comment)</i>
