@@ -17,6 +17,7 @@ public class Permute {
      * @param permutor The array of shorts used to permute. (elements of {0, ..,
      * nbChannels-1})
      * @param data The network to permute.
+     * @param nbChannels The number of channels
      *
      * @return The permuted network data.
      */
@@ -37,7 +38,7 @@ public class Permute {
             }
             permData[nbChannels][(nbOnes - 1) << 2] = (short) P;
             permData[nbChannels][(nbOnes << 2) - 2] = (short) L;
-            
+
             /* Permute outputs */
             permData[nbOnes] = new short[data[nbOnes].length];
             for (int innerIndex = 0; innerIndex < data[nbOnes].length; innerIndex++) {

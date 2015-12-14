@@ -146,11 +146,10 @@ public class SingleProcessor implements Processor {
 
             //2 - ArrayList
 //            arr = new ShortArrayList();
-
             //3 - Array
             processed = new short[data[nbOnes].length];
             counter = 0;
-            
+
             for (int innerIndex = 0; innerIndex < data[nbOnes].length; innerIndex++) {
                 short value = swapCompare(data[nbOnes][innerIndex], newComp);
                 //1 - HashSet
@@ -160,7 +159,6 @@ public class SingleProcessor implements Processor {
 //                if (!arr.contains(value)) {
 //                    arr.add(value);
 //                }
-
                 //3 - Array
                 processed[innerIndex] = swapCompare(data[nbOnes][innerIndex], newComp);
                 found = false;
@@ -175,7 +173,6 @@ public class SingleProcessor implements Processor {
                     counter++;
                 }
             }
-
 
             //1 - HashSet
 //            data[nbOnes] = set.toShortArray();
@@ -329,7 +326,7 @@ public class SingleProcessor implements Processor {
         }
 
         /* Permute & Check outputs */
-        for (int nbOnes = 1; nbOnes < nbChannels; nbOnes++) {    
+        for (int nbOnes = 1; nbOnes < nbChannels; nbOnes++) {
             for (int innerIndex = 0; innerIndex < network1[nbOnes].length; innerIndex++) {
                 int output = 0;
                 boolean found = false;
@@ -357,17 +354,7 @@ public class SingleProcessor implements Processor {
         return true;
     }
 
-    /**
-     * Checks if network1 subsumes network2. Subsumes: E(permutation p):
-     * p(outputs(network1)) part of or equal to outputs(network2). "Outputs of
-     * network1 can be converted (permutation) to or as part of the outputs of
-     * network2."
-     *
-     * @param network1 The first network as part of network1 subsumes? network2
-     * @param network2 The second network as part of network1 subsumes? network2
-     * @return Whether network1 subsumes network2.
-     */
-    private boolean subsumes(short[][] network1, short[][] network2) {
+    public boolean subsumesLemma4(short[][] network1, short[][] network2) {
         /* First check: Lemma 4: 
          If E(k) such that the data1[k].length > data2[k].length => data1 NOT subesumes data2 
          */
@@ -376,7 +363,10 @@ public class SingleProcessor implements Processor {
                 return false;
             }
         }
+        return true;
+    }
 
+    public boolean subsumesLemma5(short[][] network1, short[][] network2) {
         /* Second check: Lemma 5:
          If for x = {0,1} and 0 < k <= n |getLengthOfW(C1, x, k)| > |getLengthOfW(C2, x, k)| => C1 NOT subesume C2
          */
@@ -390,20 +380,41 @@ public class SingleProcessor implements Processor {
                 return false;
             }
         }
+        return true;
+    }
 
-        if (isValidPermutation(network1, network2)) {
-            //System.err.println("It was true");
-            return true;
+    /**
+     * Checks if network1 subsumes network2. Subsumes: E(permutation p):
+     * p(outputs(network1)) part of or equal to outputs(network2). "Outputs of
+     * network1 can be converted (permutation) to or as part of the outputs of
+     * network2."
+     *
+     * @param network1 The first network as part of network1 subsumes? network2
+     * @param network2 The second network as part of network1 subsumes? network2
+     * @return Whether network1 subsumes network2.
+     */
+    private boolean subsumes(short[][] network1, short[][] network2) {
+
+        for (int nbOnes = 1; nbOnes < nbChannels; nbOnes++) {
+            if (network1[nbOnes].length > network2[nbOnes].length) {
+                return false;
+            }
+        }
+        for (int nbOnes = 1; nbOnes < nbChannels; nbOnes++) {
+            if (network1[nbChannels][(nbOnes << 2) - 3] > network2[nbChannels][(nbOnes << 2) - 3]) {
+                //if (getLengthOfW(network1, 0, nbOnes) > getLengthOfW(network2, 0, nbOnes)) {
+                return false;
+            }
+            if (network1[nbChannels][(nbOnes << 2) - 1] > network2[nbChannels][(nbOnes << 2) - 1]) {
+                //if (getLengthOfW(network1, 1, nbOnes) > getLengthOfW(network2, 1, nbOnes)) {
+                return false;
+            }
         }
 
         byte[] currPerm = new byte[this.identityElement.length];
         System.arraycopy(this.identityElement, 0, currPerm, 0, nbChannels);
 
         while ((currPerm = Permute.getNextPermutation(currPerm)) != null) {
-            //TODO: getPermutedData inbouwen in isValidPermutation zodat we niet
-            //Onnodige permutaties gaan doen gezien het bv eerste permuted output
-            //reeds faalt -> false. (same voor checkPermutationPartOf
-            //if (isValidPermutation(Permute.getPermutedData(currPerm, network1, nbChannels), network2)) {
             if (isValidPermutation(network1, network2, currPerm)) {
                 return true;
             }
@@ -586,13 +597,13 @@ public class SingleProcessor implements Processor {
             System.out.println(input);
         }
     }
-    
+
     private void printInputs(short[] inputs) {
-        for(short input : inputs) {
+        for (short input : inputs) {
             System.out.print(input);
             System.out.print(" ");
         }
-                System.out.println("");
+        System.out.println("");
     }
 
     /**
