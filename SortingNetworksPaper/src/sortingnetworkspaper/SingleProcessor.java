@@ -368,11 +368,9 @@ public class SingleProcessor implements Processor {
      * @return Whether network1 subsumes network2.
      */
     private boolean subsumes(short[][] network1, short[][] network2) {
-        //TODO Check if performing isValidPermutation within subsumes (inline) is more efficient.
         /* First check: Lemma 4: 
          If E(k) such that the data1[k].length > data2[k].length => data1 NOT subesumes data2 
          */
-
         for (int nbOnes = 1; nbOnes < nbChannels; nbOnes++) {
             if (network1[nbOnes].length > network2[nbOnes].length) {
                 return false;
