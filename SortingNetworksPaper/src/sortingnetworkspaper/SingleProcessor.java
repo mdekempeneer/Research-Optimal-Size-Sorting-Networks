@@ -202,31 +202,31 @@ public class SingleProcessor implements Processor {
         short comp;
         int number;
         int outerShift;
-        //int oShifts;
         ObjectBigListIterator<short[][]> iter = N.iterator();
 
         /* Start Generate work */
         /* For all comparators */
         while (iter.hasNext()) {
             short[][] network = iter.next();
-            //number = 3;
 
             for (number = 3, cMaxShifts = maxShifts; number <= maxOuterComparator; number = (number << 1) - 1, cMaxShifts--) { //x*2 - 1
-                //for (oShifts = 1, cMaxShifts = maxShifts; oShifts < nbChannels; number = (1 << ++oShifts) + 1,  cMaxShifts--) {
                 comp = (short) number;
                 for (outerShift = 0; outerShift <= cMaxShifts; outerShift++, comp <<= 1) { //shift n-2, n-3, ... keer
-                    //System.out.println("Comparator: " + comp);
 
-                    //new Network (via clone)
-                    if (!isRedundantComp(network, comp)) {
-                        short[][] data = network.clone();
-                        //Fill
-                        data[0] = data[0].clone();
-                        data[0][nbComp] = comp;
-                        processData(data, comp);
-                        processW(data, comp);
+                    int prevComp = network[0][nbComp - 1];
+                    if ((prevComp & comp) != 0 || prevComp > comp) {
 
-                        newN.add(data);
+                        //new Network (via clone)
+                        if (!isRedundantComp(network, comp)) {
+                            short[][] data = network.clone();
+                            //Fill
+                            data[0] = data[0].clone();
+                            data[0][nbComp] = comp;
+                            processData(data, comp);
+                            processW(data, comp);
+
+                            newN.add(data);
+                        }
                     }
                 }
             }
@@ -645,28 +645,30 @@ public class SingleProcessor implements Processor {
 
         for (int nbOnes = 1; nbOnes < nbChannels; nbOnes++) {
             wIndexCounter = (nbOnes - 1) << 2;
-            foundL = false;
-            foundP = false;
 
-            int P = (comp ^ ((1 << nbChannels) - 1)) & data[nbChannels][wIndexCounter];
-            int L = (comp ^ ((1 << nbChannels) - 1)) & data[nbChannels][wIndexCounter + 2];
+            int oldP = data[nbChannels][wIndexCounter];
+            int oldL = data[nbChannels][wIndexCounter + 2];
+
+            int P = (comp ^ ((1 << nbChannels) - 1)) & oldP;
+            int L = (comp ^ ((1 << nbChannels) - 1)) & oldL;
+
+            foundP = (oldP == P);
+            foundL = (oldL == L);
 
             for (short output : data[nbOnes]) {
-                //if( !foundL) { //TODO: Time of beter met if.
-                L = L | (output & comp);
-                if ((L & comp) == comp) {
-                    //if((L & comp) ^ comp == 0)
-                    foundL = true;
+                if (!foundL) {
+                    L = L | (output & comp);
+                    if ((L & comp) == comp) {
+                        foundL = true;
+                    }
                 }
-                //}
 
-                //if (! foundP) { //TODO: Time of beter met if.
-                P = P | ((output ^ ((1 << nbChannels) - 1)) & comp);
-                if ((P & comp) == comp) {
-                    //if((P & comp) ^ comp == 0)
-                    foundP = true;
+                if (!foundP) {
+                    P = P | ((output ^ ((1 << nbChannels) - 1)) & comp);
+                    if ((P & comp) == comp) {
+                        foundP = true;
+                    }
                 }
-                //}
 
                 /* Break; found both */
                 if (foundP && foundL) {
