@@ -14,7 +14,7 @@ public class Main {
         
         if(args.length >= 2) {
             int nbChannels = Integer.parseInt(args[0]);
-            tester.isSortingNetwork(nbChannels, tester.parseNetwork(args[1]));
+            System.out.println(tester.isSortingNetwork(nbChannels, tester.parseNetwork(args[1])));
         } else {
             JFileChooser jfc = new JFileChooser();
             jfc.setCurrentDirectory(new File(System.getProperty("user.home")));
