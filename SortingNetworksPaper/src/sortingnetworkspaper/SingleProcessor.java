@@ -275,8 +275,6 @@ public class SingleProcessor implements Processor {
         /*  Reduce work: Lemma 6:
          C1 subsumes C2 => P(getLengthOfW(C1, x, k)) C= getLengthOfW(C2, x, k)
          */
-        //TODO: 'Inline' so we don't permute outputs when this fails.
-        // Then test time to check whether it is slower.
         if (!checkPermutationPartOf(network1, network2)) {
             return false;
         }
