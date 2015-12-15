@@ -153,14 +153,13 @@ public class SingleProcessor implements Processor {
             for (int innerIndex = 0; innerIndex < data[nbOnes].length; innerIndex++) {
                 short value = swapCompare(data[nbOnes][innerIndex], newComp);
                 //1 - HashSet
-//                set.add(swapCompare(data[nbOnes][innerIndex], newComp));
+//                set.add(value);
 
                 //2 - ArrayList
 //                if (!arr.contains(value)) {
 //                    arr.add(value);
 //                }
                 //3 - Array
-                processed[innerIndex] = swapCompare(data[nbOnes][innerIndex], newComp);
                 found = false;
                 for (int i = counter - 1; i >= 0; i--) {
                     if (processed[i] == value) {
@@ -169,8 +168,7 @@ public class SingleProcessor implements Processor {
                     }
                 }
                 if (!found) {
-                    processed[counter] = value;
-                    counter++;
+                    processed[counter++] = value;
                 }
             }
 
