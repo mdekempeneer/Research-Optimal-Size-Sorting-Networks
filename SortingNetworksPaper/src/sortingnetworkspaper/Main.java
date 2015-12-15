@@ -1,5 +1,6 @@
 package sortingnetworkspaper;
 
+import java.util.Arrays;
 import javax.swing.JOptionPane;
 
 /**
@@ -29,11 +30,12 @@ public class Main {
         long begin;
         long total = 0;
         long caseTime = 0;
+        short[] result = null;
         while (nbCase > cCase) {
             begin = System.nanoTime();
             //Processor processor = new ParallelProcessor((short) nbChannels, upperBound);
             Processor processor = new SingleProcessor((short) nbChannels, upperBound);
-            processor.process();
+            result = processor.process();
             
             cCase++;
             caseTime = System.nanoTime() - begin;
@@ -41,6 +43,7 @@ public class Main {
             total += caseTime;
             
         }
+        System.out.println(Arrays.toString(result));
         System.out.println("Total: " + total + " avg: " + total / nbCase + " ns");
     }
 
