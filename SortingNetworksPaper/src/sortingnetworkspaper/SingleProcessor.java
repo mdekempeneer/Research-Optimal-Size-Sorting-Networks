@@ -214,7 +214,8 @@ public class SingleProcessor implements Processor {
                 for (outerShift = 0; outerShift <= cMaxShifts; outerShift++, comp <<= 1) { //shift n-2, n-3, ... keer
 
                     int prevComp = network[0][nbComp - 1];
-                    if ((prevComp & comp) != 0 || prevComp < comp) {
+                    if (((prevComp & comp) != 0 && prevComp != comp)
+                            || prevComp < comp) {
 
                         //new Network (via clone)
                         if (!isRedundantComp(network, comp)) {
