@@ -15,3 +15,5 @@
 *.pl~
 
 ~$timeTestPaper.xlsx
+/C_SortingNetworks/SortingNetworks/dist/
+/C_SortingNetworks/SortingNetworks/build/
