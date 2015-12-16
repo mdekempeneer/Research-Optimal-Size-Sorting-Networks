@@ -366,7 +366,8 @@ public class SingleProcessor implements Processor {
                 return false;
             }
         }
-        for (int index = 1; index < 4 * (nbChannels - 1);) {
+        int maxIndex = (nbChannels-1) << 2;
+        for (int index = 1; index < maxIndex;) {
             if (network1[nbChannels][index] > network2[nbChannels][index]) {
                 return false;
             }
