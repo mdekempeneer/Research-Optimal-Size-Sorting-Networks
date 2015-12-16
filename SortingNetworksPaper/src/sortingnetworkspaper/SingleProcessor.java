@@ -74,7 +74,7 @@ public class SingleProcessor implements Processor {
         /* Initialize inputs */
         //TODO: Replace firstTimeGenerate & Prune with just the network (1 2) ??
         firstTimeGenerate(getOriginalInputs(upperBound));
-        short nbComp = 1; //TODO: Move to global variables
+        short nbComp = 1;
         prune();
         //System.out.println(N.size64());
 
@@ -129,10 +129,8 @@ public class SingleProcessor implements Processor {
      */
     @Override
     public void processData(short[][] data, short newComp) {
-        //TODO: Test timings for ShortOpenHashSet, Arrays, ShortArrayList
-
         //1 - HashSet
-//        ShortOpenHashSet set = new ShortOpenHashSet(); //TODO: Don't use HashSet. Time!
+//        ShortOpenHashSet set = new ShortOpenHashSet();
         //2 - ArrayList
 //        ShortArrayList arr;
         //3 - Array
@@ -378,7 +376,7 @@ public class SingleProcessor implements Processor {
                 return false;
             }
         }
-        
+
         if (isValidPermutation(network1, network2)) {
             //System.err.println("It was true");
             return true;
@@ -403,7 +401,7 @@ public class SingleProcessor implements Processor {
      */
     @Override
     public synchronized void addToNewN(ObjectBigArrayBigList<short[][]> partN) {
-        newN.addAll(partN); //TODO: System.arraycopy ??
+        newN.addAll(partN);
     }
 
     /**
@@ -440,7 +438,6 @@ public class SingleProcessor implements Processor {
          data[n] nbChannels holds W(C,x,k) info.
          */
         short[][] data = new short[nbChannels + 1][];
-        //short[][] data = new short[nbChannels][]; //TODO: Delete
         data[0] = new short[upperBound];
         data[nbChannels] = new short[(nbChannels - 1) << 2];
         int wIndexCounter;
@@ -479,12 +476,13 @@ public class SingleProcessor implements Processor {
      * @param n
      * @return
      */
-    private static float factorial(int n) {
-        float result = 1;
-        while (n > 1) {
+    public static long factorial(int n) {
+        long result = 1;
+
+        for (int i = n; n > 1; n--) {
             result *= n;
-            n--;
         }
+
         return result;
     }
 
@@ -520,7 +518,6 @@ public class SingleProcessor implements Processor {
             index++;
         } while (value < max);
 
-        //TODO: Test if array is full (length correctly) if(index != result.length) problem.
         return result;
     }
 
