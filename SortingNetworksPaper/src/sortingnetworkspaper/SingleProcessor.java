@@ -387,7 +387,7 @@ public class SingleProcessor implements Processor {
         byte[] currPerm = new byte[this.identityElement.length];
         System.arraycopy(this.identityElement, 0, currPerm, 0, nbChannels);
 
-        while ((currPerm = Permute.getNextPermutation(currPerm)) != null) {
+        while ((currPerm = Permute.getNextPermutation(currPerm)) != null) {   
             if (isValidPermutation(network1, network2, currPerm)) {
                 return true;
             }
