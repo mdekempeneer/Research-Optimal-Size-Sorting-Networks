@@ -242,7 +242,7 @@ public class SingleProcessor implements Processor {
     private void prune() {
         ObjectBigListIterator<short[][]> iter;
 
-        System.out.println("Prunestap begin: " + N.size64());
+        //System.out.println("Prunestap begin: " + N.size64());
         for (int index = 0; index < N.size64() - 1; index++) {
             iter = N.listIterator(index + 1);
             while (iter.hasNext()) {
@@ -259,7 +259,7 @@ public class SingleProcessor implements Processor {
                 }
             }
         }
-        System.out.println("Prunestap eind: " + N.size64());
+        //System.out.println("Prunestap eind: " + N.size64());
     }
 
     /**
