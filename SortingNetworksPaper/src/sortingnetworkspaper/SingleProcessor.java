@@ -366,17 +366,27 @@ public class SingleProcessor implements Processor {
                 return false;
             }
         }
-        for (int nbOnes = 1; nbOnes < nbChannels; nbOnes++) {
-            if (network1[nbChannels][(nbOnes << 2) - 3] > network2[nbChannels][(nbOnes << 2) - 3]) {
-                //if (getLengthOfW(network1, 0, nbOnes) > getLengthOfW(network2, 0, nbOnes)) {
+        for (int index = 1; index < 4 * (nbChannels - 1);) {
+            if (network1[nbChannels][index] > network2[nbChannels][index]) {
                 return false;
             }
-            if (network1[nbChannels][(nbOnes << 2) - 1] > network2[nbChannels][(nbOnes << 2) - 1]) {
-                //if (getLengthOfW(network1, 1, nbOnes) > getLengthOfW(network2, 1, nbOnes)) {
+            index += 2;
+            if (network1[nbChannels][index] > network2[nbChannels][index]) {
                 return false;
             }
+            index += 2;
         }
 
+        /*for (int nbOnes = 1; nbOnes < nbChannels; nbOnes++) {
+         if (network1[nbChannels][(nbOnes << 2) - 3] > network2[nbChannels][(nbOnes << 2) - 3]) {
+         //if (getLengthOfW(network1, 0, nbOnes) > getLengthOfW(network2, 0, nbOnes)) {
+         return false;
+         }
+         if (network1[nbChannels][(nbOnes << 2) - 1] > network2[nbChannels][(nbOnes << 2) - 1]) {
+         //if (getLengthOfW(network1, 1, nbOnes) > getLengthOfW(network2, 1, nbOnes)) {
+         return false;
+         }
+         }*/
         if (isValidPermutation(network1, network2)) {
             //System.err.println("It was true");
             return true;
