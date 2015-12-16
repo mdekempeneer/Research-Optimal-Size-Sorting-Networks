@@ -112,7 +112,6 @@ public class Permute {
         return currPerm;
     }
 
-    //TODO: Schrijf Tester voor Permute
     /*    public static void main(String[] args) {
      short[] test_arr = {0, 1, 2, 3, 4, 5, 6, 7, 8};
 
