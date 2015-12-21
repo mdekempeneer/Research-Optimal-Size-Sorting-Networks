@@ -240,7 +240,7 @@ public class SingleProcessor implements Processor {
     private void prune() {
         ObjectBigListIterator<short[][]> iter;
 
-        //System.out.println("Prunestap begin: " + N.size64());
+        System.out.println("Prunestap begin: " + N.size64());
         for (int index = 0; index < N.size64() - 1; index++) {
             iter = N.listIterator(index + 1);
             while (iter.hasNext()) {
@@ -257,7 +257,7 @@ public class SingleProcessor implements Processor {
                 }
             }
         }
-        //System.out.println("Prunestap eind: " + N.size64());
+        System.out.println("Prunestap eind: " + N.size64());
     }
 
     /**
@@ -301,24 +301,27 @@ public class SingleProcessor implements Processor {
          C1 subsumes C2 => P(w(C1, x, k)) C= w(C2, x, k)
          */
         /* Permute & Check W */
-        for (int nbOnes = 1; nbOnes < nbChannels; nbOnes++) {
-            /* Permute W */
-            int P1 = 0;
-            int L1 = 0;
+        //TODO: Check if that is true (line below)!
+        //Only checking the permutation who are valid for lemma 6.
 
-            for (byte permIndex : permutor) {
-                P1 <<= 1;
-                L1 <<= 1;
-                P1 |= ((network1[nbChannels][(nbOnes - 1) << 2] >> permIndex) & 1);
-                L1 |= ((network1[nbChannels][(nbOnes << 2) - 2] >> permIndex) & 1);
-            }
-
-            //Test      
-            if (((network2[nbChannels][(nbOnes - 1) << 2] ^ ((1 << nbChannels) - 1)) & P1) != 0
-                    || ((network2[nbChannels][(nbOnes << 2) - 2] ^ ((1 << nbChannels) - 1)) & L1) != 0) {
-                return false;
-            }
-        }
+//        for (int nbOnes = 1; nbOnes < nbChannels; nbOnes++) {
+//            /* Permute W */
+//            int P1 = 0;
+//            int L1 = 0;
+//
+//            for (byte permIndex : permutor) {
+//                P1 <<= 1;
+//                L1 <<= 1;
+//                P1 |= ((network1[nbChannels][(nbOnes - 1) << 2] >> permIndex) & 1);
+//                L1 |= ((network1[nbChannels][(nbOnes << 2) - 2] >> permIndex) & 1);
+//            }
+//
+//            //Test      
+//            if (((network2[nbChannels][(nbOnes - 1) << 2] ^ ((1 << nbChannels) - 1)) & P1) != 0
+//                    || ((network2[nbChannels][(nbOnes << 2) - 2] ^ ((1 << nbChannels) - 1)) & L1) != 0) {
+//                return false;
+//            }
+//        }
 
         /* Permute & Check outputs */
         for (int nbOnes = 1; nbOnes < nbChannels; nbOnes++) {
@@ -327,9 +330,12 @@ public class SingleProcessor implements Processor {
                 boolean found = false;
 
                 /* Compute permuted */
-                for (byte permIndex : permutor) {
-                    output <<= 1;
-                    output |= ((network1[nbOnes][innerIndex] >> permIndex) & 1);
+                for (int pIndex = permutor.length - 1; pIndex >= 0; pIndex--) {
+                    byte permIndex = permutor[pIndex];
+                    //for (byte permIndex : permutor) {
+                        output <<= 1;
+                        output |= ((network1[nbOnes][innerIndex] >> permIndex) & 1);
+                    //}
                 }
 
                 /* Check if output is partof network2 */
@@ -366,7 +372,7 @@ public class SingleProcessor implements Processor {
                 return false;
             }
         }
-        int maxIndex = (nbChannels-1) << 2;
+        int maxIndex = (nbChannels - 1) << 2;
         for (int index = 1; index < maxIndex;) {
             if (network1[nbChannels][index] > network2[nbChannels][index]) {
                 return false;
@@ -393,15 +399,132 @@ public class SingleProcessor implements Processor {
             return true;
         }
 
-        byte[] currPerm = new byte[this.identityElement.length];
-        System.arraycopy(this.identityElement, 0, currPerm, 0, nbChannels);
+        return existsAValidPerm(network1, network2);
+//        byte[] currPerm = new byte[this.identityElement.length];
+//        System.arraycopy(this.identityElement, 0, currPerm, 0, nbChannels);
+//        
+//        
+//
+//        while ((currPerm = Permute.getNextPermutation(currPerm)) != null) {
+//            if (isValidPermutation(network1, network2, currPerm)) {
+//                return true;
+//            }
+//        }
+//
+//        return false;
+    }
 
-        while ((currPerm = Permute.getNextPermutation(currPerm)) != null) {   
-            if (isValidPermutation(network1, network2, currPerm)) {
-                return true;
+    public boolean existsAValidPerm(short[][] network1, short[][] network2) {
+
+        //TODO: Create initialList once and make copy all the time.
+        int allOnes = (1 << nbChannels) - 1;
+        int[] posList = new int[nbChannels];
+
+        //Fill posList with all possibilities.
+        for (int i = 0; i < posList.length; i++) {
+            posList[i] = allOnes;
+        }
+
+        //Compute positions.
+        for (int nbOnes = 1; nbOnes < nbChannels; nbOnes++) {
+            int L2 = network2[nbChannels][(nbOnes << 2) - 2]; //L for network 2.
+            int P2 = network2[nbChannels][(nbOnes - 1) << 2]; //P for network 2.
+
+            int revLPos = allOnes ^ network1[nbChannels][(nbOnes << 2) - 2]; //Positions of 0 for L.
+            int revPPos = allOnes ^ network1[nbChannels][(nbOnes - 1) << 2]; //Positions of 0 for P.
+
+            //TODO: Can we shorten result = revOnePos & revZeroPos by inline + logic?
+            //and combine the two if's in the process.
+            //int result = revLPos & revPPos;
+            //Fill posList;
+            if (L2 != allOnes || P2 != allOnes) {
+                for (int i = 0; i < posList.length; i++) {
+                    int mask = 1 << i;
+                    int bitL = mask & L2; //TODO: Inline
+                    int bitP = mask & P2; //TODO: Inline
+
+                    if (bitL == 0) {
+                        posList[i] &= revLPos;
+                    }
+                    if (bitP == 0) {
+                        posList[i] &= revPPos;
+                    }
+
+                    //If possible positions are ever empty -> return false.
+                    if (posList[i] == 0) {
+                        return false;
+                    }
+                }
             }
         }
 
+        /* Convert posList bit structure to bytes for permutations. */
+        byte[][] Ps = new byte[nbChannels][];
+        //TODO: Can this structure be improved?
+        for (int i = 0; i < Ps.length; i++) {
+            byte[] tempP = new byte[nbChannels]; //don't know initial capacity required.
+            int counterIndexP = 0;
+            int currP = posList[i];
+
+            for (byte permIndex = 0; permIndex < nbChannels; permIndex++) {
+                if (((1 << permIndex) & currP) != 0) {// mask & posList[i] == 1 op die positie.
+                    tempP[counterIndexP++] = permIndex;
+                }
+            }
+
+            Ps[i] = new byte[counterIndexP]; //trim down to appropriate sizes.
+            System.arraycopy(tempP, 0, Ps[i], 0, counterIndexP);
+        }
+
+        //Check all permutations of the given positions.
+        return checkAllRelevantPermutations(network1, network2, Ps, 0, new byte[nbChannels]);
+    }
+
+    public boolean checkAllRelevantPermutations(short[][] network1, short[][] network2, byte[][] Ps, int currIndex, byte[] soFar) {
+        if (currIndex == nbChannels - 1) {
+            //Reached last permNumber.
+
+            for (byte p : Ps[currIndex]) {
+                boolean found = false;
+
+                //Check if already exists.
+                for (int i = currIndex - 1; i >= 0; i--) {
+                    if (soFar[i] == p) {
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (!found) {
+                    soFar[currIndex] = p;
+                    //test if valid perm and stop if it is.
+                    if (isValidPermutation(network1, network2, soFar)) {
+                        return true;
+                    }
+                }
+            }
+            return false; //Reached end of last permNumber and no valid perm found.
+        } else {
+            for (byte p : Ps[currIndex]) {
+                boolean found = false;
+
+                //Check if already exists.
+                for (int i = currIndex - 1; i >= 0; i--) {
+                    if (soFar[i] == p) {
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (!found) {
+                    soFar[currIndex] = p;
+                    //Will stop iteration when a valid is found already.
+                    if (checkAllRelevantPermutations(network1, network2, Ps, currIndex + 1, soFar)) {
+                        return true;
+                    }
+                }
+            }
+        }
         return false;
     }
 
