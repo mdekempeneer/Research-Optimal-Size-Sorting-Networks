@@ -331,7 +331,7 @@ public class SingleProcessor implements Processor {
 
                 /* Compute permuted */
                 for (int pIndex = permutor.length - 1; pIndex >= 0; pIndex--) {
-                    byte permIndex = permutor[pIndex];
+                    byte permIndex = permutor[pIndex]; //TODO: Inline
                     //for (byte permIndex : permutor) {
                         output <<= 1;
                         output |= ((network1[nbOnes][innerIndex] >> permIndex) & 1);
