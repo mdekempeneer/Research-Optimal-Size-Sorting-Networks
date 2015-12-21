@@ -306,13 +306,12 @@ public class SingleProcessor implements Processor {
             int P1 = 0;
             int L1 = 0;
 
-            //for (byte permIndex : permutor) {
+            //for (byte permIndex : permutor) { //TODO: Remove
             for (int pIndex = permutor.length - 1; pIndex >= 0; pIndex--) {
-                byte permIndex = permutor[pIndex];
                 P1 <<= 1;
                 L1 <<= 1;
-                P1 |= ((network1[nbChannels][(nbOnes - 1) << 2] >> permIndex) & 1);
-                L1 |= ((network1[nbChannels][(nbOnes << 2) - 2] >> permIndex) & 1);
+                P1 |= ((network1[nbChannels][(nbOnes - 1) << 2] >> permutor[pIndex]) & 1);
+                L1 |= ((network1[nbChannels][(nbOnes << 2) - 2] >> permutor[pIndex]) & 1);
             }
             //}
 
@@ -330,11 +329,10 @@ public class SingleProcessor implements Processor {
                 boolean found = false;
 
                 /* Compute permuted */
-                //for (byte permIndex : permutor) {
+                //for (byte permIndex : permutor) { //TODO: Remove
                 for (int pIndex = permutor.length - 1; pIndex >= 0; pIndex--) {
-                    byte permIndex = permutor[pIndex];
                     output <<= 1;
-                    output |= ((network1[nbOnes][innerIndex] >> permIndex) & 1);
+                    output |= ((network1[nbOnes][innerIndex] >> permutor[pIndex]) & 1);
                 }
                 //}
 
