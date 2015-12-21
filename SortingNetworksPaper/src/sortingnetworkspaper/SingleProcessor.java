@@ -210,9 +210,7 @@ public class SingleProcessor implements Processor {
                 for (outerShift = 0; outerShift <= cMaxShifts; outerShift++, comp <<= 1) { //shift n-2, n-3, ... keer
 
                     int prevComp = network[0][nbComp - 1];
-                    if (((prevComp & comp) != 0 && prevComp != comp)
-                            || prevComp < comp) {
-
+                    //if (((prevComp & comp) != 0 && prevComp != comp) || prevComp < comp) {
                         //new Network (via clone)
                         if (!isRedundantComp(network, comp)) {
                             short[][] data = network.clone();
@@ -224,7 +222,7 @@ public class SingleProcessor implements Processor {
 
                             newN.add(data);
                         }
-                    }
+                    //}
                 }
             }
         }
@@ -309,11 +307,11 @@ public class SingleProcessor implements Processor {
 //            int P1 = 0;
 //            int L1 = 0;
 //
-//            for (byte permIndex : permutor) {
+//            for (int pIndex = permutor.length-1; pIndex >= 0; pIndex--) {
 //                P1 <<= 1;
 //                L1 <<= 1;
-//                P1 |= ((network1[nbChannels][(nbOnes - 1) << 2] >> permIndex) & 1);
-//                L1 |= ((network1[nbChannels][(nbOnes << 2) - 2] >> permIndex) & 1);
+//                P1 |= ((network1[nbChannels][(nbOnes - 1) << 2] >> permutor[pIndex]) & 1);
+//                L1 |= ((network1[nbChannels][(nbOnes << 2) - 2] >> permutor[pIndex]) & 1);
 //            }
 //
 //            //Test      
@@ -332,10 +330,8 @@ public class SingleProcessor implements Processor {
                 /* Compute permuted */
                 for (int pIndex = permutor.length - 1; pIndex >= 0; pIndex--) {
                     byte permIndex = permutor[pIndex]; //TODO: Inline
-                    //for (byte permIndex : permutor) {
-                        output <<= 1;
-                        output |= ((network1[nbOnes][innerIndex] >> permIndex) & 1);
-                    //}
+                    output <<= 1;
+                    output |= ((network1[nbOnes][innerIndex] >> permIndex) & 1);
                 }
 
                 /* Check if output is partof network2 */
