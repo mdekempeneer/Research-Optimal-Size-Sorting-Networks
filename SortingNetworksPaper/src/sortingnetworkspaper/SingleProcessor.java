@@ -240,7 +240,7 @@ public class SingleProcessor implements Processor {
     private void prune() {
         ObjectBigListIterator<short[][]> iter;
 
-        //System.out.println("Prunestap begin: " + N.size64());
+        System.out.println("Prunestap begin: " + N.size64());
         for (int index = 0; index < N.size64() - 1; index++) {
             iter = N.listIterator(index + 1);
             while (iter.hasNext()) {
@@ -257,7 +257,7 @@ public class SingleProcessor implements Processor {
                 }
             }
         }
-        //System.out.println("Prunestap eind: " + N.size64());
+        System.out.println("Prunestap eind: " + N.size64());
     }
 
     /**
@@ -306,12 +306,15 @@ public class SingleProcessor implements Processor {
             int P1 = 0;
             int L1 = 0;
 
-            for (byte permIndex : permutor) {
+            //for (byte permIndex : permutor) {
+            for (int pIndex = permutor.length - 1; pIndex >= 0; pIndex--) {
+                byte permIndex = permutor[pIndex];
                 P1 <<= 1;
                 L1 <<= 1;
                 P1 |= ((network1[nbChannels][(nbOnes - 1) << 2] >> permIndex) & 1);
                 L1 |= ((network1[nbChannels][(nbOnes << 2) - 2] >> permIndex) & 1);
             }
+            //}
 
             //Test      
             if (((network2[nbChannels][(nbOnes - 1) << 2] ^ ((1 << nbChannels) - 1)) & P1) != 0
@@ -327,10 +330,13 @@ public class SingleProcessor implements Processor {
                 boolean found = false;
 
                 /* Compute permuted */
-                for (byte permIndex : permutor) {
+                //for (byte permIndex : permutor) {
+                for (int pIndex = permutor.length - 1; pIndex >= 0; pIndex--) {
+                    byte permIndex = permutor[pIndex];
                     output <<= 1;
                     output |= ((network1[nbOnes][innerIndex] >> permIndex) & 1);
                 }
+                //}
 
                 /* Check if output is partof network2 */
                 for (short output2 : network2[nbOnes]) {
@@ -366,7 +372,7 @@ public class SingleProcessor implements Processor {
                 return false;
             }
         }
-        int maxIndex = (nbChannels-1) << 2;
+        int maxIndex = (nbChannels - 1) << 2;
         for (int index = 1; index < maxIndex;) {
             if (network1[nbChannels][index] > network2[nbChannels][index]) {
                 return false;
@@ -396,7 +402,7 @@ public class SingleProcessor implements Processor {
         byte[] currPerm = new byte[this.identityElement.length];
         System.arraycopy(this.identityElement, 0, currPerm, 0, nbChannels);
 
-        while ((currPerm = Permute.getNextPermutation(currPerm)) != null) {   
+        while ((currPerm = Permute.getNextPermutation(currPerm)) != null) {
             if (isValidPermutation(network1, network2, currPerm)) {
                 return true;
             }
