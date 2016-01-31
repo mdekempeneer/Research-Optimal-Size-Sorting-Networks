@@ -1,12 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package sortingnetworkspaper;
 
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectBigArrayBigList;
 import it.unimi.dsi.fastutil.objects.ObjectBigListIterator;
+import it.unimi.dsi.fastutil.objects.ObjectListIterator;
 import it.unimi.dsi.fastutil.shorts.ShortArrayList;
 import it.unimi.dsi.fastutil.shorts.ShortOpenHashSet;
 import java.util.ArrayList;
@@ -20,9 +17,10 @@ public class SingleProcessor implements Processor {
     private final short nbChannels;
     private final int upperBound;
 
-    private ObjectBigArrayBigList<short[][]> N;
-    private ObjectBigArrayBigList<short[][]> newN;
-
+    //private ObjectBigArrayBigList<short[][]> N; //if changed to this, do todo's change to 64.
+    //private ObjectBigArrayBigList<short[][]> newN;
+    private ObjectArrayList<short[][]> N;
+    private ObjectArrayList<short[][]> newN;
     private final int maxOuterComparator;
     private final int maxShifts;
     //private final byte[] identityElement;
@@ -40,8 +38,10 @@ public class SingleProcessor implements Processor {
     public SingleProcessor(short nbChannels, int upperBound) {
         this.nbChannels = nbChannels;
         this.upperBound = upperBound;
-        this.N = new ObjectBigArrayBigList();
-        this.newN = new ObjectBigArrayBigList();
+        this.N = new ObjectArrayList();
+        this.newN = new ObjectArrayList();
+        //this.N = new ObjectBigArrayBigList();
+        //this.newN = new ObjectBigArrayBigList();
         this.maxOuterComparator = ((1 << (nbChannels - 1)) | 1);
         this.maxShifts = nbChannels - 2;
         //this.identityElement = getIdentityElement((byte) nbChannels);
@@ -57,16 +57,6 @@ public class SingleProcessor implements Processor {
     @Override
     public int getNbChannels() {
         return nbChannels;
-    }
-
-    /**
-     * Get the current 'main' N list.
-     *
-     * @return The list of networks before or right after the generate step.
-     */
-    @Override
-    public ObjectBigArrayBigList<short[][]> getN() {
-        return this.N;
     }
 
     /**
@@ -88,10 +78,10 @@ public class SingleProcessor implements Processor {
             nbComp++;
             //this.printInputs(N.get(0)[0]);
             //System.out.println(N.size64());
-        } while (N.size64() > 1 && nbComp < upperBound);
+        } while (N.size() > 1 && nbComp < upperBound); //TODO: Change to 64 if bigList
 
         /* Return result */
-        if (N.size64() >= 1) {
+        if (N.size() >= 1) { //TODO: Change to 64 if bigList
             return N.get(0)[0];
         } else {
             return null;
@@ -197,12 +187,12 @@ public class SingleProcessor implements Processor {
      */
     private void generate(short nbComp) {
         /* Setup environment */
-        newN = new ObjectBigArrayBigList();
+        newN = new ObjectArrayList();
         int cMaxShifts;
         short comp;
         int number;
         int outerShift;
-        ObjectBigListIterator<short[][]> iter = N.iterator();
+        ObjectListIterator<short[][]> iter = N.iterator();
 
         /* Start Generate work */
         /* For all comparators */
@@ -242,27 +232,27 @@ public class SingleProcessor implements Processor {
      * minimal sorting network for the given amount of channels.
      */
     private void prune() {
-        ObjectBigListIterator<short[][]> iter;
+        ObjectListIterator<short[][]> iter;
 
-        System.out.println("Prunestap begin: " + N.size64());
-        for (int index = 0; index < N.size64() - 1; index++) {
+        System.out.println("Prunestap begin: " + N.size());//TODO: change to 64 if bigList
+        for (int index = 0; index < N.size() - 1; index++) { //TODO: change to 64 if bigList
             iter = N.listIterator(index + 1);
-            
+
             short[][] network1 = N.get(index);
-            
+
             while (iter.hasNext()) {
                 short[][] network2 = iter.next();
 
                 if (subsumes(network1, network2)) {
                     iter.remove();
                 } else if (subsumes(network2, network1)) {
-                        N.remove(index);
-                        index--;
-                        break;
+                    N.remove(index);
+                    index--;
+                    break;
                 }
             }
         }
-        System.out.println("Prunestap eind: " + N.size64());
+        System.out.println("Prunestap eind: " + N.size()); //TODO: change to 64 if bigList
     }
 
     /**
@@ -923,6 +913,11 @@ public class SingleProcessor implements Processor {
             wResult[wIndexCounter + 3] = (short) Integer.bitCount(L);
         }
         data[nbChannels] = wResult;
+    }
+
+    @Override
+    public ObjectBigArrayBigList<short[][]> getN() {
+        return null; //TODO: change to return this.N;
     }
 
 }
