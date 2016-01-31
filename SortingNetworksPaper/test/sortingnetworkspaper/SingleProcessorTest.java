@@ -153,19 +153,19 @@ public class SingleProcessorTest {
         //00
         //01
         //11
-        short[] w1 = {0, 0, 0, 0, 
-                    1, 0, 1, 0,
-                    1, 0, 1, 0};
+        short[] w1 = {0, 0, 0, 0,
+            1, 0, 1, 0,
+            1, 0, 1, 0};
         short[] w2 = {0, 0, 1, 0,
-                    1, 0, 1, 0,
-                    1, 0, 1, 0};
-                            
+            1, 0, 1, 0,
+            1, 0, 1, 0};
+
         data1[4] = w1;
         data2[4] = w2;
         assertTrue(processor.checkPermutationPartOf(data1, data2));
     }
-    
-       @Test
+
+    @Test
     public void testCheckPermutationPartOfFalse() {
         SingleProcessor processor = new SingleProcessor((short) 4, 5);
         short[][] data1 = new short[5][];
@@ -174,21 +174,59 @@ public class SingleProcessorTest {
         //01
         //11
         //10
-        short[] w1 = {0, 0, 0, 0, 
-                    1, 0, 1, 0,
-                    1, 0, 1, 0};
+        short[] w1 = {0, 0, 0, 0,
+            1, 0, 1, 0,
+            1, 0, 1, 0};
         short[] w2 = {0, 0, 1, 0,
-                    1, 0, 1, 0,
-                    1, 0, 0, 0};
-                            
+            1, 0, 1, 0,
+            1, 0, 0, 0};
+
         data1[4] = w1;
         data2[4] = w2;
         assertFalse(processor.checkPermutationPartOf(data1, data2));
     }
-    
-    
-    
-    
-    
+
+    @Test
+    public void testGetNextPermutation() {
+        short nbChannels = 5;
+
+        byte[][] Ps = new byte[nbChannels][];
+
+        // 1,0,3,2,4
+        // 1,0,3,4,2
+        // 1,0,4,3,2
+        // 1,2,0,3,4
+        Ps[0] = new byte[]{1, 3, 4};
+        Ps[1] = new byte[]{0, 2};
+        Ps[2] = new byte[]{0, 3, 4};
+        Ps[3] = new byte[]{2, 3, 4};
+        Ps[4] = new byte[]{2, 4};
+
+        //Init
+        byte[] currPerm = {-1, -1, -1, -1, -1};
+        int currOuterIndex = 0;
+        byte[] indices = {-1, -1, -1, -1, -1};
+        int takenNumbers = 0;
+
+        int[] takenNumbersArr = new int[]{takenNumbers};
+
+        byte[] result = SingleProcessor.getNextPermutation(Ps, currPerm, indices, takenNumbersArr, currOuterIndex);
+        System.out.println(Arrays.toString(result));
+
+        currOuterIndex = currPerm.length - 1;
+        result = SingleProcessor.getNextPermutation(Ps, result, indices, takenNumbersArr, currOuterIndex);
+        System.out.println(Arrays.toString(result));
+
+        result = SingleProcessor.getNextPermutation(Ps, result, indices, takenNumbersArr, currOuterIndex);
+        System.out.println(Arrays.toString(result));
+
+        result = SingleProcessor.getNextPermutation(Ps, result, indices, takenNumbersArr, currOuterIndex);
+        System.out.println(Arrays.toString(result));
+
+        byte[] resultE = SingleProcessor.getNextPermutation(Ps, result, indices, takenNumbersArr, currOuterIndex);
+        System.out.println(Arrays.toString(resultE));
+        
+        
+    }
 
 }
