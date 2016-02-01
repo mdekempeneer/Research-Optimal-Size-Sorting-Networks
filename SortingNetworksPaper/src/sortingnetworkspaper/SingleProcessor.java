@@ -1,12 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package sortingnetworkspaper;
 
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectBigArrayBigList;
 import it.unimi.dsi.fastutil.objects.ObjectBigListIterator;
+import it.unimi.dsi.fastutil.objects.ObjectListIterator;
 import it.unimi.dsi.fastutil.shorts.ShortArrayList;
 import it.unimi.dsi.fastutil.shorts.ShortOpenHashSet;
 import java.util.ArrayList;
@@ -20,13 +17,17 @@ public class SingleProcessor implements Processor {
     private final short nbChannels;
     private final int upperBound;
 
-    private ObjectBigArrayBigList<short[][]> N;
-    private ObjectBigArrayBigList<short[][]> newN;
-
+    //private ObjectBigArrayBigList<short[][]> N; //if changed to this, do todo's change to 64.
+    //private ObjectBigArrayBigList<short[][]> newN;
+    private ObjectArrayList<short[][]> N;
+    private ObjectArrayList<short[][]> newN;
     private final int maxOuterComparator;
     private final int maxShifts;
-    private final byte[] identityElement;
+    //private final byte[] identityElement;
+    private final int[] allOnesList;
+    private final byte[] allMinusOneList;
 
+    //private long permCount = 0;
     /**
      * Create a Processor which can, for a given nbChannels and upperBound find
      * a minimal sorting network if there is one with less than or equal to
@@ -38,11 +39,15 @@ public class SingleProcessor implements Processor {
     public SingleProcessor(short nbChannels, int upperBound) {
         this.nbChannels = nbChannels;
         this.upperBound = upperBound;
-        this.N = new ObjectBigArrayBigList();
-        this.newN = new ObjectBigArrayBigList();
+        this.N = new ObjectArrayList();
+        this.newN = new ObjectArrayList();
+        //this.N = new ObjectBigArrayBigList();
+        //this.newN = new ObjectBigArrayBigList();
         this.maxOuterComparator = ((1 << (nbChannels - 1)) | 1);
         this.maxShifts = nbChannels - 2;
-        this.identityElement = getIdentityElement((byte) nbChannels);
+        //this.identityElement = getIdentityElement((byte) nbChannels);
+        this.allOnesList = getAllOnesList((byte) nbChannels);
+        this.allMinusOneList = getAllMinusOneList((byte) nbChannels);
     }
 
     /**
@@ -56,16 +61,6 @@ public class SingleProcessor implements Processor {
     }
 
     /**
-     * Get the current 'main' N list.
-     *
-     * @return The list of networks before or right after the generate step.
-     */
-    @Override
-    public ObjectBigArrayBigList<short[][]> getN() {
-        return this.N;
-    }
-
-    /**
      *
      * @return
      */
@@ -74,20 +69,22 @@ public class SingleProcessor implements Processor {
         /* Initialize inputs */
         //TODO: Replace firstTimeGenerate & Prune with just the network (1 2) ??
         firstTimeGenerate(getOriginalInputs(upperBound));
-        short nbComp = 1;
         prune();
         //System.out.println(N.size64());
 
+        short nbComp = 1;
         do {
             generate(nbComp);
             prune();
             nbComp++;
+            //System.out.println("permCount: " + permCount);
+            //permCount = 0;
             //this.printInputs(N.get(0)[0]);
             //System.out.println(N.size64());
-        } while (N.size64() > 1 && nbComp < upperBound);
+        } while (N.size() > 1 && nbComp < upperBound); //TODO: Change to 64 if bigList
 
         /* Return result */
-        if (N.size64() >= 1) {
+        if (N.size() >= 1) { //TODO: Change to 64 if bigList
             return N.get(0)[0];
         } else {
             return null;
@@ -193,15 +190,15 @@ public class SingleProcessor implements Processor {
      */
     private void generate(short nbComp) {
         /* Setup environment */
-        newN = new ObjectBigArrayBigList();
+        newN = new ObjectArrayList();
         int cMaxShifts;
         short comp;
         int number;
         int outerShift;
-        ObjectBigListIterator<short[][]> iter = N.iterator();
+        ObjectListIterator<short[][]> iter = N.iterator();
 
         /* Start Generate work */
-        /* For all comparators */
+ /* For all comparators */
         while (iter.hasNext()) {
             short[][] network = iter.next();
 
@@ -210,21 +207,21 @@ public class SingleProcessor implements Processor {
                 for (outerShift = 0; outerShift <= cMaxShifts; outerShift++, comp <<= 1) { //shift n-2, n-3, ... keer
 
                     int prevComp = network[0][nbComp - 1];
-                    if (((prevComp & comp) != 0 && prevComp != comp)
-                            || prevComp < comp) {
+                    boolean shared = (prevComp & comp) != 0;
+                    //if(prevComp != comp && (shared || prevComp < comp)) {
+                    //if (((prevComp & comp) != 0 && prevComp != comp) || prevComp < comp) {
+                    //new Network (via clone)
+                    if (!isRedundantComp(network, comp)) {
+                        short[][] data = network.clone();
+                        //Fill
+                        data[0] = data[0].clone();
+                        data[0][nbComp] = comp;
+                        processData(data, comp);
+                        processW(data, comp);
 
-                        //new Network (via clone)
-                        if (!isRedundantComp(network, comp)) {
-                            short[][] data = network.clone();
-                            //Fill
-                            data[0] = data[0].clone();
-                            data[0][nbComp] = comp;
-                            processData(data, comp);
-                            processW(data, comp);
-
-                            newN.add(data);
-                        }
+                        newN.add(data);
                     }
+                    //}
                 }
             }
         }
@@ -238,26 +235,36 @@ public class SingleProcessor implements Processor {
      * minimal sorting network for the given amount of channels.
      */
     private void prune() {
-        ObjectBigListIterator<short[][]> iter;
+        ObjectListIterator<short[][]> iter;
 
+<<<<<<< HEAD
+        System.out.println("Prunestap begin: " + N.size());//TODO: change to 64 if bigList
+        for (int index = 0; index < N.size() - 1; index++) { //TODO: change to 64 if bigList
+=======
         System.out.println("Prunestap begin: " + N.size64());
         for (int index = 0; index < N.size64() - 1; index++) {
+>>>>>>> master
             iter = N.listIterator(index + 1);
+
+            short[][] network1 = N.get(index);
+
             while (iter.hasNext()) {
                 short[][] network2 = iter.next();
 
-                if (subsumes(N.get(index), network2)) {
+                if (subsumes(network1, network2)) {
                     iter.remove();
-                } else {
-                    if (subsumes(network2, N.get(index))) {
-                        N.remove(index);
-                        index--;
-                        break;
-                    }
+                } else if (subsumes(network2, network1)) {
+                    N.remove(index);
+                    index--;
+                    break;
                 }
             }
         }
+<<<<<<< HEAD
+        System.out.println("Prunestap eind: " + N.size()); //TODO: change to 64 if bigList
+=======
         System.out.println("Prunestap eind: " + N.size64());
+>>>>>>> master
     }
 
     /**
@@ -300,6 +307,30 @@ public class SingleProcessor implements Processor {
         /*  Reduce work: Lemma 6:
          C1 subsumes C2 => P(w(C1, x, k)) C= w(C2, x, k)
          */
+<<<<<<< HEAD
+ /* Permute & Check W */
+        //TODO: Check if that is true (line below)!
+        //Only checking the permutation who are valid for lemma 6.
+
+//        for (int nbOnes = 1; nbOnes < nbChannels; nbOnes++) {
+//            /* Permute W */
+//            int P1 = 0;
+//            int L1 = 0;
+//
+//            for (int pIndex = permutor.length-1; pIndex >= 0; pIndex--) {
+//                P1 <<= 1;
+//                L1 <<= 1;
+//                P1 |= ((network1[nbChannels][(nbOnes - 1) << 2] >> permutor[pIndex]) & 1);
+//                L1 |= ((network1[nbChannels][(nbOnes << 2) - 2] >> permutor[pIndex]) & 1);
+//            }
+//
+//            //Test      
+//            if (((network2[nbChannels][(nbOnes - 1) << 2] ^ ((1 << nbChannels) - 1)) & P1) != 0
+//                    || ((network2[nbChannels][(nbOnes << 2) - 2] ^ ((1 << nbChannels) - 1)) & L1) != 0) {
+//                return false;
+//            }
+//        }
+=======
         /* Permute & Check W */
         for (int nbOnes = 1; nbOnes < nbChannels; nbOnes++) {
             /* Permute W */
@@ -321,6 +352,7 @@ public class SingleProcessor implements Processor {
                 return false;
             }
         }
+>>>>>>> master
 
         /* Permute & Check outputs */
         for (int nbOnes = 1; nbOnes < nbChannels; nbOnes++) {
@@ -329,8 +361,13 @@ public class SingleProcessor implements Processor {
                 boolean found = false;
 
                 /* Compute permuted */
+<<<<<<< HEAD
+                for (int pIndex = permutor.length - 1; pIndex >= 0; pIndex--) {
+                    byte permIndex = permutor[pIndex]; //TODO: Inline
+=======
                 //for (byte permIndex : permutor) { //TODO: Remove
                 for (int pIndex = permutor.length - 1; pIndex >= 0; pIndex--) {
+>>>>>>> master
                     output <<= 1;
                     output |= ((network1[nbOnes][innerIndex] >> permutor[pIndex]) & 1);
                 }
@@ -364,7 +401,6 @@ public class SingleProcessor implements Processor {
      * @return Whether network1 subsumes network2.
      */
     private boolean subsumes(short[][] network1, short[][] network2) {
-
         for (int nbOnes = 1; nbOnes < nbChannels; nbOnes++) {
             if (network1[nbOnes].length > network2[nbOnes].length) {
                 return false;
@@ -397,15 +433,213 @@ public class SingleProcessor implements Processor {
             return true;
         }
 
-        byte[] currPerm = new byte[this.identityElement.length];
-        System.arraycopy(this.identityElement, 0, currPerm, 0, nbChannels);
+        return existsAValidPerm(network1, network2);
 
-        while ((currPerm = Permute.getNextPermutation(currPerm)) != null) {
-            if (isValidPermutation(network1, network2, currPerm)) {
-                return true;
+        //TODO: Old code - checks ALL permutations.
+//        byte[] currPerm = new byte[this.identityElement.length];
+//        System.arraycopy(this.identityElement, 0, currPerm, 0, nbChannels);
+//
+//        while ((currPerm = Permute.getNextPermutation(currPerm)) != null) {
+//            if (isValidPermutation(network1, network2, currPerm)) {
+//                return true;
+//            }
+//        }
+//
+//        return false;
+    }
+
+    /**
+     * Check if a valid permutation exists. It creates a potential list of
+     * permutations that might work by using the network information (P and L)
+     * and iterates trying these permutations to find a correct one.
+     *
+     * @param network1 The
+     * @param network2
+     * @return
+     */
+    public boolean existsAValidPerm(short[][] network1, short[][] network2) {
+        //Create a list full of allOnes - on every Position can be every number.
+        int allOnes = (1 << nbChannels) - 1;
+        int[] posList = new int[nbChannels];
+        System.arraycopy(this.allOnesList, 0, posList, 0, nbChannels);
+
+        //Compute positions.
+        for (int nbOnes = 1; nbOnes < nbChannels; nbOnes++) {
+            int L2 = network2[nbChannels][(nbOnes << 2) - 2]; //L for network 2.
+            int P2 = network2[nbChannels][(nbOnes - 1) << 2]; //P for network 2.
+
+            int revLPos = allOnes ^ network1[nbChannels][(nbOnes << 2) - 2]; //Positions of 0 for L.
+            int revPPos = allOnes ^ network1[nbChannels][(nbOnes - 1) << 2]; //Positions of 0 for P.
+
+            //TODO: Can we shorten result = revOnePos & revZeroPos by inline + logic?
+            //and combine the two if's in the process.
+            //int result = revLPos & revPPos;
+            //Fill posList;
+            if (L2 != allOnes || P2 != allOnes) {
+                for (int i = 0; i < posList.length; i++) {
+                    int mask = 1 << i;
+                    if ((mask & L2) == 0) {
+                        posList[i] &= revLPos;
+                    }
+                    if ((mask & P2) == 0) {
+                        posList[i] &= revPPos;
+                    }
+
+                    //If possible positions are ever empty -> return false.
+                    if (posList[i] == 0) {
+                        return false;
+                    }
+                }
             }
         }
 
+        /* Convert posList bit structure to bytes for permutations. */
+        byte[][] Ps = new byte[nbChannels][];
+
+        //TODO: Can this structure be improved?
+        for (int i = 0; i < Ps.length; i++) {
+            byte[] tempP = new byte[nbChannels]; //don't know initial capacity required.
+            int countLengthPos = 0;
+            int currP = posList[i];
+
+<<<<<<< HEAD
+            //Retrieve possible numbers from the bit form (currP).
+            for (byte permIndex = 0; permIndex < nbChannels; permIndex++) {
+                if (((1 << permIndex) & currP) != 0) {// mask & posList[i] == 1 op die positie.
+                    tempP[countLengthPos++] = permIndex;
+                }
+=======
+        while ((currPerm = Permute.getNextPermutation(currPerm)) != null) {
+            if (isValidPermutation(network1, network2, currPerm)) {
+                return true;
+>>>>>>> master
+            }
+
+            Ps[i] = new byte[countLengthPos]; //trim down to appropriate sizes.
+            System.arraycopy(tempP, 0, Ps[i], 0, countLengthPos);
+        }
+
+        //Check all permutations of the given positions.
+        return checkAllRelevantPermutations(network1, network2, Ps, 0, new byte[nbChannels], 0);
+
+        //return testPossiblePermutations(network1, network2, Ps);
+    }
+
+    public boolean testPossiblePermutations(short[][] network1, short[][] network2, byte[][] Ps) {
+        int allOnes = (1 << nbChannels) - 1; //TODO: Delete if not used.
+        int lastOuterIndex = nbChannels - 1;
+        int currOuterIndex = 0;
+        int takenNumbers = 0;
+
+        byte[] currPerm = new byte[nbChannels];
+        byte[] indices = new byte[nbChannels];
+
+        System.arraycopy(allMinusOneList, 0, currPerm, 0, currPerm.length);
+        System.arraycopy(allMinusOneList, 0, indices, 0, indices.length);
+
+        boolean ended = false;
+
+        do {
+            //currOuterIndex = Which outer index we're working with.
+            //takenNumbers = bv index 0 een 1 = getal 1 is al genomen.
+
+            while (currOuterIndex >= 0 && currOuterIndex <= lastOuterIndex) {
+                if (indices[currOuterIndex] + 1 >= Ps[currOuterIndex].length) { // last Inner Index reached.
+                    //reset inner
+                    //takenNumbers -= (1 << currPerm[currOuterIndex]); //'untake' the number.
+                    takenNumbers &= (allOnes - (1 << currPerm[currOuterIndex])); //TODO: should be the same as above.
+                    currPerm[currOuterIndex] = -1;
+                    indices[currOuterIndex] = -1;
+
+                    //work on previous index.
+                    currOuterIndex--;
+
+                    //'untake' prev.
+                    if (currOuterIndex >= 0) {
+                        //takenNumbers &= (allOnes - (1 << currPerm[currOuterIndex])); //TODO: should be the same as above.
+                    }
+                } else {
+
+                    //set next
+                    int innerIndex = indices[currOuterIndex];
+                    innerIndex++;
+                    int lastInnerIndex = Ps[currOuterIndex].length - 1;
+                    byte newNumber = Ps[currOuterIndex][innerIndex];
+
+                    //get the right innerIndex for the next valid number.
+                    while ((takenNumbers & (1 << newNumber)) != 0 && innerIndex < lastInnerIndex) { //Taken && <= lastIndex
+                        newNumber = Ps[currOuterIndex][++innerIndex];
+                    }
+
+                    if ((takenNumbers & (1 << newNumber)) == 0) { //found next valid inner number.
+                        //untake
+                        if (currPerm[currOuterIndex] != -1) {
+                            takenNumbers &= (allOnes - (1 << currPerm[currOuterIndex]));
+
+                        }
+
+                        //Set the new valid number.
+                        indices[currOuterIndex] = (byte) innerIndex;
+                        currPerm[currOuterIndex] = newNumber;
+                        takenNumbers ^= (1 << newNumber);
+
+                        //start next outerIndex.
+                        currOuterIndex++;
+                    } else { //reached the end and no valid found.
+                        //reset inner
+                        if (currPerm[currOuterIndex] != -1) {
+                            takenNumbers &= (allOnes - (1 << currPerm[currOuterIndex])); //'untake' the number.
+                            currPerm[currOuterIndex] = -1;
+                            indices[currOuterIndex] = -1;
+                        }
+
+                        //work on previous index.
+                        currOuterIndex--;
+                    }
+                }
+            }
+
+            //Found valid.
+            if (currOuterIndex > lastOuterIndex) {
+                if (isValidPermutation(network1, network2, currPerm)) {
+                    return true;
+                }
+                currOuterIndex = currPerm.length - 1;
+            } else {
+                ended = true;
+            }
+
+        } while (!ended);
+        return false;
+    }
+
+    public boolean checkAllRelevantPermutations(short[][] network1, short[][] network2, byte[][] Ps, int currIndex, byte[] soFar, int posTaken) {
+        if (currIndex == nbChannels - 1) {
+            //Reached last permNumber.
+            for (byte p : Ps[currIndex]) {
+
+                if ((posTaken & (1 << p)) == 0) { //Check if not already exists.
+                    soFar[currIndex] = p;
+                    //test if valid perm and stop if it is.
+//                    permCount++;
+                    if (isValidPermutation(network1, network2, soFar)) {
+                        return true;
+                    }
+                }
+            }
+            return false; //Reached end of last permNumber and no valid perm found.
+        } else {
+            for (byte p : Ps[currIndex]) {
+                if ((posTaken & (1 << p)) == 0) { //Check if not already exists.
+                    soFar[currIndex] = p;
+                    int newPosTaken = (posTaken | (1 << p));
+                    //Will stop iteration when a valid is found already.
+                    if (checkAllRelevantPermutations(network1, network2, Ps, currIndex + 1, soFar, newPosTaken)) {
+                        return true;
+                    }
+                }
+            }
+        }
         return false;
     }
 
@@ -598,12 +832,44 @@ public class SingleProcessor implements Processor {
      * @return The Identity element which for a permutation returns the same as
      * the input.
      */
-    private static byte[] getIdentityElement(byte nbChannels) {
-        byte[] result = new byte[nbChannels];
-        for (byte i = 0; i < nbChannels; i++) {
-            result[i] = i;
+    //TODO: Remove death code.
+    /*private static byte[] getIdentityElement(byte nbChannels) {
+     byte[] result = new byte[nbChannels];
+     for (byte i = 0; i < nbChannels; i++) {
+     result[i] = i;
+     }
+     return result;
+     }*/
+    /**
+     * Create an array of nbChannels elements equal to allOnes. allOnes = (1
+     * &lt&lt nbChannels) - 1
+     *
+     * @param nbChannels The amount of the elements and the amount of 1's.
+     * @return The created array.
+     */
+    private static int[] getAllOnesList(byte nbChannels) {
+        int allOnes = (1 << nbChannels) - 1;
+        int[] list = new int[nbChannels];
+
+        for (int i = 0; i < list.length; i++) {
+            list[i] = allOnes;
         }
-        return result;
+        return list;
+    }
+
+    /**
+     * Create an array of nbChannels elements equal to -1.
+     *
+     * @param nbChannels The amount of the elements in the array.
+     * @return The created array.
+     */
+    private static byte[] getAllMinusOneList(byte nbChannels) {
+        byte[] list = new byte[nbChannels];
+
+        for (int i = 0; i < list.length; i++) {
+            list[i] = -1;
+        }
+        return list;
     }
 
     /**
@@ -695,6 +961,11 @@ public class SingleProcessor implements Processor {
             wResult[wIndexCounter + 3] = (short) Integer.bitCount(L);
         }
         data[nbChannels] = wResult;
+    }
+
+    @Override
+    public ObjectBigArrayBigList<short[][]> getN() {
+        return null; //TODO: change to return this.N;
     }
 
 }
