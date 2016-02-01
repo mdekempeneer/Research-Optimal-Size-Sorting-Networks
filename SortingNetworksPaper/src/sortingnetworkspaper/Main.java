@@ -153,7 +153,7 @@ public class Main {
         jfc.setCurrentDirectory(new File(System.getProperty("user.home")));
 
         if (type.equals("load")) {
-            if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+            if (jfc.showDialog(null, "load") == JFileChooser.APPROVE_OPTION) {
                 return jfc.getSelectedFile().getAbsolutePath();
             } else {
                 System.out.println("Failed chosing a file.");
