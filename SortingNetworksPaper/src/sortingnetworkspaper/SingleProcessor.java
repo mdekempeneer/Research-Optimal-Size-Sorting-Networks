@@ -27,6 +27,7 @@ public class SingleProcessor implements Processor {
     private final int[] allOnesList;
     private final byte[] allMinusOneList;
 
+    //private long permCount = 0;
     /**
      * Create a Processor which can, for a given nbChannels and upperBound find
      * a minimal sorting network if there is one with less than or equal to
@@ -76,6 +77,8 @@ public class SingleProcessor implements Processor {
             generate(nbComp);
             prune();
             nbComp++;
+            //System.out.println("permCount: " + permCount);
+            //permCount = 0;
             //this.printInputs(N.get(0)[0]);
             //System.out.println(N.size64());
         } while (N.size() > 1 && nbComp < upperBound); //TODO: Change to 64 if bigList
@@ -475,7 +478,6 @@ public class SingleProcessor implements Processor {
         return checkAllRelevantPermutations(network1, network2, Ps, 0, new byte[nbChannels], 0);
 
         //return testPossiblePermutations(network1, network2, Ps);
-
     }
 
     public boolean testPossiblePermutations(short[][] network1, short[][] network2, byte[][] Ps) {
@@ -574,6 +576,7 @@ public class SingleProcessor implements Processor {
                 if ((posTaken & (1 << p)) == 0) { //Check if not already exists.
                     soFar[currIndex] = p;
                     //test if valid perm and stop if it is.
+//                    permCount++;
                     if (isValidPermutation(network1, network2, soFar)) {
                         return true;
                     }
