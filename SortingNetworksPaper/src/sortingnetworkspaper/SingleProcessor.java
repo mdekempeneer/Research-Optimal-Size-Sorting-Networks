@@ -195,7 +195,7 @@ public class SingleProcessor implements Processor {
         ObjectListIterator<short[][]> iter = N.iterator();
 
         /* Start Generate work */
-        /* For all comparators */
+ /* For all comparators */
         while (iter.hasNext()) {
             short[][] network = iter.next();
 
@@ -295,7 +295,7 @@ public class SingleProcessor implements Processor {
         /*  Reduce work: Lemma 6:
          C1 subsumes C2 => P(w(C1, x, k)) C= w(C2, x, k)
          */
-        /* Permute & Check W */
+ /* Permute & Check W */
         //TODO: Check if that is true (line below)!
         //Only checking the permutation who are valid for lemma 6.
 
@@ -473,97 +473,97 @@ public class SingleProcessor implements Processor {
 
         //Check all permutations of the given positions.
         return checkAllRelevantPermutations(network1, network2, Ps, 0, new byte[nbChannels], 0);
-        /*byte[] currPerm = new byte[nbChannels];
-         byte[] indices = new byte[nbChannels];
-         int[] takenNumbersArr = new int[]{0};
 
-         System.arraycopy(allMinusOneList, 0, currPerm, 0, currPerm.length);
-         System.arraycopy(allMinusOneList, 0, indices, 0, indices.length);
-
-         byte[] result = getNextPermutation(Ps, currPerm, indices, takenNumbersArr, 0);
-         int currOuterIndex = currPerm.length - 1;
-         while (result != null) {
-         if(isValidPermutation(network1, network2, result)) {
-         return true;
-         }
-         result = getNextPermutation(Ps, currPerm, indices, takenNumbersArr, currOuterIndex);
-         }
-        
-         return false;*/
+        //return testPossiblePermutations(network1, network2, Ps);
 
     }
 
-    public static byte[] getNextPermutation(byte[][] Ps, byte[] currPerm, byte[] indices, int[] takenNumbersArr, int currOuterIndex) {
-        int allOnes = (1 << currPerm.length) - 1; //TODO: Delete if not used.
+    public boolean testPossiblePermutations(short[][] network1, short[][] network2, byte[][] Ps) {
+        int allOnes = (1 << nbChannels) - 1; //TODO: Delete if not used.
+        int lastOuterIndex = nbChannels - 1;
+        int currOuterIndex = 0;
+        int takenNumbers = 0;
 
-        //currOuterIndex = Which outer index we're working with.
-        //takenNumbers = bv index 0 een 1 = getal 1 is al genomen.
-        int takenNumbers = takenNumbersArr[0];
-        int lastOuterIndex = currPerm.length - 1;
+        byte[] currPerm = new byte[nbChannels];
+        byte[] indices = new byte[nbChannels];
 
-        while (currOuterIndex >= 0 && currOuterIndex <= lastOuterIndex) {
-            if (indices[currOuterIndex] + 1 >= Ps[currOuterIndex].length) { // last Inner Index reached.
-                //reset inner
-                //takenNumbers -= (1 << currPerm[currOuterIndex]); //'untake' the number.
-                takenNumbers &= (allOnes - (1 << currPerm[currOuterIndex])); //TODO: should be the same as above.
-                currPerm[currOuterIndex] = -1;
-                indices[currOuterIndex] = -1;
+        System.arraycopy(allMinusOneList, 0, currPerm, 0, currPerm.length);
+        System.arraycopy(allMinusOneList, 0, indices, 0, indices.length);
 
-                //work on previous index.
-                currOuterIndex--;
+        boolean ended = false;
 
-                //'untake' prev.
-                if (currOuterIndex >= 0) {
-                    //takenNumbers &= (allOnes - (1 << currPerm[currOuterIndex])); //TODO: should be the same as above.
-                }
-            } else {
+        do {
+            //currOuterIndex = Which outer index we're working with.
+            //takenNumbers = bv index 0 een 1 = getal 1 is al genomen.
 
-                //set next
-                int innerIndex = indices[currOuterIndex];
-                innerIndex++;
-                int lastInnerIndex = Ps[currOuterIndex].length - 1;
-                byte newNumber = Ps[currOuterIndex][innerIndex];
-
-                //get the right innerIndex for the next valid number.
-                while ((takenNumbers & (1 << newNumber)) != 0 && innerIndex < lastInnerIndex) { //Taken && <= lastIndex
-                    newNumber = Ps[currOuterIndex][++innerIndex];
-                }
-
-                if ((takenNumbers & (1 << newNumber)) == 0) { //found next valid inner number.
-                    //untake
-                    if (currPerm[currOuterIndex] != -1) {
-                        takenNumbers &= (allOnes - (1 << currPerm[currOuterIndex]));
-
-                    }
-
-                    //Set the new valid number.
-                    indices[currOuterIndex] = (byte) innerIndex;
-                    currPerm[currOuterIndex] = newNumber;
-                    takenNumbers ^= (1 << newNumber);
-
-                    //start next outerIndex.
-                    currOuterIndex++;
-                } else { //reached the end and no valid found.
+            while (currOuterIndex >= 0 && currOuterIndex <= lastOuterIndex) {
+                if (indices[currOuterIndex] + 1 >= Ps[currOuterIndex].length) { // last Inner Index reached.
                     //reset inner
-                    if (currPerm[currOuterIndex] != -1) {
-                        takenNumbers &= (allOnes - (1 << currPerm[currOuterIndex])); //'untake' the number.
-                        currPerm[currOuterIndex] = -1;
-                        indices[currOuterIndex] = -1;
-                    }
+                    //takenNumbers -= (1 << currPerm[currOuterIndex]); //'untake' the number.
+                    takenNumbers &= (allOnes - (1 << currPerm[currOuterIndex])); //TODO: should be the same as above.
+                    currPerm[currOuterIndex] = -1;
+                    indices[currOuterIndex] = -1;
 
                     //work on previous index.
                     currOuterIndex--;
+
+                    //'untake' prev.
+                    if (currOuterIndex >= 0) {
+                        //takenNumbers &= (allOnes - (1 << currPerm[currOuterIndex])); //TODO: should be the same as above.
+                    }
+                } else {
+
+                    //set next
+                    int innerIndex = indices[currOuterIndex];
+                    innerIndex++;
+                    int lastInnerIndex = Ps[currOuterIndex].length - 1;
+                    byte newNumber = Ps[currOuterIndex][innerIndex];
+
+                    //get the right innerIndex for the next valid number.
+                    while ((takenNumbers & (1 << newNumber)) != 0 && innerIndex < lastInnerIndex) { //Taken && <= lastIndex
+                        newNumber = Ps[currOuterIndex][++innerIndex];
+                    }
+
+                    if ((takenNumbers & (1 << newNumber)) == 0) { //found next valid inner number.
+                        //untake
+                        if (currPerm[currOuterIndex] != -1) {
+                            takenNumbers &= (allOnes - (1 << currPerm[currOuterIndex]));
+
+                        }
+
+                        //Set the new valid number.
+                        indices[currOuterIndex] = (byte) innerIndex;
+                        currPerm[currOuterIndex] = newNumber;
+                        takenNumbers ^= (1 << newNumber);
+
+                        //start next outerIndex.
+                        currOuterIndex++;
+                    } else { //reached the end and no valid found.
+                        //reset inner
+                        if (currPerm[currOuterIndex] != -1) {
+                            takenNumbers &= (allOnes - (1 << currPerm[currOuterIndex])); //'untake' the number.
+                            currPerm[currOuterIndex] = -1;
+                            indices[currOuterIndex] = -1;
+                        }
+
+                        //work on previous index.
+                        currOuterIndex--;
+                    }
                 }
             }
-        }
 
-        //Found valid.
-        if (currOuterIndex > lastOuterIndex) {
-            takenNumbersArr[0] = takenNumbers; //store result.
-            return currPerm;
-        } else {
-            return null;
-        }
+            //Found valid.
+            if (currOuterIndex > lastOuterIndex) {
+                if (isValidPermutation(network1, network2, currPerm)) {
+                    return true;
+                }
+                currOuterIndex = currPerm.length - 1;
+            } else {
+                ended = true;
+            }
+
+        } while (!ended);
+        return false;
     }
 
     public boolean checkAllRelevantPermutations(short[][] network1, short[][] network2, byte[][] Ps, int currIndex, byte[] soFar, int posTaken) {

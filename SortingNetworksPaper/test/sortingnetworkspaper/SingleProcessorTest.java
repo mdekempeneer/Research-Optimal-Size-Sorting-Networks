@@ -210,7 +210,7 @@ public class SingleProcessorTest {
 
         int[] takenNumbersArr = new int[]{takenNumbers};
 
-        byte[] result = SingleProcessor.getNextPermutation(Ps, currPerm, indices, takenNumbersArr, currOuterIndex);
+        /*byte[] result = SingleProcessor.getNextPermutation(Ps, currPerm, indices, takenNumbersArr, currOuterIndex);
         System.out.println(Arrays.toString(result));
 
         currOuterIndex = currPerm.length - 1;
@@ -224,7 +224,7 @@ public class SingleProcessorTest {
         System.out.println(Arrays.toString(result));
 
         byte[] resultE = SingleProcessor.getNextPermutation(Ps, result, indices, takenNumbersArr, currOuterIndex);
-        System.out.println(Arrays.toString(resultE));
+        System.out.println(Arrays.toString(resultE));*/
         
         
     }
