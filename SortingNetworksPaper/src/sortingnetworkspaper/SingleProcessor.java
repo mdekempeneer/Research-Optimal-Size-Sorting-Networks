@@ -236,14 +236,8 @@ public class SingleProcessor implements Processor {
      */
     private void prune() {
         ObjectListIterator<short[][]> iter;
-
-<<<<<<< HEAD
         System.out.println("Prunestap begin: " + N.size());//TODO: change to 64 if bigList
         for (int index = 0; index < N.size() - 1; index++) { //TODO: change to 64 if bigList
-=======
-        System.out.println("Prunestap begin: " + N.size64());
-        for (int index = 0; index < N.size64() - 1; index++) {
->>>>>>> master
             iter = N.listIterator(index + 1);
 
             short[][] network1 = N.get(index);
@@ -260,11 +254,7 @@ public class SingleProcessor implements Processor {
                 }
             }
         }
-<<<<<<< HEAD
         System.out.println("Prunestap eind: " + N.size()); //TODO: change to 64 if bigList
-=======
-        System.out.println("Prunestap eind: " + N.size64());
->>>>>>> master
     }
 
     /**
@@ -307,8 +297,7 @@ public class SingleProcessor implements Processor {
         /*  Reduce work: Lemma 6:
          C1 subsumes C2 => P(w(C1, x, k)) C= w(C2, x, k)
          */
-<<<<<<< HEAD
- /* Permute & Check W */
+        /* Permute & Check W */
         //TODO: Check if that is true (line below)!
         //Only checking the permutation who are valid for lemma 6.
 
@@ -330,29 +319,6 @@ public class SingleProcessor implements Processor {
 //                return false;
 //            }
 //        }
-=======
-        /* Permute & Check W */
-        for (int nbOnes = 1; nbOnes < nbChannels; nbOnes++) {
-            /* Permute W */
-            int P1 = 0;
-            int L1 = 0;
-
-            //for (byte permIndex : permutor) { //TODO: Remove
-            for (int pIndex = permutor.length - 1; pIndex >= 0; pIndex--) {
-                P1 <<= 1;
-                L1 <<= 1;
-                P1 |= ((network1[nbChannels][(nbOnes - 1) << 2] >> permutor[pIndex]) & 1);
-                L1 |= ((network1[nbChannels][(nbOnes << 2) - 2] >> permutor[pIndex]) & 1);
-            }
-            //}
-
-            //Test      
-            if (((network2[nbChannels][(nbOnes - 1) << 2] ^ ((1 << nbChannels) - 1)) & P1) != 0
-                    || ((network2[nbChannels][(nbOnes << 2) - 2] ^ ((1 << nbChannels) - 1)) & L1) != 0) {
-                return false;
-            }
-        }
->>>>>>> master
 
         /* Permute & Check outputs */
         for (int nbOnes = 1; nbOnes < nbChannels; nbOnes++) {
@@ -361,13 +327,8 @@ public class SingleProcessor implements Processor {
                 boolean found = false;
 
                 /* Compute permuted */
-<<<<<<< HEAD
                 for (int pIndex = permutor.length - 1; pIndex >= 0; pIndex--) {
                     byte permIndex = permutor[pIndex]; //TODO: Inline
-=======
-                //for (byte permIndex : permutor) { //TODO: Remove
-                for (int pIndex = permutor.length - 1; pIndex >= 0; pIndex--) {
->>>>>>> master
                     output <<= 1;
                     output |= ((network1[nbOnes][innerIndex] >> permutor[pIndex]) & 1);
                 }
@@ -502,17 +463,11 @@ public class SingleProcessor implements Processor {
             int countLengthPos = 0;
             int currP = posList[i];
 
-<<<<<<< HEAD
             //Retrieve possible numbers from the bit form (currP).
             for (byte permIndex = 0; permIndex < nbChannels; permIndex++) {
                 if (((1 << permIndex) & currP) != 0) {// mask & posList[i] == 1 op die positie.
                     tempP[countLengthPos++] = permIndex;
                 }
-=======
-        while ((currPerm = Permute.getNextPermutation(currPerm)) != null) {
-            if (isValidPermutation(network1, network2, currPerm)) {
-                return true;
->>>>>>> master
             }
 
             Ps[i] = new byte[countLengthPos]; //trim down to appropriate sizes.
