@@ -1,15 +1,13 @@
 package sortingnetworkspaper;
 
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectBigArrayBigList;
 import it.unimi.dsi.fastutil.objects.ObjectListIterator;
-import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import sortingnetworkspaper.memory.ObjArrayList;
 
 /**
  *
@@ -20,8 +18,8 @@ public class SingleProcessor implements Processor {
     private final short nbChannels;
     private final int upperBound;
 
-    private ObjectArrayList<short[][]> N;
-    private ObjectArrayList<short[][]> newN;
+    private ObjArrayList<short[][]> N;
+    private ObjArrayList<short[][]> newN;
     private final int maxOuterComparator;
     private final int maxShifts;
     //private final byte[] identityElement;
@@ -45,8 +43,8 @@ public class SingleProcessor implements Processor {
     public SingleProcessor(short nbChannels, int upperBound, String savePath) {
         this.nbChannels = nbChannels;
         this.upperBound = upperBound;
-        this.N = new ObjectArrayList();
-        this.newN = new ObjectArrayList();
+        this.N = new ObjArrayList();
+        this.newN = new ObjArrayList();
         this.maxOuterComparator = ((1 << (nbChannels - 1)) | 1);
         this.maxShifts = nbChannels - 2;
         //this.identityElement = getIdentityElement((byte) nbChannels);
@@ -116,7 +114,7 @@ public class SingleProcessor implements Processor {
      *
      * @return
      */
-    public short[] process(ObjectArrayList<short[][]> loadedN) {
+    public short[] process(ObjArrayList<short[][]> loadedN) {
 
         /* Initialize inputs */
         N = loadedN;
@@ -131,7 +129,7 @@ public class SingleProcessor implements Processor {
                 break;
             }
         }
-        System.out.println("Finished 0-" + (nbComp-1) + ", started at " + nbComp);
+        System.out.println("Finished 0-" + (nbComp - 1) + ", started at " + nbComp);
 
         /* Process N */
         do {
@@ -252,7 +250,7 @@ public class SingleProcessor implements Processor {
      */
     private void generate(short nbComp) {
         /* Setup environment */
-        newN = new ObjectArrayList();
+        newN = new ObjArrayList();
         int cMaxShifts;
         short comp;
         int number;
@@ -263,27 +261,30 @@ public class SingleProcessor implements Processor {
         /* For all comparators */
         while (iter.hasNext()) {
             short[][] network = iter.next();
+            int prevComp = network[0][nbComp - 1];
 
             for (number = 3, cMaxShifts = maxShifts; number <= maxOuterComparator; number = (number << 1) - 1, cMaxShifts--) { //x*2 - 1
                 comp = (short) number;
                 for (outerShift = 0; outerShift <= cMaxShifts; outerShift++, comp <<= 1) { //shift n-2, n-3, ... keer
-
-                    int prevComp = network[0][nbComp - 1];
+                    
                     boolean shared = (prevComp & comp) != 0;
                     //if(prevComp != comp && (shared || prevComp < comp)) {
-                    //if (((prevComp & comp) != 0 && prevComp != comp) || prevComp < comp) {
-                    //new Network (via clone)
-                    if (!isRedundantComp(network, comp)) {
-                        short[][] data = network.clone();
-                        //Fill
-                        data[0] = data[0].clone();
-                        data[0][nbComp] = comp;
-                        processData(data, comp);
-                        processW(data, comp);
+                    int compMZ = comp >> Integer.numberOfTrailingZeros(comp); //2de
+                    int prevCompMZ = prevComp >> Integer.numberOfTrailingZeros(prevComp); //1ste
+                    
+                    if (((prevComp & comp) != 0 && prevComp != comp) || (prevCompMZ < compMZ || (compMZ == prevCompMZ && prevComp < comp))) {
+                        //new Network (via clone)
+                        if (!isRedundantComp(network, comp)) {
+                            short[][] data = network.clone();
+                            //Fill
+                            data[0] = data[0].clone();
+                            data[0][nbComp] = comp;
+                            processData(data, comp);
+                            processW(data, comp);
 
-                        newN.add(data);
+                            newN.add(data);
+                        }
                     }
-                    //}
                 }
             }
         }

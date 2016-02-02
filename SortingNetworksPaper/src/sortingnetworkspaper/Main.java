@@ -1,10 +1,8 @@
 package sortingnetworkspaper;
 
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.Arrays;
@@ -12,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import sortingnetworkspaper.memory.ObjArrayList;
 
 /**
  *
@@ -56,7 +55,7 @@ public class Main {
         }
 
         /* Load start */
-        ObjectArrayList<short[][]> N = null;
+        ObjArrayList<short[][]> N = null;
         if (loadMode == (JOptionPane.YES_OPTION)) {
             N = getN(loadPath);
         }
@@ -168,12 +167,11 @@ public class Main {
         return null;
     }
 
-    private static ObjectArrayList<short[][]> getN(String loadPath) {
+    private static ObjArrayList<short[][]> getN(String loadPath) {
         ObjectInputStream iis = null;
         try {
             iis = new ObjectInputStream(new BufferedInputStream(new FileInputStream(loadPath)));
-            //iis = new ObjectInputStream(new FileInputStream(loadPath));
-            return (ObjectArrayList<short[][]>) iis.readObject();
+            return (ObjArrayList<short[][]>) iis.readObject();
         } catch (IOException | ClassNotFoundException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
