@@ -34,12 +34,12 @@ public class SingleProcessor implements Processor {
 //    private static long lLengthCounter = 0;
 //    private static long emptyPosCounter = 0;
 //    private static long networkPermCounter = 0;
+//      private long permCount = 0;
 
     /* IO */
     private boolean shouldSave;
     private final String savePath;
 
-    private long permCount = 0;
     /**
      * Create a Processor which can, for a given nbChannels and upperBound find
      * a minimal sorting network if there is one with less than or equal to
