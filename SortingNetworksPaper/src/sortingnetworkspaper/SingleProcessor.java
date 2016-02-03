@@ -1,12 +1,13 @@
 package sortingnetworkspaper;
 
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectBigArrayBigList;
-import it.unimi.dsi.fastutil.objects.ObjectBigListIterator;
 import it.unimi.dsi.fastutil.objects.ObjectListIterator;
-import it.unimi.dsi.fastutil.shorts.ShortArrayList;
-import it.unimi.dsi.fastutil.shorts.ShortOpenHashSet;
-import java.util.ArrayList;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import sortingnetworkspaper.memory.ObjArrayList;
 
 /**
  *
@@ -17,17 +18,28 @@ public class SingleProcessor implements Processor {
     private final short nbChannels;
     private final int upperBound;
 
-    //private ObjectBigArrayBigList<short[][]> N; //if changed to this, do todo's change to 64.
-    //private ObjectBigArrayBigList<short[][]> newN;
-    private ObjectArrayList<short[][]> N;
-    private ObjectArrayList<short[][]> newN;
+    private ObjArrayList<short[][]> N;
+    private ObjArrayList<short[][]> newN;
     private final int maxOuterComparator;
     private final int maxShifts;
     //private final byte[] identityElement;
     private final int[] allOnesList;
     private final byte[] allMinusOneList;
+    
+    //Statistics
+//    private static long uniqueCounter = 0;
+//    private static long redundantCounter = 0;
+//    private static long kLengthCounter = 0;
+//    private static long pLengthCounter = 0;
+//    private static long lLengthCounter = 0;
+//    private static long emptyPosCounter = 0;
+//    private static long networkPermCounter = 0;
+//      private long permCount = 0;
 
-    //private long permCount = 0;
+    /* IO */
+    private boolean shouldSave;
+    private final String savePath;
+
     /**
      * Create a Processor which can, for a given nbChannels and upperBound find
      * a minimal sorting network if there is one with less than or equal to
@@ -35,19 +47,34 @@ public class SingleProcessor implements Processor {
      *
      * @param nbChannels The amount of channels for the networks.
      * @param upperBound The maximum amount of comparators to use.
+     * @param saveFlag Whether to save the previous prune.
      */
-    public SingleProcessor(short nbChannels, int upperBound) {
+    public SingleProcessor(short nbChannels, int upperBound, String savePath) {
         this.nbChannels = nbChannels;
         this.upperBound = upperBound;
-        this.N = new ObjectArrayList();
-        this.newN = new ObjectArrayList();
-        //this.N = new ObjectBigArrayBigList();
-        //this.newN = new ObjectBigArrayBigList();
+        this.N = new ObjArrayList();
+        this.newN = new ObjArrayList();
         this.maxOuterComparator = ((1 << (nbChannels - 1)) | 1);
         this.maxShifts = nbChannels - 2;
         //this.identityElement = getIdentityElement((byte) nbChannels);
         this.allOnesList = getAllOnesList((byte) nbChannels);
         this.allMinusOneList = getAllMinusOneList((byte) nbChannels);
+
+        this.savePath = savePath;
+        this.shouldSave = false;
+    }
+
+    /**
+     * Create a Processor which can, for a given nbChannels and upperBound find
+     * a minimal sorting network if there is one with less than or equal to
+     * upperBound.
+     *
+     * @param nbChannels The amount of channels for the networks.
+     * @param upperBound The maximum amount of comparators to use.
+     * @param saveFlag Whether to save the previous prune.
+     */
+    public SingleProcessor(short nbChannels, int upperBound) {
+        this(nbChannels, upperBound, "");
     }
 
     /**
@@ -77,14 +104,61 @@ public class SingleProcessor implements Processor {
             generate(nbComp);
             prune();
             nbComp++;
+
             //System.out.println("permCount: " + permCount);
             //permCount = 0;
             //this.printInputs(N.get(0)[0]);
             //System.out.println(N.size64());
-        } while (N.size() > 1 && nbComp < upperBound); //TODO: Change to 64 if bigList
+        } while (N.size() > 1 && nbComp < upperBound);
+        
+        //System.out.println("#Unique " + uniqueCounter + "; #Redundant " + redundantCounter);
+        //System.out.println("#kLengthCounter " + kLengthCounter + "; #pLengthCounter " + pLengthCounter + "; #lLengthCounter " + lLengthCounter);
+        //System.out.println("#emptyPosCounter " + emptyPosCounter);
+        //System.out.println("#networkPermCounter " + networkPermCounter);
 
         /* Return result */
-        if (N.size() >= 1) { //TODO: Change to 64 if bigList
+        if (N.size() >= 1) {
+            return N.get(0)[0];
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     *
+     * @return
+     */
+    public short[] process(ObjArrayList<short[][]> loadedN) {
+
+        /* Initialize inputs */
+        N = loadedN;
+        prune();
+        System.out.println("Finished pruning loaded data.");
+        //Calc nbComp
+        short nbComp = 0;
+        short[][] network = N.get(0);
+        for (short i = 0; i < network[0].length; i++) {
+            if (network[0][i] == 0) {
+                nbComp = i;
+                break;
+            }
+        }
+        System.out.println("Finished 0-" + (nbComp - 1) + ", started at " + nbComp);
+
+        /* Process N */
+        do {
+            generate(nbComp);
+            prune();
+            nbComp++;
+
+            //System.out.println("permCount: " + permCount);
+            //permCount = 0;
+            //this.printInputs(N.get(0)[0]);
+            //System.out.println(N.size64());
+        } while (N.size() > 1 && nbComp < upperBound);
+
+        /* Return result */
+        if (N.size() >= 1) {
             return N.get(0)[0];
         } else {
             return null;
@@ -190,7 +264,7 @@ public class SingleProcessor implements Processor {
      */
     private void generate(short nbComp) {
         /* Setup environment */
-        newN = new ObjectArrayList();
+        newN = new ObjArrayList();
         int cMaxShifts;
         short comp;
         int number;
@@ -198,30 +272,38 @@ public class SingleProcessor implements Processor {
         ObjectListIterator<short[][]> iter = N.iterator();
 
         /* Start Generate work */
- /* For all comparators */
+        /* For all comparators */
         while (iter.hasNext()) {
             short[][] network = iter.next();
-
+            int prevComp = network[0][nbComp - 1];
+            int prevCompMZ = prevComp >> Integer.numberOfTrailingZeros(prevComp); //1ste
+                    
             for (number = 3, cMaxShifts = maxShifts; number <= maxOuterComparator; number = (number << 1) - 1, cMaxShifts--) { //x*2 - 1
                 comp = (short) number;
+                int compMZ = comp >> Integer.numberOfTrailingZeros(comp); //2de
+                
                 for (outerShift = 0; outerShift <= cMaxShifts; outerShift++, comp <<= 1) { //shift n-2, n-3, ... keer
-
-                    int prevComp = network[0][nbComp - 1];
+                    
                     boolean shared = (prevComp & comp) != 0;
                     //if(prevComp != comp && (shared || prevComp < comp)) {
-                    //if (((prevComp & comp) != 0 && prevComp != comp) || prevComp < comp) {
-                    //new Network (via clone)
-                    if (!isRedundantComp(network, comp)) {
-                        short[][] data = network.clone();
-                        //Fill
-                        data[0] = data[0].clone();
-                        data[0][nbComp] = comp;
-                        processData(data, comp);
-                        processW(data, comp);
+                    
+                    if (((prevComp & comp) != 0 && prevComp != comp) || (prevCompMZ < compMZ || (compMZ == prevCompMZ && prevComp < comp))) {
+                        //new Network (via clone)
+                        if (!isRedundantComp(network, comp)) {
+                            short[][] data = network.clone();
+                            //Fill
+                            data[0] = data[0].clone();
+                            data[0][nbComp] = comp;
+                            processData(data, comp);
+                            processW(data, comp);
 
-                        newN.add(data);
-                    }
-                    //}
+                            newN.add(data);
+                        }/* else {
+                            redundantCounter++;
+                        }*/
+                    }/* else {
+                        uniqueCounter++;
+                    }*/
                 }
             }
         }
@@ -236,25 +318,32 @@ public class SingleProcessor implements Processor {
      */
     private void prune() {
         ObjectListIterator<short[][]> iter;
-        System.out.println("Prunestap begin: " + N.size());//TODO: change to 64 if bigList
-        for (int index = 0; index < N.size() - 1; index++) { //TODO: change to 64 if bigList
-            iter = N.listIterator(index + 1);
+        System.out.println("Prunestap begin: " + N.size());
+        for (int index = 0; index < N.size() - 1; index++) {
+            if (shouldSave) {
+                saveN();
 
-            short[][] network1 = N.get(index);
+                System.out.println("Done saving. Exiting now.");
+                System.exit(0);
+            } else {
+                iter = N.listIterator(index + 1);
 
-            while (iter.hasNext()) {
-                short[][] network2 = iter.next();
+                short[][] network1 = N.get(index);
 
-                if (subsumes(network1, network2)) {
-                    iter.remove();
-                } else if (subsumes(network2, network1)) {
-                    N.remove(index);
-                    index--;
-                    break;
+                while (iter.hasNext()) {
+                    short[][] network2 = iter.next();
+
+                    if (subsumes(network1, network2)) {
+                        iter.remove();
+                    } else if (subsumes(network2, network1)) {
+                        N.remove(index);
+                        index--;
+                        break;
+                    }
                 }
             }
         }
-        System.out.println("Prunestap eind: " + N.size()); //TODO: change to 64 if bigList
+        System.out.println("Prunestap eind: " + N.size());
     }
 
     /**
@@ -364,16 +453,20 @@ public class SingleProcessor implements Processor {
     private boolean subsumes(short[][] network1, short[][] network2) {
         for (int nbOnes = 1; nbOnes < nbChannels; nbOnes++) {
             if (network1[nbOnes].length > network2[nbOnes].length) {
+                //kLengthCounter++;
                 return false;
             }
         }
+        
         int maxIndex = (nbChannels - 1) << 2;
         for (int index = 1; index < maxIndex;) {
             if (network1[nbChannels][index] > network2[nbChannels][index]) {
+                //pLengthCounter++;
                 return false;
             }
             index += 2;
             if (network1[nbChannels][index] > network2[nbChannels][index]) {
+                //lLengthCounter++;
                 return false;
             }
             index += 2;
@@ -394,6 +487,7 @@ public class SingleProcessor implements Processor {
             return true;
         }
 
+        //networkPermCounter++;
         return existsAValidPerm(network1, network2);
 
         //TODO: Old code - checks ALL permutations.
@@ -448,6 +542,7 @@ public class SingleProcessor implements Processor {
 
                     //If possible positions are ever empty -> return false.
                     if (posList[i] == 0) {
+                        //emptyPosCounter++;
                         return false;
                     }
                 }
@@ -576,7 +671,7 @@ public class SingleProcessor implements Processor {
                 if ((posTaken & (1 << p)) == 0) { //Check if not already exists.
                     soFar[currIndex] = p;
                     //test if valid perm and stop if it is.
-//                    permCount++;
+                    //permCount++;
                     if (isValidPermutation(network1, network2, soFar)) {
                         return true;
                     }
@@ -921,6 +1016,26 @@ public class SingleProcessor implements Processor {
     @Override
     public ObjectBigArrayBigList<short[][]> getN() {
         return null; //TODO: change to return this.N;
+    }
+
+    /**
+     * Set shouldSave to true.
+     */
+    public void initiateSave() {
+        this.shouldSave = true;
+    }
+
+    private void saveN() {
+        if (savePath != null && !savePath.equals("")) {
+            ObjectOutputStream oos;
+            try {
+                //oos = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(this.savePath)));
+                oos = new ObjectOutputStream(new FileOutputStream(this.savePath));
+                oos.writeObject(this.N);
+            } catch (IOException ex) {
+                Logger.getLogger(SingleProcessor.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
 }
