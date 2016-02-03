@@ -25,12 +25,21 @@ public class SingleProcessor implements Processor {
     //private final byte[] identityElement;
     private final int[] allOnesList;
     private final byte[] allMinusOneList;
+    
+    //Statistics
+//    private static long uniqueCounter = 0;
+//    private static long redundantCounter = 0;
+//    private static long kLengthCounter = 0;
+//    private static long pLengthCounter = 0;
+//    private static long lLengthCounter = 0;
+//    private static long emptyPosCounter = 0;
+//    private static long networkPermCounter = 0;
 
     /* IO */
     private boolean shouldSave;
     private final String savePath;
 
-    //private long permCount = 0;
+    private long permCount = 0;
     /**
      * Create a Processor which can, for a given nbChannels and upperBound find
      * a minimal sorting network if there is one with less than or equal to
@@ -101,6 +110,11 @@ public class SingleProcessor implements Processor {
             //this.printInputs(N.get(0)[0]);
             //System.out.println(N.size64());
         } while (N.size() > 1 && nbComp < upperBound);
+        
+        //System.out.println("#Unique " + uniqueCounter + "; #Redundant " + redundantCounter);
+        //System.out.println("#kLengthCounter " + kLengthCounter + "; #pLengthCounter " + pLengthCounter + "; #lLengthCounter " + lLengthCounter);
+        //System.out.println("#emptyPosCounter " + emptyPosCounter);
+        //System.out.println("#networkPermCounter " + networkPermCounter);
 
         /* Return result */
         if (N.size() >= 1) {
@@ -262,15 +276,16 @@ public class SingleProcessor implements Processor {
         while (iter.hasNext()) {
             short[][] network = iter.next();
             int prevComp = network[0][nbComp - 1];
-
+            int prevCompMZ = prevComp >> Integer.numberOfTrailingZeros(prevComp); //1ste
+                    
             for (number = 3, cMaxShifts = maxShifts; number <= maxOuterComparator; number = (number << 1) - 1, cMaxShifts--) { //x*2 - 1
                 comp = (short) number;
+                int compMZ = comp >> Integer.numberOfTrailingZeros(comp); //2de
+                
                 for (outerShift = 0; outerShift <= cMaxShifts; outerShift++, comp <<= 1) { //shift n-2, n-3, ... keer
                     
                     boolean shared = (prevComp & comp) != 0;
                     //if(prevComp != comp && (shared || prevComp < comp)) {
-                    int compMZ = comp >> Integer.numberOfTrailingZeros(comp); //2de
-                    int prevCompMZ = prevComp >> Integer.numberOfTrailingZeros(prevComp); //1ste
                     
                     if (((prevComp & comp) != 0 && prevComp != comp) || (prevCompMZ < compMZ || (compMZ == prevCompMZ && prevComp < comp))) {
                         //new Network (via clone)
@@ -283,8 +298,12 @@ public class SingleProcessor implements Processor {
                             processW(data, comp);
 
                             newN.add(data);
-                        }
-                    }
+                        }/* else {
+                            redundantCounter++;
+                        }*/
+                    }/* else {
+                        uniqueCounter++;
+                    }*/
                 }
             }
         }
@@ -434,16 +453,20 @@ public class SingleProcessor implements Processor {
     private boolean subsumes(short[][] network1, short[][] network2) {
         for (int nbOnes = 1; nbOnes < nbChannels; nbOnes++) {
             if (network1[nbOnes].length > network2[nbOnes].length) {
+                //kLengthCounter++;
                 return false;
             }
         }
+        
         int maxIndex = (nbChannels - 1) << 2;
         for (int index = 1; index < maxIndex;) {
             if (network1[nbChannels][index] > network2[nbChannels][index]) {
+                //pLengthCounter++;
                 return false;
             }
             index += 2;
             if (network1[nbChannels][index] > network2[nbChannels][index]) {
+                //lLengthCounter++;
                 return false;
             }
             index += 2;
@@ -464,6 +487,7 @@ public class SingleProcessor implements Processor {
             return true;
         }
 
+        //networkPermCounter++;
         return existsAValidPerm(network1, network2);
 
         //TODO: Old code - checks ALL permutations.
@@ -518,6 +542,7 @@ public class SingleProcessor implements Processor {
 
                     //If possible positions are ever empty -> return false.
                     if (posList[i] == 0) {
+                        //emptyPosCounter++;
                         return false;
                     }
                 }
@@ -646,7 +671,7 @@ public class SingleProcessor implements Processor {
                 if ((posTaken & (1 << p)) == 0) { //Check if not already exists.
                     soFar[currIndex] = p;
                     //test if valid perm and stop if it is.
-//                    permCount++;
+                    //permCount++;
                     if (isValidPermutation(network1, network2, soFar)) {
                         return true;
                     }
