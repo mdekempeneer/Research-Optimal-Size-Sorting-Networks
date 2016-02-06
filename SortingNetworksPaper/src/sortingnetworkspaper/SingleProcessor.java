@@ -219,9 +219,14 @@ public class SingleProcessor implements Processor {
             //3 - Array
             processed = new short[data[nbOnes].length];
             counter = 0;
+            boolean foundNew = false;
 
             for (int innerIndex = 0; innerIndex < data[nbOnes].length; innerIndex++) {
-                short value = swapCompare(data[nbOnes][innerIndex], newComp);
+                short oldValue = data[nbOnes][innerIndex];
+                short value = swapCompare(oldValue, newComp);
+                if(value != oldValue) {
+                    foundNew = true;
+                }
                 //1 - HashSet
 //                set.add(value);
 
@@ -247,9 +252,11 @@ public class SingleProcessor implements Processor {
             //2 - ArrayList
 //            data[nbOnes] = arr.toShortArray();
             //3 - Array
+            if(foundNew) { //CAUTION! Don't do this 'shared array' with writing lists to disk.
             short[] temp = new short[counter];
             System.arraycopy(processed, 0, temp, 0, counter);
             data[nbOnes] = temp;
+            }
         }
 
     }
