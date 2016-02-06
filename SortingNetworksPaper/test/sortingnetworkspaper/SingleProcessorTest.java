@@ -66,8 +66,8 @@ public class SingleProcessorTest {
         }
 
         /* Compute */
-        processor.processData(data, comp[0]);
-        processor.processW(data, comp[0]);
+        processor.processData(data, comp[0], 1);
+        processor.processW(data, comp[0], 1);
 
         /* Check */
         for (int i = 0; i < (nbChannels - 1) * 4; i++) {
@@ -76,7 +76,7 @@ public class SingleProcessorTest {
 
         /* Compute */
         processor.processData(data, comp[1]);
-        processor.processW(data, comp[1]);
+        processor.processW(data, comp[1], 1);
 
         /* Check */
         for (int i = 0; i < (nbChannels - 1) * 4; i++) {
@@ -85,7 +85,7 @@ public class SingleProcessorTest {
 
         /* Compute */
         processor.processData(data, comp[2]);
-        processor.processW(data, comp[2]);
+        processor.processW(data, comp[2], 1);
 
         /* Check */
         for (int i = 0; i < (nbChannels - 1) * 4; i++) {
@@ -139,7 +139,7 @@ public class SingleProcessorTest {
 
         for (int i = 0; i < comps.length; i++) {
             processor.processData(data, comps[i]);
-            processor.processW(data, comps[i]);
+            processor.processW(data, comps[i], 1);
         }
 
         assertTrue(processor.checkPermutationPartOf(data, data));

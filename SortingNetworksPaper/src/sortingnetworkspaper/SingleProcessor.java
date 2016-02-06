@@ -26,7 +26,7 @@ public class SingleProcessor implements Processor {
     //private final byte[] identityElement;
     private final int[] allOnesList;
     private final byte[] allMinusOneList;
-    
+
     //Statistics
 //    private static long uniqueCounter = 0;
 //    private static long redundantCounter = 0;
@@ -111,7 +111,7 @@ public class SingleProcessor implements Processor {
             //this.printInputs(N.get(0)[0]);
             //System.out.println(N.size64());
         } while (N.size() > 1 && nbComp < upperBound);
-        
+
         //System.out.println("#Unique " + uniqueCounter + "; #Redundant " + redundantCounter);
         //System.out.println("#kLengthCounter " + kLengthCounter + "; #pLengthCounter " + pLengthCounter + "; #lLengthCounter " + lLengthCounter);
         //System.out.println("#emptyPosCounter " + emptyPosCounter);
@@ -184,8 +184,8 @@ public class SingleProcessor implements Processor {
                 //Fill
                 data[0] = new short[2];
                 data[0][0] = comp;
-                processData(data, comp);
-                processW(data, comp);
+                processData(data, comp, 1);
+                processW(data, comp, 1);
 
                 N.add(data);
             }
@@ -198,19 +198,19 @@ public class SingleProcessor implements Processor {
      *
      * @param data The network
      * @param newComp The comparator to process the data on.
+     * @param startIndex The index of where to start. (= 1 will cover
+     * everything.)
      */
-    @Override
-    public void processData(short[][] data, short newComp) {
+    public void processData(short[][] data, short newComp, int startIndex) {
         //1 - HashSet
 //        ShortOpenHashSet set = new ShortOpenHashSet();
         //2 - ArrayList
 //        ShortArrayList arr;
         //3 - Array
         short[] processed;
-        int counter;
         boolean found;
 
-        for (int nbOnes = 1; nbOnes < nbChannels; nbOnes++) {
+        for (int nbOnes = startIndex; nbOnes < nbChannels; nbOnes++) {
             //1 - HashSet
 //            set.clear();
 
@@ -218,13 +218,13 @@ public class SingleProcessor implements Processor {
 //            arr = new ShortArrayList();
             //3 - Array
             processed = new short[data[nbOnes].length];
-            counter = 0;
+            int counter = 0;
             boolean foundNew = false;
 
             for (int innerIndex = 0; innerIndex < data[nbOnes].length; innerIndex++) {
                 short oldValue = data[nbOnes][innerIndex];
                 short value = swapCompare(oldValue, newComp);
-                if(value != oldValue) {
+                if (value != oldValue) {
                     foundNew = true;
                 }
                 //1 - HashSet
@@ -252,10 +252,10 @@ public class SingleProcessor implements Processor {
             //2 - ArrayList
 //            data[nbOnes] = arr.toShortArray();
             //3 - Array
-            if(foundNew) { //CAUTION! Don't do this 'shared array' with writing lists to disk.
-            short[] temp = new short[counter];
-            System.arraycopy(processed, 0, temp, 0, counter);
-            data[nbOnes] = temp;
+            if (foundNew) { //CAUTION! Don't do this 'shared array' with writing lists to disk.
+                short[] temp = new short[counter];
+                System.arraycopy(processed, 0, temp, 0, counter);
+                data[nbOnes] = temp;
             }
         }
 
@@ -285,36 +285,39 @@ public class SingleProcessor implements Processor {
             short[][] network = iter.next();
             int prevComp = network[0][nbComp - 1];
             int prevCompMZ = prevComp >> Integer.numberOfTrailingZeros(prevComp);
-                    
+
             for (number = 3, cMaxShifts = maxShifts; number <= maxOuterComparator; number = (number << 1) - 1, cMaxShifts--) { //x*2 - 1
                 comp = (short) number;
                 int compMZ = comp >> Integer.numberOfTrailingZeros(comp);
-                
+
                 for (outerShift = 0; outerShift <= cMaxShifts; outerShift++, comp <<= 1) { //shift n-2, n-3, ... keer
-                    
+
                     //if(prevComp != comp && (shared || prevComp < comp)) {
-                    
                     if (((prevComp & comp) != 0 && prevComp != comp) || (prevCompMZ < compMZ || (compMZ == prevCompMZ && prevComp < comp))) {
                         //new Network (via clone)
-                        if (!isRedundantComp(network, comp)) {
+                        //if (!isRedundantComp(network, comp)) {
+                        int index = getChangeIndex(network, comp);
+                        if (index != -1) { //!= redundant
                             short[][] data = network.clone();
-                            //Fill
-                            data[0] = new short[nbComp+1];
+                            //Fill comp
+                            data[0] = new short[nbComp + 1];
                             System.arraycopy(network[0], 0, data[0], 0, nbComp);
                             data[0][nbComp] = comp;
-                            
-                            
-                            
-                            processData(data, comp);
-                            processW(data, comp);
+
+                            //processData(data, comp);
+                            //processW(data, comp);
+                            processData(data, comp, index);
+                            processW(data, comp, index);
 
                             newN.add(data);
                         }/* else {
-                            redundantCounter++;
-                        }*/
+                         redundantCounter++;
+                         }*/
+
                     }/* else {
-                        uniqueCounter++;
-                    }*/
+                     uniqueCounter++;
+                     }*/
+
                 }
             }
         }
@@ -428,7 +431,6 @@ public class SingleProcessor implements Processor {
 
                 /* Compute permuted */
                 for (int pIndex = permutor.length - 1; pIndex >= 0; pIndex--) {
-                    byte permIndex = permutor[pIndex]; //TODO: Inline
                     output <<= 1;
                     output |= ((network1[nbOnes][innerIndex] >> permutor[pIndex]) & 1);
                 }
@@ -468,7 +470,7 @@ public class SingleProcessor implements Processor {
                 return false;
             }
         }
-        
+
         int maxIndex = (nbChannels - 1) << 2;
         for (int index = 1; index < maxIndex;) {
             if (network1[nbChannels][index] > network2[nbChannels][index]) {
@@ -941,12 +943,34 @@ public class SingleProcessor implements Processor {
     private boolean isRedundantComp(short[][] data, short comp) {
         for (int nbOnes = 1; nbOnes < nbChannels; nbOnes++) {
             for (int innerIndex = 0; innerIndex < data[nbOnes].length; innerIndex++) {
-                if (data[nbOnes][innerIndex] != swapCompare(data[nbOnes][innerIndex], comp)) {
+                short output = data[nbOnes][innerIndex];
+                if (output != swapCompare(output, comp)) {
                     return false;
                 }
             }
         }
         return true;
+    }
+
+    /**
+     * Check if the given comp is redundant given the data present. If it is
+     * not, the first index of changing outputArr will be returned.
+     *
+     * @param data The date before the comp would be added.
+     * @param comp The comp that would be added.
+     * @return -1 If the comparator is redundant else a number 0 &lt= x &lt
+     * nbChannels
+     */
+    private int getChangeIndex(short[][] data, short comp) {
+        for (int nbOnes = 1; nbOnes < nbChannels; nbOnes++) {
+            for (int innerIndex = 0; innerIndex < data[nbOnes].length; innerIndex++) {
+                short output = data[nbOnes][innerIndex];
+                if (output != swapCompare(output, comp)) {
+                    return nbOnes;
+                }
+            }
+        }
+        return -1;
     }
 
     /*  Reduce work: Lemma 6:
@@ -973,15 +997,20 @@ public class SingleProcessor implements Processor {
      *
      * @param data
      * @param comp
+     * @param startIndex
      */
-    public void processW(short[][] data, short comp) {
+    public void processW(short[][] data, short comp, int startIndex) {
         short[] wResult = new short[data[nbChannels].length];
 
         int wIndexCounter;
         boolean foundL;
         boolean foundP;
 
-        for (int nbOnes = 1; nbOnes < nbChannels; nbOnes++) {
+        if (startIndex != 1) {
+            System.arraycopy(data[nbChannels], 0, wResult, 0, (startIndex - 1) << 2);
+        }
+
+        for (int nbOnes = startIndex; nbOnes < nbChannels; nbOnes++) {
             wIndexCounter = (nbOnes - 1) << 2;
 
             int oldP = data[nbChannels][wIndexCounter];
@@ -1044,6 +1073,11 @@ public class SingleProcessor implements Processor {
                 Logger.getLogger(SingleProcessor.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+    }
+
+    @Override
+    public void processData(short[][] data, short newComp) {
+        processData(data, newComp, 1);
     }
 
 }
