@@ -5,6 +5,7 @@ import it.unimi.dsi.fastutil.objects.ObjectListIterator;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import sortingnetworkspaper.memory.ObjArrayList;
@@ -181,7 +182,7 @@ public class SingleProcessor implements Processor {
                 //new Network (via clone)
                 short[][] data = inputs.clone();
                 //Fill
-                data[0] = new short[upperBound];
+                data[0] = new short[2];
                 data[0][0] = comp;
                 processData(data, comp);
                 processW(data, comp);
@@ -276,15 +277,14 @@ public class SingleProcessor implements Processor {
         while (iter.hasNext()) {
             short[][] network = iter.next();
             int prevComp = network[0][nbComp - 1];
-            int prevCompMZ = prevComp >> Integer.numberOfTrailingZeros(prevComp); //1ste
+            int prevCompMZ = prevComp >> Integer.numberOfTrailingZeros(prevComp);
                     
             for (number = 3, cMaxShifts = maxShifts; number <= maxOuterComparator; number = (number << 1) - 1, cMaxShifts--) { //x*2 - 1
                 comp = (short) number;
-                int compMZ = comp >> Integer.numberOfTrailingZeros(comp); //2de
+                int compMZ = comp >> Integer.numberOfTrailingZeros(comp);
                 
                 for (outerShift = 0; outerShift <= cMaxShifts; outerShift++, comp <<= 1) { //shift n-2, n-3, ... keer
                     
-                    boolean shared = (prevComp & comp) != 0;
                     //if(prevComp != comp && (shared || prevComp < comp)) {
                     
                     if (((prevComp & comp) != 0 && prevComp != comp) || (prevCompMZ < compMZ || (compMZ == prevCompMZ && prevComp < comp))) {
@@ -292,8 +292,12 @@ public class SingleProcessor implements Processor {
                         if (!isRedundantComp(network, comp)) {
                             short[][] data = network.clone();
                             //Fill
-                            data[0] = data[0].clone();
+                            data[0] = new short[nbComp+1];
+                            System.arraycopy(network[0], 0, data[0], 0, nbComp);
                             data[0][nbComp] = comp;
+                            
+                            
+                            
                             processData(data, comp);
                             processW(data, comp);
 
@@ -737,7 +741,7 @@ public class SingleProcessor implements Processor {
          data[n] nbChannels holds W(C,x,k) info.
          */
         short[][] data = new short[nbChannels + 1][];
-        data[0] = new short[upperBound];
+        data[0] = new short[2];
         data[nbChannels] = new short[(nbChannels - 1) << 2];
         int wIndexCounter;
 
@@ -915,10 +919,7 @@ public class SingleProcessor implements Processor {
      */
     private static byte[] getAllMinusOneList(byte nbChannels) {
         byte[] list = new byte[nbChannels];
-
-        for (int i = 0; i < list.length; i++) {
-            list[i] = -1;
-        }
+        Arrays.fill(list, (byte) -1);
         return list;
     }
 
