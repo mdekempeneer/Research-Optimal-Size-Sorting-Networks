@@ -18,9 +18,6 @@ public class SingleProcessor implements Processor {
 
     private final short nbChannels;
     private final int upperBound;
-
-    private ObjArrayList<short[][]> N;
-    private ObjArrayList<short[][]> newN;
     private final int maxOuterComparator;
     private final int maxShifts;
     //private final byte[] identityElement;
@@ -53,8 +50,6 @@ public class SingleProcessor implements Processor {
     public SingleProcessor(short nbChannels, int upperBound, String savePath) {
         this.nbChannels = nbChannels;
         this.upperBound = upperBound;
-        this.N = new ObjArrayList();
-        this.newN = new ObjArrayList();
         this.maxOuterComparator = ((1 << (nbChannels - 1)) | 1);
         this.maxShifts = nbChannels - 2;
         //this.identityElement = getIdentityElement((byte) nbChannels);
@@ -96,21 +91,22 @@ public class SingleProcessor implements Processor {
     public short[] process() {
         /* Initialize inputs */
         //TODO: Replace firstTimeGenerate & Prune with just the network (1 2) ??
-        firstTimeGenerate(getOriginalInputs(upperBound));
-        prune();
+        ObjArrayList<short[][]> NList = firstTimeGenerate(getOriginalInputs(upperBound));
+        prune(NList);
         //System.out.println(N.size64());
 
         short nbComp = 1;
         do {
-            generate(nbComp);
-            prune();
+            NList = performCycle(NList, nbComp);
+            //generate(nbComp);
+            //prune();
             nbComp++;
 
             //System.out.println("permCount: " + permCount);
             //permCount = 0;
             //this.printInputs(N.get(0)[0]);
             //System.out.println(N.size64());
-        } while (N.size() > 1 && nbComp < upperBound);
+        } while (NList.size() > 1 && nbComp < upperBound);
 
         //System.out.println("#Unique " + uniqueCounter + "; #Redundant " + redundantCounter);
         //System.out.println("#kLengthCounter " + kLengthCounter + "; #pLengthCounter " + pLengthCounter + "; #lLengthCounter " + lLengthCounter);
@@ -118,8 +114,8 @@ public class SingleProcessor implements Processor {
         //System.out.println("#networkPermCounter " + networkPermCounter);
 
         /* Return result */
-        if (N.size() >= 1) {
-            return N.get(0)[0];
+        if (NList.size() >= 1) {
+            return NList.get(0)[0];
         } else {
             return null;
         }
@@ -169,7 +165,8 @@ public class SingleProcessor implements Processor {
     /**
      * Add all networks consisting of 1 comparator to N.
      */
-    private void firstTimeGenerate(short[][] inputs) {
+    private ObjArrayList<short[][]> firstTimeGenerate(short[][] inputs) {
+        ObjArrayList<short[][]> list = new ObjArrayList();
         int cMaxShifts = maxShifts;
         short comp;
         int number;
@@ -187,9 +184,11 @@ public class SingleProcessor implements Processor {
                 processData(data, comp, 1);
                 processW(data, comp, 1);
 
-                N.add(data);
+                list.add(data);
             }
         }
+
+        return list;
     }
 
     /**
@@ -261,6 +260,72 @@ public class SingleProcessor implements Processor {
 
     }
 
+    private ObjArrayList<short[][]> performCycle(ObjArrayList<short[][]> networkList, short nbComps) {
+        ObjArrayList<short[][]> newList = new ObjArrayList();
+        ObjectListIterator<short[][]> iter = networkList.iterator();
+        while (iter.hasNext()) {
+            short[][] network = iter.next();
+            ObjArrayList<short[][]> prunedList = generate(network, nbComps);
+            prune(prunedList);
+
+            //for every from prunedlist
+            //prune w all others
+            //ToDo:
+        }
+
+        return newList;
+    }
+
+    private ObjArrayList<short[][]> generate(short[][] network, short nbComp) {
+        /* Setup environment */
+        ObjArrayList<short[][]> list = new ObjArrayList();
+        int cMaxShifts;
+        short comp;
+        int number;
+        int outerShift;
+
+        /* Start Generate work */
+ /* For all comparators */
+        int prevComp = network[0][nbComp - 1];
+        int prevCompMZ = prevComp >> Integer.numberOfTrailingZeros(prevComp);
+
+        for (number = 3, cMaxShifts = maxShifts; number <= maxOuterComparator; number = (number << 1) - 1, cMaxShifts--) { //x*2 - 1
+            comp = (short) number;
+            int compMZ = comp >> Integer.numberOfTrailingZeros(comp);
+
+            for (outerShift = 0; outerShift <= cMaxShifts; outerShift++, comp <<= 1) { //shift n-2, n-3, ... keer
+
+                //if(prevComp != comp && (shared || prevComp < comp)) {
+                if (((prevComp & comp) != 0 && prevComp != comp) || (prevCompMZ < compMZ || (compMZ == prevCompMZ && prevComp < comp))) {
+                    //new Network (via clone)
+                    //if (!isRedundantComp(network, comp)) {
+                    int index = getChangeIndex(network, comp);
+                    if (index != -1) { //!= redundant
+                        short[][] data = network.clone();
+                        //Fill comp
+                        data[0] = new short[nbComp + 1];
+                        System.arraycopy(network[0], 0, data[0], 0, nbComp);
+                        data[0][nbComp] = comp;
+
+                        //processData(data, comp);
+                        //processW(data, comp);
+                        processData(data, comp, index);
+                        processW(data, comp, index);
+
+                        list.add(data);
+                    }/* else {
+                         redundantCounter++;
+                         }*/
+
+                }/* else {
+                     uniqueCounter++;
+                     }*/
+
+            }
+        }
+        return list;
+    }
+
     /**
      * Generate networks. Adds all possible comparators to every network in N
      * and replaces N with the result. (Redundant comparators are neglected,
@@ -270,94 +335,86 @@ public class SingleProcessor implements Processor {
      * working on.
      * @see #isRedundantComp(short[][], short)
      */
-    private void generate(short nbComp) {
-        /* Setup environment */
-        newN = new ObjArrayList();
-        int cMaxShifts;
-        short comp;
-        int number;
-        int outerShift;
-        ObjectListIterator<short[][]> iter = N.iterator();
-
-        /* Start Generate work */
-        /* For all comparators */
-        while (iter.hasNext()) {
-            short[][] network = iter.next();
-            int prevComp = network[0][nbComp - 1];
-            int prevCompMZ = prevComp >> Integer.numberOfTrailingZeros(prevComp);
-
-            for (number = 3, cMaxShifts = maxShifts; number <= maxOuterComparator; number = (number << 1) - 1, cMaxShifts--) { //x*2 - 1
-                comp = (short) number;
-                int compMZ = comp >> Integer.numberOfTrailingZeros(comp);
-
-                for (outerShift = 0; outerShift <= cMaxShifts; outerShift++, comp <<= 1) { //shift n-2, n-3, ... keer
-
-                    //if(prevComp != comp && (shared || prevComp < comp)) {
-                    if (((prevComp & comp) != 0 && prevComp != comp) || (prevCompMZ < compMZ || (compMZ == prevCompMZ && prevComp < comp))) {
-                        //new Network (via clone)
-                        //if (!isRedundantComp(network, comp)) {
-                        int index = getChangeIndex(network, comp);
-                        if (index != -1) { //!= redundant
-                            short[][] data = network.clone();
-                            //Fill comp
-                            data[0] = new short[nbComp + 1];
-                            System.arraycopy(network[0], 0, data[0], 0, nbComp);
-                            data[0][nbComp] = comp;
-
-                            //processData(data, comp);
-                            //processW(data, comp);
-                            processData(data, comp, index);
-                            processW(data, comp, index);
-
-                            newN.add(data);
-                        }/* else {
-                         redundantCounter++;
-                         }*/
-
-                    }/* else {
-                     uniqueCounter++;
-                     }*/
-
-                }
-            }
-        }
-
-        /* Point to new reference */
-        N = newN;
-    }
+//    private void generate(short nbComp) {
+//        /* Setup environment */
+//        newN = new ObjArrayList();
+//        int cMaxShifts;
+//        short comp;
+//        int number;
+//        int outerShift;
+//        ObjectListIterator<short[][]> iter = N.iterator();
+//
+//        /* Start Generate work */
+// /* For all comparators */
+//        while (iter.hasNext()) {
+//            short[][] network = iter.next();
+//            int prevComp = network[0][nbComp - 1];
+//            int prevCompMZ = prevComp >> Integer.numberOfTrailingZeros(prevComp);
+//
+//            for (number = 3, cMaxShifts = maxShifts; number <= maxOuterComparator; number = (number << 1) - 1, cMaxShifts--) { //x*2 - 1
+//                comp = (short) number;
+//                int compMZ = comp >> Integer.numberOfTrailingZeros(comp);
+//
+//                for (outerShift = 0; outerShift <= cMaxShifts; outerShift++, comp <<= 1) { //shift n-2, n-3, ... keer
+//
+//                    //if(prevComp != comp && (shared || prevComp < comp)) {
+//                    if (((prevComp & comp) != 0 && prevComp != comp) || (prevCompMZ < compMZ || (compMZ == prevCompMZ && prevComp < comp))) {
+//                        //new Network (via clone)
+//                        //if (!isRedundantComp(network, comp)) {
+//                        int index = getChangeIndex(network, comp);
+//                        if (index != -1) { //!= redundant
+//                            short[][] data = network.clone();
+//                            //Fill comp
+//                            data[0] = new short[nbComp + 1];
+//                            System.arraycopy(network[0], 0, data[0], 0, nbComp);
+//                            data[0][nbComp] = comp;
+//
+//                            //processData(data, comp);
+//                            //processW(data, comp);
+//                            processData(data, comp, index);
+//                            processW(data, comp, index);
+//
+//                            newN.add(data);
+//                        }/* else {
+//                         redundantCounter++;
+//                         }*/
+//
+//                    }/* else {
+//                     uniqueCounter++;
+//                     }*/
+//
+//                }
+//            }
+//        }
+//
+//        /* Point to new reference */
+//        N = newN;
+//    }
 
     /**
      * Prune the current N by removing what does not prevent us from getting 1
      * minimal sorting network for the given amount of channels.
      */
-    private void prune() {
+    private void prune(ObjArrayList<short[][]> list) {
         ObjectListIterator<short[][]> iter;
-        System.out.println("Prunestap begin: " + N.size());
-        for (int index = 0; index < N.size() - 1; index++) {
-            if (shouldSave) {
-                saveN();
+        for (int index = 0; index < list.size() - 1; index++) { //TODO: klopt list.size() -1 wel?
 
-                System.out.println("Done saving. Exiting now.");
-                System.exit(0);
-            } else {
-                iter = N.listIterator(index + 1);
+            iter = list.listIterator(index + 1);
 
-                short[][] network1 = N.get(index);
+            short[][] network1 = list.get(index);
 
-                while (iter.hasNext()) {
-                    short[][] network2 = iter.next();
+            while (iter.hasNext()) {
+                short[][] network2 = iter.next();
 
-                    if (subsumes(network1, network2)) {
-                        iter.remove();
-                    } else if (subsumes(network2, network1)) {
-                        N.remove(index);
-                        index--;
-                        break;
-                    }
+                if (subsumes(network1, network2)) {
+                    iter.remove();
+                } else if (subsumes(network2, network1)) {
+                    list.remove(index);
+                    index--;
+                    break;
                 }
             }
         }
-        System.out.println("Prunestap eind: " + N.size());
     }
 
     /**
@@ -400,7 +457,7 @@ public class SingleProcessor implements Processor {
         /*  Reduce work: Lemma 6:
          C1 subsumes C2 => P(w(C1, x, k)) C= w(C2, x, k)
          */
-        /* Permute & Check W */
+ /* Permute & Check W */
         //TODO: Check if that is true (line below)!
         //Only checking the permutation who are valid for lemma 6.
 
@@ -713,7 +770,7 @@ public class SingleProcessor implements Processor {
      */
     @Override
     public synchronized void addToNewN(ObjectBigArrayBigList<short[][]> partN) {
-        newN.addAll(partN);
+        //newN.addAll(partN);
     }
 
     /**
@@ -1062,13 +1119,13 @@ public class SingleProcessor implements Processor {
         this.shouldSave = true;
     }
 
-    private void saveN() {
+    private void saveN(ObjArrayList<short[][]> list) {
         if (savePath != null && !savePath.equals("")) {
             ObjectOutputStream oos;
             try {
                 //oos = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(this.savePath)));
                 oos = new ObjectOutputStream(new FileOutputStream(this.savePath));
-                oos.writeObject(this.N);
+                oos.writeObject(list);
             } catch (IOException ex) {
                 Logger.getLogger(SingleProcessor.class.getName()).log(Level.SEVERE, null, ex);
             }
