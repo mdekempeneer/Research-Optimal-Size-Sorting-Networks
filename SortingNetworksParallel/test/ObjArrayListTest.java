@@ -34,9 +34,10 @@ public class ObjArrayListTest {
 
         //Give task to thread
         while (current < capacity) {
+            int t = current++;
             executor.execute(new Runnable() {
                 public void run() {
-                    int networkIndex = resultN.add(new int[]{current++}, null); //gives -1 if no spot was found.`
+                    int networkIndex = resultN.add(new int[]{t}, null); //gives -1 if no spot was found.`
                     latch.countDown();
                 }
             });
@@ -60,7 +61,7 @@ public class ObjArrayListTest {
     }
 
     private boolean contains(ObjArrayList<int[]> list, int k) {
-        for (int i = 0; i < list.size(); i++) {
+        for (int i = 0; i < list.size()+1; i++) {
             if (list.get(i)[0] == k) {
                 return true;
             }
