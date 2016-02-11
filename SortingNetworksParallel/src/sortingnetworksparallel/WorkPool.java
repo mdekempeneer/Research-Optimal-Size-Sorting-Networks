@@ -13,7 +13,6 @@ import sortingnetworksparallel.memory.ObjArrayList;
  *
  * @author Admin
  */
-//TODO: Don't forget to shutDown the executor when the application is finished!!!!!
 public class WorkPool {
 
     private final Processor processor;
@@ -29,7 +28,7 @@ public class WorkPool {
         this.processor = processor;
         this.nbChannels = nbChannels;
 
-        int nbThreads = Runtime.getRuntime().availableProcessors();
+        int nbThreads = Runtime.getRuntime().availableProcessors() - 2;
         executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(nbThreads);
 
         System.out.println("Will be using " + nbThreads + " threads");

@@ -421,9 +421,9 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
         nullFlag = true;
         final K old = a[index];
         a[index] = null;
-        if (index == size) {
+        /*if (index == size) {
             size--;
-        }
+        }*/
         if (ASSERTS) {
             assert size <= a.length;
         }
@@ -439,10 +439,7 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
             nullFlag = false;
             for (int i = size - 1; i >= 0; i--) {
                 if (a[i] == null) {
-                    for(int j = i+1; j < size; j++) {
-                        a[j-1] = a[j];
-                    }
-                    
+                    System.arraycopy(a, (i+1), a, i, size-i);
                     size--;
                 }
             }

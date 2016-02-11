@@ -328,7 +328,7 @@ public class Processor {
 
                 if (network2 != null && network2 != network) {
                     if (subsumes(network, network2)) {
-                        networkList.remove(index); //TODO: Make sure the ObjArrayList does not change indexes w remove().
+                        networkList.remove(index);
                     } else if (subsumes(network2, network)) {
                         networkList.remove(networkIndex);
                         break;
