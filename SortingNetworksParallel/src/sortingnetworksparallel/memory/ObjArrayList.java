@@ -38,6 +38,7 @@ package sortingnetworksparallel.memory;
 
 import it.unimi.dsi.fastutil.objects.AbstractObjectList;
 import it.unimi.dsi.fastutil.objects.AbstractObjectListIterator;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectArrays;
 import it.unimi.dsi.fastutil.objects.ObjectCollection;
 import it.unimi.dsi.fastutil.objects.ObjectIterator;
@@ -345,16 +346,16 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
 
     @Override
     public boolean add(final K k) {
-        if(size+1 < a.length) {
+        if(size < a.length) {
             a[size++] = k;
         } else {
            for(int i = 0; i < a.length; i++) {
                if(a[i] == null) {
-                   a[i] = k;
-                   return true;
-               }
-           }
-           return false;
+                    a[i] = k;
+                    return true;
+                }
+            }
+            return false;
         }
         if (ASSERTS) {
             assert size <= a.length;
@@ -370,26 +371,24 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
      * @param dummy
      * @return The index of where the object is added. -1 is no index was found.
      */
-    public int add(final K k, Object dummy) {
-        if(size+1 < a.length) {
-            a[size++] = k;
-            return (size-1);
+    public synchronized int add(final K k, Object dummy) { //todo
+        if (size < a.length) {
+            int index = size++;
+            a[index] = k;
+            return (index);
         } else {
            for(int i = 0; i < a.length; i++) {
                if(a[i] == null) {
-                   a[i] = k;
-                   return i;
-               }
-           }
-           return -1;
+                    a[i] = k;
+                    return i;
+                }
+            }
+            return -1;
         }
     }
 
     @Override
     public K get(final int index) {
-        if (index >= size) {
-            throw new IndexOutOfBoundsException("Index (" + index + ") is greater than or equal to list size (" + size + ")");
-        }
         return a[index];
     }
 
@@ -422,8 +421,8 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
         final K old = a[index];
         a[index] = null;
         /*if (index == size) {
-            size--;
-        }*/
+         size--;
+         }*/
         if (ASSERTS) {
             assert size <= a.length;
         }
@@ -439,7 +438,7 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
             nullFlag = false;
             for (int i = size - 1; i >= 0; i--) {
                 if (a[i] == null) {
-                    System.arraycopy(a, (i+1), a, i, size-i);
+                    System.arraycopy(a, (i + 1), a, i, size - i);
                     size--;
                 }
             }

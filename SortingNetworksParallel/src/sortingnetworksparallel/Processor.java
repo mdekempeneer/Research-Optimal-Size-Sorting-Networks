@@ -94,6 +94,11 @@ public class Processor {
             nbComp++;
 
             System.out.println("Cycle complete with " + nbComp + " comps and size " + NList.size());
+            /*if (innerPruneTest(NList)) {
+                NList.fixNulls();
+                NList.trim();
+                System.out.println("[ERROR]: Found unpruned" + NList.size());
+            }*/
         } while (NList.size() > 1 && nbComp < upperBound);
 
         workPool.shutDown();
@@ -305,6 +310,35 @@ public class Processor {
                 }
             }
         }
+    }
+
+    public boolean innerPruneTest(AbstractObjectList<short[][]> networkList) {
+        boolean found = false;
+
+        ObjectListIterator<short[][]> iter;
+        for (int index = 0; index < networkList.size() - 1; index++) {
+            short[][] network1 = networkList.get(index);
+            if (network1 != null) {
+                iter = networkList.listIterator(index + 1);
+
+                while (iter.hasNext()) {
+                    short[][] network2 = iter.next();
+                    if (network2 != null) {
+                        if (subsumes(network1, network2)) {
+                            iter.remove();
+                            found = true;
+                        } else if (subsumes(network2, network1)) {
+                            networkList.remove(index);
+                            index--;
+                            found = true;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        return found;
     }
 
     /**
