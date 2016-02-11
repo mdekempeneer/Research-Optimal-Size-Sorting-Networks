@@ -23,12 +23,14 @@ public class WorkPool {
      *
      * @param processor The {@link Processor} that uses this. Methods of this
      * {@link Processor} will be used.
+     * @param nbChannels The amount of channels used in the network.
      */
     public WorkPool(Processor processor, short nbChannels) {
         this.processor = processor;
         this.nbChannels = nbChannels;
 
-        int nbThreads = Runtime.getRuntime().availableProcessors() - 2;
+        int nbThreads = Runtime.getRuntime().availableProcessors();
+        nbThreads = (int) (nbThreads * 3.0/4.0);
         executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(nbThreads);
 
         System.out.println("Will be using " + nbThreads + " threads");
