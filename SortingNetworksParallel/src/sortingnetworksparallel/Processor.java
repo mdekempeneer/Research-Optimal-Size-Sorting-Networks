@@ -94,7 +94,9 @@ public class Processor {
             nbComp++;
 
             System.out.println("Cycle complete with " + nbComp + " comps and size " + NList.size());
-            /*if (innerPruneTest(NList)) {
+            
+            /*//Tests if list only contains non subsumable.
+            if (innerPruneTest(NList)) {
                 NList.fixNulls();
                 NList.trim();
                 System.out.println("[ERROR]: Found unpruned" + NList.size());

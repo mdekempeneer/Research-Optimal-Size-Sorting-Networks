@@ -339,7 +339,7 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
 
     @Override
     public boolean add(final K k) {
-        if(size.get()+1 < a.length) {
+        if(size.get() < a.length) {
             a[size.getAndIncrement()] = k;
         } else {
            for(int i = 0; i < a.length; i++) {
@@ -362,7 +362,7 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
      * @return The index of where the object is added. -1 is no index was found.
      */
     public int add(final K k, Object dummy) {
-        if(size.get()+1 < a.length) {
+        if(size.get() < a.length) {
             int index = size.getAndIncrement();
             a[index] = k;
             return index;
@@ -425,7 +425,7 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
             nullFlag = false;
             for (int i = size.get() - 1; i >= 0; i--) {
                 if (a[i] == null) {
-                    System.arraycopy(a, (i+1), a, i, size.get()-i);
+                    System.arraycopy(a, (i+1), a, i, size.get()-i-1);
                     size.decrementAndGet();
                 }
             }
