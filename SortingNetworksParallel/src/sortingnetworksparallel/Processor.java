@@ -94,13 +94,14 @@ public class Processor {
             nbComp++;
 
             System.out.println("Cycle complete with " + nbComp + " comps and size " + NList.size());
-            
+
             /*//Tests if list only contains non subsumable.
-            if (innerPruneTest(NList)) {
-                NList.fixNulls();
-                NList.trim();
-                System.out.println("[ERROR]: Found unpruned" + NList.size());
-            }*/
+             System.out.println("Testing if all pruned");
+             if (innerPruneTest(NList)) {
+             NList.fixNulls();
+             NList.trim();
+             System.out.println("[ERROR]: Found unpruned" + NList.size());
+             }*/
         } while (NList.size() > 1 && nbComp < upperBound);
 
         workPool.shutDown();
@@ -198,7 +199,7 @@ public class Processor {
      *
      * @param data The network
      * @param newComp The comparator to process the data on.
-     * @param startIndex The index of where to start. (= 1 will cover
+     * @param startIndex The outerIndex of where to start. (= 1 will cover
      * everything.)
      */
     public void processData(short[][] data, short newComp, int startIndex) {
@@ -242,7 +243,7 @@ public class Processor {
      * comparators. (Redundant comparators are neglected, see isRedundantComp)
      *
      * @param network The network to expand from.
-     * @param nbComp The index of the comparator (data[0][nbComp]) to start
+     * @param nbComp The outerIndex of the comparator (data[0][nbComp]) to start
      * working on.
      * @see #isRedundantComp(short[][], short)
      */
@@ -283,6 +284,8 @@ public class Processor {
         }
         return result;
     }
+    
+    
 
     /**
      * Prune N by removing every network that is being subsumed by another
@@ -351,24 +354,39 @@ public class Processor {
      * and stop execution even before the whole list is iterated over.
      *
      * @param networkList The list of networks to prune on.
-     * @param networkIndex The index of the network located in the networkList
-     * used to perform subsumes with (in 2 directions).
+     * @param networkIndex The outerIndex of the network located in the
+     * networkList used to perform subsumes with (in 2 directions).
+     * @param skipSize The networks with outerIndex >= networkIndex and &lt
+     * skipSize+networkIndex aren't checked.
      *
      */
-    public void prune(ObjArrayList<short[][]> networkList, int networkIndex) {
-        short[][] network = networkList.get(networkIndex);
+    public void prune(ObjArrayList<short[][]> networkList, final int networkIndex, final int skipSize) {
+        int maxSkipIndex = networkIndex + skipSize;
 
-        if (network != null) {
-            for (int index = 0; index < networkList.size(); index++) {
-                short[][] network2 = networkList.get(index);
+        for (int outerIndex = 0; outerIndex < networkList.size(); outerIndex++) {
+            if (outerIndex < networkIndex || outerIndex >= maxSkipIndex) { //skip the ones between=innerPruned.
+                short[][] network2 = networkList.get(outerIndex);
 
-                if (network2 != null && network2 != network) {
-                    if (subsumes(network, network2)) {
-                        networkList.remove(index);
-                    } else if (subsumes(network2, network)) {
-                        networkList.remove(networkIndex);
-                        break;
+                if (network2 != null) {
+
+                    for (int i = 0; i < skipSize; i++) { //for all in the innerPrune
+                        int innerIndex = networkIndex + i;
+                        short[][] network = networkList.get(innerIndex);
+                        if (network != null) { //else already removed.
+
+                            if (subsumes(network, network2)) {
+                                if (networkList.get(innerIndex) != null) { //recheck
+                                    networkList.remove(outerIndex);
+                                }
+                                break;
+                            } else if (subsumes(network2, network)) {
+                                    networkList.remove(innerIndex);
+                                //break;
+                            }
+
+                        }
                     }
+
                 }
             }
         }
@@ -617,8 +635,8 @@ public class Processor {
         boolean ended = false;
 
         do {
-            //currOuterIndex = Which outer index we're working with.
-            //takenNumbers = bv index 0 een 1 = getal 1 is al genomen.
+            //currOuterIndex = Which outer outerIndex we're working with.
+            //takenNumbers = bv outerIndex 0 een 1 = getal 1 is al genomen.
 
             while (currOuterIndex >= 0 && currOuterIndex <= lastOuterIndex) {
                 if (indices[currOuterIndex] + 1 >= Ps[currOuterIndex].length) { // last Inner Index reached.
@@ -628,7 +646,7 @@ public class Processor {
                     currPerm[currOuterIndex] = -1;
                     indices[currOuterIndex] = -1;
 
-                    //work on previous index.
+                    //work on previous outerIndex.
                     currOuterIndex--;
 
                     //'untake' prev.
@@ -670,7 +688,7 @@ public class Processor {
                             indices[currOuterIndex] = -1;
                         }
 
-                        //work on previous index.
+                        //work on previous outerIndex.
                         currOuterIndex--;
                     }
                 }
@@ -848,14 +866,14 @@ public class Processor {
 //        short comp;
 //        int number;
 //        int outerShift;
-//        int index = 0;
+//        int outerIndex = 0;
 //
 //        /* For all comparators */
 //        for (number = 3, cMaxShifts = maxShifts; number <= maxOuterComparator; number = (number << 1) - 1, cMaxShifts--) { //x*2 - 1
 //            comp = (short) number;
 //            for (outerShift = 0; outerShift <= cMaxShifts; outerShift++, comp <<= 1) { //shift n-2, n-3, ... keer
-//                result[index] = comp;
-//                index++;
+//                result[outerIndex] = comp;
+//                outerIndex++;
 //            }
 //        }
 //        return result;
@@ -925,7 +943,7 @@ public class Processor {
 //    }
     /**
      * Check if the given comp is redundant given the data present. If it is
-     * not, the first index of changing outputArr will be returned.
+     * not, the first outerIndex of changing outputArr will be returned.
      *
      * @param data The date before the comp would be added.
      * @param comp The comp that would be added.

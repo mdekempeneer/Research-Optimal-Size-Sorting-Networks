@@ -339,16 +339,16 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
 
     @Override
     public boolean add(final K k) {
-        if(size.get() < a.length) {
+        if (size.get() < a.length) {
             a[size.getAndIncrement()] = k;
         } else {
-           for(int i = 0; i < a.length; i++) {
-               if(a[i] == null) {
-                   a[i] = k;
-                   return true;
-               }
-           }
-           return false;
+            for (int i = 0; i < a.length; i++) {
+                if (a[i] == null) {
+                    a[i] = k;
+                    return true;
+                }
+            }
+            return false;
         }
         return true;
     }
@@ -362,18 +362,45 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
      * @return The index of where the object is added. -1 is no index was found.
      */
     public int add(final K k, Object dummy) {
-        if(size.get() < a.length) {
+        if (size.get() < a.length) {
             int index = size.getAndIncrement();
             a[index] = k;
             return index;
         } else {
-           for(int i = 0; i < a.length; i++) {
-               if(a[i] == null) {
+            for (int i = 0; i < a.length; i++) {
+                if (a[i] == null) {
                     a[i] = k;
                     return i;
                 }
             }
             return -1;
+        }
+    }
+
+    //TODO: Add comments
+    public int add(final ObjectArrayList<K> k) {
+        if (size.get() < a.length) {
+            int r = k.size();
+            int index = size.getAndAdd(r);
+            for(int i = 0; i < r; i++) {
+                a[index+i] = k.get(i);
+            }
+            return index;
+        } else {
+            int i = 0;
+            ObjectListIterator<K> iter = k.iterator();
+            while (iter.hasNext()) {
+                for (; i < a.length; i++) {
+                    if (a[i] == null) {
+                        a[i] = iter.next();
+                        break;
+                    }
+                }
+                if(i == a.length) {
+                    return -1;
+                }
+            }
+            return -2;
         }
     }
 
@@ -411,8 +438,8 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
         final K old = a[index];
         a[index] = null;
         /*if (index == size) {
-            size--;
-        }*/
+         size--;
+         }*/
         return old;
     }
 
@@ -425,7 +452,7 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
             nullFlag = false;
             for (int i = size.get() - 1; i >= 0; i--) {
                 if (a[i] == null) {
-                    System.arraycopy(a, (i+1), a, i, size.get()-i-1);
+                    System.arraycopy(a, (i + 1), a, i, size.get() - i - 1);
                     size.decrementAndGet();
                 }
             }

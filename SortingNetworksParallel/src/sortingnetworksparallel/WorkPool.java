@@ -18,6 +18,7 @@ public class WorkPool {
     private final Processor processor;
     private final short nbChannels;
     private final ThreadPoolExecutor executor;
+    private final int MAX_AMOUNT = 50;
 
     /**
      *
@@ -56,22 +57,26 @@ public class WorkPool {
         CountDownLatch latch = new CountDownLatch(N.size());
 
         //Perform generate & prune for every old network.
-        while (oldIter.hasNext()) {
+        while (oldIter.hasNext()) { //TODO: grant threads more than 1.
             short[][] network = oldIter.next();
 
             //Give task to thread
             executor.execute(() -> {
                 ObjectArrayList<short[][]> prunedList = processor.generate(network, nbComp);
                 processor.innerPrune(prunedList);
+                
+                int networkIndex = resultN.add(prunedList);
+                processor.prune(resultN, networkIndex, prunedList.size());
 
-                ObjectListIterator<short[][]> innerIter = prunedList.listIterator();
+                /*ObjectListIterator<short[][]> innerIter = prunedList.listIterator();
 
+                
                 while (innerIter.hasNext()) {
                     //Add newNetwork
                     short[][] newNetwork = innerIter.next();
                     int networkIndex = resultN.add(newNetwork, null); //gives -1 if no spot was found.
                     processor.prune(resultN, networkIndex);
-                }
+                }*/
                 latch.countDown();
             });
         }
