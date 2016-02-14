@@ -38,7 +38,7 @@ public class Processor {
 //      private long permCount = 0;
 
     /* IO */
-    private boolean shouldSave;
+    public boolean shouldSave;
     private final String savePath;
 
     /**
@@ -77,6 +77,46 @@ public class Processor {
         this(nbChannels, upperBound, "");
     }
 
+    public short[] process(ObjArrayList<short[][]> NList, short nbComp) {
+        /* Initialize inputs */
+        
+        do {
+            long begin = System.currentTimeMillis();
+            NList = workPool.performCycle(NList, nbComp);
+            long took = System.currentTimeMillis() - begin;
+            nbComp++;
+
+            System.out.println("Cycle complete with " + nbComp + " comps and size " + NList.size() + " took " + took + " ms");
+
+            if (shouldSave) {
+                System.out.println("Saving Data");
+                save(NList, nbComp);
+                System.exit(0);
+            }
+            /*//Tests if list only contains non subsumable.
+             System.out.println("Testing if all pruned");
+             if (innerPruneTest(NList)) {
+             NList.fixNulls();
+             NList.trim();
+             System.out.println("[ERROR]: Found unpruned" + NList.size());
+             }*/
+        } while (NList.size() > 1 && nbComp < upperBound);
+
+        workPool.shutDown();
+
+        //System.out.println("#Unique " + uniqueCounter + "; #Redundant " + redundantCounter);
+        //System.out.println("#kLengthCounter " + kLengthCounter + "; #pLengthCounter " + pLengthCounter + "; #lLengthCounter " + lLengthCounter);
+        //System.out.println("#emptyPosCounter " + emptyPosCounter);
+        //System.out.println("#networkPermCounter " + networkPermCounter);
+
+        /* Return result */
+        if (NList.size() >= 1) {
+            return NList.get(0)[0];
+        } else {
+            return null;
+        }
+    }
+
     /**
      *
      * @return
@@ -90,11 +130,17 @@ public class Processor {
         short nbComp = 1;
 
         do {
+            long begin = System.currentTimeMillis();
             NList = workPool.performCycle(NList, nbComp);
+            long took = System.currentTimeMillis() - begin;
             nbComp++;
 
-            System.out.println("Cycle complete with " + nbComp + " comps and size " + NList.size());
+            System.out.println("Cycle complete with " + nbComp + " comps and size " + NList.size() + " took " + took + " ms");
 
+            if (shouldSave) {
+                System.out.println("Saving Data");
+                save(NList, nbComp);
+            }
             /*//Tests if list only contains non subsumable.
              System.out.println("Testing if all pruned");
              if (innerPruneTest(NList)) {
@@ -239,6 +285,62 @@ public class Processor {
     }
 
     /**
+     * Generate networks by expanding the given networks with all possible
+     * comparators. (Redundant comparators are neglected, see isRedundantComp)
+     *
+     * This assumes networkLists back-array contains no nulls upto size().
+     *
+     * @param networkList The list that contains the networks to expand.
+     * @param startIndex The index of the first network in the list to expand.
+     * @param length The amount of networks to expand. (startIndex to
+     * startIndex+length-1)
+     * @param nbComp The outerIndex of the comparator (data[0][nbComp]) to start
+     * working on.
+     * @see #isRedundantComp(short[][], short)
+     */
+    public ObjectArrayList<short[][]> generate(final ObjArrayList<short[][]> networkList, final int startIndex, final int length, final short nbComp) {
+        /* Setup environment */
+        ObjectArrayList<short[][]> result = new ObjectArrayList();
+        int cMaxShifts;
+        short comp;
+        int number;
+        int outerShift;
+
+        /* Start Generate work */
+        int maxIndex = Math.min(startIndex + length, networkList.size());
+        for (int i = startIndex; i < maxIndex; i++) {
+            short[][] network = networkList.get(i);
+
+            int prevComp = network[0][nbComp - 1];
+            int prevCompMZ = prevComp >> Integer.numberOfTrailingZeros(prevComp); // e.g 001010 -> 00101
+
+            for (number = 3, cMaxShifts = maxShifts; number <= maxOuterComparator; number = (number << 1) - 1, cMaxShifts--) { //x*2 - 1
+                comp = (short) number;
+                int compMZ = comp >> Integer.numberOfTrailingZeros(comp);
+
+                for (outerShift = 0; outerShift <= cMaxShifts; outerShift++, comp <<= 1) { //shift n-2, n-3, ... keer
+                    if (((prevComp & comp) != 0 && prevComp != comp) || (prevCompMZ < compMZ || (compMZ == prevCompMZ && prevComp < comp))) {
+                        int index = getChangeIndex(network, comp);
+                        if (index != -1) { //!= redundant
+                            short[][] data = network.clone();
+                            //Fill comp
+                            data[0] = new short[nbComp + 1];
+                            System.arraycopy(network[0], 0, data[0], 0, nbComp);
+                            data[0][nbComp] = comp;
+
+                            processData(data, comp, index);
+                            processW(data, comp, index);
+
+                            result.add(data);
+                        }
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+    /**
      * Generate networks by expanding the given network with all possible
      * comparators. (Redundant comparators are neglected, see isRedundantComp)
      *
@@ -284,8 +386,6 @@ public class Processor {
         }
         return result;
     }
-    
-    
 
     /**
      * Prune N by removing every network that is being subsumed by another
@@ -380,7 +480,7 @@ public class Processor {
                                 }
                                 break;
                             } else if (subsumes(network2, network)) {
-                                    networkList.remove(innerIndex);
+                                networkList.remove(innerIndex);
                                 //break;
                             }
 
@@ -1046,15 +1146,24 @@ public class Processor {
         this.shouldSave = true;
     }
 
-    private void saveObjList(ObjArrayList<short[][]> networkList) {
+    private void save(ObjArrayList<short[][]> NList, short nbComp) {
         if (savePath != null && !savePath.equals("")) {
-            ObjectOutputStream oos;
+            ObjectOutputStream oos = null;
             try {
                 //oos = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(this.savePath)));
                 oos = new ObjectOutputStream(new FileOutputStream(this.savePath));
-                oos.writeObject(networkList);
+                oos.writeObject(NList);
+                oos.writeShort(nbComp);
             } catch (IOException ex) {
                 Logger.getLogger(Processor.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                if (oos != null) {
+                    try {
+                        oos.close();
+                    } catch (IOException ex) {
+                        Logger.getLogger(Processor.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
             }
         }
     }

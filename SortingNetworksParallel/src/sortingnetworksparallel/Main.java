@@ -31,8 +31,8 @@ public class Main {
             System.exit(0);
         }
 
-        int nbChannels = getAnswerFromUser("Amount of channels?", 7);
-        int upperBound = getAnswerFromUser("Expected upperBound?", 16);
+        int nbChannels = getAnswerFromUser("Amount of channels?", 8);
+        int upperBound = getAnswerFromUser("Expected upperBound?", 19);
         if (nbChannels <= 1 || nbChannels > 16) {
             System.err.println("Algorithm/Datastructures can only handle 2-16 channels.");
             return;
@@ -56,8 +56,27 @@ public class Main {
 
         /* Load start */
         ObjArrayList<short[][]> N = null;
+        short nbComp = 0;
         if (loadMode == (JOptionPane.YES_OPTION)) {
-            N = getN(loadPath);
+            ObjectInputStream iis = null;
+            try {
+                iis = new ObjectInputStream(new BufferedInputStream(new FileInputStream(loadPath)));
+                N = (ObjArrayList<short[][]>) iis.readObject();
+                nbComp = iis.readShort();
+            } catch (IOException | ClassNotFoundException ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                try {
+                    if (iis != null) {
+                        iis.close();
+                    }
+                } catch (IOException ex) {
+                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (N != null) {
+                System.out.println("Loaded " + N.size() + " networks w comp " + nbComp);
+            }
         }
 
         /* Clean start */
@@ -73,10 +92,10 @@ public class Main {
         } else {
             processor = new Processor((short) nbChannels, upperBound);
         }
-        
+
         //Process
         if (loadPath != null && !loadPath.equals("")) {
-            System.err.println("Not implemented yet.");
+            result = processor.process(N, nbComp);
         } else {
             result = processor.process();
         }
@@ -129,7 +148,7 @@ public class Main {
             if (processor != null) {
                 processor.initiateSave();
             }
-            System.out.println("Started saving process ");
+            System.out.println("Saving process will start at the end of the current cycle.");
         }
     });
 

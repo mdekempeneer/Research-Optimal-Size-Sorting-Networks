@@ -18,7 +18,6 @@ public class WorkPool {
     private final Processor processor;
     private final short nbChannels;
     private final ThreadPoolExecutor executor;
-    private final int MAX_AMOUNT = 50;
 
     /**
      *
@@ -48,35 +47,27 @@ public class WorkPool {
      * @return A pruned list.
      */
     public ObjArrayList<short[][]> performCycle(ObjArrayList<short[][]> N, short nbComp) {
-        ObjectListIterator<short[][]> oldIter = N.listIterator();
         long capacity = N.size() * ((nbChannels * (nbChannels-1))/2);
         if(capacity > Integer.MAX_VALUE) {
             System.out.println("[WARNING]: Ensured capacity (" + capacity + ") exceeds Integer.MAX_VALUE. Hopefully we didn't need that much.");
         }
         ObjArrayList<short[][]> resultN = new ObjArrayList((int) Math.min(capacity, Integer.MAX_VALUE));
-        CountDownLatch latch = new CountDownLatch(N.size());
+        final int nb = 64;
+        CountDownLatch latch = new CountDownLatch((int) Math.ceil(N.size() / (double) nb));
 
-        //Perform generate & prune for every old network.
-        while (oldIter.hasNext()) { //TODO: grant threads more than 1.
-            short[][] network = oldIter.next();
-
+        //Perform generate & prune for every batch of old networks.
+       for(int index = 0; index < N.size(); index += nb) {
+           
+           int startIndex = index;
+           
             //Give task to thread
             executor.execute(() -> {
-                ObjectArrayList<short[][]> prunedList = processor.generate(network, nbComp);
+                ObjectArrayList<short[][]> prunedList = processor.generate(N, startIndex, nb, nbComp);
                 processor.innerPrune(prunedList);
                 
                 int networkIndex = resultN.add(prunedList);
                 processor.prune(resultN, networkIndex, prunedList.size());
 
-                /*ObjectListIterator<short[][]> innerIter = prunedList.listIterator();
-
-                
-                while (innerIter.hasNext()) {
-                    //Add newNetwork
-                    short[][] newNetwork = innerIter.next();
-                    int networkIndex = resultN.add(newNetwork, null); //gives -1 if no spot was found.
-                    processor.prune(resultN, networkIndex);
-                }*/
                 latch.countDown();
             });
         }
