@@ -31,8 +31,8 @@ public class Main {
             System.exit(0);
         }
 
-        int nbChannels = getAnswerFromUser("Amount of channels?", 7);
-        int upperBound = getAnswerFromUser("Expected upperBound?", 16);
+        int nbChannels = getAnswerFromUser("Amount of channels?", 8);
+        int upperBound = getAnswerFromUser("Expected upperBound?", 19);
         if (nbChannels <= 1 || nbChannels > 16) {
             System.err.println("Algorithm/Datastructures can only handle 2-16 channels.");
             return;
@@ -55,46 +55,60 @@ public class Main {
         }
 
         /* Load start */
-        ObjArrayList<short[][]> N = null;
+        ObjArrayList<short[][]> oldList = null;
+        int startIndex = 0;
+        ObjArrayList<short[][]> newList = null;
+        short nbComp = 0;
         if (loadMode == (JOptionPane.YES_OPTION)) {
-            N = getN(loadPath);
+            ObjectInputStream iis = null;
+            try {
+                iis = new ObjectInputStream(new FileInputStream(loadPath));
+                oldList = (ObjArrayList<short[][]>) iis.readObject();
+                startIndex = iis.readInt();
+                newList = (ObjArrayList<short[][]>) iis.readObject();
+                nbComp = iis.readShort();
+            } catch (IOException | ClassNotFoundException ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                try {
+                    if (iis != null) {
+                        iis.close();
+                    }
+                } catch (IOException ex) {
+                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (oldList != null && newList != null) {
+                System.out.println("Finished loading O.size=" + oldList.size() + " startIndex=" + startIndex + " newList.size=" + newList.size() + " nbComp=" + nbComp);
+            }
         }
 
         /* Clean start */
-        int nbCase = 1;
-        int cCase = 0;
         long begin;
-        long total = 0;
-        long caseTime = 0;
+        long caseTime;
         short[] result = null;
-        while (nbCase > cCase) {
-            begin = System.nanoTime();
+        begin = System.nanoTime();
 
-            //Init
-            //Processor processor = new ParallelProcessor((short) nbChannels, upperBound);
-            if (savePath != null && !savePath.equals("")) {
-                IOThread.start();
-                processor = new SingleProcessor((short) nbChannels, upperBound, savePath);
-            } else {
-                processor = new SingleProcessor((short) nbChannels, upperBound);
-            }
-            //Process
-            if (loadPath != null && !loadPath.equals("")) {
-//                result = processor.process(N);
-                System.out.println("Not implemented yet");
-                //TODO
-            } else {
-                result = processor.process();
-            }
-
-            cCase++;
-            caseTime = System.nanoTime() - begin;
-            System.out.println("Took " + caseTime + " ns");
-            total += caseTime;
-
+        //Init
+        //Processor processor = new ParallelProcessor((short) nbChannels, upperBound);
+        if (savePath != null && !savePath.equals("")) {
+            IOThread.start();
+            processor = new SingleProcessor((short) nbChannels, upperBound, savePath);
+        } else {
+            processor = new SingleProcessor((short) nbChannels, upperBound);
         }
+        //Process
+        if (loadPath != null && !loadPath.equals("")) {
+            result = processor.process(oldList, startIndex, newList, nbComp);
+            oldList = null;
+            newList = null;
+        } else {
+            result = processor.process();
+        }
+
+        caseTime = System.nanoTime() - begin;
+        System.out.println("Took " + caseTime + " ns");
         System.out.println(Arrays.toString(result));
-        System.out.println("Total: " + total + " avg: " + total / nbCase + " ns");
     }
 
     /**
@@ -159,12 +173,10 @@ public class Main {
             } else {
                 System.out.println("Failed chosing a file.");
             }
+        } else if (jfc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+            return jfc.getSelectedFile().getAbsolutePath();
         } else {
-            if (jfc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
-                return jfc.getSelectedFile().getAbsolutePath();
-            } else {
-                System.out.println("Failed chosing a file.");
-            }
+            System.out.println("Failed chosing a file.");
         }
         return null;
     }
