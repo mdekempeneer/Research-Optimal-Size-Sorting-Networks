@@ -98,10 +98,9 @@ public class SingleProcessor implements Processor {
         short nbComp = 1;
         do {
             NList = performCycle(NList, nbComp);
-            //generate(nbComp);
-            //prune();
+            System.out.println("Performed cycle w " + nbComp + " comps and size " + NList.size());
             nbComp++;
-
+            
             //System.out.println("permCount: " + permCount);
             //permCount = 0;
             //this.printInputs(N.get(0)[0]);
@@ -125,42 +124,42 @@ public class SingleProcessor implements Processor {
      *
      * @return
      */
-    public short[] process(ObjArrayList<short[][]> loadedN) {
-
-        /* Initialize inputs */
-        N = loadedN;
-        prune();
-        System.out.println("Finished pruning loaded data.");
-        //Calc nbComp
-        short nbComp = 0;
-        short[][] network = N.get(0);
-        for (short i = 0; i < network[0].length; i++) {
-            if (network[0][i] == 0) {
-                nbComp = i;
-                break;
-            }
-        }
-        System.out.println("Finished 0-" + (nbComp - 1) + ", started at " + nbComp);
-
-        /* Process N */
-        do {
-            generate(nbComp);
-            prune();
-            nbComp++;
-
-            //System.out.println("permCount: " + permCount);
-            //permCount = 0;
-            //this.printInputs(N.get(0)[0]);
-            //System.out.println(N.size64());
-        } while (N.size() > 1 && nbComp < upperBound);
-
-        /* Return result */
-        if (N.size() >= 1) {
-            return N.get(0)[0];
-        } else {
-            return null;
-        }
-    }
+//    public short[] process(ObjArrayList<short[][]> loadedN) {
+//
+//        /* Initialize inputs */
+//        N = loadedN;
+//        prune();
+//        System.out.println("Finished pruning loaded data.");
+//        //Calc nbComp
+//        short nbComp = 0;
+//        short[][] network = N.get(0);
+//        for (short i = 0; i < network[0].length; i++) {
+//            if (network[0][i] == 0) {
+//                nbComp = i;
+//                break;
+//            }
+//        }
+//        System.out.println("Finished 0-" + (nbComp - 1) + ", started at " + nbComp);
+//
+//        /* Process N */
+//        do {
+//            generate(nbComp);
+//            prune();
+//            nbComp++;
+//
+//            //System.out.println("permCount: " + permCount);
+//            //permCount = 0;
+//            //this.printInputs(N.get(0)[0]);
+//            //System.out.println(N.size64());
+//        } while (N.size() > 1 && nbComp < upperBound);
+//
+//        /* Return result */
+//        if (N.size() >= 1) {
+//            return N.get(0)[0];
+//        } else {
+//            return null;
+//        }
+//    }
 
     /**
      * Add all networks consisting of 1 comparator to N.
@@ -267,6 +266,10 @@ public class SingleProcessor implements Processor {
             short[][] network = iter.next();
             ObjArrayList<short[][]> prunedList = generate(network, nbComps);
             prune(prunedList);
+            
+            prune(newList, prunedList);
+            
+            newList.addList(prunedList);
 
             //for every from prunedlist
             //prune w all others
@@ -390,6 +393,26 @@ public class SingleProcessor implements Processor {
 //        /* Point to new reference */
 //        N = newN;
 //    }
+    
+    private void prune(ObjArrayList<short[][]> networkList, ObjArrayList<short[][]> subList) {
+        ObjectListIterator<short[][]> iter = networkList.iterator();
+        
+        while(iter.hasNext()) {
+            short[][] network2 = iter.next();
+            ObjectListIterator<short[][]> innerIter = subList.iterator();
+        
+            while(innerIter.hasNext()) {
+                short[][] network = innerIter.next();
+                
+                if (subsumes(network, network2)) {
+                    iter.remove();
+                    break;
+                } else if (subsumes(network2, network)) {
+                    innerIter.remove();
+                }
+            }
+        }        
+    }
 
     /**
      * Prune the current N by removing what does not prevent us from getting 1

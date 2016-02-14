@@ -80,7 +80,9 @@ public class Main {
             }
             //Process
             if (loadPath != null && !loadPath.equals("")) {
-                result = processor.process(N);
+//                result = processor.process(N);
+                System.out.println("Not implemented yet");
+                //TODO
             } else {
                 result = processor.process();
             }
