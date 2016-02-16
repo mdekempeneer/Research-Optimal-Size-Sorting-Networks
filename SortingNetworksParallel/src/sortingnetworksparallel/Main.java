@@ -55,13 +55,17 @@ public class Main {
         }
 
         /* Load start */
-        ObjArrayList<short[][]> N = null;
+        ObjArrayList<short[][]> oldL = null;
+        int startIndex = 0;
+        ObjArrayList<short[][]> newL = null;
         short nbComp = 0;
         if (loadMode == (JOptionPane.YES_OPTION)) {
             ObjectInputStream iis = null;
             try {
                 iis = new ObjectInputStream(new BufferedInputStream(new FileInputStream(loadPath)));
-                N = (ObjArrayList<short[][]>) iis.readObject();
+                oldL = (ObjArrayList<short[][]>) iis.readObject();
+                startIndex = iis.readInt();
+                newL = (ObjArrayList<short[][]>) iis.readObject();
                 nbComp = iis.readShort();
             } catch (IOException | ClassNotFoundException ex) {
                 Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
@@ -74,8 +78,8 @@ public class Main {
                     Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-            if (N != null) {
-                System.out.println("Loaded " + N.size() + " networks w comp " + nbComp);
+            if (oldL != null && newL != null) {
+                System.out.println("Loaded " + oldL.size() + " networks w comp " + nbComp + " and new " + newL.size() + " and index " + startIndex);
             }
         }
 
@@ -95,7 +99,7 @@ public class Main {
 
         //Process
         if (loadPath != null && !loadPath.equals("")) {
-            result = processor.process(N, nbComp);
+            result = processor.process(oldL, startIndex, newL, nbComp);
         } else {
             result = processor.process();
         }

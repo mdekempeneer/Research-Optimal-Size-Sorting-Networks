@@ -77,22 +77,30 @@ public class Processor {
         this(nbChannels, upperBound, "");
     }
 
-    public short[] process(ObjArrayList<short[][]> NList, short nbComp) {
+    public short[] process(ObjArrayList<short[][]> oldL, int startIndex, ObjArrayList<short[][]> newL, short nbComp) {
         /* Initialize inputs */
-        
+        long begin = System.currentTimeMillis();
+        ObjArrayList<short[][]> NList = workPool.performCycle(oldL, startIndex, newL, nbComp);
+        oldL = null;
+        newL = null;
+        long took = System.currentTimeMillis() - begin;
+        nbComp++;
+        System.out.println("Cycle complete with " + nbComp + " comps and size " + NList.size() + " took " + took + " ms");
+
+        //cycle
         do {
-            long begin = System.currentTimeMillis();
+            begin = System.currentTimeMillis();
             NList = workPool.performCycle(NList, nbComp);
-            long took = System.currentTimeMillis() - begin;
+            took = System.currentTimeMillis() - begin;
             nbComp++;
 
             System.out.println("Cycle complete with " + nbComp + " comps and size " + NList.size() + " took " + took + " ms");
 
-            if (shouldSave) {
-                System.out.println("Saving Data");
-                save(NList, nbComp);
-                System.exit(0);
-            }
+            /*if (shouldSave) {
+             System.out.println("Saving Data");
+             save(NList, nbComp);
+             System.exit(0);
+             }*/
             /*//Tests if list only contains non subsumable.
              System.out.println("Testing if all pruned");
              if (innerPruneTest(NList)) {
@@ -137,10 +145,10 @@ public class Processor {
 
             System.out.println("Cycle complete with " + nbComp + " comps and size " + NList.size() + " took " + took + " ms");
 
-            if (shouldSave) {
-                System.out.println("Saving Data");
-                save(NList, nbComp);
-            }
+            /*if (shouldSave) {
+             System.out.println("Saving Data");
+             save(NList, nbComp);
+             }*/
             /*//Tests if list only contains non subsumable.
              System.out.println("Testing if all pruned");
              if (innerPruneTest(NList)) {
@@ -1144,6 +1152,7 @@ public class Processor {
      */
     public void initiateSave() {
         this.shouldSave = true;
+        workPool.shutDownAndSave();
     }
 
     private void save(ObjArrayList<short[][]> NList, short nbComp) {
@@ -1153,6 +1162,30 @@ public class Processor {
                 //oos = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(this.savePath)));
                 oos = new ObjectOutputStream(new FileOutputStream(this.savePath));
                 oos.writeObject(NList);
+                oos.writeShort(nbComp);
+            } catch (IOException ex) {
+                Logger.getLogger(Processor.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                if (oos != null) {
+                    try {
+                        oos.close();
+                    } catch (IOException ex) {
+                        Logger.getLogger(Processor.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        }
+    }
+
+    public void save(ObjArrayList<short[][]> oldL, int startIndex, ObjArrayList<short[][]> newL, short nbComp) {
+        if (savePath != null && !savePath.equals("")) {
+            ObjectOutputStream oos = null;
+            try {
+                //oos = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(this.savePath)));
+                oos = new ObjectOutputStream(new FileOutputStream(this.savePath));
+                oos.writeObject(oldL);
+                oos.writeInt(startIndex);
+                oos.writeObject(newL);
                 oos.writeShort(nbComp);
             } catch (IOException ex) {
                 Logger.getLogger(Processor.class.getName()).log(Level.SEVERE, null, ex);
