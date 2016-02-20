@@ -36,7 +36,7 @@ public class WorkPool {
         this.nbComps = (nbChannels * (nbChannels - 1)) / 2;
 
         int nbThreads = Runtime.getRuntime().availableProcessors();
-        nbThreads = (int) (nbThreads * 3.0 / 4.0);
+        nbThreads = (int) (nbThreads * 4.0 / 4.0);
         executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(nbThreads);
 
         //System.out.println("Will be using " + nbThreads + " threads");
