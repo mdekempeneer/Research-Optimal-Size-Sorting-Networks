@@ -85,7 +85,7 @@ public class Processor {
         newL = null;
         long took = System.currentTimeMillis() - begin;
         nbComp++;
-        System.out.println("Cycle complete with " + nbComp + " comps and size " + NList.size() + " took " + took + " ms");
+        //System.out.println("Cycle complete with " + nbComp + " comps and size " + NList.size() + " took " + took + " ms");
 
         //cycle
         do {
@@ -94,7 +94,7 @@ public class Processor {
             took = System.currentTimeMillis() - begin;
             nbComp++;
 
-            System.out.println("Cycle complete with " + nbComp + " comps and size " + NList.size() + " took " + took + " ms");
+            //System.out.println("Cycle complete with " + nbComp + " comps and size " + NList.size() + " took " + took + " ms");
 
             /*if (shouldSave) {
              System.out.println("Saving Data");
@@ -143,7 +143,7 @@ public class Processor {
             long took = System.currentTimeMillis() - begin;
             nbComp++;
 
-            System.out.println("Cycle complete with " + nbComp + " comps and size " + NList.size() + " took " + took + " ms");
+            //System.out.println("Cycle complete with " + nbComp + " comps and size " + NList.size() + " took " + took + " ms");
 
             /*if (shouldSave) {
              System.out.println("Saving Data");

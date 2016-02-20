@@ -79,7 +79,7 @@ public class Main {
                 }
             }
             if (oldL != null && newL != null) {
-                System.out.println("Loaded " + oldL.size() + " networks w comp " + nbComp + " and new " + newL.size() + " and index " + startIndex);
+                //System.out.println("Loaded " + oldL.size() + " networks w comp " + nbComp + " and new " + newL.size() + " and index " + startIndex);
             }
         }
 
@@ -106,7 +106,7 @@ public class Main {
 
         caseTime = System.nanoTime() - begin;
         System.out.println("Took " + caseTime + " ns");
-        System.out.println(Arrays.toString(result));
+        //System.out.println(Arrays.toString(result));
     }
 
     /**
@@ -152,7 +152,7 @@ public class Main {
             if (processor != null) {
                 processor.initiateSave();
             }
-            System.out.println("Saving process will start at the end of the current cycle.");
+            //System.out.println("Saving process will start at the end of the current cycle.");
         }
     });
 
@@ -169,13 +169,13 @@ public class Main {
             if (jfc.showDialog(null, "load") == JFileChooser.APPROVE_OPTION) {
                 return jfc.getSelectedFile().getAbsolutePath();
             } else {
-                System.out.println("Failed chosing a file.");
+                //System.out.println("Failed chosing a file.");
             }
         } else {
             if (jfc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
                 return jfc.getSelectedFile().getAbsolutePath();
             } else {
-                System.out.println("Failed chosing a file.");
+                //System.out.println("Failed chosing a file.");
             }
         }
         return null;

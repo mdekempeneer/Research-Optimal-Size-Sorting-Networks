@@ -39,7 +39,7 @@ public class WorkPool {
         nbThreads = (int) (nbThreads * 3.0 / 4.0);
         executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(nbThreads);
 
-        System.out.println("Will be using " + nbThreads + " threads");
+        //System.out.println("Will be using " + nbThreads + " threads");
     }
 
     /**
