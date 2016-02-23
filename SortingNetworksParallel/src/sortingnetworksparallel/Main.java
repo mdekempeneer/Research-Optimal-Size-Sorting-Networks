@@ -22,17 +22,36 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        int loadMode = getYesNoCancelFromUser("Resume from saved file?");
-        int saveMode = getYesNoCancelFromUser("Save on prune?");
+        int loadMode = JOptionPane.NO_OPTION;
+        int saveMode = JOptionPane.NO_OPTION;
+        
+        int nbChannels = 8;
+        int upperBound = 19;
+        int innerSize = 64;
+        double percThreads = 0.75;
+        
+        if (args.length == 0) {
+            loadMode = getYesNoCancelFromUser("Resume from saved file?");
+            saveMode = getYesNoCancelFromUser("Save on prune?");
 
-        //Cancelled
-        if (loadMode == JOptionPane.CANCEL_OPTION || saveMode == JOptionPane.CANCEL_OPTION
-                || loadMode == JOptionPane.CLOSED_OPTION || saveMode == JOptionPane.CLOSED_OPTION) {
-            System.exit(0);
+            //Cancelled
+            if (loadMode == JOptionPane.CANCEL_OPTION || saveMode == JOptionPane.CANCEL_OPTION
+                    || loadMode == JOptionPane.CLOSED_OPTION || saveMode == JOptionPane.CLOSED_OPTION) {
+                System.exit(0);
+            }
+
+            nbChannels = getAnswerFromUser("Amount of channels?", nbChannels);
+            upperBound = getAnswerFromUser("Expected upperBound?", upperBound);
+        } else {
+            nbChannels = Integer.parseInt(args[0]);
+            upperBound = Integer.parseInt(args[1]);
+            
+            if(args.length == 4) {
+                innerSize = Integer.parseInt(args[2]);
+                percThreads = Double.parseDouble(args[3]);
+            }
         }
-
-        int nbChannels = getAnswerFromUser("Amount of channels?", 8);
-        int upperBound = getAnswerFromUser("Expected upperBound?", 19);
+        
         if (nbChannels <= 1 || nbChannels > 16) {
             System.err.println("Algorithm/Datastructures can only handle 2-16 channels.");
             return;
@@ -92,9 +111,9 @@ public class Main {
         //Init
         if (savePath != null && !savePath.equals("")) {
             IOThread.start();
-            processor = new Processor((short) nbChannels, upperBound, savePath);
+            processor = new Processor((short) nbChannels, upperBound, savePath, innerSize, percThreads);
         } else {
-            processor = new Processor((short) nbChannels, upperBound);
+            processor = new Processor((short) nbChannels, upperBound, innerSize, percThreads);
         }
 
         //Process

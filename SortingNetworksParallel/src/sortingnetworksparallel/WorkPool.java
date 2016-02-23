@@ -24,6 +24,7 @@ public class WorkPool {
     private final int nbComps;
     private boolean shouldSave = false;
     private CountDownLatch latch;
+    private final int INNER_SIZE;
 
     /**
      *
@@ -31,12 +32,13 @@ public class WorkPool {
      * {@link Processor} will be used.
      * @param nbChannels The amount of channels used in the network.
      */
-    public WorkPool(Processor processor, short nbChannels) {
+    public WorkPool(Processor processor, short nbChannels, int innerSize, double percThreads) {
         this.processor = processor;
         this.nbComps = (nbChannels * (nbChannels - 1)) / 2;
-
+        this.INNER_SIZE = innerSize;
+        
         int nbThreads = Runtime.getRuntime().availableProcessors();
-        nbThreads = (int) (nbThreads * 3.0 / 4.0);
+        nbThreads = (int) (nbThreads * percThreads);
         executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(nbThreads);
 
         System.out.println("Will be using " + nbThreads + " threads");
@@ -52,7 +54,7 @@ public class WorkPool {
      * @return A pruned list.
      */
     public ObjArrayList<short[][]> performCycle(ObjArrayList<short[][]> oldL, int startIndex, ObjArrayList<short[][]> resultN, short nbComp) {
-        final int nb = 64;
+        final int nb = INNER_SIZE;
         latch = new CountDownLatch((int) Math.ceil((oldL.size()-startIndex) / (double) nb));
         resultN.ensureCapacity(oldL.size() * nbComps);
 

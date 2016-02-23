@@ -50,7 +50,7 @@ public class Processor {
      * @param upperBound The maximum amount of comparators to use.
      * @param saveFlag Whether to save the previous prune.
      */
-    public Processor(short nbChannels, int upperBound, String savePath) {
+    public Processor(short nbChannels, int upperBound, String savePath, int innerSize, double percThreads) {
         this.nbChannels = nbChannels;
         this.upperBound = upperBound;
         this.maxOuterComparator = ((1 << (nbChannels - 1)) | 1);
@@ -61,7 +61,7 @@ public class Processor {
         this.savePath = savePath;
         this.shouldSave = false;
 
-        this.workPool = new WorkPool(this, nbChannels);
+        this.workPool = new WorkPool(this, nbChannels, innerSize, percThreads);
     }
 
     /**
@@ -73,8 +73,8 @@ public class Processor {
      * @param upperBound The maximum amount of comparators to use.
      * @param saveFlag Whether to save the previous prune.
      */
-    public Processor(short nbChannels, int upperBound) {
-        this(nbChannels, upperBound, "");
+    public Processor(short nbChannels, int upperBound, int innerSize, double percThreads) {
+        this(nbChannels, upperBound, "", innerSize, percThreads);
     }
 
     public short[] process(ObjArrayList<short[][]> oldL, int startIndex, ObjArrayList<short[][]> newL, short nbComp) {
