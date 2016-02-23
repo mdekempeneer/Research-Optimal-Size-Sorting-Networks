@@ -36,7 +36,7 @@ public class WorkPool {
         this.processor = processor;
         this.nbComps = (nbChannels * (nbChannels - 1)) / 2;
         this.INNER_SIZE = innerSize;
-        
+
         int nbThreads = Runtime.getRuntime().availableProcessors();
         nbThreads = (int) (nbThreads * percThreads);
         executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(nbThreads);
@@ -53,27 +53,30 @@ public class WorkPool {
      * currently have.
      * @return A pruned list.
      */
-    public ObjArrayList<short[][]> performCycle(ObjArrayList<short[][]> oldL, int startIndex, ObjArrayList<short[][]> resultN, short nbComp) {
+    public ObjArrayList<short[][]> performCycle(final ObjArrayList<short[][]> oldL, int startIndex, final ObjArrayList<short[][]> resultN, final short nbComp) {
         final int nb = INNER_SIZE;
-        latch = new CountDownLatch((int) Math.ceil((oldL.size()-startIndex) / (double) nb));
+        latch = new CountDownLatch((int) Math.ceil((oldL.size() - startIndex) / (double) nb));
         resultN.ensureCapacity(oldL.size() * nbComps);
 
-        AtomicInteger doneIndex = new AtomicInteger();
+        final AtomicInteger doneIndex = new AtomicInteger();
 
         //Perform generate & prune for every batch of old networks.
         for (int index = startIndex; index < oldL.size(); index += nb) {
-            int startIndexT = index;
+            final int startIndexT = index;
 
             //Give task to thread
-            executor.execute(() -> {
-                ObjectArrayList<short[][]> prunedList = processor.generate(oldL, startIndexT, nb, nbComp);
-                processor.innerPrune(prunedList);
+            executor.execute(new Runnable() {
+                @Override
+                public void run() {
+                    ObjectArrayList<short[][]> prunedList = processor.generate(oldL, startIndexT, nb, nbComp);
+                    processor.innerPrune(prunedList);
 
-                int networkIndex = resultN.add(prunedList);
-                processor.prune(resultN, networkIndex, prunedList.size());
+                    int networkIndex = resultN.add(prunedList);
+                    processor.prune(resultN, networkIndex, prunedList.size());
 
-                latch.countDown();
-                doneIndex.getAndAdd(nb);
+                    latch.countDown();
+                    doneIndex.getAndAdd(nb);
+                }
             });
         }
 
@@ -105,31 +108,36 @@ public class WorkPool {
      * currently have.
      * @return A pruned list.
      */
-    public ObjArrayList<short[][]> performCycle(ObjArrayList<short[][]> N, short nbComp) {
+    public ObjArrayList<short[][]> performCycle(final ObjArrayList<short[][]> N, final short nbComp) {
         long capacity = N.size() * nbComps;
         if (capacity > Integer.MAX_VALUE) {
             System.out.println("[WARNING]: Ensured capacity (" + capacity + ") exceeds Integer.MAX_VALUE. Hopefully we didn't need that much.");
         }
-        ObjArrayList<short[][]> resultN = new ObjArrayList((int) Math.min(capacity, Integer.MAX_VALUE));
+        final ObjArrayList<short[][]> resultN = new ObjArrayList((int) Math.min(capacity, Integer.MAX_VALUE));
         final int nb = 64;
         latch = new CountDownLatch((int) Math.ceil(N.size() / (double) nb));
 
-        AtomicInteger doneIndex = new AtomicInteger();
+        final AtomicInteger doneIndex = new AtomicInteger();
 
         //Perform generate & prune for every batch of old networks.
         for (int index = 0; index < N.size(); index += nb) {
-            int startIndex = index;
+            final int startIndex = index;
 
             //Give task to thread
-            executor.execute(() -> {
-                ObjectArrayList<short[][]> prunedList = processor.generate(N, startIndex, nb, nbComp);
-                processor.innerPrune(prunedList);
+            executor.execute(new Runnable() {
 
-                int networkIndex = resultN.add(prunedList);
-                processor.prune(resultN, networkIndex, prunedList.size());
+                @Override
+                public void run() {
+                    ObjectArrayList<short[][]> prunedList = processor.generate(N, startIndex, nb, nbComp);
+                    processor.innerPrune(prunedList);
+ 
+                    int networkIndex = resultN.add(prunedList);
+                    processor.prune(resultN, networkIndex, prunedList.size());
 
-                latch.countDown();
-                doneIndex.getAndAdd(nb);
+                    latch.countDown();
+                    doneIndex.getAndAdd(nb);
+                }
+
             });
         }
 

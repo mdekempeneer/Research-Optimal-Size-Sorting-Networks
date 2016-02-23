@@ -24,12 +24,12 @@ public class ObjArrayListTest {
         executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(nbThreads);
 
         int capacity = 10000;
-        ObjArrayList<int[]> resultN = new ObjArrayList(capacity);
-        CountDownLatch latch = new CountDownLatch(capacity);
+        final ObjArrayList<int[]> resultN = new ObjArrayList(capacity);
+        final CountDownLatch latch = new CountDownLatch(capacity);
 
         //Give task to thread
         while (current < capacity) {
-            int index = current++;
+            final int index = current++;
             executor.execute(new Runnable() {
                 @Override
                 public void run() {
@@ -76,13 +76,13 @@ public class ObjArrayListTest {
 
         int capacity = 100000;
         int conNumber = 50;
-        ObjArrayList<int[]> resultN = new ObjArrayList(capacity);
-        CountDownLatch latch = new CountDownLatch(capacity / conNumber);
+        final ObjArrayList<int[]> resultN = new ObjArrayList(capacity);
+        final CountDownLatch latch = new CountDownLatch(capacity / conNumber);
 
         //Give task to thread
         while (current < capacity) {
 
-            ObjectArrayList<int[]> numbers = new ObjectArrayList();
+            final ObjectArrayList<int[]> numbers = new ObjectArrayList();
             for (int i = 0; i < conNumber; i++) {
                 numbers.add(new int[]{current + i});
             }
