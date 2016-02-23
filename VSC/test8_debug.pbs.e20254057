@@ -1,0 +1,3 @@
+/var/spool/torque/mom_priv/jobs/20254057.icts-p-svcs-1.SC: line 1: {rtf1ansiansicpg1252cocoartf1404cocoasubrtf340: command not found
+/var/spool/torque/mom_priv/jobs/20254057.icts-p-svcs-1.SC: line 2: syntax error near unexpected token `}'
+/var/spool/torque/mom_priv/jobs/20254057.icts-p-svcs-1.SC: line 2: `{\fonttbl\f0\fswiss\fcharset0 Helvetica;}'

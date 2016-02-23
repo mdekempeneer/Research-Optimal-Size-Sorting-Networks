@@ -48,7 +48,9 @@ public class Processor {
      *
      * @param nbChannels The amount of channels for the networks.
      * @param upperBound The maximum amount of comparators to use.
-     * @param saveFlag Whether to save the previous prune.
+     * @param savePath  //TODO
+     * @param innerSize
+     * @param percThreads
      */
     public Processor(short nbChannels, int upperBound, String savePath, int innerSize, double percThreads) {
         this.nbChannels = nbChannels;
@@ -71,7 +73,8 @@ public class Processor {
      *
      * @param nbChannels The amount of channels for the networks.
      * @param upperBound The maximum amount of comparators to use.
-     * @param saveFlag Whether to save the previous prune.
+     * @param innerSize //TODO
+     * @param percThreads
      */
     public Processor(short nbChannels, int upperBound, int innerSize, double percThreads) {
         this(nbChannels, upperBound, "", innerSize, percThreads);
@@ -304,6 +307,7 @@ public class Processor {
      * startIndex+length-1)
      * @param nbComp The outerIndex of the comparator (data[0][nbComp]) to start
      * working on.
+     * @return //TODO
      * @see #isRedundantComp(short[][], short)
      */
     public ObjectArrayList<short[][]> generate(final ObjArrayList<short[][]> networkList, final int startIndex, final int length, final short nbComp) {
@@ -355,6 +359,7 @@ public class Processor {
      * @param network The network to expand from.
      * @param nbComp The outerIndex of the comparator (data[0][nbComp]) to start
      * working on.
+     * @return //TODO
      * @see #isRedundantComp(short[][], short)
      */
     public ObjectArrayList<short[][]> generate(short[][] network, short nbComp) {
@@ -844,24 +849,6 @@ public class Processor {
             }
         }
         return false;
-    }
-
-    /**
-     *
-     * @param outputPath
-     */
-    public void process(String outputPath) {
-        process(outputPath, null, false);
-    }
-
-    /**
-     *
-     * @param outputPath
-     * @param logPath
-     * @param log
-     */
-    public void process(String outputPath, String logPath, boolean log) {
-
     }
 
     /**

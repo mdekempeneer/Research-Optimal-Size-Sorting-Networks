@@ -1,0 +1,36 @@
+time: 300
+nodes: 1
+procs: 2
+account string: default_project
+queue: q1h
+========================================================================
+Will be using 20 threads
+Cycle complete with 2 comps and size 3 took 4 ms
+Cycle complete with 3 comps and size 7 took 13 ms
+Cycle complete with 4 comps and size 20 took 10 ms
+Cycle complete with 5 comps and size 59 took 21 ms
+Cycle complete with 6 comps and size 208 took 32 ms
+Cycle complete with 7 comps and size 807 took 104 ms
+Cycle complete with 8 comps and size 3414 took 908 ms
+Cycle complete with 9 comps and size 14337 took 11360 ms
+Cycle complete with 10 comps and size 55966 took 124885 ms
+========================================================================
+Epilogue args:
+Date: Tue Feb 23 14:56:48 CET 2016
+Allocated nodes:
+r5i1n13
+r5i1n13
+Job ID: 20254115.icts-p-svcs-1
+User ID: vsc31468
+Group ID: vsc31468
+Job Name: test9_debugmode.pbs
+Session ID: 12752
+Resource List: neednodes=2,nodes=2,pmem=1gb,walltime=00:05:00
+Resources Used: cput=00:11:01,mem=2147108kb,vmem=20551672kb,walltime=00:05:42
+Queue Name: q1h
+Account String: 
+-------------------------------------------------------------------------
+time: 342
+nodes: 1
+procs: 2
+account: default_project

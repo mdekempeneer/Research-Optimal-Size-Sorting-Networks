@@ -1,0 +1,44 @@
+time: 60
+nodes: 1
+procs: 20
+account string: default_project
+queue: q1h
+========================================================================
+========================================================================
+Epilogue args:
+Date: Tue Feb 23 14:21:33 CET 2016
+Allocated nodes:
+r5i1n13
+r5i1n13
+r5i1n13
+r5i1n13
+r5i1n13
+r5i1n13
+r5i1n13
+r5i1n13
+r5i1n13
+r5i1n13
+r5i1n13
+r5i1n13
+r5i1n13
+r5i1n13
+r5i1n13
+r5i1n13
+r5i1n13
+r5i1n13
+r5i1n13
+r5i1n13
+Job ID: 20254093.icts-p-svcs-1
+User ID: vsc31468
+Group ID: vsc31468
+Job Name: test8_debugmode.pbs
+Session ID: 3559
+Resource List: neednodes=1:ppn=20,nodes=1:ppn=20,pmem=1gb,walltime=00:01:00
+Resources Used: cput=00:00:00,mem=0kb,vmem=0kb,walltime=00:00:00
+Queue Name: q1h
+Account String: 
+-------------------------------------------------------------------------
+time: 0
+nodes: 1
+procs: 20
+account: default_project
