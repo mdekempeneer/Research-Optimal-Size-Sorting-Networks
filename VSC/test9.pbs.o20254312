@@ -1,0 +1,71 @@
+time: 86400
+nodes: 1
+procs: 20
+account string: default_project
+queue: q24h
+========================================================================
+Will be using 24 threads
+Cycle complete with 2 comps and size 3 took 10 ms
+Cycle complete with 3 comps and size 7 took 7 ms
+Cycle complete with 4 comps and size 20 took 16 ms
+Cycle complete with 5 comps and size 59 took 34 ms
+Cycle complete with 6 comps and size 208 took 45 ms
+Cycle complete with 7 comps and size 807 took 103 ms
+Cycle complete with 8 comps and size 3415 took 245 ms
+Cycle complete with 9 comps and size 14340 took 1669 ms
+Cycle complete with 10 comps and size 55986 took 15624 ms
+Cycle complete with 11 comps and size 188710 took 154239 ms
+Cycle complete with 12 comps and size 490288 took 1062174 ms
+Cycle complete with 13 comps and size 854645 took 3797288 ms
+Cycle complete with 14 comps and size 914533 took 5661054 ms
+Cycle complete with 15 comps and size 607155 took 3404493 ms
+Cycle complete with 16 comps and size 274184 took 898401 ms
+Cycle complete with 17 comps and size 94080 took 126276 ms
+Cycle complete with 18 comps and size 25783 took 12442 ms
+Cycle complete with 19 comps and size 5694 took 976 ms
+Cycle complete with 20 comps and size 1106 took 68 ms
+Cycle complete with 21 comps and size 250 took 10 ms
+Cycle complete with 22 comps and size 73 took 3 ms
+Cycle complete with 23 comps and size 27 took 1 ms
+Cycle complete with 24 comps and size 8 took 0 ms
+Cycle complete with 25 comps and size 1 took 0 ms
+Took 15135358007399 ns
+[3, 12, 48, 10, 68, 129, 192, 5, 272, 320, 17, 80, 34, 6, 160, 18, 68, 264, 384, 20, 40, 24, 96, 48, 192]
+========================================================================
+Epilogue args:
+Date: Wed Feb 24 03:38:42 CET 2016
+Allocated nodes:
+r5i2n10
+r5i2n10
+r5i2n10
+r5i2n10
+r5i2n10
+r5i2n10
+r5i2n10
+r5i2n10
+r5i2n10
+r5i2n10
+r5i2n10
+r5i2n10
+r5i2n10
+r5i2n10
+r5i2n10
+r5i2n10
+r5i2n10
+r5i2n10
+r5i2n10
+r5i2n10
+Job ID: 20254312.icts-p-svcs-1
+User ID: vsc31468
+Group ID: vsc31468
+Job Name: test9.pbs
+Session ID: 32232
+Resource List: mem=8gb,neednodes=1:ppn=20,nodes=1:ppn=20,pmem=1gb,walltime=24:00:00
+Resources Used: cput=73:06:08,mem=5261232kb,vmem=21003520kb,walltime=04:12:17
+Queue Name: q24h
+Account String: 
+-------------------------------------------------------------------------
+time: 15137
+nodes: 1
+procs: 20
+account: default_project
