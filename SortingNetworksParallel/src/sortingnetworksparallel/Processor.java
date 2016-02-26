@@ -48,7 +48,7 @@ public class Processor {
      *
      * @param nbChannels The amount of channels for the networks.
      * @param upperBound The maximum amount of comparators to use.
-     * @param savePath  //TODO
+     * @param savePath //TODO
      * @param innerSize
      * @param percThreads
      */
@@ -474,10 +474,8 @@ public class Processor {
      *
      */
     public void prune(ObjArrayList<short[][]> networkList, final int networkIndex, final int skipSize) {
-        int maxSkipIndex = networkIndex + skipSize;
-
         for (int outerIndex = 0; outerIndex < networkList.size(); outerIndex++) {
-            if (outerIndex < networkIndex || outerIndex >= maxSkipIndex) { //skip the ones between=innerPruned.
+            if (outerIndex != networkIndex) {
                 short[][] network2 = networkList.get(outerIndex);
 
                 if (network2 != null) {
@@ -499,22 +497,23 @@ public class Processor {
 
                         }
                     }
-
                 }
+            } else {
+                outerIndex += skipSize - 1;
             }
         }
     }
+//}
 
-    /**
-     * Check whether the output of network1 is a part of or equal to the output
-     * of network2.
-     *
-     * @param network1 The first network.
-     * @param network2 The second network.
-     * @return Whether outputs(network1) is equal to or part of
-     * outputs(network2).
-     */
-    private boolean isValidPermutation(short[][] network1, short[][] network2) {
+/**
+ * Check whether the output of network1 is a part of or equal to the output of
+ * network2.
+ *
+ * @param network1 The first network.
+ * @param network2 The second network.
+ * @return Whether outputs(network1) is equal to or part of outputs(network2).
+ */
+private boolean isValidPermutation(short[][] network1, short[][] network2) {
         /*  Reduce work: Lemma 6:
          C1 subsumes C2 => P(getLengthOfW(C1, x, k)) C= getLengthOfW(C2, x, k)
          */
@@ -1150,14 +1149,22 @@ public class Processor {
                 oos = new ObjectOutputStream(new FileOutputStream(this.savePath));
                 oos.writeObject(NList);
                 oos.writeShort(nbComp);
-            } catch (IOException ex) {
-                Logger.getLogger(Processor.class.getName()).log(Level.SEVERE, null, ex);
+            
+
+} catch (IOException ex) {
+                Logger.getLogger(Processor.class  
+
+.getName()).log(Level.SEVERE, null, ex);
             } finally {
                 if (oos != null) {
                     try {
                         oos.close();
-                    } catch (IOException ex) {
-                        Logger.getLogger(Processor.class.getName()).log(Level.SEVERE, null, ex);
+                    
+
+} catch (IOException ex) {
+                        Logger.getLogger(Processor.class  
+
+.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
@@ -1174,14 +1181,22 @@ public class Processor {
                 oos.writeInt(startIndex);
                 oos.writeObject(newL);
                 oos.writeShort(nbComp);
-            } catch (IOException ex) {
-                Logger.getLogger(Processor.class.getName()).log(Level.SEVERE, null, ex);
+            
+
+} catch (IOException ex) {
+                Logger.getLogger(Processor.class  
+
+.getName()).log(Level.SEVERE, null, ex);
             } finally {
                 if (oos != null) {
                     try {
                         oos.close();
-                    } catch (IOException ex) {
-                        Logger.getLogger(Processor.class.getName()).log(Level.SEVERE, null, ex);
+                    
+
+} catch (IOException ex) {
+                        Logger.getLogger(Processor.class  
+
+.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
