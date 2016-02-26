@@ -505,15 +505,16 @@ public class Processor {
     }
 //}
 
-/**
- * Check whether the output of network1 is a part of or equal to the output of
- * network2.
- *
- * @param network1 The first network.
- * @param network2 The second network.
- * @return Whether outputs(network1) is equal to or part of outputs(network2).
- */
-private boolean isValidPermutation(short[][] network1, short[][] network2) {
+    /**
+     * Check whether the output of network1 is a part of or equal to the output
+     * of network2.
+     *
+     * @param network1 The first network.
+     * @param network2 The second network.
+     * @return Whether outputs(network1) is equal to or part of
+     * outputs(network2).
+     */
+    private boolean isValidPermutation(short[][] network1, short[][] network2) {
         /*  Reduce work: Lemma 6:
          C1 subsumes C2 => P(getLengthOfW(C1, x, k)) C= getLengthOfW(C2, x, k)
          */
@@ -1149,22 +1150,18 @@ private boolean isValidPermutation(short[][] network1, short[][] network2) {
                 oos = new ObjectOutputStream(new FileOutputStream(this.savePath));
                 oos.writeObject(NList);
                 oos.writeShort(nbComp);
-            
 
-} catch (IOException ex) {
-                Logger.getLogger(Processor.class  
-
-.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(Processor.class
+                        .getName()).log(Level.SEVERE, null, ex);
             } finally {
                 if (oos != null) {
                     try {
                         oos.close();
-                    
 
-} catch (IOException ex) {
-                        Logger.getLogger(Processor.class  
-
-.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(Processor.class
+                                .getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
@@ -1181,22 +1178,18 @@ private boolean isValidPermutation(short[][] network1, short[][] network2) {
                 oos.writeInt(startIndex);
                 oos.writeObject(newL);
                 oos.writeShort(nbComp);
-            
 
-} catch (IOException ex) {
-                Logger.getLogger(Processor.class  
-
-.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(Processor.class
+                        .getName()).log(Level.SEVERE, null, ex);
             } finally {
                 if (oos != null) {
                     try {
                         oos.close();
-                    
 
-} catch (IOException ex) {
-                        Logger.getLogger(Processor.class  
-
-.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(Processor.class
+                                .getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
