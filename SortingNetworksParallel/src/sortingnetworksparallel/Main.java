@@ -28,7 +28,7 @@ public class Main {
         int nbChannels = 8;
         int upperBound = 19;
         int innerSize = 64;
-        double percThreads = 0.75;
+        double percThreads = 1;
         
         if (args.length == 0) {
             loadMode = getYesNoCancelFromUser("Resume from saved file?");
