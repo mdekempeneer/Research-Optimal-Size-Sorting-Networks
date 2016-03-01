@@ -394,7 +394,7 @@ public class SingleProcessor {
         int outerShift;
 
         /* Start Generate work */
- /* For all comparators */
+        /* For all comparators */
         int prevComp = network[0][nbComp - 1];
         int prevCompMZ = prevComp >> Integer.numberOfTrailingZeros(prevComp);
 
@@ -423,12 +423,12 @@ public class SingleProcessor {
 
                         list.add(data);
                     }/* else {
-                         redundantCounter++;
-                         }*/
+                     redundantCounter++;
+                     }*/
 
                 }/* else {
-                     uniqueCounter++;
-                     }*/
+                 uniqueCounter++;
+                 }*/
 
             }
         }
@@ -585,7 +585,7 @@ public class SingleProcessor {
         /*  Reduce work: Lemma 6:
          C1 subsumes C2 => P(w(C1, x, k)) C= w(C2, x, k)
          */
- /* Permute & Check W */
+        /* Permute & Check W */
         //TODO: Check if that is true (line below)!
         //Only checking the permutation who are valid for lemma 6.
 
@@ -749,6 +749,7 @@ public class SingleProcessor {
 
         /* Convert posList bit structure to bytes for permutations. */
         byte[][] Ps = new byte[nbChannels][];
+        int taken = 0;
 
         //TODO: Can this structure be improved?
         for (int i = 0; i < Ps.length; i++) {
@@ -758,13 +759,31 @@ public class SingleProcessor {
 
             //Retrieve possible numbers from the bit form (currP).
             for (byte permIndex = 0; permIndex < nbChannels; permIndex++) {
-                if (((1 << permIndex) & currP) != 0) {// mask & posList[i] == 1 op die positie.
+                if ((1 << permIndex & currP) != 0 && (1 << permIndex & taken) == 0) {// mask & posList[i] == 1 op die positie.
                     tempP[countLengthPos++] = permIndex;
                 }
             }
 
             Ps[i] = new byte[countLengthPos]; //trim down to appropriate sizes.
             System.arraycopy(tempP, 0, Ps[i], 0, countLengthPos);
+
+            if (countLengthPos == 1) { //if only 1 option. remove it from all others.
+                byte n = tempP[0];
+                taken |= (1 << n);
+
+                for (int j = 0; j < i; j++) {
+                    if ((posList[j] & (1 << n)) != 0) { //found one that has the taken.
+
+                        int fIndex = Arrays.binarySearch(Ps[j], n);
+
+                        byte[] newArr = new byte[Ps[j].length - 1];
+                        System.arraycopy(Ps[j], 0, newArr, 0, fIndex);
+                        System.arraycopy(Ps[j], fIndex + 1, newArr, fIndex, newArr.length - fIndex);
+
+                        Ps[j] = newArr;
+                    }
+                }
+            }
         }
 
         //Check all permutations of the given positions.
