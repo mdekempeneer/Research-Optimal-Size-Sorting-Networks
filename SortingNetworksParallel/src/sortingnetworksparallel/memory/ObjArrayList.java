@@ -1,25 +1,25 @@
 /* Generic definitions */
-/* Assertions (useful to generate conditional code) */
-/* Current type and class (and size, if applicable) */
-/* Value methods */
-/* Interfaces (keys) */
-/* Interfaces (values) */
-/* Abstract implementations (keys) */
-/* Abstract implementations (values) */
-/* Static containers (keys) */
-/* Static containers (values) */
-/* Implementations */
-/* Synchronized wrappers */
-/* Unmodifiable wrappers */
-/* Other wrappers */
-/* Methods (keys) */
-/* Methods (values) */
-/* Methods (keys/values) */
-/* Methods that have special names depending on keys (but the special names depend on values) */
-/* Equality */
-/* Object/Reference-only definitions (keys) */
-/* Object/Reference-only definitions (values) */
-/*		 
+ /* Assertions (useful to generate conditional code) */
+ /* Current type and class (and size, if applicable) */
+ /* Value methods */
+ /* Interfaces (keys) */
+ /* Interfaces (values) */
+ /* Abstract implementations (keys) */
+ /* Abstract implementations (values) */
+ /* Static containers (keys) */
+ /* Static containers (values) */
+ /* Implementations */
+ /* Synchronized wrappers */
+ /* Unmodifiable wrappers */
+ /* Other wrappers */
+ /* Methods (keys) */
+ /* Methods (values) */
+ /* Methods (keys/values) */
+ /* Methods that have special names depending on keys (but the special names depend on values) */
+ /* Equality */
+ /* Object/Reference-only definitions (keys) */
+ /* Object/Reference-only definitions (values) */
+ /*		 
  * Copyright (C) 2002-2015 Sebastiano Vigna
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -89,6 +89,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * {@link System#arraycopy(Object,int,Object,int,int) System.arraycopy()}
  * instead of expensive loops.
  *
+ * @param <K> //TODO
  * @see java.util.ArrayList
  */
 public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAccess, Cloneable, java.io.Serializable {
@@ -122,8 +123,8 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
      * This constructor is only meant to be used by the wrapping methods.
      *
      * @param a the array that will be used to back this array list.
+     * @param dummy //TODO
      */
-    @SuppressWarnings("unused")
     protected ObjArrayList(final K a[], boolean dummy) {
         this.a = a;
         this.wrapped = true;
@@ -134,7 +135,6 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
      *
      * @param capacity the initial capacity of the array list (may be 0).
      */
-    @SuppressWarnings("unchecked")
     public ObjArrayList(final int capacity) {
         a = (K[]) new Object[capacity];
         wrapped = false;
@@ -257,6 +257,7 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
      * {@link #elements()} will be the same (see the comments in the class
      * documentation).
      *
+     * @param <K> //TODO
      * @param a an array to wrap.
      * @param length the length of the resulting array list.
      * @return a new array list of the given size, wrapping the given array.
@@ -278,6 +279,7 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
      * {@link #elements()} will be the same (see the comments in the class
      * documentation).
      *
+     * @param <K> //TODO
      * @param a an array to wrap.
      * @return a new array list wrapping the given array.
      */
@@ -291,16 +293,13 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
      *
      * @param capacity the new minimum capacity for this array list.
      */
-    @SuppressWarnings("unchecked")
     public void ensureCapacity(final int capacity) {
         if (wrapped) {
             a = ObjectArrays.ensureCapacity(a, capacity, size.get());
-        } else {
-            if (capacity > a.length) {
-                final Object t[] = new Object[capacity];
-                System.arraycopy(a, 0, t, 0, size.get());
-                a = (K[]) t;
-            }
+        } else if (capacity > a.length) {
+            final Object t[] = new Object[capacity];
+            System.arraycopy(a, 0, t, 0, size.get());
+            a = (K[]) t;
         }
     }
 
@@ -311,17 +310,14 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
      *
      * @param capacity the new minimum capacity for this array list.
      */
-    @SuppressWarnings("unchecked")
     private void grow(final int capacity) {
         if (wrapped) {
             a = ObjectArrays.grow(a, capacity, size.get());
-        } else {
-            if (capacity > a.length) {
-                final int newLength = (int) Math.max(Math.min(2L * a.length, it.unimi.dsi.fastutil.Arrays.MAX_ARRAY_SIZE), capacity);
-                final Object t[] = new Object[newLength];
-                System.arraycopy(a, 0, t, 0, size.get());
-                a = (K[]) t;
-            }
+        } else if (capacity > a.length) {
+            final int newLength = (int) Math.max(Math.min(2L * a.length, it.unimi.dsi.fastutil.Arrays.MAX_ARRAY_SIZE), capacity);
+            final Object t[] = new Object[newLength];
+            System.arraycopy(a, 0, t, 0, size.get());
+            a = (K[]) t;
         }
     }
 
@@ -358,7 +354,7 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
      * }.
      *
      * @param k The object to add.
-     * @param dummy
+     * @param dummy //TODO
      * @return The index of where the object is added. -1 is no index was found.
      */
     public int add(final K k, Object dummy) {
@@ -377,13 +373,18 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
         }
     }
 
-    //TODO: Add comments
+    /**
+     * TODO Add comments
+     *
+     * @param k
+     * @return
+     */
     public int add(final ObjectArrayList<K> k) {
         if (size.get() < a.length) {
             int r = k.size();
             int index = size.getAndAdd(r);
-            for(int i = 0; i < r; i++) {
-                a[index+i] = k.get(i);
+            for (int i = 0; i < r; i++) {
+                a[index + i] = k.get(i);
             }
             return index;
         } else {
@@ -396,7 +397,7 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
                         break;
                     }
                 }
-                if(i == a.length) {
+                if (i == a.length) {
                     return -1;
                 }
             }
@@ -534,7 +535,6 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
      *
      * @param n the threshold for the trimming.
      */
-    @SuppressWarnings("unchecked")
     public void trim(final int n) {
         // TODO: use Arrays.trim() and preserve type only if necessary
         if (n >= a.length || size.get() == a.length) {
@@ -722,7 +722,6 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
      * @return a negative integer, zero, or a positive integer as this list is
      * lexicographically less than, equal to, or greater than the argument.
      */
-    @SuppressWarnings("unchecked")
     public int compareTo(final ObjArrayList<? extends K> l) {
         final int s1 = size(), s2 = l.size();
         final K a1[] = a, a2[] = l.a;
@@ -745,7 +744,6 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
         }
     }
 
-    @SuppressWarnings("unchecked")
     private void readObject(java.io.ObjectInputStream s) throws java.io.IOException, ClassNotFoundException {
         s.defaultReadObject();
         a = (K[]) new Object[size.get()];

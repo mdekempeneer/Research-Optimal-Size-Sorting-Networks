@@ -1,8 +1,6 @@
 package sortingnetworksparallel;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import it.unimi.dsi.fastutil.objects.ObjectListIterator;
-import java.util.Iterator;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -31,6 +29,8 @@ public class WorkPool {
      * @param processor The {@link Processor} that uses this. Methods of this
      * {@link Processor} will be used.
      * @param nbChannels The amount of channels used in the network.
+     * @param innerSize //TODO
+     * @param percThreads //TODO
      */
     public WorkPool(Processor processor, short nbChannels, int innerSize, double percThreads) {
         this.processor = processor;
@@ -48,7 +48,9 @@ public class WorkPool {
      * Get a pruned list by Performing a generate&Prune cycle on N. N will not
      * be modified.
      *
-     * @param N The list to perform a generate & prune cycle on.
+     * @param oldL //TODO
+     * @param startIndex //TODO
+     * @param resultN //TODO
      * @param nbComp One more than the amount of comparators the networks in N
      * currently have.
      * @return A pruned list.
@@ -159,6 +161,9 @@ public class WorkPool {
         return resultN;
     }
 
+    /**
+     * TODO
+     */
     public void shutDownAndSave() {
         executor.shutdownNow();
         shouldSave = true;
@@ -175,6 +180,9 @@ public class WorkPool {
         }
     }
 
+    /**
+     * TODO
+     */
     public void shutDown() {
         executor.shutdownNow();
     }

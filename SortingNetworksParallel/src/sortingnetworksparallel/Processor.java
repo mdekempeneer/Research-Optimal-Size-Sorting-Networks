@@ -48,9 +48,10 @@ public class Processor {
      *
      * @param nbChannels The amount of channels for the networks.
      * @param upperBound The maximum amount of comparators to use.
-     * @param savePath //TODO
-     * @param innerSize
-     * @param percThreads
+     * @param savePath The absolute path where to save the file.
+     * @param innerSize The amount of the inner size of the lists for each
+     * thread.
+     * @param percThreads The percentage of usage of the threads.
      */
     public Processor(short nbChannels, int upperBound, String savePath, int innerSize, double percThreads) {
         this.nbChannels = nbChannels;
@@ -73,8 +74,9 @@ public class Processor {
      *
      * @param nbChannels The amount of channels for the networks.
      * @param upperBound The maximum amount of comparators to use.
-     * @param innerSize //TODO
-     * @param percThreads
+     * @param innerSize he amount of the inner size of the lists for each
+     * thread.
+     * @param percThreads The percentage of usage of the threads.
      */
     public Processor(short nbChannels, int upperBound, int innerSize, double percThreads) {
         this(nbChannels, upperBound, "", innerSize, percThreads);
@@ -104,7 +106,7 @@ public class Processor {
              save(NList, nbComp);
              System.exit(0);
              }*/
-            /*//Tests if list only contains non subsumable.
+ /*//Tests if list only contains non subsumable.
              System.out.println("Testing if all pruned");
              if (innerPruneTest(NList)) {
              NList.fixNulls();
@@ -152,7 +154,7 @@ public class Processor {
              System.out.println("Saving Data");
              save(NList, nbComp);
              }*/
-            /*//Tests if list only contains non subsumable.
+ /*//Tests if list only contains non subsumable.
              System.out.println("Testing if all pruned");
              if (innerPruneTest(NList)) {
              NList.fixNulls();
@@ -307,7 +309,8 @@ public class Processor {
      * startIndex+length-1)
      * @param nbComp The outerIndex of the comparator (data[0][nbComp]) to start
      * working on.
-     * @return //TODO
+     * @return A list of generated networks, expanded by all possible
+     * comparators to the given network.
      * @see #isRedundantComp(short[][], short)
      */
     public ObjectArrayList<short[][]> generate(final ObjArrayList<short[][]> networkList, final int startIndex, final int length, final short nbComp) {
@@ -359,7 +362,8 @@ public class Processor {
      * @param network The network to expand from.
      * @param nbComp The outerIndex of the comparator (data[0][nbComp]) to start
      * working on.
-     * @return //TODO
+     * @return A list of generated networks, expanded by all possible
+     * comparators to the given network.
      * @see #isRedundantComp(short[][], short)
      */
     public ObjectArrayList<short[][]> generate(short[][] network, short nbComp) {
@@ -371,7 +375,7 @@ public class Processor {
         int outerShift;
 
         /* Start Generate work */
-        /* For all comparators */
+ /* For all comparators */
         int prevComp = network[0][nbComp - 1];
         int prevCompMZ = prevComp >> Integer.numberOfTrailingZeros(prevComp); // e.g 001010 -> 00101
 
@@ -545,30 +549,8 @@ public class Processor {
         /*  Reduce work: Lemma 6:
          C1 subsumes C2 => P(w(C1, x, k)) C= w(C2, x, k)
          */
-        /* Permute & Check W */
-        //TODO: Check if that is true (line below)!
-        //Only checking the permutation who are valid for lemma 6.
 
-//        for (int nbOnes = 1; nbOnes < nbChannels; nbOnes++) {
-//            /* Permute W */
-//            int P1 = 0;
-//            int L1 = 0;
-//
-//            for (int pIndex = permutor.length-1; pIndex >= 0; pIndex--) {
-//                P1 <<= 1;
-//                L1 <<= 1;
-//                P1 |= ((network1[nbChannels][(nbOnes - 1) << 2] >> permutor[pIndex]) & 1);
-//                L1 |= ((network1[nbChannels][(nbOnes << 2) - 2] >> permutor[pIndex]) & 1);
-//            }
-//
-//            //Test      
-//            if (((network2[nbChannels][(nbOnes - 1) << 2] ^ ((1 << nbChannels) - 1)) & P1) != 0
-//                    || ((network2[nbChannels][(nbOnes << 2) - 2] ^ ((1 << nbChannels) - 1)) & L1) != 0) {
-//                return false;
-//            }
-//        }
-
-        /* Permute & Check outputs */
+ /* Permute & Check outputs */
         for (int nbOnes = 1; nbOnes < nbChannels; nbOnes++) {
             for (int innerIndex = 0; innerIndex < network1[nbOnes].length; innerIndex++) {
                 int output = 0;
@@ -900,15 +882,15 @@ public class Processor {
     }
 
     /**
-     * TODO: Possible to optimize
+     * Calculates the factorial of a given number.
      *
-     * @param n
-     * @return
+     * @param n The number of which the factorial has to be calculated
+     * @return n!
      */
     public static long factorial(int n) {
         long result = 1;
 
-        for (int i = n; n > 1; n--) {
+        for (; n > 1; n--) {
             result *= n;
         }
 
