@@ -1,6 +1,5 @@
 package sortingnetworkspaper;
 
-import it.unimi.dsi.fastutil.objects.ObjectBigArrayBigList;
 import it.unimi.dsi.fastutil.objects.ObjectListIterator;
 import java.io.FileOutputStream;
 import java.io.IOException;
