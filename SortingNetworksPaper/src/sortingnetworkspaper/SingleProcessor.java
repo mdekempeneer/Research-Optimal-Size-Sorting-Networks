@@ -394,7 +394,7 @@ public class SingleProcessor {
         int outerShift;
 
         /* Start Generate work */
-        /* For all comparators */
+ /* For all comparators */
         int prevComp = network[0][nbComp - 1];
         int prevCompMZ = prevComp >> Integer.numberOfTrailingZeros(prevComp);
 
@@ -585,7 +585,7 @@ public class SingleProcessor {
         /*  Reduce work: Lemma 6:
          C1 subsumes C2 => P(w(C1, x, k)) C= w(C2, x, k)
          */
-        /* Permute & Check W */
+ /* Permute & Check W */
         //TODO: Check if that is true (line below)!
         //Only checking the permutation who are valid for lemma 6.
 
@@ -770,7 +770,7 @@ public class SingleProcessor {
             if (countLengthPos == 1) { //if only 1 option. remove it from all others.
                 byte n = tempP[0];
                 taken |= (1 << n);
-
+                
                 for (int j = 0; j < i; j++) {
                     if ((posList[j] & (1 << n)) != 0) { //found one that has the taken.
 
@@ -781,13 +781,14 @@ public class SingleProcessor {
                         System.arraycopy(Ps[j], fIndex + 1, newArr, fIndex, newArr.length - fIndex);
 
                         Ps[j] = newArr;
-                    }
+                    } 
                 }
             }
         }
 
         //Check all permutations of the given positions.
-        return checkAllRelevantPermutations(network1, network2, Ps, 0, new byte[nbChannels], 0);
+        return checkAllRelevantPermutations(network1, network2, Ps,
+                0, new byte[nbChannels], 0);
 
         //return testPossiblePermutations(network1, network2, Ps);
     }
@@ -1195,14 +1196,18 @@ public class SingleProcessor {
                 oos.writeInt(nextStartIndex);
                 oos.writeObject(newList);
                 oos.writeShort(nbComps);
+
             } catch (IOException ex) {
-                Logger.getLogger(SingleProcessor.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(SingleProcessor.class
+                        .getName()).log(Level.SEVERE, null, ex);
             } finally {
                 if (oos != null) {
                     try {
                         oos.close();
+
                     } catch (IOException ex) {
-                        Logger.getLogger(SingleProcessor.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(SingleProcessor.class
+                                .getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }

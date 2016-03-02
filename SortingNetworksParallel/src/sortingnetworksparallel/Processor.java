@@ -106,7 +106,7 @@ public class Processor {
              save(NList, nbComp);
              System.exit(0);
              }*/
-            /*//Tests if list only contains non subsumable.
+ /*//Tests if list only contains non subsumable.
              System.out.println("Testing if all pruned");
              if (innerPruneTest(NList)) {
              NList.fixNulls();
@@ -154,7 +154,7 @@ public class Processor {
              System.out.println("Saving Data");
              save(NList, nbComp);
              }*/
-            /*//Tests if list only contains non subsumable.
+ /*//Tests if list only contains non subsumable.
              System.out.println("Testing if all pruned");
              if (innerPruneTest(NList)) {
              NList.fixNulls();
@@ -375,7 +375,7 @@ public class Processor {
         int outerShift;
 
         /* Start Generate work */
-        /* For all comparators */
+ /* For all comparators */
         int prevComp = network[0][nbComp - 1];
         int prevCompMZ = prevComp >> Integer.numberOfTrailingZeros(prevComp); // e.g 001010 -> 00101
 
@@ -550,7 +550,7 @@ public class Processor {
          C1 subsumes C2 => P(w(C1, x, k)) C= w(C2, x, k)
          */
 
-        /* Permute & Check outputs */
+ /* Permute & Check outputs */
         for (int nbOnes = 1; nbOnes < nbChannels; nbOnes++) {
             for (int innerIndex = 0; innerIndex < network1[nbOnes].length; innerIndex++) {
                 int output = 0;
@@ -712,7 +712,7 @@ public class Processor {
             if (countLengthPos == 1) { //if only 1 option. remove it from all others.
                 byte n = tempP[0];
                 taken |= (1 << n);
-
+                
                 for (int j = 0; j < i; j++) {
                     if ((posList[j] & (1 << n)) != 0) { //found one that has the taken.
 
