@@ -746,9 +746,24 @@ public class SingleProcessor {
             }
         }
 
+        //int taken = 0;
+        for (int i = 0; i < posList.length; i++) {
+            int value = posList[i];
+            if (Integer.bitCount(value) == 1) {
+                //taken |= value;
+                for (int j = 0; j < posList.length; j++) {
+                    if (((value & posList[j]) != 0) && (i != j)) {
+                        posList[j] -= value;
+                        if (posList[j] == 0) {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+
         /* Convert posList bit structure to bytes for permutations. */
         byte[][] Ps = new byte[nbChannels][];
-        int taken = 0;
 
         //TODO: Can this structure be improved?
         for (int i = 0; i < Ps.length; i++) {
@@ -758,7 +773,7 @@ public class SingleProcessor {
 
             //Retrieve possible numbers from the bit form (currP).
             for (byte permIndex = 0; permIndex < nbChannels; permIndex++) {
-                if ((1 << permIndex & currP) != 0 && (1 << permIndex & taken) == 0) {// mask & posList[i] == 1 op die positie.
+                if ((1 << permIndex & currP) != 0 /*&& (1 << permIndex & taken) == 0*/) {// mask & posList[i] == 1 op die positie.
                     tempP[countLengthPos++] = permIndex;
                 }
             }
@@ -766,10 +781,10 @@ public class SingleProcessor {
             Ps[i] = new byte[countLengthPos]; //trim down to appropriate sizes.
             System.arraycopy(tempP, 0, Ps[i], 0, countLengthPos);
 
-            if (countLengthPos == 1) { //if only 1 option. remove it from all others.
+            /*if (countLengthPos == 1) { //if only 1 option. remove it from all others.
                 byte n = tempP[0];
                 taken |= (1 << n);
-                
+
                 for (int j = 0; j < i; j++) {
                     if ((posList[j] & (1 << n)) != 0) { //found one that has the taken.
 
@@ -780,9 +795,9 @@ public class SingleProcessor {
                         System.arraycopy(Ps[j], fIndex + 1, newArr, fIndex, newArr.length - fIndex);
 
                         Ps[j] = newArr;
-                    } 
+                    }
                 }
-            }
+            }*/
         }
 
         //Check all permutations of the given positions.
