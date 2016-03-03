@@ -1,0 +1,3 @@
+Exception in thread "main" java.lang.ArrayIndexOutOfBoundsException: 4
+	at sortingnetworksparallel.Processor.process(Processor.java:151)
+	at sortingnetworksparallel.Main.main(Main.java:123)
