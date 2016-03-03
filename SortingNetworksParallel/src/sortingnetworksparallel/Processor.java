@@ -561,7 +561,6 @@ public class Processor {
                     output <<= 1;
                     output |= ((network1[nbOnes][innerIndex] >> permutor[pIndex]) & 1);
                 }
-                //}
 
                 /* Check if output is partof network2 */
                 for (short output2 : network2[nbOnes]) {
@@ -726,7 +725,16 @@ public class Processor {
         //Check all permutations of the given positions.
         byte[] perm = new byte[nbChannels];
         Arrays.fill(perm, (byte) -1);
-        return checkAllRelevantPermutations(network1, network2, Ps, 0, new byte[nbChannels], 0, null, perm);
+
+        short[][] permNetwork = new short[network1.length][];
+        for (int nbOnes = 1; nbOnes < nbChannels; nbOnes++) {
+            short[] orig = network1[nbOnes];
+            short[] output = new short[orig.length];
+            System.arraycopy(orig, 0, output, 0, output.length);
+            permNetwork[nbOnes] = output;
+        }
+
+        return checkAllRelevantPermutations(network1, network2, Ps, 0, new byte[nbChannels], 0, permNetwork, perm);
 
         //return testPossiblePermutations(network1, network2, Ps);
     }
@@ -832,33 +840,23 @@ public class Processor {
                             break;
                         }
                     }
-                    
-                    if (permNetwork == null) {
-                        permNetwork = new short[network1.length][];
-                        for (int nbOnes = 1; nbOnes < nbChannels; nbOnes++) {
-                            short[] orig = network1[nbOnes];
-                            short[] output = new short[orig.length];
-                            System.arraycopy(orig, 0, output, 0, output.length);
-                            permNetwork[nbOnes] = output;
-                        }
-                    }
+
                     int soFarLength = soFar.length;
 
                     /* Permute & Check outputs */
                     for (int nbOnes = 1; nbOnes < nbChannels; nbOnes++) {
                         for (int innerIndex = 0; innerIndex < network1[nbOnes].length; innerIndex++) {
 
-
                             /* Compute permuted */
                             for (int pIndex = i; pIndex < soFarLength; pIndex++) {
-                                int bit = ((network1[nbOnes][innerIndex] >> soFar[pIndex]) & 1) << currIndex;
-                                int mask = 1 << currIndex;
+                                int bit = ((network1[nbOnes][innerIndex] >> soFar[pIndex]) & 1) << pIndex;
+                                int mask = 1 << pIndex;
                                 permNetwork[nbOnes][innerIndex] ^= ((permNetwork[nbOnes][innerIndex] ^ bit) & mask);
                             }
                         }
                     }
 
-                    System.arraycopy(soFar, 0, perm, 0, soFarLength);
+                    System.arraycopy(soFar, i, perm, i, soFarLength-i);
 
                     if (isValidPermutation(permNetwork, network2)) {
                         return true;
