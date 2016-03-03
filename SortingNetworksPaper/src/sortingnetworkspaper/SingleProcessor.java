@@ -746,11 +746,9 @@ public class SingleProcessor {
             }
         }
 
-        //int taken = 0;
         for (int i = 0; i < posList.length; i++) {
             int value = posList[i];
             if (Integer.bitCount(value) == 1) {
-                //taken |= value;
                 for (int j = 0; j < posList.length; j++) {
                     if (((value & posList[j]) != 0) && (i != j)) {
                         posList[j] -= value;
@@ -773,31 +771,13 @@ public class SingleProcessor {
 
             //Retrieve possible numbers from the bit form (currP).
             for (byte permIndex = 0; permIndex < nbChannels; permIndex++) {
-                if ((1 << permIndex & currP) != 0 /*&& (1 << permIndex & taken) == 0*/) {// mask & posList[i] == 1 op die positie.
+                if ((1 << permIndex & currP) != 0) {// mask & posList[i] == 1 op die positie.
                     tempP[countLengthPos++] = permIndex;
                 }
             }
 
             Ps[i] = new byte[countLengthPos]; //trim down to appropriate sizes.
             System.arraycopy(tempP, 0, Ps[i], 0, countLengthPos);
-
-            /*if (countLengthPos == 1) { //if only 1 option. remove it from all others.
-                byte n = tempP[0];
-                taken |= (1 << n);
-
-                for (int j = 0; j < i; j++) {
-                    if ((posList[j] & (1 << n)) != 0) { //found one that has the taken.
-
-                        int fIndex = Arrays.binarySearch(Ps[j], n);
-
-                        byte[] newArr = new byte[Ps[j].length - 1];
-                        System.arraycopy(Ps[j], 0, newArr, 0, fIndex);
-                        System.arraycopy(Ps[j], fIndex + 1, newArr, fIndex, newArr.length - fIndex);
-
-                        Ps[j] = newArr;
-                    }
-                }
-            }*/
         }
 
         //Check all permutations of the given positions.
