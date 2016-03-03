@@ -140,7 +140,18 @@ public class Processor {
         innerPrune(NList);
         NList.fixNulls();
         NList.trim();
-        short nbComp = 1;
+        short[][] network = NList.get(0);
+        int j = 1;
+        short nbComp = (short) (nbChannels/2);
+        short[] comps = new short[nbComp];
+        comps[0] = network[0][0];
+        network[0] = comps;
+        for (int i = 2; i <= nbChannels-2; i += 2) {
+            short comp = (short) (3 << i);
+            network[0][j++] = (short) comp;
+            this.processData(network,  comp);
+            this.processW(network, comp, 1);
+        }
 
         do {
             long begin = System.currentTimeMillis();
