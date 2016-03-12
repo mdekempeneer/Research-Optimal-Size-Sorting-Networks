@@ -1200,5 +1200,4 @@ public class Processor {
     public void processData(short[][] data, short newComp) {
         processData(data, newComp, 1);
     }
-
 }
