@@ -203,5 +203,5 @@ TSWLatexianTemp*
 id_rsa_vsc.pub
 
 id_rsa_vsc
-/C/C_WV/dist/
-/C/C_WV/build/
+
+*.metadata/*
