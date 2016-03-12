@@ -205,3 +205,5 @@ id_rsa_vsc.pub
 id_rsa_vsc
 
 *.metadata/*
+.metadata/
+.metadata/*
