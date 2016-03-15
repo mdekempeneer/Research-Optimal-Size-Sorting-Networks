@@ -15,43 +15,12 @@
 #define trailingZeros(x) __builtin_ctz(x)
 #define leadingZeros(x) __builtin_clz(x)
 #define bitCount(x) __builtin_popcount(x)
+#define NETWORK_LENGTH NB_CHANNELS + 1
 
 using namespace std;
 
 /* Type def */
 typedef unsigned short lshort;
-
-//Array of shorts
-
-typedef struct lshort_array {
-    size_t length;
-    lshort* shorts;
-} lshort_array;
-
-//typedef lshort_array** networkRef; //TODO: Change to shared_ptr
-typedef std::shared_ptr<lshort_array> networkRef;
-
-/**
- * Initialize (allocate) an array of lshorts.
- * @param N The amount of lshorts.
- * @return A reference to the beginning of this structure.
- */
-lshort_array* initialiaze_lshort_array(size_t N) {
-    lshort_array* arr = (lshort_array*) malloc(sizeof (lshort_array) + N * sizeof (lshort));
-    arr->shorts = (lshort*) (arr + 1);
-
-    return arr;
-}
-
-networkRef* initialize_network() {
-    return (networkRef*) malloc(sizeof (lshort_array) * NB_CHANNELS);
-}
-
-
-
-
-
-
 
 /* Variables */
 const lshort NB_CHANNELS = 8;
@@ -60,24 +29,54 @@ const lshort UPPERBOUND = 19;
 const int INNERSIZE = 256;
 const double PERC_THREADS = 1.0;
 
+//Array of shorts
+
+typedef struct lshort_array {
+    size_t length;
+    lshort* shorts;
+} lshort_array;
+
+//typedef lshort_array** networkRef;
+typedef std::shared_ptr<lshort_array>* networkRef;
+
+/**
+ * Initialize (allocate) an array of lshorts.
+ * @param N The amount of lshorts.
+ * @return A reference to the beginning of this structure.
+ */
+shared_ptr<lshort_array> initialize_lshort_array(size_t N) {
+    lshort_array* arr = (lshort_array*) malloc(sizeof (lshort_array) + N * sizeof (lshort));
+    arr->shorts = (lshort*) (arr + 1);
+    shared_ptr<lshort_array> ptr1(arr);
+    return ptr1;
+}
+
+networkRef initialize_network() {
+    //shared_ptr<lshort_array> ptr1((lshort_array*) (malloc(sizeof (lshort_array) * NB_CHANNELS)));
+    shared_ptr<lshort_array>* net = ((shared_ptr<lshort_array>*)malloc(sizeof (shared_ptr<lshort_array>) * NETWORK_LENGTH));
+    //return (networkRef*) malloc(sizeof (lshort_array) + sizeof (networkRef) * NB_CHANNELS);
+
+    return net;
+}
+
 //WorkPool workPool;
 const int MAX_OUTER_COMPARATOR = ((1 << (NB_CHANNELS - 1)) | 1);
 const int MAX_SHIFTS = NB_CHANNELS - 2;
-lshort allOnesList[NB_CHANNELS];
+lshort* allOnesList;
 
 
 
 std::list<networkRef> firstTimeGenerate(networkRef defaultNetwork);
 void processData(networkRef data, lshort newComp);
+void processData(networkRef data, lshort newComp, int startIndex);
 void fillAllOnesList();
 lshort swapCompare(lshort input, lshort comp);
-lshort** getOriginalInputs();
-lshort* getPermutations(short nbOnes, short maxBits);
+networkRef getOriginalInputs();
+shared_ptr<lshort_array> getPermutations(short nbOnes, short maxBits);
 int factorial(int n);
+networkRef clone(networkRef network);
+void processW(networkRef data, lshort comp, int startIndex);
 
-/*
- * 
- */
 int main(int argc, char* argv[]) {
 
     //Setup
@@ -134,11 +133,10 @@ std::list<networkRef> firstTimeGenerate(networkRef defaultNetwork) {
         lshort comp = number;
         for (int outerShift = 0; outerShift <= cMaxShifts; outerShift++, comp <<= 1) { //shift n-2, n-3, ... keer
             //new Network (via clone)
-            networkRef data = defaultNetwork.clone();
+            networkRef data = clone(defaultNetwork);
 
             //Fill
-            data[0] = new short[2];
-            data[0][0] = comp;
+            data[0].get()->shorts[0] = comp;
             processData(data, comp, 1);
             processW(data, comp, 1);
 
@@ -147,6 +145,16 @@ std::list<networkRef> firstTimeGenerate(networkRef defaultNetwork) {
     }
 
     return networkList;
+}
+
+networkRef clone(networkRef network) {
+    networkRef clone = initialize_network();
+    for (int i = 0; i < NETWORK_LENGTH; i++) {
+        int length = network[i].get()->length;
+        clone[i] = initialize_lshort_array(length);
+        memcpy(clone[i].get()->shorts, network[i].get()->shorts, length * sizeof (lshort));
+    }
+    return clone;
 }
 
 /**
@@ -159,36 +167,37 @@ std::list<networkRef> firstTimeGenerate(networkRef defaultNetwork) {
  * everything.)
  */
 void processData(networkRef data, lshort newComp, int startIndex) {
-    lshort* processed;
+    shared_ptr<lshort_array> processed;
     bool found;
 
     for (int nbOnes = startIndex; nbOnes < NB_CHANNELS; nbOnes++) {
-        processed = new short[data[nbOnes].length];
+        int length = data[nbOnes].get()->length;
+        processed = initialize_lshort_array(length);
 
         int counter = 0;
         bool foundNew = false;
 
-        for (int innerIndex = 0; innerIndex < data[nbOnes].length; innerIndex++) {
-            short oldValue = data[nbOnes][innerIndex];
-            short value = swapCompare(oldValue, newComp);
+        for (int innerIndex = 0; innerIndex < length; innerIndex++) {
+            lshort oldValue = data[nbOnes].get()->shorts[innerIndex];
+            lshort value = swapCompare(oldValue, newComp);
             if (value != oldValue) {
                 foundNew = true;
             }
             found = false;
             for (int i = counter - 1; i >= 0; i--) {
-                if (processed[i] == value) {
+                if (processed.get()->shorts[i] == value) {
                     found = true;
                     break;
                 }
             }
             if (!found) {
-                processed[counter++] = value;
+                processed.get()->shorts[counter++] = value;
             }
         }
 
         if (foundNew) { //CAUTION! Don't do this 'shared array' with writing lists to disk.
-            lshort result = new short[counter];
-            System.arraycopy(processed, 0, result, 0, result.length);
+            shared_ptr<lshort_array> result = initialize_lshort_array(counter);
+            memcpy(result.get()->shorts, processed.get()->shorts, counter * sizeof (lshort));
             data[nbOnes] = result;
         }
     }
@@ -208,7 +217,7 @@ void processData(networkRef data, lshort newComp) {
  */
 void fillAllOnesList() {
     lshort allOnes = (1 << NB_CHANNELS) - 1;
-    allOnesList = new lshort[NB_CHANNELS];
+    allOnesList = (lshort*) malloc(NB_CHANNELS * sizeof (lshort));
     std::fill(allOnesList, allOnesList + NB_CHANNELS, allOnes);
 }
 
@@ -219,7 +228,7 @@ void fillAllOnesList() {
  * @return range from 2 to (2^nbChannels-1) excluding all sorted (binary)
  * ones.
  */
-lshort** getOriginalInputs() {
+networkRef getOriginalInputs() {
 
     /* 
      data[0] Comparators
@@ -228,19 +237,21 @@ lshort** getOriginalInputs() {
      ...
      data[n] nbChannels holds W(C,x,k) info.
      */
-    lshort** data = new lshort*[NB_CHANNELS + 1];
-    data[0] = new lshort[2]; //Comparators.
-    data[NB_CHANNELS] = new lshort[(NB_CHANNELS - 1) << 2];
+    networkRef data = initialize_network();
+
+    //networkRef data = new lshort*[NB_CHANNELS + 1]; //TODO
+    data[0] = initialize_lshort_array(2); //Comparators
+    data[NB_CHANNELS] = initialize_lshort_array((NB_CHANNELS - 1) << 2);
     register int wIndexCounter;
 
     for (int nbOnes = 1; nbOnes < NB_CHANNELS; nbOnes++) {
         data[nbOnes] = getPermutations(((1 << nbOnes) - 1), NB_CHANNELS);
         wIndexCounter = (nbOnes - 1) << 2;
 
-        data[NB_CHANNELS][wIndexCounter] = ((1 << NB_CHANNELS) - 1);
-        data[NB_CHANNELS][wIndexCounter + 1] = NB_CHANNELS;
-        data[NB_CHANNELS][wIndexCounter + 2] = ((1 << NB_CHANNELS) - 1);
-        data[NB_CHANNELS][wIndexCounter + 3] = NB_CHANNELS;
+        data[NB_CHANNELS].get()->shorts[wIndexCounter] = ((1 << NB_CHANNELS) - 1);
+        data[NB_CHANNELS].get()->shorts[wIndexCounter + 1] = NB_CHANNELS;
+        data[NB_CHANNELS].get()->shorts[wIndexCounter + 2] = ((1 << NB_CHANNELS) - 1);
+        data[NB_CHANNELS].get()->shorts[wIndexCounter + 3] = NB_CHANNELS;
     }
     return data;
 }
@@ -254,8 +265,7 @@ lshort** getOriginalInputs() {
  * @return All permutations starting with start that are smaller than
  * (2^maxBits)-1
  */
-lshort* getPermutations(short nbOnes, short maxBits) {
-
+shared_ptr<lshort_array> getPermutations(short nbOnes, short maxBits) {
     lshort start = ((1 << nbOnes) - 1);
 
     //Calculate length
@@ -264,15 +274,17 @@ lshort* getPermutations(short nbOnes, short maxBits) {
     temp /= factorial(maxBits - beginNbOnes);
     int length = ceil(temp);
 
-
     //Variables
-    lshort* result = new lshort[length];
+    shared_ptr<lshort_array> arr = initialize_lshort_array(length);
+
+    lshort* result = arr.get()->shorts;
     lshort value = start;
     int max = (1 << maxBits) - 1;
     lshort t;
     int index = 0;
 
     //Get all permutations.
+    //TODO SEGMENTATION FAULT ???
     do {
         result[index] = value;
         t = value | (value - 1);
@@ -280,17 +292,75 @@ lshort* getPermutations(short nbOnes, short maxBits) {
         index++;
     } while (value < max);
 
-    return result;
+    return arr;
 }
 
 /**
  * Get n!
- * @param
+ * 
+ * @param n The parameter
  * @return n! 
  */
 int factorial(int n) {
     return (n == 1 || n == 0) ? 1 : factorial(n - 1) * n;
 }
 
+/**
+ * TODO
+ *
+ * @param data
+ * @param comp
+ * @param startIndex
+ */
+void processW(networkRef data, lshort comp, int startIndex) {
+    shared_ptr<lshort_array> wResult = initialize_lshort_array(data[NB_CHANNELS].get()->length);
 
+    int wIndexCounter;
+    bool foundL;
+    bool foundP;
 
+    if (startIndex != 1) {
+        memcpy(wResult.get()->shorts, data[NB_CHANNELS].get()->shorts, ((startIndex - 1) << 2) * sizeof (lshort));
+    }
+
+    for (int nbOnes = startIndex; nbOnes < NB_CHANNELS; nbOnes++) {
+        wIndexCounter = (nbOnes - 1) << 2;
+
+        int oldP = data[NB_CHANNELS].get()->shorts[wIndexCounter];
+        int oldL = data[NB_CHANNELS].get()->shorts[wIndexCounter + 2];
+
+        int P = (comp ^ ((1 << NB_CHANNELS) - 1)) & oldP;
+        int L = (comp ^ ((1 << NB_CHANNELS) - 1)) & oldL;
+
+        foundP = (oldP == P);
+        foundL = (oldL == L);
+
+        for (int i = 0; i < data[nbOnes].get()->length; i++) {
+            lshort output = data[nbOnes].get()->shorts[i];
+
+            if (!foundL) {
+                L = L | (output & comp);
+                if ((L & comp) == comp) {
+                    foundL = true;
+                }
+            }
+
+            if (!foundP) {
+                P = P | ((output ^ ((1 << NB_CHANNELS) - 1)) & comp);
+                if ((P & comp) == comp) {
+                    foundP = true;
+                }
+            }
+
+            /* Break; found both */
+            if (foundP && foundL) {
+                break;
+            }
+        }
+        wResult.get()->shorts[wIndexCounter] = (lshort) P;
+        wResult.get()->shorts[wIndexCounter + 1] = (lshort) bitCount(P);
+        wResult.get()->shorts[wIndexCounter + 2] = (lshort) L;
+        wResult.get()->shorts[wIndexCounter + 3] = (lshort) bitCount(L);
+    }
+    data[NB_CHANNELS] = wResult;
+}
