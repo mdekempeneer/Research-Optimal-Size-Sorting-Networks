@@ -20,14 +20,15 @@ using namespace std;
 
 /* Type def */
 typedef unsigned short lshort;
-typedef lshort_array** networkRef; //TODO: Change to shared_ptr
 
 //Array of shorts
-
 typedef struct lshort_array {
     size_t length;
     lshort* shorts;
 } lshort_array;
+
+//typedef lshort_array** networkRef; //TODO: Change to shared_ptr
+typedef std::shared_ptr<lshort_array> networkRef;
 
 /**
  * Initialize (allocate) an array of lshorts.
@@ -36,13 +37,13 @@ typedef struct lshort_array {
  */
 lshort_array* initialiaze_lshort_array(size_t N) {
     lshort_array* arr = (lshort_array*) malloc(sizeof (lshort_array) + N * sizeof (lshort))
-    arr->shorts = (lshort*) (arr + 1);
+            arr->shorts = (lshort*) (arr + 1);
 
     return arr;
 }
 
 networkRef* initialize_network() {
-    return (networkRef*) malloc(sizeof(lshort_array) * NB_CHANNELS);
+    return (networkRef*) malloc(sizeof (lshort_array) * NB_CHANNELS);
 }
 
 
@@ -65,8 +66,8 @@ lshort allOnesList[NB_CHANNELS];
 
 
 
-std::list<network> firstTimeGenerate(network defaultNetwork);
-void processData(network data, lshort newComp);
+std::list<networkRef> firstTimeGenerate(networkRef defaultNetwork);
+void processData(networkRef data, lshort newComp);
 void fillAllOnesList();
 lshort swapCompare(lshort input, lshort comp);
 lshort** getOriginalInputs();
@@ -80,7 +81,7 @@ int main(int argc, char* argv[]) {
 
     //Setup
     fillAllOnesList();
-    network defaultNetwork = getOriginalInputs();
+    networkRef defaultNetwork = getOriginalInputs();
 
     //execute
 
@@ -122,9 +123,9 @@ lshort swapCompare(lshort input, lshort comp) {
  * has all possible outputs.
  * @return A list of all possible networks with 1 comparator.
  */
-std::list<network> firstTimeGenerate(network defaultNetwork) {
+std::list<networkRef> firstTimeGenerate(networkRef defaultNetwork) {
     int capacity = (NB_CHANNELS * (NB_CHANNELS - 1)) / 2;
-    std::list<network> networkList; //networkList.push_front()
+    std::list<networkRef> networkList; //networkList.push_front()
     int cMaxShifts = MAX_SHIFTS;
 
     /* For all comparators */
@@ -132,7 +133,7 @@ std::list<network> firstTimeGenerate(network defaultNetwork) {
         lshort comp = number;
         for (int outerShift = 0; outerShift <= cMaxShifts; outerShift++, comp <<= 1) { //shift n-2, n-3, ... keer
             //new Network (via clone)
-            network data = defaultNetwork.clone();
+            networkRef data = defaultNetwork.clone();
 
             //Fill
             data[0] = new short[2];
@@ -156,7 +157,7 @@ std::list<network> firstTimeGenerate(network defaultNetwork) {
  * @param startIndex The outerIndex of where to start. (= 1 will cover
  * everything.)
  */
-void processData(network data, lshort newComp, int startIndex) {
+void processData(networkRef data, lshort newComp, int startIndex) {
     lshort* processed;
     bool found;
 
@@ -193,7 +194,7 @@ void processData(network data, lshort newComp, int startIndex) {
 
 }
 
-void processData(network data, lshort newComp) {
+void processData(networkRef data, lshort newComp) {
     processData(data, newComp, 1);
 }
 
