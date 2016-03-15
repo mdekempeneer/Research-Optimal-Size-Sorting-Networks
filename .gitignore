@@ -29,6 +29,12 @@
 /C/C_WV/nbproject/Package-Debug.bash
 /C/C_WV/nbproject/configurations.xml
 /C/C_WV/nbproject/private/configurations.xml
+C/C_WV/nbproject/configurations.xml
+C/C_WV/nbproject/Makefile-Debug.mk
+C/C_WV/nbproject/Makefile-impl.mk
+C/C_WV/nbproject/Makefile-variables.mk
+C/C_WV/nbproject/Package-Debug.bash
+C/C_WV/nbproject/private/configurations.xml
 
 id_rsa_vcs
 
@@ -215,21 +221,6 @@ id_rsa_vsc
 *.metadata/*
 .metadata/
 .metadata/*
-
-C/C_WV/nbproject/configurations.xml
-
-C/C_WV/nbproject/configurations.xml
-
-C/C_WV/nbproject/Makefile-Debug.mk
-
-C/C_WV/nbproject/Makefile-impl.mk
-
-C/C_WV/nbproject/Makefile-variables.mk
-
-C/C_WV/nbproject/Package-Debug.bash
-
-C/C_WV/nbproject/private/configurations.xml
-
 C/C_WV/nbproject/private/private.xml
 
 C/C_WV/nbproject/private/private.xml
