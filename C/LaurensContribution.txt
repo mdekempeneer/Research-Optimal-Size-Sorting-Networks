@@ -1,0 +1,14 @@
+typedef struct bitmap_array {
+	size_t length;
+	bitmap* bitmaps;
+} bitmap_array;
+
+bitmap_array* initialiaze_bitmap_array(size_t N) {
+	bitmap_array* arr = (bitmap_array*) malloc(sizeof(bitmap_array) + N*sizeof(unsigned short))
+	arr->bitmaps = (bitmap*)(arr+1);
+
+	return arr;
+}
+
+
+

@@ -1,1 +1,3 @@
-register int <--- suggest to put it in register. (e.G for counters)
+* register int <--- suggest to put it in register. (e.G for counters)
+
+* 
