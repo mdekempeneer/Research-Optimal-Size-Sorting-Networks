@@ -17,7 +17,7 @@ bitmap_array* initialiaze_bitmap_array(size_t N) {
 
 
 
-
+typedef bitmap_array**
 network[2]
 
 *(netwerk+2])

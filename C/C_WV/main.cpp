@@ -20,12 +20,13 @@ using namespace std;
 
 /* Type def */
 typedef unsigned short lshort;
-typedef lshort_array* network[];
+typedef lshort_array** networkRef; //TODO: Change to shared_ptr
 
 //Array of shorts
+
 typedef struct lshort_array {
-	size_t length;
-	lshort* shorts;
+    size_t length;
+    lshort* shorts;
 } lshort_array;
 
 /**
@@ -34,10 +35,14 @@ typedef struct lshort_array {
  * @return A reference to the beginning of this structure.
  */
 lshort_array* initialiaze_lshort_array(size_t N) {
-	lshort_array* arr = (lshort_array*) malloc(sizeof(lshort_array) + N*sizeof(lshort))
-	arr->shorts = (lshort*)(arr+1);
+    lshort_array* arr = (lshort_array*) malloc(sizeof (lshort_array) + N * sizeof (lshort))
+    arr->shorts = (lshort*) (arr + 1);
 
-	return arr;
+    return arr;
+}
+
+networkRef* initialize_network() {
+    return (networkRef*) malloc(sizeof(lshort_array) * NB_CHANNELS);
 }
 
 
@@ -157,7 +162,7 @@ void processData(network data, lshort newComp, int startIndex) {
 
     for (int nbOnes = startIndex; nbOnes < NB_CHANNELS; nbOnes++) {
         processed = new short[data[nbOnes].length];
-        
+
         int counter = 0;
         bool foundNew = false;
 
