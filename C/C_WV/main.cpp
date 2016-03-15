@@ -22,6 +22,7 @@ using namespace std;
 typedef unsigned short lshort;
 
 //Array of shorts
+
 typedef struct lshort_array {
     size_t length;
     lshort* shorts;
@@ -36,8 +37,8 @@ typedef std::shared_ptr<lshort_array> networkRef;
  * @return A reference to the beginning of this structure.
  */
 lshort_array* initialiaze_lshort_array(size_t N) {
-    lshort_array* arr = (lshort_array*) malloc(sizeof (lshort_array) + N * sizeof (lshort))
-            arr->shorts = (lshort*) (arr + 1);
+    lshort_array* arr = (lshort_array*) malloc(sizeof (lshort_array) + N * sizeof (lshort));
+    arr->shorts = (lshort*) (arr + 1);
 
     return arr;
 }
