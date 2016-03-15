@@ -20,7 +20,31 @@ using namespace std;
 
 /* Type def */
 typedef unsigned short lshort;
-typedef lshort** network;
+typedef lshort_array* network[];
+
+//Array of shorts
+typedef struct lshort_array {
+	size_t length;
+	lshort* shorts;
+} lshort_array;
+
+/**
+ * Initialize (allocate) an array of lshorts.
+ * @param N The amount of lshorts.
+ * @return A reference to the beginning of this structure.
+ */
+lshort_array* initialiaze_lshort_array(size_t N) {
+	lshort_array* arr = (lshort_array*) malloc(sizeof(lshort_array) + N*sizeof(lshort))
+	arr->shorts = (lshort*)(arr+1);
+
+	return arr;
+}
+
+
+
+
+
+
 
 /* Variables */
 const lshort NB_CHANNELS = 8;

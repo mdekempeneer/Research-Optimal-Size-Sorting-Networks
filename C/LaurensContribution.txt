@@ -12,3 +12,18 @@ bitmap_array* initialiaze_bitmap_array(size_t N) {
 
 
 
+
+
+
+
+
+
+network[2]
+
+*(netwerk+2])
+
+
+
+network net = (network) malloc(sizeof(bitmap_array*) *k)
+
+net[2]
