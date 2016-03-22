@@ -68,6 +68,7 @@ public class WorkPool {
 
             //Give task to thread
             executor.execute(new Runnable() {
+                
                 @Override
                 public void run() {
                     ObjectArrayList<short[][]> prunedList = processor.generate(oldL, startIndexT, nb, nbComp);
