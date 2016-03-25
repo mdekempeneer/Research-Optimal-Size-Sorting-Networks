@@ -6,15 +6,11 @@ import it.unimi.dsi.fastutil.objects.ObjectListIterator;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.math.BigInteger;
-import java.math.PublicBigInteger;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import sortingnetworksparallel.memory.Counter;
 import sortingnetworksparallel.memory.ObjArrayList;
-import sortingnetworksparallel.memory.PMutableBigInteger;
 
 /**
  *
@@ -31,12 +27,10 @@ public class Processor {
     private final int[] allOnesList;
     private final byte[] allMinusOneList;
 
-    private final int nbPossibleComps;
-    private int nbCompR;
-
     //Statistics
     //public static AtomicCounter initCounter = new AtomicCounter();
-    public static ArrayList<Counter> countList = new ArrayList();
+    //public static ArrayList<Counter> countList = new ArrayList();
+    public static Counter result;
 
     //private AtomicLong permCount = new AtomicLong();
 
@@ -57,10 +51,8 @@ public class Processor {
      * @param percThreads The percentage of usage of the threads.
      */
     public Processor(short nbChannels, int upperBound, String savePath, int innerSize, double percThreads) {
-        this.nbCompR = 0;
         this.nbChannels = nbChannels;
         this.upperBound = upperBound;
-        this.nbPossibleComps = (nbChannels * (nbChannels - 1)) / 2;
         this.maxOuterComparator = ((1 << (nbChannels - 1)) | 1);
         this.maxShifts = nbChannels - 2;
         this.allOnesList = getAllOnesList((byte) nbChannels);
@@ -95,7 +87,6 @@ public class Processor {
         newL = null;
         long took = System.currentTimeMillis() - begin;
         nbComp++;
-        nbCompR++;
         System.out.println("Cycle complete with " + nbComp + " comps and size " + NList.size() + " took " + took + " ms");
 
         //cycle
@@ -104,7 +95,6 @@ public class Processor {
             NList = workPool.performCycle(NList, nbComp);
             took = System.currentTimeMillis() - begin;
             nbComp++;
-            nbCompR++;
 
             System.out.println("Cycle complete with " + nbComp + " comps and size " + NList.size() + " took " + took + " ms");
 
@@ -124,20 +114,22 @@ public class Processor {
 
         workPool.shutDown();
 
-        Counter result = new Counter();
-
-        for (Counter c : this.countList) {
-            result.addCounter(c);
-        }
-
-        System.out.println("UniqueCounter_rel " + result.uniqueCounter_rel);
+//        Counter result = new Counter();
+//
+//        for (Counter c : this.countList) {
+//            result.addCounter(c);
+//        }
         System.out.println("UniqueCounter_abs" + result.uniqueCounter_abs);
-        System.out.println("redundantCounter_rel " + result.redundantCounter_rel);
         System.out.println("redundantCounter_abs " + result.redundantCounter_abs);
-        System.out.println("kLengthCounter_rel " + result.kLengthCounter_rel);
         System.out.println("kLengthCounter_abs " + result.kLengthCounter_abs);
+        System.out.println("pLengthCounter_abs " + result.pLengthCounter_abs);
+        System.out.println("lLengthCounter_abs " + result.lLengthCounter_abs);
+        System.out.println("networkPermCounter_abs " + result.networkPermCounter_abs);
+        System.out.println("emptyPosCounter_abs " + result.emptyPosCounter_abs);
+        System.out.println("");
+        result.clear();
         // System.out.println("#Unique " + uniqueCounter + "; #Redundant " + redundantCounter);
-        // System.out.println("#kLengthCounter " + kLengthCounter + "; #pLengthCounter " + pLengthCounter + "; #lLengthCounter " + lLengthCounter);
+        //System.out.println("#kLengthCounter " + kLengthCounter + "; #pLengthCounter " + pLengthCounter + "; #lLengthCounter " + lLengthCounter);
         // System.out.println("#emptyPosCounter " + emptyPosCounter);
         // System.out.println("#networkPermCounter " + networkPermCounter);
 
@@ -156,23 +148,40 @@ public class Processor {
     public short[] process() {
         /* Initialize inputs */
         ObjArrayList<short[][]> NList = firstTimeGenerate(getOriginalInputs(upperBound));
-        Counter tCounter = new Counter();
-        innerPrune(NList, tCounter);
-        countList.add(tCounter);
+        //Counter tCounter = new Counter();
+        result = new Counter();
+        //innerPrune(NList, tCounter);
+        innerPrune(NList, result);
+//        countList.add(tCounter);
 
         NList.fixNulls();
         NList.trim();
         short nbComp = 1;
-        nbCompR = 1;
 
         do {
             long begin = System.currentTimeMillis();
             NList = workPool.performCycle(NList, nbComp);
             long took = System.currentTimeMillis() - begin;
             nbComp++;
-            nbCompR++;
 
             System.out.println("Cycle complete with " + nbComp + " comps and size " + NList.size() + " took " + took + " ms");
+
+//            Counter result = countList.get(0);
+//
+//            for (int i = 1; i < countList.size(); i++) {
+//                result.addCounter(countList.get(i));
+//            }
+            System.out.println("UniqueCounter_abs " + result.uniqueCounter_abs);
+            System.out.println("redundantCounter_abs " + result.redundantCounter_abs);
+            System.out.println("kLengthCounter_abs " + result.kLengthCounter_abs);
+            System.out.println("pLengthCounter_abs " + result.pLengthCounter_abs);
+            System.out.println("lLengthCounter_abs " + result.lLengthCounter_abs);
+            System.out.println("networkPermCounter_abs " + result.networkPermCounter_abs);
+            System.out.println("emptyPosCounter_abs " + result.emptyPosCounter_abs);
+            System.out.println("");
+
+            result.clear();
+//            countList.clear();
 
             /*if (shouldSave) {
              System.out.println("Saving Data");
@@ -189,20 +198,6 @@ public class Processor {
         } while (NList.size() > 1 && nbComp < upperBound);
 
         workPool.shutDown();
-
-        Counter result = new Counter();
-        System.out.println("list " + countList.size());
-
-        for (Counter c : countList) {
-            result.addCounter(c);
-        }
-
-        System.out.println("UniqueCounter_rel " + result.uniqueCounter_rel);
-        System.out.println("UniqueCounter_abs " + result.uniqueCounter_abs);
-        System.out.println("redundantCounter_rel " + result.redundantCounter_rel);
-        System.out.println("redundantCounter_abs " + result.redundantCounter_abs);
-        System.out.println("kLengthCounter_rel " + result.kLengthCounter_rel);
-        System.out.println("kLengthCounter_abs " + result.kLengthCounter_abs);
 
         //System.out.println("#Unique " + uniqueCounter + "; #Redundant " + redundantCounter);
         //System.out.println("#kLengthCounter " + kLengthCounter + "; #pLengthCounter " + pLengthCounter + "; #lLengthCounter " + lLengthCounter);
@@ -387,11 +382,11 @@ public class Processor {
 
                             result.add(data);
                         } else {
-                            counter.redundantCounter_abs.add(PMutableBigInteger.ONE);
+                            counter.redundantCounter_abs++;
                             //counter.redundantCounter_rel.add(new PMutableBigInteger((int) Math.pow(this.nbPossibleComps, (this.upperBound - nbComp - 1))));
                         }
                     } else {
-                        counter.uniqueCounter_abs.add(PMutableBigInteger.ONE);
+                        counter.uniqueCounter_abs++;
                         //counter.uniqueCounter_rel.add(new PMutableBigInteger((int) Math.pow(this.nbPossibleComps, (this.upperBound - nbComp - 1))));
                     }
                 }
@@ -444,11 +439,11 @@ public class Processor {
 
                         result.add(data);
                     } else {
-                        counter.redundantCounter_abs.add(PMutableBigInteger.ONE);
+                        counter.redundantCounter_abs++;
                         //counter.redundantCounter_rel.add(new PMutableBigInteger((int) Math.pow(this.nbPossibleComps, (this.upperBound - nbComp - 1))));
                     }
                 } else {
-                    counter.uniqueCounter_abs.add(PMutableBigInteger.ONE);
+                    counter.uniqueCounter_abs++;
                     //counter.uniqueCounter_rel.add(new PMutableBigInteger((int) Math.pow(this.nbPossibleComps, (this.upperBound - nbComp - 1))));
                 }
             }
@@ -646,8 +641,7 @@ public class Processor {
     private boolean subsumes(short[][] network1, short[][] network2, Counter counter) {
         for (int nbOnes = 1; nbOnes < nbChannels; nbOnes++) {
             if (network1[nbOnes].length > network2[nbOnes].length) {
-                counter.kLengthCounter_abs.add(PMutableBigInteger.ONE);
-                //counter.kLengthCounter_rel.add(new PMutableBigInteger((int) Math.pow(this.nbPossibleComps, (upperBound - nbCompR - 1))));
+                counter.kLengthCounter_abs++;
                 return false;
             }
         }
@@ -655,14 +649,12 @@ public class Processor {
         int maxIndex = (nbChannels - 1) << 2;
         for (int index = 1; index < maxIndex;) {
             if (network1[nbChannels][index] > network2[nbChannels][index]) {
-                //counter.pLengthCounter_abs = counter.pLengthCounter_abs.add(BigInteger.ONE);
-                //TODO: pLengthCounter++;
+                counter.pLengthCounter_abs++;
                 return false;
             }
             index += 2;
             if (network1[nbChannels][index] > network2[nbChannels][index]) {
-                //counter.lLengthCounter_abs = counter.lLengthCounter_abs.add(BigInteger.ONE);
-                //TODO lLengthCounter++;
+                counter.lLengthCounter_abs++;
                 return false;
             }
             index += 2;
@@ -684,7 +676,8 @@ public class Processor {
         }
 
         //networkPermCounter++;
-        return existsAValidPerm(network1, network2);
+        counter.networkPermCounter_abs++;
+        return existsAValidPerm(network1, network2, counter);
 
         //TODO: Old code - checks ALL permutations.
 //        byte[] currPerm = new byte[this.identityElement.length];
@@ -708,7 +701,7 @@ public class Processor {
      * @param network2
      * @return
      */
-    public boolean existsAValidPerm(short[][] network1, short[][] network2) {
+    public boolean existsAValidPerm(short[][] network1, short[][] network2, Counter counter) {
         //Create a list full of allOnes - on every Position can be every number.
         int allOnes = (1 << nbChannels) - 1;
         int[] posList = new int[nbChannels];
@@ -738,7 +731,7 @@ public class Processor {
 
                     //If possible positions are ever empty -> return false.
                     if (posList[i] == 0) {
-                        //emptyPosCounter++;
+                        counter.emptyPosCounter_abs++;
                         return false;
                     }
                 }

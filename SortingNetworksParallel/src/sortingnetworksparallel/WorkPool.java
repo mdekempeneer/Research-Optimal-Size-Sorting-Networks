@@ -81,7 +81,8 @@ public class WorkPool {
                     processor.prune(resultN, networkIndex, prunedList.size(), counter);
 
                     //Processor.initCounter.addCounter(counter);
-                    Processor.countList.add(counter);
+//                    Processor.countList.add(counter);
+                    Processor.result.addCounter(counter);
 
                     latch.countDown();
                     doneIndex.getAndAdd(nb);
@@ -146,7 +147,8 @@ public class WorkPool {
                     processor.prune(resultN, networkIndex, prunedList.size(), counter);
 
                     //Processor.initCounter.addCounter(counter);
-                    Processor.countList.add(counter);
+//                    Processor.countList.add(counter);
+                    Processor.result.addCounter(counter);
 
                     latch.countDown();
                     doneIndex.getAndAdd(nb);
