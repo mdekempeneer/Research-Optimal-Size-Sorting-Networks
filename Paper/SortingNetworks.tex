@@ -2,10 +2,11 @@
 \documentclass{article}
 \usepackage{SortingNetworks}
 \usepackage{times}
-% the following package is optional:
 \usepackage{latexsym} 
+\usepackage{pgfplots} % LaTeX
+\usepackage{capt-of}
 
-\title{Sorting Networks\thanks{Special thanks to Tom Schrijvers and Luc De Raedt.}}
+\title{Sorteernetwerken van Optimale Grootte\thanks{Dankwoord}}
 \author{Mathias Dekempeneer, Vincent Derkinderen \\
 Bachelor Informatica\\
 Katholieke Universiteit Leuven \\
@@ -17,33 +18,32 @@ Katholieke Universiteit Leuven \\
 
 \begin{abstract}
 Korte samenvatting van wat we doen en wat de conclusie is.\\
-Verder werken op paper van Codish et al. Sorteer optimal size sorting network.\\ Tijdsverbetering van x?
-
+Verder werken op paper van Codish et al. Sorteer optimal size sorting network.\\
+Tijdsverbetering van x?
 \end{abstract}
 
 \section{Introductie}
+
 Situering + bijdrage.\\
 Sorting Network (high level), Optimal Size (high level), contributies andere papers rond deze twee, enkele getallen rond grootte orde van het probleem, wat er al geprobeerd is (SAT, generate \& prune,...), hoe wij het probleem zullen aanpakken (hoe wij prunen (high level)), gebruikte hardware...
 
 \section{Probleemstelling}
-Definities + basisuitleg + evaluatiecriteria\\
-%\subsection{Sorteernetwerk}
+Definities + basisuitleg + evaluatiecriteria\\ \\
 Comparator netwerk, sorteernetwerk\\ \\
-%\subsection{TODO}
-optimale grootte, nul \'e\'en principe, huidige tabel van resultaten optimale grootte (en diepte), formule voor ondergrens
+Optimale grootte, nul \'e\'en principe, huidige tabel van resultaten optimale grootte (en diepte), formule voor ondergrens
 
 \section{Voorgestelde oplossing}
 Ontwerp, wat (algoritme)\\
-Generate \& prune (en hoe we dit doen) + de getallen hierrond (zoals aantal comparatoren). Het prune idee uitleggen. Benadruk de slechte grootte orde en de nood aan snellere beslissingen om de uitkomst van de prune check op voorhand te weten.
+Generate \& prune (en hoe we dit doen) + de getallen hier rond (zoals aantal comparatoren). Het prune idee uitleggen. Benadruk de slechte grootte orde en de nood aan snellere beslissingen om de uitkomst van de prune check op voorhand te weten.
 
 \subsection{Representatie van sorteernetwerken}
 Bijgehouden informatie van netwerken
 
-\subsection{Genereer}
+\subsection{Genereren}
 Uitleg hoe we de generate doen.\\
 Redundant (of de comparator die je toevoegt, wel iets verandert? Uitleggen wat wij specifiek doen), unique\_if uitleggen
 
-\subsection{Snoei}
+\subsection{Snoeien}
 Uitleg hoe we de prune doen.\\
 Checken  van alle netwerken met alle netwerken voor de prune stap.
 \begin{itemize}
@@ -61,10 +61,31 @@ Uitleg hoe generate and prune verandert door elke thread zijn stuk te laten gene
 Empirische evaluaties + grafiekjes\\
 Tabel geven van hoeveel beslissingen er op welke plaats genomen worden.\\ \\
 Vergelijken runtime voor 9 kanalen met Codish.\\
-Schatting runtime voor 10 kanalen.
+Schatting runtime voor 10 kanalen.\\\\
+
+
+\begin{tikzpicture} 
+	\begin{axis}[
+		ylabel = Tijd (miliseconde),
+		xlabel = Aantal kanalen,
+		enlargelimits=0.15,
+		ybar=1pt,
+		ymode = log,
+		log basis y = 10,
+		bar width=9pt,
+		nodes near coords,
+		point meta=10^y,
+		ymajorgrids = true
+]
+\addplot
+    coordinates {(4, 16.93) (5, 25.05) (6, 82.44) (7, 141.48) (8, 6680.31) (9, 15135358.01)};
+\addplot
+	coordinates {(9, 1101480000)};
+\end{axis}
+\end{tikzpicture}
 
 \section{Conclusies}
-Conclusie\\
+Conclusie\cite{sortingNetworksSize2014}\\
 Conclusie van wat er bereikt is en hoe er verder aan gewerkt kan worden.
 
 \section*{Erkenning}
@@ -75,8 +96,8 @@ Hier komt de erkenning.
 %\section{\LaTeX{} and Word Style Files}\label{stylefiles}
 %Dit is een appendix sectie
 
-%\bibliographystyle{named}
-%\bibliography{SortingNetworks}
+\bibliographystyle{named}
+\bibliography{SortingNetworks}
 
 \end{document}
 
