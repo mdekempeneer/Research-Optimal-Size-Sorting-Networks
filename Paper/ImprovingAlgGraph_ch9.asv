@@ -1,5 +1,4 @@
-close all
-
+cl
 X = 2:25
 n = 12
 Y2 = zeros([1 24])
@@ -16,18 +15,16 @@ legend('Vorige', 'Job20281461 - 256')
 
 
 M = zeros([1 24])
-M(1:n) = (Y1(1:n) - Y2(1:n))/1000
+M(1:n) = (Y1(1:n) - Y2(1:n))/60000
 figure
 bar(X, M')
-set(gca,'YScale','log')
-title('Running time difference in s')
+title('Running time difference in min')
 
 % Acc diff
 Acc1 = cumsum(Y1/1000)
 Acc2 = cumsum(Y2/1000)
 figure
 bar(X, [Acc1 ; Acc2]')
-set(gca,'YScale','log')
 title('Acc run time in s')
 
 
