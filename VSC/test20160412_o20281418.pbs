@@ -1,0 +1,124 @@
+time: 60
+nodes: 1
+procs: 24
+account string: default_project
+queue: q1h
+========================================================================
+Will be using 24 threads
+Cycle complete with 2 comps and size 2 took 7 ms
+Cycle complete with 3 comps and size 1 took 1 ms
+Took 115202568 ns
+[3, 6, 3]
+Will be using 24 threads
+Cycle complete with 2 comps and size 3 took 3 ms
+Cycle complete with 3 comps and size 4 took 1 ms
+Cycle complete with 4 comps and size 2 took 1 ms
+Cycle complete with 5 comps and size 1 took 1 ms
+Took 17328771 ns
+[3, 12, 5, 10, 6]
+Will be using 24 threads
+Cycle complete with 2 comps and size 3 took 3 ms
+Cycle complete with 3 comps and size 6 took 1 ms
+Cycle complete with 4 comps and size 11 took 1 ms
+Cycle complete with 5 comps and size 10 took 2 ms
+Cycle complete with 6 comps and size 7 took 2 ms
+Cycle complete with 7 comps and size 6 took 1 ms
+Cycle complete with 8 comps and size 4 took 1 ms
+Cycle complete with 9 comps and size 1 took 1 ms
+Took 24478119 ns
+[3, 6, 3, 24, 10, 20, 12, 5, 3]
+Will be using 24 threads
+Cycle complete with 2 comps and size 3 took 2 ms
+Cycle complete with 3 comps and size 7 took 2 ms
+Cycle complete with 4 comps and size 17 took 4 ms
+Cycle complete with 5 comps and size 36 took 9 ms
+Cycle complete with 6 comps and size 53 took 15 ms
+Cycle complete with 7 comps and size 53 took 12 ms
+Cycle complete with 8 comps and size 44 took 5 ms
+Cycle complete with 9 comps and size 23 took 1 ms
+Cycle complete with 10 comps and size 8 took 1 ms
+Cycle complete with 11 comps and size 4 took 1 ms
+Cycle complete with 12 comps and size 1 took 1 ms
+Took 65476245 ns
+[3, 6, 3, 24, 48, 24, 9, 18, 10, 36, 12, 24]
+Will be using 24 threads
+Cycle complete with 2 comps and size 3 took 5 ms
+Cycle complete with 3 comps and size 7 took 2 ms
+Cycle complete with 4 comps and size 19 took 3 ms
+Cycle complete with 5 comps and size 51 took 27 ms
+Cycle complete with 6 comps and size 141 took 18 ms
+Cycle complete with 7 comps and size 325 took 22 ms
+Cycle complete with 8 comps and size 564 took 54 ms
+Cycle complete with 9 comps and size 678 took 56 ms
+Cycle complete with 10 comps and size 510 took 29 ms
+Cycle complete with 11 comps and size 280 took 16 ms
+Cycle complete with 12 comps and size 106 took 7 ms
+Cycle complete with 13 comps and size 33 took 1 ms
+Cycle complete with 14 comps and size 11 took 1 ms
+Cycle complete with 15 comps and size 6 took 1 ms
+Cycle complete with 16 comps and size 1 took 0 ms
+Took 258468456 ns
+[3, 6, 24, 96, 10, 72, 33, 3, 48, 24, 96, 10, 36, 20, 12, 96]
+Will be using 24 threads
+Cycle complete with 2 comps and size 3 took 4 ms
+Cycle complete with 3 comps and size 7 took 3 ms
+Cycle complete with 4 comps and size 20 took 10 ms
+Cycle complete with 5 comps and size 57 took 42 ms
+Cycle complete with 6 comps and size 189 took 19 ms
+Cycle complete with 7 comps and size 648 took 73 ms
+Cycle complete with 8 comps and size 2088 took 266 ms
+Cycle complete with 9 comps and size 5703 took 594 ms
+Cycle complete with 10 comps and size 11668 took 1023 ms
+Cycle complete with 11 comps and size 16094 took 2057 ms
+Cycle complete with 12 comps and size 13304 took 1571 ms
+Cycle complete with 13 comps and size 6677 took 709 ms
+Cycle complete with 14 comps and size 2215 took 216 ms
+Cycle complete with 15 comps and size 503 took 40 ms
+Cycle complete with 16 comps and size 77 took 12 ms
+Cycle complete with 17 comps and size 18 took 1 ms
+Cycle complete with 18 comps and size 9 took 1 ms
+Cycle complete with 19 comps and size 1 took 0 ms
+Took 6663352099 ns
+[3, 12, 48, 192, 5, 10, 6, 80, 160, 96, 17, 34, 18, 136, 40, 68, 96, 20, 24]
+========================================================================
+Epilogue args:
+Date: Tue Apr 12 15:48:35 CEST 2016
+Allocated nodes:
+r8i0n13
+r8i0n13
+r8i0n13
+r8i0n13
+r8i0n13
+r8i0n13
+r8i0n13
+r8i0n13
+r8i0n13
+r8i0n13
+r8i0n13
+r8i0n13
+r8i0n13
+r8i0n13
+r8i0n13
+r8i0n13
+r8i0n13
+r8i0n13
+r8i0n13
+r8i0n13
+r8i0n13
+r8i0n13
+r8i0n13
+r8i0n13
+Job ID: 20281418.hpc-p-svcs-10.icts.hpc.kuleuven.be
+User ID: vsc31468
+Group ID: vsc31468
+Job Name: test20160412.pbs
+Session ID: 27600
+Resource List: neednodes=1:ppn=24:haswell,nodes=1:ppn=24:haswell,pmem=1gb,walltime=00:01:00
+Resources Used: cput=00:01:29,energy_used=0,mem=1137532kb,vmem=21003520kb,walltime=00:00:09
+Queue Name: q1h
+Account String: 
+-------------------------------------------------------------------------
+time: 9
+nodes: 1
+procs: 24
+account: default_project
