@@ -478,7 +478,39 @@ public class Processor {
      *
      */
     public void prune(ObjArrayList<short[][]> networkList, final int networkIndex, final int skipSize) {
-        for (int outerIndex = 0; outerIndex < networkList.size(); outerIndex++) {
+        int bound = networkList.size();
+        
+        for (int outerIndex = 0; outerIndex < bound; outerIndex++) {
+            if (outerIndex != networkIndex) {
+                short[][] network2 = networkList.get(outerIndex);
+
+                if (network2 != null) {
+
+                    for (int i = 0; i < skipSize; i++) { //for all in the innerPrune
+                        int innerIndex = networkIndex + i;
+                        short[][] network = networkList.get(innerIndex);
+                        if (network != null) { //else already removed.
+
+                            if (subsumes(network, network2)) {
+                                if (networkList.get(innerIndex) != null) { //recheck
+                                    networkList.remove(outerIndex);
+                                }
+                                break;
+                            } else if (subsumes(network2, network)) {
+                                networkList.remove(innerIndex);
+                                //break;
+                            }
+
+                        }
+                    }
+                }
+            } else {
+                outerIndex += skipSize - 1;
+            }
+        }
+        
+        /* The same but using the updated size */
+        for (int outerIndex = bound; outerIndex < networkList.size(); outerIndex++) {
             if (outerIndex != networkIndex) {
                 short[][] network2 = networkList.get(outerIndex);
 
