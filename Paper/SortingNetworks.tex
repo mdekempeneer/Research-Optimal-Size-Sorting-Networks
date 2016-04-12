@@ -75,13 +75,23 @@ Schatting runtime voor 10 kanalen.\\\\
 		bar width=9pt,
 		nodes near coords,
 		point meta=10^y,
-		ymajorgrids = true
+		ymajorgrids = true, 
+		legend pos = north west
 ]
 \addplot
-    coordinates {(4, 16.93) (5, 25.05) (6, 82.44) (7, 141.48) (8, 6680.31) (9, 15135358.01)};
+    coordinates {(4, 16.93) 			(5, 25.05) 			(6, 82.44) 			(7, 141.48) 		(8, 6680.31) (9, 15135358.01)};
 \addplot
-	coordinates {(9, 1101480000)};
+    coordinates {(4, 17.328771)		(5, 24.478119) 	(6, 65.476245)	(7, 258.468456)	(8, 6663.352099)};
+\addplot
+    coordinates {(4, 19.435501)		(5, 24.276606) 	(6, 70.032632)	(7, 343.578030)	(8, 14755.053198)};
+\addplot
+    coordinates {(4, 20.619104)		(5, 24.064872) 	(6, 67.499158)	(7, 259.514450)	(8, 7785.144087)};
+
+%\addplot
+%	coordinates {(9, 1101480000)};
+\legend{vorige, job20281418, job20281449, job20281461};
 \end{axis}
+
 \end{tikzpicture}
 
 \section{Conclusies}
