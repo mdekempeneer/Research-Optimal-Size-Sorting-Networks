@@ -1042,6 +1042,12 @@ public class Processor {
      * nbChannels
      */
     private int getChangeIndex(short[][] data, short comp) {
+        
+        //for all W( k=0)
+        //gesorteerd => alle 1 'en rechts => geen 0 rechts => een 0 rechts
+        //een 0 op de plaats van de channel voor k = het tegengestelde van het verwachte = goed.
+        
+        //TODO: If one uses sorted channel, also redundant.
         for (int nbOnes = 1; nbOnes < nbChannels; nbOnes++) {
             for (int innerIndex = 0; innerIndex < data[nbOnes].length; innerIndex++) {
                 short output = data[nbOnes][innerIndex];
@@ -1050,6 +1056,8 @@ public class Processor {
                 }
             }
         }
+        
+        //test if this happens else we could just do else { return 1 }
         return -1;
     }
 
