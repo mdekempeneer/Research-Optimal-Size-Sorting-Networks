@@ -95,7 +95,7 @@ public class WorkPool {
 
         //Adjust sizes.
         resultN.fixNulls();
-        resultN.trim();
+        //resultN.trim();
 
         return resultN;
     }
@@ -156,7 +156,7 @@ public class WorkPool {
 
         //Adjust sizes.
         resultN.fixNulls();
-        resultN.trim();
+        //resultN.trim();
 
         return resultN;
     }

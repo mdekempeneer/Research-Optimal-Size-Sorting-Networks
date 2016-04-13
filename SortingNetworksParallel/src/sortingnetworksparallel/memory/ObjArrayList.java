@@ -380,8 +380,8 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
      * @return
      */
     public int add(final ObjectArrayList<K> k) {
+        int r = k.size();
         if (size.get() < a.length) {
-            int r = k.size();
             int index = size.getAndAdd(r);
             for (int i = 0; i < r; i++) {
                 a[index + i] = k.get(i);
