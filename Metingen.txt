@@ -3,4 +3,5 @@ test20160412.pbs : ch=4-9; innerSize=1024; Haswell;	output=20281449.o	CANCELLED
 test20160412.pbs : ch=4-9; innerSize=256; Haswell;	output=20281461.o	ERROR 9 ch, 22 comp :(
 
 13/04/2016
-test20160413.pbs : ch=4-9; innerSize=256; Haswell;	output=20281753.o
+test20160413.pbs        : ch=4-9; innerSize=256; Haswell;	output=20281753.o
+test20160413_noTrim.pbs : ch=4-9; innerSize=256; Haswell;	output=20281806.o NO TRIM() => CANCELLED
