@@ -24,6 +24,7 @@ title('Running time')
 set(gca,'YScale','log')
 legend('Vorige', 'Job20281753 - 256', 'Job20283061 - pruneCut - 256' )
 
+
 M = zeros([1 24]);
 N = zeros([1 24]);
 O = zeros([1 24]);
@@ -48,21 +49,20 @@ legend('1 tov 2', '1 tov 3', '3 tov 5');
 
 % Acc 
 Acc1 = cumsum(Y1/1000);
+Acc2 = cumsum(Y2/1000);
 Acc3 = cumsum(Y3/1000);
-Acc5 = cumsum(Y5/1000);
+Acc5 = cumsum(Y
 figure
-bar(X, [Acc1 ; Acc3 ; Acc5]')
+bar(X, [Acc1 ; Acc2; Acc3]')
 set(gca,'YScale','log')
 title('Acc run time in s')
-legend('Acc 1', 'Acc 3', 'Acc 5');
 
 
-DiffAcc3 = Acc1 - Acc3;
-DiffAcc5 = Acc3 - Acc5;
+DiffAcc1 = Acc1 - Acc2;
+DiffAcc2 = Acc1 - Acc3;
 figure
-bar(X, [DiffAcc3 ; DiffAcc5]')
+bar(X, [DiffAcc1 ; DiffAcc2]')
 set(gca,'YScale','log')
 title('Acc run time difference in s')
-legend('1 tov 3', '3 tov 5');
 
 
