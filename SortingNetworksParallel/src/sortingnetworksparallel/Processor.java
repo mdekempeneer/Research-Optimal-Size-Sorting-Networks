@@ -664,7 +664,7 @@ public class Processor {
             int P2 = network2[nbChannels][(nbOnes - 1) << 2]; //P for network 2.
 
             int revLPos = allOnes ^ network1[nbChannels][(nbOnes << 2) - 2]; //Positions of 0 for L.
-            int revPPos = allOnes ^ network1[nbChannels][(nbOnes - 1) << 2]; //Positions of 0 for P.
+            int revPPos = allOnes ^ network1[nbChannels][(nbOnes - 1) << 2]; //Positions of 1 for P.
 
             //TODO: Can we shorten result = revOnePos & revZeroPos by inline + logic?
             //and combine the two if's in the process.
@@ -689,6 +689,9 @@ public class Processor {
             }
         }
 
+        /* If at certain position only 1 number possible,
+           claim the number and remove from other positions.
+        */
         for (int i = 0; i < posList.length; i++) {
             int value = posList[i];
             if (Integer.bitCount(value) == 1) {
