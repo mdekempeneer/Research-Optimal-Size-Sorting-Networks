@@ -5,6 +5,7 @@
 \usepackage{latexsym} 
 \usepackage{pgfplots} % LaTeX
 \usepackage{capt-of}
+\usepackage[dutch]{babel}
 
 \title{Sorteernetwerken van Optimale Grootte\thanks{Dankwoord}}
 \author{Mathias Dekempeneer, Vincent Derkinderen \\
@@ -28,9 +29,37 @@ Situering + bijdrage.\\
 Sorting Network (high level), Optimal Size (high level), contributies andere papers rond deze twee, enkele getallen rond grootte orde van het probleem, wat er al geprobeerd is (SAT, generate \& prune,...), hoe wij het probleem zullen aanpakken (hoe wij prunen (high level)), gebruikte hardware...
 
 \section{Probleemstelling}
-Definities + basisuitleg + evaluatiecriteria\\ \\
+Een \textit{comparator netwerk} $C^n_k$ bestaat uit $n$ kanalen en $k$ \textit{comparatoren}. Een comparator $\left(i, j\right)$ verbindt twee verschillende kanalen $i$ en $j$ waarbij $0 < i < j \leq n$.
+We nemen $x_l^m$ als waarde op kanaal $m$ net voor comparator $l$.
+De $l^{de}$ comparator  vergelijkt de huidige waarden van beide kanalen en plaatst de kleinste waarde op kanaal $i$ en de grootste waarde op kanaal $j$ zodat $x_{l+1}^i = \min(x_l^i,x_l^j)$ en $x_{l+1}^j = \max(x_l^i,x_l^j)$. De uitvoer van een comparator netwerk verwijst naar de partieel geordende vector $\vec{x} = \{x^1_{k+1} \dots x^n_{k+1} \} $.\\ %TODO voeg toe: "elementen uit een totaal geordende set", invoer
+Een \textit{sorteernetwerk} is een comparator netwerk met als eigenschap dat de uitvoer gesorteerd is ongeacht de invoer.\\
+Een sorteernetwerk $C^n_k$ van optimale grootte houdt in dat er geen ander sorteernetwerk $C^n_l$ bestaat waarbij $l < k$. %TODO grootte = aantal comparatoren
+Om te onderzoeken of een comparator netwerk een sorteernetwerk is, kunnen we gebruik maken van het \textit{nul - \'e\'en principe}.
+
+
+~\\ \textbf{HIER KOMT NOG EEN FOTO VAN DE WERKING VAN EEN SORTEERNETWERK.}
+
+
+
+~\\\\Definities + basisuitleg + evaluatiecriteria\\ \\
 Comparator netwerk, sorteernetwerk\\ \\
-Optimale grootte, nul \'e\'en principe, huidige tabel van resultaten optimale grootte (en diepte), formule voor ondergrens
+Optimale grootte, nul \'e\'en principe, huidige tabel van resultaten optimale grootte (en diepte), formule voor ondergrens\\
+
+\begin{table}[h!]
+
+\begin{tabular}{r|c|c|c|c|c|c|c}
+n & 6 & 7 & 8 & 9 & 10 & 11 & 12\\ 
+\hline 
+bovengrens & 12 & 16 & 19 & 25 & 29 & 35 & 39\\ 
+\hline 
+ondergrens & 12 & 16 & 19 & 25& 29 & 33 & 37\\
+\end{tabular} 
+\caption{Minimaal aantal comparatoren bij \textit{n} kanalen.}
+\end{table}
+
+\begin{equation}
+S(n+1) \geq S(n) + \lceil \log_2(n) \rceil, \forall n \geq 1
+\end{equation}
 
 \section{Voorgestelde oplossing}
 Ontwerp, wat (algoritme)\\
@@ -79,17 +108,11 @@ Schatting runtime voor 10 kanalen.\\\\
 		legend pos = north west
 ]
 \addplot
-    coordinates {(4, 16.93) 			(5, 25.05) 			(6, 82.44) 			(7, 141.48) 		(8, 6680.31) (9, 15135358.01)};
-\addplot
-    coordinates {(4, 17.328771)		(5, 24.478119) 	(6, 65.476245)	(7, 258.468456)	(8, 6663.352099)};
-\addplot
-    coordinates {(4, 19.435501)		(5, 24.276606) 	(6, 70.032632)	(7, 343.578030)	(8, 14755.053198)};
-\addplot
-    coordinates {(4, 20.619104)		(5, 24.064872) 	(6, 67.499158)	(7, 259.514450)	(8, 7785.144087)};
+    coordinates {(4, 16.93) (5, 25.05) (6, 82.44) (7, 141.48) (8, 6680.31) (9, 15135358.01)};
 
-%\addplot
-%	coordinates {(9, 1101480000)};
-\legend{vorige, job20281418, job20281449, job20281461};
+\addplot
+	coordinates {(9, 1101480000)};
+\legend{vorige, \cite{sortingNetworksSize2014}};
 \end{axis}
 
 \end{tikzpicture}
@@ -99,8 +122,7 @@ Conclusie\cite{sortingNetworksSize2014}\\
 Conclusie van wat er bereikt is en hoe er verder aan gewerkt kan worden.\cite{sortingNetworksTheEndGame}
 
 \section*{Erkenning}
-Hier komt de erkenning.
-
+De rekeninfrastructuur en dienstverlening gebruikt in dit werk, werd voorzien door het VSC (Vlaams Supercomputer Centrum), gefinancierd door het FWO en de Vlaamse regering - departement EWI
 
 
 
