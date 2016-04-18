@@ -1,0 +1,48 @@
+This is BibTeX, Version 0.99d (TeX Live 2015)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: SortingNetworks.aux
+The style file: named.bst
+Database file #1: SortingNetworks.bib
+Warning--empty publisher in Knuth3
+You've used 3 entries,
+            2439 wiz_defined-function locations,
+            569 strings with 5141 characters,
+and the built_in function-call counts, 1005 in all, are:
+= -- 93
+> -- 48
+< -- 0
++ -- 16
+- -- 16
+* -- 75
+:= -- 182
+add.period$ -- 9
+call.type$ -- 3
+change.case$ -- 20
+chr.to.int$ -- 3
+cite$ -- 4
+duplicate$ -- 43
+empty$ -- 75
+format.name$ -- 19
+if$ -- 198
+int.to.chr$ -- 1
+int.to.str$ -- 0
+missing$ -- 3
+newline$ -- 18
+num.names$ -- 9
+pop$ -- 23
+preamble$ -- 1
+purify$ -- 23
+quote$ -- 0
+skip$ -- 31
+stack$ -- 0
+substring$ -- 15
+swap$ -- 6
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 20
+warning$ -- 1
+while$ -- 6
+width$ -- 5
+write$ -- 39
+(There was 1 warning)
