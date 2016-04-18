@@ -1,5 +1,12 @@
 \begin{thebibliography}{}
 
+\bibitem[\protect\citeauthoryear{Batcher}{1968}]{sortingNetworksApplications}
+K.~E. Batcher.
+\newblock Sorting networks and their applications.
+\newblock In {\em Proceedings of the April 30--May 2, 1968, Spring Joint
+  Computer Conference}, AFIPS '68 (Spring), pages 307--314, New York, NY, USA,
+  1968. ACM.
+
 \bibitem[\protect\citeauthoryear{Codish \bgroup \em et al.\egroup
   }{2014}]{sortingNetworksSize2014}
 Michael Codish, Luis Cruz-Filipe, Michael Frank, and Peter Schneider-Kamp.
@@ -20,5 +27,15 @@ D.~E. {Knuth}.
 \newblock {\em {The art of computer programming. Vol.3: Sorting and
   searching}}.
 \newblock 1973.
+
+\bibitem[\protect\citeauthoryear{Voorhis}{1972}]{Voorhis1972}
+David~C. Voorhis.
+\newblock {\em Complexity of Computer Computations: Proceedings of a symposium
+  on the Complexity of Computer Computations, held March 20--22, 1972, at the
+  IBM Thomas J. Watson Research Center, Yorktown Heights, New York, and
+  sponsored by the Office of Naval Research, Mathematics Program, IBM World
+  Trade Corporation, and the IBM Research Mathematical Sciences Department},
+  chapter Toward a Lower Bound for Sorting Networks, pages 119--129.
+\newblock Springer US, Boston, MA, 1972.
 
 \end{thebibliography}

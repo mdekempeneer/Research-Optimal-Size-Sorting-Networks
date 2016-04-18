@@ -6,6 +6,8 @@
 \usepackage{pgfplots} % LaTeX
 \usepackage{capt-of}
 \usepackage[dutch]{babel}
+\usepackage{amsthm}
+\newtheorem{lemma}{Lemma}
 
 \title{Sorteernetwerken van Optimale Grootte\thanks{Dankwoord}}
 \author{Mathias Dekempeneer, Vincent Derkinderen \\
@@ -32,9 +34,10 @@ Sorting Network (high level), Optimal Size (high level), contributies andere pap
 Een \textit{comparator netwerk} $C^n_k$ bestaat uit $n$ kanalen en $k$ \textit{comparatoren}. Een comparator $\left(i, j\right)$ verbindt twee verschillende kanalen $i$ en $j$ waarbij $0 < i < j \leq n$.
 We nemen $x_l^m$ als waarde op kanaal $m$ net voor comparator $l$.
 De $l^{de}$ comparator  vergelijkt de huidige waarden van beide kanalen en plaatst de kleinste waarde op kanaal $i$ en de grootste waarde op kanaal $j$ zodat $x_{l+1}^i = \min(x_l^i,x_l^j)$ en $x_{l+1}^j = \max(x_l^i,x_l^j)$. De uitvoer van een comparator netwerk verwijst naar de partieel geordende vector $\vec{x} = \{x^1_{k+1} \dots x^n_{k+1} \} $.\\ %TODO voeg toe: "elementen uit een totaal geordende set", invoer
-Een \textit{sorteernetwerk} is een comparator netwerk met als eigenschap dat de uitvoer gesorteerd is ongeacht de invoer.\\
+Een \textit{sorteernetwerk} is een comparator netwerk met als eigenschap dat de uitvoer gesorteerd is ongeacht de invoer.
 Een sorteernetwerk $C^n_k$ van optimale grootte houdt in dat er geen ander sorteernetwerk $C^n_l$ bestaat waarbij $l < k$. %TODO grootte = aantal comparatoren
-Om te onderzoeken of een comparator netwerk een sorteernetwerk is, kunnen we gebruik maken van het \textit{nul - \'e\'en principe}. Dit principe, zoals beschreven volgens Knuth \cite{Knuth3}, impliceert dat 
+Om te onderzoeken of een comparator netwerk een sorteernetwerk is, kunnen we gebruik maken van het \textit{nul - \'e\'en principe}. Dit principe, zoals beschreven volgens Knuth \cite{Knuth3}, stelt dat wanneer een comparator netwerk met $n$ kanalen alle $2^n$ mogelijke sequenties van $n$ $0$- en $1$-en sorteert, het een sorteernetwerk is.
+De optimale grootte van een sorteernetwerk met $n$ kanalen is reeds bewezen tot en met $n \leq 10$ (Tabel \ref{tabel1} \cite{sortingNetworksSize2014}). Voor $n > 10$ zijn er bovengrenzen gekend door zowel concrete voorbeelden als de systematische constructie van Batcher \cite{sortingNetworksApplications}. De ondergrenzen werden gevonden via bewijzen en lemma \ref{lemma1} \cite{Voorhis1972}.
 
 
 ~\\ \textbf{HIER KOMT NOG EEN FOTO VAN DE WERKING VAN EEN SORTEERNETWERK.}
@@ -54,12 +57,14 @@ bovengrens & 12 & 16 & 19 & 25 & 29 & 35 & 39\\
 \hline 
 ondergrens & 12 & 16 & 19 & 25& 29 & 33 & 37\\
 \end{tabular} 
-\caption{Minimaal aantal comparatoren bij \textit{n} kanalen.}
+\caption{Minimaal aantal comparatoren bij $6 \leq n \leq 12$ kanalen.}
+\label{tabel1}
 \end{table}
 
-\begin{equation}
-S(n+1) \geq S(n) + \lceil \log_2(n) \rceil, \forall n \geq 1
-\end{equation}
+\begin{lemma}
+$S(n+1) \geq S(n) + \lceil \log_2(n) \rceil, \forall n \geq 1$
+\label{lemma1}
+\end{lemma}
 
 \section{Voorgestelde oplossing}
 Ontwerp, wat (algoritme)\\
@@ -122,7 +127,8 @@ Conclusie\cite{sortingNetworksSize2014}\\
 Conclusie van wat er bereikt is en hoe er verder aan gewerkt kan worden.\cite{sortingNetworksTheEndGame}
 
 \section*{Erkenning}
-De rekeninfrastructuur en dienstverlening gebruikt in dit werk, werd voorzien door het VSC (Vlaams Supercomputer Centrum), gefinancierd door het FWO en de Vlaamse regering - departement EWI
+De rekeninfrastructuur en dienstverlening gebruikt in dit werk, werd voorzien door het VSC (Vlaams Supercomputer Centrum), gefinancierd door het FWO en de Vlaamse regering - departement EWI.\\
+Professor Dr. Ir. Tom Schrijvers, Katholieke Universiteit Leuven.
 
 
 
