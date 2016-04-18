@@ -35,9 +35,9 @@ C/C_WV/nbproject/Makefile-variables.mk
 C/C_WV/nbproject/Package-Debug.bash
 C/C_WV/nbproject/private/configurations.xml
 
-id_rsa_vcs
+id_rsa_vsc
 
-id_rsa_vcs.pub
+id_rsa_vsc.pub
 
 *.metadata/*
 .metadata/
