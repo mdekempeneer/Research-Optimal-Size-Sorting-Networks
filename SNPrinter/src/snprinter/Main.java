@@ -83,7 +83,7 @@ public class Main {
         StringBuilder str = new StringBuilder();
         str.append("[");
         for (int i = 0; i < data.length; i++) {
-            String number = String.format("%5s", Integer.toBinaryString(data[i])).replace(' ', '0');
+            String number = String.format("%" + nbChannels +  "s", Integer.toBinaryString(data[i])).replace(' ', '0');
             //String = Integer.toBinaryString(data[i])
             str.append(number).append(",");
         }
