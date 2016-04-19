@@ -106,13 +106,16 @@ public class Processor {
              save(NList, nbComp);
              System.exit(0);
              }*/
- /*//Tests if list only contains non subsumable.
+            
+            /*
+            //Tests if list only contains non subsumable.
              System.out.println("Testing if all pruned");
              if (innerPruneTest(NList)) {
              NList.fixNulls();
              NList.trim();
              System.out.println("[ERROR]: Found unpruned" + NList.size());
-             }*/
+             }
+            */
         } while (NList.size() > 1 && nbComp < upperBound);
 
         workPool.shutDown();
@@ -738,6 +741,16 @@ public class Processor {
             }
         }
 
+        /* DEBUG Check - check if every position is used.*/
+        int checkAll = allOnes;
+        for(int i = 0; i < posList.length; i++) {
+            checkAll &= (~posList[i] & allOnes);
+        }
+        if(checkAll != 0) {
+            return false;
+            //System.out.println(" found one " + Integer.toBinaryString(checkAll));
+        }
+        
         /* Convert posList bit structure to bytes for permutations. */
         byte[][] Ps = new byte[nbChannels][];
 
