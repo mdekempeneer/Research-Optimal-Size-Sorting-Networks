@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.29)  18 APR 2016 22:53
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.29)  19 APR 2016 14:19
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -679,12 +679,27 @@ Overfull \hbox (6.99098pt too wide) in paragraph at lines 123--124
 [][] 
  []
 
+
+Underfull \hbox (badness 10000) in paragraph at lines 125--126
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 125--126
+
+ []
+
+
+Overfull \hbox (22.96344pt too wide) in paragraph at lines 147--148
+[][] 
+ []
+
 (./SortingNetworks.bbl) [2] (./SortingNetworks.aux) ) 
 Here is how much of TeX's memory you used:
- 21398 strings out of 493089
- 552724 string characters out of 6134842
- 708314 words of memory out of 5000000
- 24494 multiletter control sequences out of 15000+600000
+ 21417 strings out of 493089
+ 553075 string characters out of 6134842
+ 709314 words of memory out of 5000000
+ 24513 multiletter control sequences out of 15000+600000
  23006 words of font info for 55 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  62i,17n,100p,731b,2115s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -698,7 +713,7 @@ ublic/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/pu
 blic/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/
 times/utmb8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/times/utmr
 8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on SortingNetworks.pdf (2 pages, 115822 bytes).
+Output written on SortingNetworks.pdf (2 pages, 117618 bytes).
 PDF statistics:
  51 PDF objects out of 1000 (max. 8388607)
  37 compressed objects within 1 object stream

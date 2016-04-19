@@ -122,6 +122,30 @@ Schatting runtime voor 10 kanalen.\\\\
 
 \end{tikzpicture}
 
+Dit is tekst er tussen\\\\
+
+\begin{tikzpicture}
+%\fill [gray!15] (1.5,1.5) -- (2.5,1.5) -- (2.5,2.5) -- (1.5,2.5) -- cycle;
+%\foreach \a in {1,..,9}
+\def\x{3}
+\foreach \a in {1/\x, 2/\x, 3/\x, 4/\x, 5/\x, 6/\x, 7/\x, 8/\x, 9/\x}
+  \draw[thick] (0,\a) -- ++(27/\x,0);
+\foreach \b in {{1/\x,1/\x}, {1/\x, 2/\x}, {1/\x, 3/\x}, {1/\x, 4/\x}, {1/\x,5/\x}, {1/\x,6/\x}, {2/\x, 2/\x}, {2/\x, 4/\x}, {2/\x,5/\x}, {2/\x,7/\x}, {3/\x, 3/\x}, {3/\x, 8/\x}, {4/\x,1/\x}, {4/\x,9/\x}, {5/\x,8/\x}, {5/\x,9/\x}, {5/\x,1/\x}, {5/\x,3/\x}, {6/\x,3/\x}, {6/\x,5/\x}, {7/\x,1/\x}, {7/\x,3/\x}, {7/\x, 6/\x}, {7/\x,8/\x}, {8/\x,4/\x}, {8/\x,8/\x}, {9/\x,2/\x}, {9/\x,7/\x}, {10/\x,7/\x}, {10/\x,9/\x}}
+  \filldraw (\b) circle (1.5 pt);
+\draw[thick] (1/\x,1/\x) -- (1/\x,2/\x);
+\draw[thick] (1/\x,3/\x) -- (1/\x,4/\x);
+\draw[thick] (1/\x,5/\x) -- (1/\x,6/\x);
+\draw[thick] (2/\x,2/\x) -- (2/\x,4/\x);
+\draw[thick] (2/\x,5/\x) -- (2/\x,7/\x);
+\draw[thick] (3/\x,3/\x) -- (3/\x,8/\x);
+\draw[thick] (4/\x,1/\x) -- (4/\x,9/\x);
+\draw[thick] (5/\x,8/\x) -- (5/\x,9/\x);
+\draw[thick] (5/\x,1/\x) -- (5/\x,3/\x);
+\draw[thick] (6/\x,3/\x) -- (6/\x,5/\x);
+\draw[thick] (7/\x,1/\x) -- (7/\x,3/\x);
+\draw[thick] (7/\x,6/\x) -- (7/\x,8/\x);
+\end{tikzpicture}
+
 \section{Conclusies}
 Conclusie\cite{sortingNetworksSize2014}\\
 Conclusie van wat er bereikt is en hoe er verder aan gewerkt kan worden.\cite{sortingNetworksTheEndGame}
