@@ -5,6 +5,9 @@
 \usepackage{latexsym} 
 \usepackage{pgfplots} % LaTeX
 \usepackage{capt-of}
+\usepackage[dutch]{babel}
+\usepackage{amsthm}
+\newtheorem{lemma}{Lemma}
 
 \title{Sorteernetwerken van Optimale Grootte\thanks{Dankwoord}}
 \author{Mathias Dekempeneer, Vincent Derkinderen \\
@@ -28,9 +31,40 @@ Situering + bijdrage.\\
 Sorting Network (high level), Optimal Size (high level), contributies andere papers rond deze twee, enkele getallen rond grootte orde van het probleem, wat er al geprobeerd is (SAT, generate \& prune,...), hoe wij het probleem zullen aanpakken (hoe wij prunen (high level)), gebruikte hardware...
 
 \section{Probleemstelling}
-Definities + basisuitleg + evaluatiecriteria\\ \\
+Een \textit{comparator netwerk} $C^n_k$ bestaat uit $n$ kanalen en $k$ \textit{comparatoren}. Een comparator $\left(i, j\right)$ verbindt twee verschillende kanalen $i$ en $j$ waarbij $0 < i < j \leq n$.
+We nemen $x_l^m$ als waarde op kanaal $m$ net voor comparator $l$.
+De $l^{de}$ comparator  vergelijkt de huidige waarden van beide kanalen en plaatst de kleinste waarde op kanaal $i$ en de grootste waarde op kanaal $j$ zodat $x_{l+1}^i = \min(x_l^i,x_l^j)$ en $x_{l+1}^j = \max(x_l^i,x_l^j)$. De uitvoer van een comparator netwerk verwijst naar de partieel geordende vector $\vec{x} = \{x^1_{k+1} \dots x^n_{k+1} \} $.\\ %TODO voeg toe: "elementen uit een totaal geordende set", invoer
+Een \textit{sorteernetwerk} is een comparator netwerk met als eigenschap dat de uitvoer gesorteerd is ongeacht de invoer.
+Een sorteernetwerk $C^n_k$ van optimale grootte houdt in dat er geen ander sorteernetwerk $C^n_l$ bestaat waarbij $l < k$. %TODO grootte = aantal comparatoren
+Om te onderzoeken of een comparator netwerk een sorteernetwerk is, kunnen we gebruik maken van het \textit{nul - \'e\'en principe}. Dit principe, zoals beschreven volgens Knuth \cite{Knuth3}, stelt dat wanneer een comparator netwerk met $n$ kanalen alle $2^n$ mogelijke sequenties van $n$ $0$- en $1$-en sorteert, het een sorteernetwerk is.
+De optimale grootte van een sorteernetwerk met $n$ kanalen is reeds bewezen tot en met $n \leq 10$ (Tabel \ref{tabel1} \cite{sortingNetworksSize2014}). Voor $n > 10$ zijn er bovengrenzen gekend door zowel concrete voorbeelden als de systematische constructie van Batcher \cite{sortingNetworksApplications}. De ondergrenzen werden gevonden via bewijzen en lemma \ref{lemma1} \cite{Voorhis1972}.
+
+
+~\\ \textbf{HIER KOMT NOG EEN FOTO VAN DE WERKING VAN EEN SORTEERNETWERK.}
+
+
+
+~\\\\Definities + basisuitleg + evaluatiecriteria\\ \\
 Comparator netwerk, sorteernetwerk\\ \\
-Optimale grootte, nul \'e\'en principe, huidige tabel van resultaten optimale grootte (en diepte), formule voor ondergrens
+Optimale grootte, nul \'e\'en principe, huidige tabel van resultaten optimale grootte (en diepte), formule voor ondergrens\\
+
+\begin{table}[h!]
+
+\begin{tabular}{r|c|c|c|c|c|c|c}
+n & 6 & 7 & 8 & 9 & 10 & 11 & 12\\ 
+\hline 
+bovengrens & 12 & 16 & 19 & 25 & 29 & 35 & 39\\ 
+\hline 
+ondergrens & 12 & 16 & 19 & 25& 29 & 33 & 37\\
+\end{tabular} 
+\caption{Minimaal aantal comparatoren bij $6 \leq n \leq 12$ kanalen.}
+\label{tabel1}
+\end{table}
+
+\begin{lemma}
+$S(n+1) \geq S(n) + \lceil \log_2(n) \rceil, \forall n \geq 1$
+\label{lemma1}
+\end{lemma}
 
 \section{Voorgestelde oplossing}
 Ontwerp, wat (algoritme)\\
@@ -63,7 +97,8 @@ Tabel geven van hoeveel beslissingen er op welke plaats genomen worden.\\ \\
 Vergelijken runtime voor 9 kanalen met Codish.\\
 Schatting runtime voor 10 kanalen.\\\\
 
-
+\begin{figure}[!h]
+\centering
 \begin{tikzpicture} 
 	\begin{axis}[
 		ylabel = Tijd (miliseconde),
@@ -79,28 +114,62 @@ Schatting runtime voor 10 kanalen.\\\\
 		legend pos = north west
 ]
 \addplot
-    coordinates {(4, 16.93) 			(5, 25.05) 			(6, 82.44) 			(7, 141.48) 		(8, 6680.31) (9, 15135358.01)};
-\addplot
-    coordinates {(4, 17.328771)		(5, 24.478119) 	(6, 65.476245)	(7, 258.468456)	(8, 6663.352099)};
-\addplot
-    coordinates {(4, 19.435501)		(5, 24.276606) 	(6, 70.032632)	(7, 343.578030)	(8, 14755.053198)};
-\addplot
-    coordinates {(4, 20.619104)		(5, 24.064872) 	(6, 67.499158)	(7, 259.514450)	(8, 7785.144087)};
+    coordinates {(4, 16.93) (5, 25.05) (6, 82.44) (7, 141.48) (8, 6680.31) (9, 15135358.01)};
 
-%\addplot
-%	coordinates {(9, 1101480000)};
-\legend{vorige, job20281418, job20281449, job20281461};
+\addplot
+	coordinates {(9, 1101480000)};
+\legend{vorige, \cite{sortingNetworksSize2014}};
 \end{axis}
-
 \end{tikzpicture}
+\caption{Resultaten}
+\end{figure}
+
+\begin{figure}[!h]
+\centering
+\begin{tikzpicture}
+%\fill [gray!15] (1.5,1.5) -- (2.5,1.5) -- (2.5,2.5) -- (1.5,2.5) -- cycle;
+%\foreach \a in {1,..,9}
+\def\x{3.5}
+\foreach \a in {1/\x, 2/\x, 3/\x, 4/\x, 5/\x, 6/\x, 7/\x, 8/\x, 9/\x}
+  \draw[thick] (0,\a) -- ++(18/\x,0);
+\foreach \b in {{1/\x,1/\x},{1/\x,2/\x},{1/\x,3/\x},{1/\x,4/\x},{1/\x,5/\x},{1/\x,6/\x},{2/\x,2/\x},{2/\x,4/\x},{2/\x,5/\x},{2/\x,7/\x},{3/\x,3/\x},{3/\x,8/\x},{4/\x,1/\x},{4/\x,9/\x},{5/\x,8/\x},{5/\x,9/\x},{5/\x,1/\x},{5/\x,3/\x},{6/\x,3/\x},{6/\x,5/\x},{7/\x,1/\x},{7/\x,3/\x},{7/\x,6/\x},{7/\x,8/\x},{8/\x,4/\x},{8/\x,8/\x},{9/\x,2/\x},{9/\x,7/\x},{10/\x,7/\x},{10/\x,9/\x},{11/\x,8/\x},{11/\x,9/\x},{11/\x,4/\x},{11/\x,7/\x},{12/\x,2/\x},{12/\x,6/\x}, {13/\x,2/\x},{13/\x,3/\x},{13/\x,5/\x},{13/\x,6/\x},{14/\x,4/\x},{14/\x,5/\x},{15/\x,3/\x},{15/\x,4/\x},{15/\x,5/\x},{15/\x,6/\x},{16/\x,6/\x},{16/\x,7/\x},{17/\x,7/\x},{17/\x,8/\x}}
+  \filldraw (\b) circle (1.5 pt);
+\draw[thick] (1/\x,1/\x) -- (1/\x,2/\x);
+\draw[thick] (1/\x,3/\x) -- (1/\x,4/\x);
+\draw[thick] (1/\x,5/\x) -- (1/\x,6/\x);
+\draw[thick] (2/\x,2/\x) -- (2/\x,4/\x);
+\draw[thick] (2/\x,5/\x) -- (2/\x,7/\x);
+\draw[thick] (3/\x,3/\x) -- (3/\x,8/\x);
+\draw[thick] (4/\x,1/\x) -- (4/\x,9/\x);
+\draw[thick] (5/\x,8/\x) -- (5/\x,9/\x);
+\draw[thick] (5/\x,1/\x) -- (5/\x,3/\x);
+\draw[thick] (6/\x,3/\x) -- (6/\x,5/\x);
+\draw[thick] (7/\x,1/\x) -- (7/\x,3/\x);
+\draw[thick] (7/\x,6/\x) -- (7/\x,8/\x);
+\draw[thick] (8/\x,4/\x) -- (8/\x,8/\x);
+\draw[thick] (9/\x,2/\x) -- (9/\x,7/\x);
+\draw[thick] (10/\x,7/\x) -- (10/\x,9/\x);
+\draw[thick] (11/\x,8/\x) -- (11/\x,9/\x);
+\draw[thick] (11/\x,4/\x) -- (11/\x,7/\x);
+\draw[thick] (12/\x,2/\x) -- (12/\x,6/\x);
+\draw[thick] (13/\x,2/\x) -- (13/\x,3/\x);
+\draw[thick] (13/\x,5/\x) -- (13/\x,6/\x);
+\draw[thick] (14/\x,4/\x) -- (14/\x,5/\x);
+\draw[thick] (15/\x,3/\x) -- (15/\x,4/\x);
+\draw[thick] (15/\x,5/\x) -- (15/\x,6/\x);
+\draw[thick] (16/\x,6/\x) -- (16/\x,7/\x);
+\draw[thick] (17/\x,7/\x) -- (17/\x,8/\x);
+\end{tikzpicture}
+\caption{Sorteernetwerk 9 kanalen, 25 comparatoren}
+\end{figure}
 
 \section{Conclusies}
 Conclusie\cite{sortingNetworksSize2014}\\
 Conclusie van wat er bereikt is en hoe er verder aan gewerkt kan worden.\cite{sortingNetworksTheEndGame}
 
 \section*{Erkenning}
-Hier komt de erkenning.
-
+De rekeninfrastructuur en dienstverlening gebruikt in dit werk, werd voorzien door het VSC (Vlaams Supercomputer Centrum), gefinancierd door het FWO en de Vlaamse regering - departement EWI.\\
+Professor Dr. Ir. Tom Schrijvers, Katholieke Universiteit Leuven.
 
 
 
