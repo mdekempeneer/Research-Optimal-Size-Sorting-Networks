@@ -97,7 +97,8 @@ Tabel geven van hoeveel beslissingen er op welke plaats genomen worden.\\ \\
 Vergelijken runtime voor 9 kanalen met Codish.\\
 Schatting runtime voor 10 kanalen.\\\\
 
-
+\begin{figure}[!h]
+\centering
 \begin{tikzpicture} 
 	\begin{axis}[
 		ylabel = Tijd (miliseconde),
@@ -119,15 +120,16 @@ Schatting runtime voor 10 kanalen.\\\\
 	coordinates {(9, 1101480000)};
 \legend{vorige, \cite{sortingNetworksSize2014}};
 \end{axis}
-
 \end{tikzpicture}
+\caption{Resultaten}
+\end{figure}
 
-Dit is tekst er tussen\\\\
-
+\begin{figure}[!h]
+\centering
 \begin{tikzpicture}
 %\fill [gray!15] (1.5,1.5) -- (2.5,1.5) -- (2.5,2.5) -- (1.5,2.5) -- cycle;
 %\foreach \a in {1,..,9}
-\def\x{3}
+\def\x{3.5}
 \foreach \a in {1/\x, 2/\x, 3/\x, 4/\x, 5/\x, 6/\x, 7/\x, 8/\x, 9/\x}
   \draw[thick] (0,\a) -- ++(18/\x,0);
 \foreach \b in {{1/\x,1/\x},{1/\x,2/\x},{1/\x,3/\x},{1/\x,4/\x},{1/\x,5/\x},{1/\x,6/\x},{2/\x,2/\x},{2/\x,4/\x},{2/\x,5/\x},{2/\x,7/\x},{3/\x,3/\x},{3/\x,8/\x},{4/\x,1/\x},{4/\x,9/\x},{5/\x,8/\x},{5/\x,9/\x},{5/\x,1/\x},{5/\x,3/\x},{6/\x,3/\x},{6/\x,5/\x},{7/\x,1/\x},{7/\x,3/\x},{7/\x,6/\x},{7/\x,8/\x},{8/\x,4/\x},{8/\x,8/\x},{9/\x,2/\x},{9/\x,7/\x},{10/\x,7/\x},{10/\x,9/\x},{11/\x,8/\x},{11/\x,9/\x},{11/\x,4/\x},{11/\x,7/\x},{12/\x,2/\x},{12/\x,6/\x}, {13/\x,2/\x},{13/\x,3/\x},{13/\x,5/\x},{13/\x,6/\x},{14/\x,4/\x},{14/\x,5/\x},{15/\x,3/\x},{15/\x,4/\x},{15/\x,5/\x},{15/\x,6/\x},{16/\x,6/\x},{16/\x,7/\x},{17/\x,7/\x},{17/\x,8/\x}}
@@ -158,6 +160,8 @@ Dit is tekst er tussen\\\\
 \draw[thick] (16/\x,6/\x) -- (16/\x,7/\x);
 \draw[thick] (17/\x,7/\x) -- (17/\x,8/\x);
 \end{tikzpicture}
+\caption{Sorteernetwerk 9 kanalen, 25 comparatoren}
+\end{figure}
 
 \section{Conclusies}
 Conclusie\cite{sortingNetworksSize2014}\\
