@@ -1,0 +1,17 @@
+﻿Revert "gitignore"
+
+This reverts commit bc668a925949dface3682ba5ffaa1cc693b12def, reversing
+changes made to f38cb8604cf4f88dd9dc911ceeffdc8fa523d369.
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# Your branch is ahead of 'originV/master' by 2 commits.
+#   (use "git push" to publish your local commits)
+#
+# Changes to be committed:
+#	modified:   .gitignore
+#	modified:   SortingNetworksPaper/nbproject/project.properties
+#	modified:   SortingNetworksParallel/nbproject/project.properties
+#
+
