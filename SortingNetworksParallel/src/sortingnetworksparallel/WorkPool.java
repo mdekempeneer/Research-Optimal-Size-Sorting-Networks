@@ -8,6 +8,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import sortingnetworksparallel.memory.Counter;
 import sortingnetworksparallel.memory.ObjArrayList;
 
 /**
@@ -68,13 +69,20 @@ public class WorkPool {
 
             //Give task to thread
             executor.execute(new Runnable() {
+
+                Counter counter = new Counter();
+
                 @Override
                 public void run() {
-                    ObjectArrayList<short[][]> prunedList = processor.generate(oldL, startIndexT, nb, nbComp);
-                    processor.innerPrune(prunedList);
+                    ObjectArrayList<short[][]> prunedList = processor.generate(oldL, startIndexT, nb, nbComp, counter);
+                    processor.innerPrune(prunedList, counter);
 
                     int networkIndex = resultN.add(prunedList);
-                    processor.prune(resultN, networkIndex, prunedList.size());
+                    processor.prune(resultN, networkIndex, prunedList.size(), counter);
+
+                    //Processor.initCounter.addCounter(counter);
+//                    Processor.countList.add(counter);
+                    Processor.result.addCounter(counter);
 
                     latch.countDown();
                     doneIndex.getAndAdd(nb);
@@ -128,13 +136,19 @@ public class WorkPool {
             //Give task to thread
             executor.execute(new Runnable() {
 
+                Counter counter = new Counter();
+
                 @Override
                 public void run() {
-                    ObjectArrayList<short[][]> prunedList = processor.generate(N, startIndex, nb, nbComp);
-                    processor.innerPrune(prunedList);
- 
+                    ObjectArrayList<short[][]> prunedList = processor.generate(N, startIndex, nb, nbComp, counter);
+                    processor.innerPrune(prunedList, counter);
+
                     int networkIndex = resultN.add(prunedList);
-                    processor.prune(resultN, networkIndex, prunedList.size());
+                    processor.prune(resultN, networkIndex, prunedList.size(), counter);
+
+                    //Processor.initCounter.addCounter(counter);
+//                    Processor.countList.add(counter);
+                    Processor.result.addCounter(counter);
 
                     latch.countDown();
                     doneIndex.getAndAdd(nb);
