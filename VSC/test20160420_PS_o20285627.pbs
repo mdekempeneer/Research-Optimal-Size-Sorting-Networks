@@ -641,3 +641,146 @@ lLengthCounter_abs 36057529802
 networkPermCounter_abs 6035786714
 emptyPosCounter_abs 2757081980
 
+Cycle complete with 15 comps and size 607319 took 2828227 ms
+UniqueCounter_abs 10017982
+redundantCounter_abs 10432831
+kLengthCounter_abs 2303065144281
+pLengthCounter_abs 18578442688
+lLengthCounter_abs 18533843762
+networkPermCounter_abs 3925353966
+emptyPosCounter_abs 1891010981
+
+Cycle complete with 16 comps and size 274304 took 757034 ms
+UniqueCounter_abs 6352362
+redundantCounter_abs 7924918
+kLengthCounter_abs 633400703731
+pLengthCounter_abs 4213773583
+lLengthCounter_abs 4390083919
+networkPermCounter_abs 1271260390
+emptyPosCounter_abs 642463856
+
+Cycle complete with 17 comps and size 94117 took 120817 ms
+UniqueCounter_abs 2717910
+redundantCounter_abs 4060450
+kLengthCounter_abs 97944922272
+pLengthCounter_abs 521981960
+lLengthCounter_abs 587489988
+networkPermCounter_abs 257042628
+emptyPosCounter_abs 135478740
+
+Cycle complete with 18 comps and size 25789 took 12943 ms
+UniqueCounter_abs 876489
+redundantCounter_abs 1566990
+kLengthCounter_abs 9436404999
+pLengthCounter_abs 45798471
+lLengthCounter_abs 51775714
+networkPermCounter_abs 40263545
+emptyPosCounter_abs 21813933
+
+Cycle complete with 19 comps and size 5697 took 826 ms
+UniqueCounter_abs 224487
+redundantCounter_abs 479055
+kLengthCounter_abs 647531103
+pLengthCounter_abs 3097448
+lLengthCounter_abs 3423901
+networkPermCounter_abs 4782767
+emptyPosCounter_abs 2528122
+
+Cycle complete with 20 comps and size 1106 took 60 ms
+UniqueCounter_abs 46584
+redundantCounter_abs 117047
+kLengthCounter_abs 39976765
+pLengthCounter_abs 160469
+lLengthCounter_abs 175082
+networkPermCounter_abs 456328
+emptyPosCounter_abs 236459
+
+Cycle complete with 21 comps and size 250 took 14 ms
+UniqueCounter_abs 8067
+redundantCounter_abs 25508
+kLengthCounter_abs 1488289
+pLengthCounter_abs 3498
+lLengthCounter_abs 3553
+networkPermCounter_abs 23280
+emptyPosCounter_abs 11069
+
+Cycle complete with 22 comps and size 73 took 3 ms
+UniqueCounter_abs 1563
+redundantCounter_abs 6483
+kLengthCounter_abs 68674
+pLengthCounter_abs 24
+lLengthCounter_abs 24
+networkPermCounter_abs 1182
+emptyPosCounter_abs 416
+
+Cycle complete with 23 comps and size 27 took 1 ms
+UniqueCounter_abs 455
+redundantCounter_abs 2007
+kLengthCounter_abs 4320
+pLengthCounter_abs 0
+lLengthCounter_abs 0
+networkPermCounter_abs 46
+emptyPosCounter_abs 10
+
+Cycle complete with 24 comps and size 8 took 1 ms
+UniqueCounter_abs 161
+redundantCounter_abs 781
+kLengthCounter_abs 214
+pLengthCounter_abs 0
+lLengthCounter_abs 0
+networkPermCounter_abs 0
+emptyPosCounter_abs 0
+
+Cycle complete with 25 comps and size 1 took 0 ms
+UniqueCounter_abs 45
+redundantCounter_abs 241
+kLengthCounter_abs 0
+pLengthCounter_abs 0
+lLengthCounter_abs 0
+networkPermCounter_abs 0
+emptyPosCounter_abs 0
+
+Took 13103315333534 ns
+[3, 12, 48, 192, 5, 40, 272, 80, 68, 72, 130, 160, 258, 10, 288, 17, 20, 6, 40, 24, 12, 320, 96, 48, 384]
+========================================================================
+Epilogue args:
+Date: Wed Apr 20 17:35:10 CEST 2016
+Allocated nodes:
+r5i2n1
+r5i2n1
+r5i2n1
+r5i2n1
+r5i2n1
+r5i2n1
+r5i2n1
+r5i2n1
+r5i2n1
+r5i2n1
+r5i2n1
+r5i2n1
+r5i2n1
+r5i2n1
+r5i2n1
+r5i2n1
+r5i2n1
+r5i2n1
+r5i2n1
+r5i2n1
+r5i2n1
+r5i2n1
+r5i2n1
+r5i2n1
+Job ID: 20285627.hpc-p-svcs-10.icts.hpc.kuleuven.be
+User ID: vsc31468
+Group ID: vsc31468
+Job Name: test20160420_PS.pbs
+Session ID: 9563
+Resource List: neednodes=1:ppn=24:haswell,nodes=1:ppn=24:haswell,pmem=2500mb,walltime=08:00:00
+Resources Used: cput=74:01:01,energy_used=0,mem=3649408kb,vmem=21003520kb,walltime=03:38:33
+Queue Name: q24h
+Account String: 
+-------------------------------------------------------------------------
+time: 13113
+nodes: 1
+procs: 24
+account: default_project
