@@ -8,3 +8,6 @@ test20160413_noTrim.pbs : ch=4-9; innerSize=256; Haswell;	output=20281806.o NO T
 
 15/04/2016
 test20160415.pbs	: ch=4-9; innerSize=256; Haswell;	output=20283061.o
+
+20/04/2016
+test20160420_PS.pbs	: ch=4-9; innerSize=256; Haswell;	output=20285627.o (master debug check=checkAll + meting counters)
