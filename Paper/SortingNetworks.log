@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.29)  19 APR 2016 18:53
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.29)  20 APR 2016 16:49
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -717,10 +717,10 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 ] (./SortingNetworks.aux) ) 
 Here is how much of TeX's memory you used:
- 22561 strings out of 493089
- 588983 string characters out of 6134842
+ 22560 strings out of 493089
+ 588967 string characters out of 6134842
  728030 words of memory out of 5000000
- 25644 multiletter control sequences out of 15000+600000
+ 25643 multiletter control sequences out of 15000+600000
  19384 words of font info for 45 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  62i,19n,100p,731b,2201s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -735,7 +735,7 @@ b></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb>
 </usr/local/texlive/2015/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/loca
 l/texlive/2015/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/
 2015/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on SortingNetworks.pdf (3 pages, 145720 bytes).
+Output written on SortingNetworks.pdf (3 pages, 145706 bytes).
 PDF statistics:
  61 PDF objects out of 1000 (max. 8388607)
  43 compressed objects within 1 object stream
