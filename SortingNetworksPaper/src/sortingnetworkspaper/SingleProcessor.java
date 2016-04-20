@@ -1,6 +1,5 @@
 package sortingnetworkspaper;
 
-import it.unimi.dsi.fastutil.objects.ObjectBigArrayBigList;
 import it.unimi.dsi.fastutil.objects.ObjectListIterator;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -423,12 +422,12 @@ public class SingleProcessor {
 
                         list.add(data);
                     }/* else {
-                         redundantCounter++;
-                         }*/
+                     redundantCounter++;
+                     }*/
 
                 }/* else {
-                     uniqueCounter++;
-                     }*/
+                 uniqueCounter++;
+                 }*/
 
             }
         }
@@ -747,6 +746,20 @@ public class SingleProcessor {
             }
         }
 
+        for (int i = 0; i < posList.length; i++) {
+            int value = posList[i];
+            if (Integer.bitCount(value) == 1) {
+                for (int j = 0; j < posList.length; j++) {
+                    if (((value & posList[j]) != 0) && (i != j)) {
+                        posList[j] -= value;
+                        if (posList[j] == 0) {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+
         /* Convert posList bit structure to bytes for permutations. */
         byte[][] Ps = new byte[nbChannels][];
 
@@ -758,7 +771,7 @@ public class SingleProcessor {
 
             //Retrieve possible numbers from the bit form (currP).
             for (byte permIndex = 0; permIndex < nbChannels; permIndex++) {
-                if (((1 << permIndex) & currP) != 0) {// mask & posList[i] == 1 op die positie.
+                if ((1 << permIndex & currP) != 0) {// mask & posList[i] == 1 op die positie.
                     tempP[countLengthPos++] = permIndex;
                 }
             }
@@ -768,7 +781,8 @@ public class SingleProcessor {
         }
 
         //Check all permutations of the given positions.
-        return checkAllRelevantPermutations(network1, network2, Ps, 0, new byte[nbChannels], 0);
+        return checkAllRelevantPermutations(network1, network2, Ps,
+                0, new byte[nbChannels], 0);
 
         //return testPossiblePermutations(network1, network2, Ps);
     }
@@ -1176,14 +1190,18 @@ public class SingleProcessor {
                 oos.writeInt(nextStartIndex);
                 oos.writeObject(newList);
                 oos.writeShort(nbComps);
+
             } catch (IOException ex) {
-                Logger.getLogger(SingleProcessor.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(SingleProcessor.class
+                        .getName()).log(Level.SEVERE, null, ex);
             } finally {
                 if (oos != null) {
                     try {
                         oos.close();
+
                     } catch (IOException ex) {
-                        Logger.getLogger(SingleProcessor.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(SingleProcessor.class
+                                .getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
