@@ -632,3 +632,12 @@ lLengthCounter_abs 29964610822
 networkPermCounter_abs 4131737148
 emptyPosCounter_abs 1776805082
 
+Cycle complete with 14 comps and size 914384 took 4858853 ms
+UniqueCounter_abs 9750102
+redundantCounter_abs 8467049
+kLengthCounter_abs 3910795044006
+pLengthCounter_abs 36222127450
+lLengthCounter_abs 36057529802
+networkPermCounter_abs 6035786714
+emptyPosCounter_abs 2757081980
+
