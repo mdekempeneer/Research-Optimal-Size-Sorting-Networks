@@ -2,6 +2,7 @@ package sortingnetworksparallel;
 
 import it.unimi.dsi.fastutil.objects.AbstractObjectList;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectBigArrayBigList;
 import it.unimi.dsi.fastutil.objects.ObjectListIterator;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -9,7 +10,6 @@ import java.io.ObjectOutputStream;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import sortingnetworksparallel.memory.Counter;
 import sortingnetworksparallel.memory.ObjArrayList;
 
 /**
@@ -28,11 +28,14 @@ public class Processor {
     private final byte[] allMinusOneList;
 
     //Statistics
-    //public static AtomicCounter initCounter = new AtomicCounter();
-    //public static ArrayList<Counter> countList = new ArrayList();
-    public static Counter result;
-
-    //private AtomicLong permCount = new AtomicLong();
+//    private static long uniqueCounter = 0;
+//    private static long redundantCounter = 0;
+//    private static long kLengthCounter = 0;
+//    private static long pLengthCounter = 0;
+//    private static long lLengthCounter = 0;
+//    private static long emptyPosCounter = 0;
+//    private static long networkPermCounter = 0;
+//    private long permCount = 0;
 
     /* IO */
     public boolean shouldSave;
@@ -117,24 +120,10 @@ public class Processor {
 
         workPool.shutDown();
 
-//        Counter result = new Counter();
-//
-//        for (Counter c : this.countList) {
-//            result.addCounter(c);
-//        }
-        System.out.println("UniqueCounter_abs" + result.uniqueCounter_abs);
-        System.out.println("redundantCounter_abs " + result.redundantCounter_abs);
-        System.out.println("kLengthCounter_abs " + result.kLengthCounter_abs);
-        System.out.println("pLengthCounter_abs " + result.pLengthCounter_abs);
-        System.out.println("lLengthCounter_abs " + result.lLengthCounter_abs);
-        System.out.println("networkPermCounter_abs " + result.networkPermCounter_abs);
-        System.out.println("emptyPosCounter_abs " + result.emptyPosCounter_abs);
-        System.out.println("");
-        result.clear();
-        // System.out.println("#Unique " + uniqueCounter + "; #Redundant " + redundantCounter);
+        //System.out.println("#Unique " + uniqueCounter + "; #Redundant " + redundantCounter);
         //System.out.println("#kLengthCounter " + kLengthCounter + "; #pLengthCounter " + pLengthCounter + "; #lLengthCounter " + lLengthCounter);
-        // System.out.println("#emptyPosCounter " + emptyPosCounter);
-        // System.out.println("#networkPermCounter " + networkPermCounter);
+        //System.out.println("#emptyPosCounter " + emptyPosCounter);
+        //System.out.println("#networkPermCounter " + networkPermCounter);
 
         /* Return result */
         if (NList.size() >= 1) {
@@ -151,12 +140,7 @@ public class Processor {
     public short[] process() {
         /* Initialize inputs */
         ObjArrayList<short[][]> NList = firstTimeGenerate(getOriginalInputs(upperBound));
-        //Counter tCounter = new Counter();
-        result = new Counter();
-        //innerPrune(NList, tCounter);
-        innerPrune(NList, result);
-//        countList.add(tCounter);
-
+        innerPrune(NList);
         NList.fixNulls();
         NList.trim();
         short nbComp = 1;
@@ -169,29 +153,11 @@ public class Processor {
 
             System.out.println("Cycle complete with " + nbComp + " comps and size " + NList.size() + " took " + took + " ms");
 
-//            Counter result = countList.get(0);
-//
-//            for (int i = 1; i < countList.size(); i++) {
-//                result.addCounter(countList.get(i));
-//            }
-            System.out.println("UniqueCounter_abs " + result.uniqueCounter_abs);
-            System.out.println("redundantCounter_abs " + result.redundantCounter_abs);
-            System.out.println("kLengthCounter_abs " + result.kLengthCounter_abs);
-            System.out.println("pLengthCounter_abs " + result.pLengthCounter_abs);
-            System.out.println("lLengthCounter_abs " + result.lLengthCounter_abs);
-            System.out.println("networkPermCounter_abs " + result.networkPermCounter_abs);
-            System.out.println("emptyPosCounter_abs " + result.emptyPosCounter_abs);
-            System.out.println("");
-
-            result.clear();
-//            countList.clear();
-
             /*if (shouldSave) {
              System.out.println("Saving Data");
              save(NList, nbComp);
              }*/
- /*
-            //Tests if list only contains non subsumable.
+ /*//Tests if list only contains non subsumable.
              System.out.println("Testing if all pruned");
              if (innerPruneTest(NList)) {
              NList.fixNulls();
@@ -350,7 +316,7 @@ public class Processor {
      * comparators to the given network.
      * @see #isRedundantComp(short[][], short)
      */
-    public ObjectArrayList<short[][]> generate(final ObjArrayList<short[][]> networkList, final int startIndex, final int length, final short nbComp, final Counter counter) {
+    public ObjectArrayList<short[][]> generate(final ObjArrayList<short[][]> networkList, final int startIndex, final int length, final short nbComp) {
         /* Setup environment */
         ObjectArrayList<short[][]> result = new ObjectArrayList();
         int cMaxShifts;
@@ -384,13 +350,7 @@ public class Processor {
                             processW(data, comp, index);
 
                             result.add(data);
-                        } else {
-                            counter.redundantCounter_abs++;
-                            //counter.redundantCounter_rel.add(new PMutableBigInteger((int) Math.pow(this.nbPossibleComps, (this.upperBound - nbComp - 1))));
                         }
-                    } else {
-                        counter.uniqueCounter_abs++;
-                        //counter.uniqueCounter_rel.add(new PMutableBigInteger((int) Math.pow(this.nbPossibleComps, (this.upperBound - nbComp - 1))));
                     }
                 }
             }
@@ -405,12 +365,11 @@ public class Processor {
      * @param network The network to expand from.
      * @param nbComp The outerIndex of the comparator (data[0][nbComp]) to start
      * working on.
-     * @param counter The counter class to count stuff.
      * @return A list of generated networks, expanded by all possible
      * comparators to the given network.
      * @see #isRedundantComp(short[][], short)
      */
-    public ObjectArrayList<short[][]> generate(short[][] network, short nbComp, Counter counter) {
+    public ObjectArrayList<short[][]> generate(short[][] network, short nbComp) {
         /* Setup environment */
         ObjectArrayList<short[][]> result = new ObjectArrayList();
         int cMaxShifts;
@@ -441,13 +400,7 @@ public class Processor {
                         processW(data, comp, index);
 
                         result.add(data);
-                    } else {
-                        counter.redundantCounter_abs++;
-                        //counter.redundantCounter_rel.add(new PMutableBigInteger((int) Math.pow(this.nbPossibleComps, (this.upperBound - nbComp - 1))));
                     }
-                } else {
-                    counter.uniqueCounter_abs++;
-                    //counter.uniqueCounter_rel.add(new PMutableBigInteger((int) Math.pow(this.nbPossibleComps, (this.upperBound - nbComp - 1))));
                 }
             }
         }
@@ -461,7 +414,7 @@ public class Processor {
      *
      * @param networkList The list of networks to prune in.
      */
-    public void innerPrune(AbstractObjectList<short[][]> networkList, Counter counter) {
+    public void innerPrune(AbstractObjectList<short[][]> networkList) {
         ObjectListIterator<short[][]> iter;
         for (int index = 0; index < networkList.size() - 1; index++) {
             short[][] network1 = networkList.get(index);
@@ -471,9 +424,9 @@ public class Processor {
                 while (iter.hasNext()) {
                     short[][] network2 = iter.next();
                     if (network2 != null) {
-                        if (subsumes(network1, network2, counter)) {
+                        if (subsumes(network1, network2)) {
                             iter.remove();
-                        } else if (subsumes(network2, network1, counter)) {
+                        } else if (subsumes(network2, network1)) {
                             networkList.remove(index);
                             index--;
                             break;
@@ -484,7 +437,7 @@ public class Processor {
         }
     }
 
-    public boolean innerPruneTest(AbstractObjectList<short[][]> networkList, Counter counter) {
+    public boolean innerPruneTest(AbstractObjectList<short[][]> networkList) {
         boolean found = false;
 
         ObjectListIterator<short[][]> iter;
@@ -496,10 +449,10 @@ public class Processor {
                 while (iter.hasNext()) {
                     short[][] network2 = iter.next();
                     if (network2 != null) {
-                        if (subsumes(network1, network2, counter)) {
+                        if (subsumes(network1, network2)) {
                             iter.remove();
                             found = true;
-                        } else if (subsumes(network2, network1, counter)) {
+                        } else if (subsumes(network2, network1)) {
                             networkList.remove(index);
                             index--;
                             found = true;
@@ -525,10 +478,8 @@ public class Processor {
      * networkList used to perform subsumes with (in 2 directions).
      * @param skipSize The networks with outerIndex >= networkIndex and &lt
      * skipSize+networkIndex aren't checked.
-     * @param counter The Counter to count.
      *
      */
-<<<<<<< HEAD
     public void prune(ObjArrayList<short[][]> networkList, final int networkIndex, final int skipSize) {
         int bound = networkList.size();
         
@@ -563,10 +514,6 @@ public class Processor {
         
         /* The same but using the updated size */
         for (int outerIndex = bound; outerIndex < networkList.size(); outerIndex++) {
-=======
-    public void prune(ObjArrayList<short[][]> networkList, final int networkIndex, final int skipSize, Counter counter) {
-        for (int outerIndex = 0; outerIndex < networkList.size(); outerIndex++) {
->>>>>>> PaperStatistics
             if (outerIndex != networkIndex) {
                 short[][] network2 = networkList.get(outerIndex);
 
@@ -577,12 +524,12 @@ public class Processor {
                         short[][] network = networkList.get(innerIndex);
                         if (network != null) { //else already removed.
 
-                            if (subsumes(network, network2, counter)) {
+                            if (subsumes(network, network2)) {
                                 if (networkList.get(innerIndex) != null) { //recheck
                                     networkList.remove(outerIndex);
                                 }
                                 break;
-                            } else if (subsumes(network2, network, counter)) {
+                            } else if (subsumes(network2, network)) {
                                 networkList.remove(innerIndex);
                                 //break;
                             }
@@ -678,10 +625,10 @@ public class Processor {
      * @param network2 The second network as part of network1 subsumes? network2
      * @return Whether network1 subsumes network2.
      */
-    private boolean subsumes(short[][] network1, short[][] network2, Counter counter) {
+    private boolean subsumes(short[][] network1, short[][] network2) {
         for (int nbOnes = 1; nbOnes < nbChannels; nbOnes++) {
             if (network1[nbOnes].length > network2[nbOnes].length) {
-                counter.kLengthCounter_abs++;
+                //kLengthCounter++;
                 return false;
             }
         }
@@ -689,12 +636,12 @@ public class Processor {
         int maxIndex = (nbChannels - 1) << 2;
         for (int index = 1; index < maxIndex;) {
             if (network1[nbChannels][index] > network2[nbChannels][index]) {
-                counter.pLengthCounter_abs++;
+                //pLengthCounter++;
                 return false;
             }
             index += 2;
             if (network1[nbChannels][index] > network2[nbChannels][index]) {
-                counter.lLengthCounter_abs++;
+                //lLengthCounter++;
                 return false;
             }
             index += 2;
@@ -716,8 +663,7 @@ public class Processor {
         }
 
         //networkPermCounter++;
-        counter.networkPermCounter_abs++;
-        return existsAValidPerm(network1, network2, counter);
+        return existsAValidPerm(network1, network2);
 
         //TODO: Old code - checks ALL permutations.
 //        byte[] currPerm = new byte[this.identityElement.length];
@@ -741,7 +687,7 @@ public class Processor {
      * @param network2
      * @return
      */
-    public boolean existsAValidPerm(short[][] network1, short[][] network2, Counter counter) {
+    public boolean existsAValidPerm(short[][] network1, short[][] network2) {
         //Create a list full of allOnes - on every Position can be every number.
         int allOnes = (1 << nbChannels) - 1;
         int[] posList = new int[nbChannels];
@@ -771,7 +717,7 @@ public class Processor {
 
                     //If possible positions are ever empty -> return false.
                     if (posList[i] == 0) {
-                        counter.emptyPosCounter_abs++;
+                        //emptyPosCounter++;
                         return false;
                     }
                 }
