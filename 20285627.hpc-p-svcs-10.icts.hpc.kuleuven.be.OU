@@ -614,3 +614,21 @@ lLengthCounter_abs 2326227291
 networkPermCounter_abs 216744704
 emptyPosCounter_abs 79731223
 
+Cycle complete with 12 comps and size 490237 took 954578 ms
+UniqueCounter_abs 2335534
+redundantCounter_abs 1355798
+kLengthCounter_abs 760419237851
+pLengthCounter_abs 10459263985
+lLengthCounter_abs 11264328424
+networkPermCounter_abs 1258278337
+emptyPosCounter_abs 497607516
+
+Cycle complete with 13 comps and size 854552 took 3398333 ms
+UniqueCounter_abs 5831160
+redundantCounter_abs 4165541
+kLengthCounter_abs 2705016171371
+pLengthCounter_abs 29882873221
+lLengthCounter_abs 29964610822
+networkPermCounter_abs 4131737148
+emptyPosCounter_abs 1776805082
+
