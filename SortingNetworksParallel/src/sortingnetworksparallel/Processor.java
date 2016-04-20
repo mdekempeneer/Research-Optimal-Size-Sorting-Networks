@@ -103,13 +103,16 @@ public class Processor {
              save(NList, nbComp);
              System.exit(0);
              }*/
- /*//Tests if list only contains non subsumable.
+            
+            /*
+            //Tests if list only contains non subsumable.
              System.out.println("Testing if all pruned");
              if (innerPruneTest(NList)) {
              NList.fixNulls();
              NList.trim();
              System.out.println("[ERROR]: Found unpruned" + NList.size());
-             }*/
+             }
+            */
         } while (NList.size() > 1 && nbComp < upperBound);
 
         workPool.shutDown();
@@ -525,8 +528,45 @@ public class Processor {
      * @param counter The Counter to count.
      *
      */
+<<<<<<< HEAD
+    public void prune(ObjArrayList<short[][]> networkList, final int networkIndex, final int skipSize) {
+        int bound = networkList.size();
+        
+        for (int outerIndex = 0; outerIndex < bound; outerIndex++) {
+            if (outerIndex != networkIndex) {
+                short[][] network2 = networkList.get(outerIndex);
+
+                if (network2 != null) {
+
+                    for (int i = 0; i < skipSize; i++) { //for all in the innerPrune
+                        int innerIndex = networkIndex + i;
+                        short[][] network = networkList.get(innerIndex);
+                        if (network != null) { //else already removed.
+
+                            if (subsumes(network, network2)) {
+                                if (networkList.get(innerIndex) != null) { //recheck
+                                    networkList.remove(outerIndex);
+                                }
+                                break;
+                            } else if (subsumes(network2, network)) {
+                                networkList.remove(innerIndex);
+                                //break;
+                            }
+
+                        }
+                    }
+                }
+            } else {
+                outerIndex += skipSize - 1;
+            }
+        }
+        
+        /* The same but using the updated size */
+        for (int outerIndex = bound; outerIndex < networkList.size(); outerIndex++) {
+=======
     public void prune(ObjArrayList<short[][]> networkList, final int networkIndex, final int skipSize, Counter counter) {
         for (int outerIndex = 0; outerIndex < networkList.size(); outerIndex++) {
+>>>>>>> PaperStatistics
             if (outerIndex != networkIndex) {
                 short[][] network2 = networkList.get(outerIndex);
 
@@ -713,7 +753,7 @@ public class Processor {
             int P2 = network2[nbChannels][(nbOnes - 1) << 2]; //P for network 2.
 
             int revLPos = allOnes ^ network1[nbChannels][(nbOnes << 2) - 2]; //Positions of 0 for L.
-            int revPPos = allOnes ^ network1[nbChannels][(nbOnes - 1) << 2]; //Positions of 0 for P.
+            int revPPos = allOnes ^ network1[nbChannels][(nbOnes - 1) << 2]; //Positions of 1 for P.
 
             //TODO: Can we shorten result = revOnePos & revZeroPos by inline + logic?
             //and combine the two if's in the process.
@@ -738,6 +778,9 @@ public class Processor {
             }
         }
 
+        /* If at certain position only 1 number possible,
+           claim the number and remove from other positions.
+        */
         for (int i = 0; i < posList.length; i++) {
             int value = posList[i];
             if (Integer.bitCount(value) == 1) {
@@ -752,6 +795,16 @@ public class Processor {
             }
         }
 
+        /* DEBUG Check - check if every position is used.*/
+        int checkAll = allOnes;
+        for(int i = 0; i < posList.length; i++) {
+            checkAll &= (~posList[i] & allOnes);
+        }
+        if(checkAll != 0) {
+            return false;
+            //System.out.println(" found one " + Integer.toBinaryString(checkAll));
+        }
+        
         /* Convert posList bit structure to bytes for permutations. */
         byte[][] Ps = new byte[nbChannels][];
 
@@ -1091,6 +1144,12 @@ public class Processor {
      * nbChannels
      */
     private int getChangeIndex(short[][] data, short comp) {
+        
+        //for all W( k=0)
+        //gesorteerd => alle 1 'en rechts => geen 0 rechts => een 0 rechts
+        //een 0 op de plaats van de channel voor k = het tegengestelde van het verwachte = goed.
+        
+        //TODO: If one uses sorted channel, also redundant.
         for (int nbOnes = 1; nbOnes < nbChannels; nbOnes++) {
             for (int innerIndex = 0; innerIndex < data[nbOnes].length; innerIndex++) {
                 short output = data[nbOnes][innerIndex];
@@ -1099,6 +1158,8 @@ public class Processor {
                 }
             }
         }
+        
+        //test if this happens else we could just do else { return 1 }
         return -1;
     }
 

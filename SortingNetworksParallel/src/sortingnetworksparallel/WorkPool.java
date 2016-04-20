@@ -124,7 +124,7 @@ public class WorkPool {
             System.out.println("[WARNING]: Ensured capacity (" + capacity + ") exceeds Integer.MAX_VALUE. Hopefully we didn't need that much.");
         }
         final ObjArrayList<short[][]> resultN = new ObjArrayList((int) Math.min(capacity, Integer.MAX_VALUE));
-        final int nb = 64;
+        final int nb = INNER_SIZE;
         latch = new CountDownLatch((int) Math.ceil(N.size() / (double) nb));
 
         final AtomicInteger doneIndex = new AtomicInteger();

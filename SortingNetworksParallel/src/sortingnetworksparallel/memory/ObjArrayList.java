@@ -322,7 +322,7 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
     }
 
     @Override
-    public void add(final int index, final K k) { //TODO check if used.
+    public void add(final int index, final K k) {
         System.out.println("used add(int, k)");
         ensureIndex(index);
         grow(size.get() + 1);
@@ -380,8 +380,8 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
      * @return
      */
     public int add(final ObjectArrayList<K> k) {
+        int r = k.size();
         if (size.get() < a.length) {
-            int r = k.size();
             int index = size.getAndAdd(r);
             for (int i = 0; i < r; i++) {
                 a[index + i] = k.get(i);
@@ -430,18 +430,25 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
         return -1;
     }
 
+    /**
+     * Remove the object from the given index.
+     * The result will be a null value on that index.
+     * @param index The index to set to null. A index higher than it should be causes unwanted results.
+     * @return null.
+     */
     @Override
     public K remove(final int index) {
-        if (index >= size.get()) {
+        /*
+        if (index >= size.get()) { //Never happens anyway!
             throw new IndexOutOfBoundsException("Index (" + index + ") is greater than or equal to list size (" + size + ")");
-        }
+        }*/
         nullFlag = true;
-        final K old = a[index];
+        //final K old = a[index]; //return type not used!
         a[index] = null;
         /*if (index == size) {
          size--;
          }*/
-        return old;
+        return null;
     }
 
     /**
@@ -451,12 +458,15 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
     public void fixNulls() {
         if (nullFlag) {
             nullFlag = false;
-            for (int i = size.get() - 1; i >= 0; i--) {
+            int length = size.get();
+            
+            for (int i = length - 1; i >= 0; i--) {
                 if (a[i] == null) {
-                    System.arraycopy(a, (i + 1), a, i, size.get() - i - 1);
-                    size.decrementAndGet();
+                    System.arraycopy(a, (i + 1), a, i, length - i - 1);
+                    length--;
                 }
             }
+            size.set(length);
         }
     }
 
@@ -522,25 +532,14 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
     /**
      * Trims the backing array if it is too large.
      *
-     * If the current array length is smaller than or equal to <code>n</code>,
-     * this method does nothing. Otherwise, it trims the array length to the
-     * maximum between <code>n</code> and {@link #size()}.
-     *
-     * <P>
-     * This method is useful when reusing lists.
-     * {@linkplain #clear() Clearing a list} leaves the array length untouched.
-     * If you are reusing a list many times, you can call this method with a
-     * typical size to avoid keeping around a very large array just because of a
-     * few large transient lists.
-     *
-     * @param n the threshold for the trimming.
+     * @param n Considered 0, regardless of input.
      */
     public void trim(final int n) {
         // TODO: use Arrays.trim() and preserve type only if necessary
-        if (n >= a.length || size.get() == a.length) {
+        if (size.get() == a.length) {
             return;
         }
-        final K t[] = (K[]) new Object[Math.max(n, size.get())];
+        final K t[] = (K[]) new Object[size.get()];
         System.arraycopy(a, 0, t, 0, size.get());
         a = t;
     }

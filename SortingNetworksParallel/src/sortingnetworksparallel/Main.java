@@ -27,7 +27,7 @@ public class Main {
         
         int nbChannels = 8;
         int upperBound = 19;
-        int innerSize = 64;
+        int innerSize = 128;
         double percThreads = 1;
         
         if (args.length == 0) {
