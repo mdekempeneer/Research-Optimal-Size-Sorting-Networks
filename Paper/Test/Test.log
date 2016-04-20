@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.29)  20 APR 2016 16:05
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.29)  20 APR 2016 16:06
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -643,14 +643,14 @@ your preamble.
 Here is how much of TeX's memory you used:
  21484 strings out of 493089
  544042 string characters out of 6134842
- 715728 words of memory out of 5000000
+ 716728 words of memory out of 5000000
  24605 multiletter control sequences out of 15000+600000
  3940 words of font info for 15 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  62i,5n,77p,720b,609s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/c
 m/cmr10.pfb>
-Output written on Test.pdf (1 page, 16320 bytes).
+Output written on Test.pdf (1 page, 16635 bytes).
 PDF statistics:
  15 PDF objects out of 1000 (max. 8388607)
  10 compressed objects within 1 object stream
