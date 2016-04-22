@@ -10,6 +10,30 @@
 \usetikzlibrary{arrows,automata}
 \newtheorem{lemma}{Lemma}
 \newtheorem{definitie}{Definitie}
+\usepackage{subcaption}
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\lstset{frame=tb,
+  language=Java,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+\renewcommand{\lstlistingname}{Code}
 
 \title{Sorteernetwerken van Optimale Grootte}%\thanks{Dankwoord}}
 \author{Mathias Dekempeneer, Vincent Derkinderen \\
@@ -69,6 +93,7 @@ De uitvoer van een comparator netwerk verwijst naar de partieel geordende vector
 Een \textit{sorteernetwerk} is een comparator netwerk met als eigenschap dat de uitvoer gesorteerd is ongeacht de invoer.
 Een sorteernetwerk $C^n_k$ van optimale grootte houdt in dat er geen ander sorteernetwerk $C^n_l$ bestaat waarbij $l < k$. %TODO grootte = aantal comparatoren
 Figuur \ref{Werking} is een voorbeeld van zo een netwerk waarop ook de werking gedemonstreerd wordt.
+Deze figuur toont ook twee parallelle comparatoren $(1,2)$ en $(3,4)$, comparatoren die geen kanaal gemeenschappelijk hebben en van volgorde omgewisseld kunnen worden.
 \begin{figure}[h!]
 \centering
 \includegraphics[scale=0.275]{NetworkTransparent.png} 
@@ -169,8 +194,62 @@ Outputs drie 1'en & $\left[0111\right]$ & $\left[1011\right]$ &  \\
 Bij de genereer-stap lopen we over de set $R^n_k$ en voegen we bij elk netwerk alle mogelijke comparatoren toe.
 Aangezien een netwerk dat wordt uitgebreid met een overbodige comparator, \'e\'en waarbij de outputs ongewijzigd blijven, gesubsumed zal worden door een uitbreiding van dat netwerk met een niet overbodige comparator, kunnen we deze meteen verwijderen uit de set $N^n_{k+1}$. 
 Alvorens deze beslissing te maken door alle outputs te overlopen, kunnen we ook eerst kijken of de comparator gelijk is aan de vorige in het netwerk.
+Wanneer 2 netwerken op de volgorde van hun parallelle comparatoren na gelijk zijn zoals in figuur \ref{fig1} en \ref{fig2} zullen deze elkaar subsumen en \'e\'en van de twee verwijderd worden.
+Dit kan reeds bij de generatie-stap gemakkelijk opgevangen worden door bij het toevoegen van een nieuwe comparator x na te gaan of x een kanaal gemeenschappelijk heeft met de vorige comparator (Code \ref{code1}).
+\begin{lstlisting}[caption={Test op parallelle comparatoren},label=code1]
+x  & vorigeComp != 0
+\end{lstlisting}
+Wanneer dit niet het geval is en het dus parallelle comparatoren zijn, kunnen we bijvoorbeeld kiezen om het netwerk weg te gooien waarbij de nieuwe comparator kleiner is dan de vorige comparator.
+\begin{figure}[!h]
+	\centering
+	\begin{subfigure}[b]{0.3\textwidth}
+	\centering
+    		\begin{tikzpicture}
+			\def\x{3.5}
+			\fill [red!30] (4.5/\x,0.5/\x) -- (6.5/\x,0.5/\x) -- (6.5/\x,7.5/\x) -- (4.5/\x,7.5/\x) -- cycle;
+			\foreach \a in {1/\x, 2/\x, 3/\x, 4/\x, 5/\x, 6/\x, 7/\x}
+			\draw[thick] (0,\a) -- ++(7/\x,0);
+			\foreach \b in {{1/\x,1/\x},{1/\x,2/\x},{1/\x,3/\x},{1/\x,4/\x},{1/\x,5/\x},{1/\x,6/\x},{2/\x,2/\x},{2/\x,4/\x},{3/\x,3/\x},{3/\x,6/\x},{4/\x,1/\x},{4/\x,7/\x},{5/\x,6/\x},{5/\x,7/\x},{6/\x,1/\x},{6/\x,5/\x}}
+			\filldraw (\b) circle (1.5 pt);
+			\draw[thick] (1/\x,1/\x) -- (1/\x,2/\x);
+			\draw[thick] (1/\x,3/\x) -- (1/\x,4/\x);
+			\draw[thick] (1/\x,5/\x) -- (1/\x,6/\x);
+			\draw[thick] (2/\x,2/\x) -- (2/\x,4/\x);
+			\draw[thick] (3/\x,3/\x) -- (3/\x,6/\x);
+			\draw[thick] (4/\x,1/\x) -- (4/\x,7/\x);
+			\draw[thick] (5/\x,6/\x) -- (5/\x,7/\x);
+			\draw[thick] (6/\x,1/\x) -- (6/\x,5/\x);
+		\end{tikzpicture}
+		\caption{Netwerk 1}
+		\label{fig1}
+    \end{subfigure}
+    
+    \begin{subfigure}[b]{0.3\textwidth}
+    \centering
+		\begin{tikzpicture}
+			\def\x{3.5}
+			\fill [red!30] (4.5/\x,0.5/\x) -- (6.5/\x,0.5/\x) -- (6.5/\x,7.5/\x) -- (4.5/\x,7.5/\x) -- cycle;
+			\foreach \a in {1/\x, 2/\x, 3/\x, 4/\x, 5/\x, 6/\x, 7/\x}
+			\draw[thick] (0,\a) -- ++(7/\x,0);
+			\foreach \b in {{1/\x,1/\x},{1/\x,2/\x},{1/\x,3/\x},{1/\x,4/\x},{1/\x,5/\x},{1/\x,6/\x},{2/\x,2/\x},{2/\x,4/\x},{3/\x,3/\x},{3/\x,6/\x},{4/\x,1/\x},{4/\x,7/\x},{6/\x,6/\x},{6/\x,7/\x},{5/\x,1/\x},{5/\x,5/\x}}
+			\filldraw (\b) circle (1.5 pt);
+			\draw[thick] (1/\x,1/\x) -- (1/\x,2/\x);
+			\draw[thick] (1/\x,3/\x) -- (1/\x,4/\x);
+			\draw[thick] (1/\x,5/\x) -- (1/\x,6/\x);
+			\draw[thick] (2/\x,2/\x) -- (2/\x,4/\x);
+			\draw[thick] (3/\x,3/\x) -- (3/\x,6/\x);
+			\draw[thick] (4/\x,1/\x) -- (4/\x,7/\x);
+			\draw[thick] (6/\x,6/\x) -- (6/\x,7/\x);
+			\draw[thick] (5/\x,1/\x) -- (5/\x,5/\x);
+		\end{tikzpicture}
+		\caption{Netwerk 2}
+		\label{fig2}
+    \end{subfigure}
+    \caption{}
+\end{figure}
 
-Om nog meer het overlopen van alle outputs te vermijden, kunnen we ook nog het geval van figuur \ref{fig1} en \ref{fig2} vermijden.
+
+
 ~\\\\
 Uitleg hoe we de generate doen.\\
 Redundant (of de comparator die je toevoegt, wel iets verandert? Uitleggen wat wij specifiek doen), unique\_if uitleggen
