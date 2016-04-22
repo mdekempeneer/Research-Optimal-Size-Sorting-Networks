@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.29)  22 APR 2016 16:13
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.29)  22 APR 2016 16:18
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -749,34 +749,26 @@ LaTeX Font Info:    Try loading font information for OT1+pcr on input line 174.
 (/usr/local/texlive/2015/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 ) [2]
-Underfull \hbox (badness 10000) in paragraph at lines 253--256
+LaTeX Font Info:    Try loading font information for OMS+ptm on input line 256.
 
- []
-
-
-Underfull \hbox (badness 1400) in paragraph at lines 253--256
-\OT1/ptm/m/n/10 Redundant (of de com-pa-ra-tor die je toe-voegt, wel iets
- []
-
-LaTeX Font Info:    Try loading font information for OMS+ptm on input line 261.
 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/psnfss/omsptm.fd
 File: omsptm.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 261.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 256.
 
-Underfull \hbox (badness 10000) in paragraph at lines 272--276
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 272--276
+Underfull \hbox (badness 10000) in paragraph at lines 267--271
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 272--276
+Underfull \hbox (badness 10000) in paragraph at lines 267--271
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 267--271
 
  []
 
@@ -791,10 +783,10 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 ] (./SortingNetworks.aux) ) 
 Here is how much of TeX's memory you used:
- 25000 strings out of 493089
- 628325 string characters out of 6134842
- 771428 words of memory out of 5000000
- 28045 multiletter control sequences out of 15000+600000
+ 24999 strings out of 493089
+ 628307 string characters out of 6134842
+ 771286 words of memory out of 5000000
+ 28044 multiletter control sequences out of 15000+600000
  26187 words of font info for 59 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  62i,19n,100p,731b,2222s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -813,7 +805,7 @@ ocal/texlive/2015/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/tex
 live/2015/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2015/
 texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2015/texmf-dist
 /fonts/type1/urw/times/utmri8a.pfb>
-Output written on SortingNetworks.pdf (4 pages, 182893 bytes).
+Output written on SortingNetworks.pdf (4 pages, 182677 bytes).
 PDF statistics:
  80 PDF objects out of 1000 (max. 8388607)
  57 compressed objects within 1 object stream
