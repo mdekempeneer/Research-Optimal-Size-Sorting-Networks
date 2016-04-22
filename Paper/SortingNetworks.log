@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.29)  20 APR 2016 16:49
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.29)  22 APR 2016 15:01
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -680,65 +680,87 @@ Package pdftex.def Info: NetworkTransparent.png used on input line 74.
  <./NetworkTransparent.png>]
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 98.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <9> on input line 136.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 146.
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 149.
 
-Underfull \hbox (badness 10000) in paragraph at lines 141--144
+
+(/usr/local/texlive/2015/texmf-dist/tex/latex/psnfss/ot1pcr.fd
+File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
+)
+
+LaTeX Warning: Reference `fig1' on page 2 undefined on input line 173.
+
+
+LaTeX Warning: Reference `fig2' on page 2 undefined on input line 173.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 173--177
 
  []
 
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 145.
-LaTeX Font Info:    Try loading font information for OMS+ptm on input line 156.
+
+Underfull \hbox (badness 1400) in paragraph at lines 173--177
+\OT1/ptm/m/n/10 Redundant (of de com-pa-ra-tor die je toe-voegt, wel iets
+ []
+
+LaTeX Font Info:    Try loading font information for OMS+ptm on input line 182.
 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/psnfss/omsptm.fd
 File: omsptm.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 156.
-
-Underfull \hbox (badness 10000) in paragraph at lines 167--171
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 167--171
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 182.
+ [2]
+Underfull \hbox (badness 10000) in paragraph at lines 193--197
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 167--171
+Underfull \hbox (badness 10000) in paragraph at lines 193--197
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 193--197
 
  []
 
 Missing character: There is no ; in font nullfont!
+(./SortingNetworks.bbl) [3] (./SortingNetworks.aux)
 
-LaTeX Warning: `!h' float specifier changed to `!ht'.
+LaTeX Warning: There were undefined references.
 
-[2] (./SortingNetworks.bbl) [3
-
-] (./SortingNetworks.aux) ) 
+ ) 
 Here is how much of TeX's memory you used:
- 22560 strings out of 493089
- 588967 string characters out of 6134842
- 728030 words of memory out of 5000000
- 25643 multiletter control sequences out of 15000+600000
- 19384 words of font info for 45 fonts, out of 8000000 for 9000
+ 22616 strings out of 493089
+ 589663 string characters out of 6134842
+ 725550 words of memory out of 5000000
+ 25686 multiletter control sequences out of 15000+600000
+ 26187 words of font info for 59 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  62i,19n,100p,731b,2201s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/
-base/8r.enc}</usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/
-cmex10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/c
-mmi10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cm
-mi7.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr1
-0.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.p
-fb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pf
-b></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb>
-</usr/local/texlive/2015/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/loca
-l/texlive/2015/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/
-2015/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on SortingNetworks.pdf (3 pages, 145706 bytes).
+{/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
+exlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/te
+xlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/tex
+live/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texli
+ve/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive
+/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texlive/2
+015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/201
+5/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2015/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2015/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2015/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2015/texmf-d
+ist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2015/texmf-dist/font
+s/type1/urw/times/utmb8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/ur
+w/times/utmr8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/times/ut
+mri8a.pfb>
+Output written on SortingNetworks.pdf (3 pages, 176087 bytes).
 PDF statistics:
- 61 PDF objects out of 1000 (max. 8388607)
- 43 compressed objects within 1 object stream
+ 77 PDF objects out of 1000 (max. 8388607)
+ 55 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  18 words of extra memory for PDF output out of 10000 (max. 10000000)
 
