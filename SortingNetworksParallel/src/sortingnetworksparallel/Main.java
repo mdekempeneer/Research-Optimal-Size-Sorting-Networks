@@ -10,7 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import sortingnetworksparallel.memory.ObjArrayList;
+import sortingnetworksparallel.memory.NullArray;
 
 /**
  *
@@ -74,17 +74,17 @@ public class Main {
         }
 
         /* Load start */
-        ObjArrayList<short[][]> oldL = null;
+        NullArray oldL = null;
         int startIndex = 0;
-        ObjArrayList<short[][]> newL = null;
+        NullArray newL = null;
         short nbComp = 0;
         if (loadMode == (JOptionPane.YES_OPTION)) {
             ObjectInputStream iis = null;
             try {
                 iis = new ObjectInputStream(new BufferedInputStream(new FileInputStream(loadPath)));
-                oldL = (ObjArrayList<short[][]>) iis.readObject();
+                oldL = (NullArray) iis.readObject();
                 startIndex = iis.readInt();
-                newL = (ObjArrayList<short[][]>) iis.readObject();
+                newL = (NullArray) iis.readObject();
                 nbComp = iis.readShort();
             } catch (IOException | ClassNotFoundException ex) {
                 Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
@@ -200,11 +200,11 @@ public class Main {
         return null;
     }
 
-    private static ObjArrayList<short[][]> getN(String loadPath) {
+    private static NullArray getN(String loadPath) {
         ObjectInputStream iis = null;
         try {
             iis = new ObjectInputStream(new BufferedInputStream(new FileInputStream(loadPath)));
-            return (ObjArrayList<short[][]>) iis.readObject();
+            return (NullArray) iis.readObject();
         } catch (IOException | ClassNotFoundException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         } finally {

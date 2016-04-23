@@ -92,7 +92,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @param <K> //TODO
  * @see java.util.ArrayList
  */
-public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAccess, Cloneable, java.io.Serializable {
+public class NullArray extends AbstractObjectList<short[][]> implements RandomAccess, Cloneable, java.io.Serializable {
 
     private static final long serialVersionUID = -7046029254386353131L;
     /**
@@ -107,7 +107,8 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
     /**
      * The backing array.
      */
-    protected transient K a[];
+    protected transient short[][] a[];
+    
     /**
      * The current actual size of the list (never greater than the backing-array
      * length).
@@ -125,7 +126,7 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
      * @param a the array that will be used to back this array list.
      * @param dummy //TODO
      */
-    protected ObjArrayList(final K a[], boolean dummy) {
+    protected NullArray(final short[][] a[], boolean dummy) {
         this.a = a;
         this.wrapped = true;
     }
@@ -135,15 +136,15 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
      *
      * @param capacity the initial capacity of the array list (may be 0).
      */
-    public ObjArrayList(final int capacity) {
-        a = (K[]) new Object[capacity];
+    public NullArray(final int capacity) {
+        a = new short[capacity][][];
         wrapped = false;
     }
 
     /**
      * Creates a new array list with {@link #DEFAULT_INITIAL_CAPACITY} capacity.
      */
-    public ObjArrayList() {
+    public NullArray() {
         this(DEFAULT_INITIAL_CAPACITY);
     }
 
@@ -152,7 +153,7 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
      *
      * @param c a collection that will be used to fill the array list.
      */
-    public ObjArrayList(final Collection<? extends K> c) {
+    public NullArray(final Collection<? extends short[][]> c) {
         this(c.size());
         size = new AtomicInteger(ObjectIterators.unwrap(c.iterator(), a));
     }
@@ -164,7 +165,7 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
      * @param c a type-specific collection that will be used to fill the array
      * list.
      */
-    public ObjArrayList(final ObjectCollection<? extends K> c) {
+    public NullArray(final ObjectCollection<? extends short[][]> c) {
         this(c.size());
         size = new AtomicInteger(ObjectIterators.unwrap(c.iterator(), a));
     }
@@ -174,7 +175,7 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
      *
      * @param l a type-specific list that will be used to fill the array list.
      */
-    public ObjArrayList(final ObjectList<? extends K> l) {
+    public NullArray(final ObjectList<? extends short[][]> l) {
         this(l.size());
         l.getElements(0, a, 0, (size = new AtomicInteger(l.size())).get());
     }
@@ -184,7 +185,7 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
      *
      * @param a an array whose elements will be used to fill the array list.
      */
-    public ObjArrayList(final K a[]) {
+    public NullArray(final short[][] a[]) {
         this(a, 0, a.length);
     }
 
@@ -195,7 +196,7 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
      * @param offset the first element to use.
      * @param length the number of elements to use.
      */
-    public ObjArrayList(final K a[], final int offset, final int length) {
+    public NullArray(final short[][] a[], final int offset, final int length) {
         this(length);
         System.arraycopy(a, offset, this.a, 0, length);
         size = new AtomicInteger(length);
@@ -207,7 +208,7 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
      *
      * @param i an iterator whose returned elements will fill the array list.
      */
-    public ObjArrayList(final Iterator<? extends K> i) {
+    public NullArray(final Iterator<? extends short[][]> i) {
         this();
         while (i.hasNext()) {
             this.add(i.next());
@@ -221,7 +222,7 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
      * @param i a type-specific iterator whose returned elements will fill the
      * array list.
      */
-    public ObjArrayList(final ObjectIterator<? extends K> i) {
+    public NullArray(final ObjectIterator<? extends short[][]> i) {
         this();
         while (i.hasNext()) {
             this.add(i.next());
@@ -245,7 +246,7 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
      *
      * @return the backing array.
      */
-    public K[] elements() {
+    public short[][][] elements() {
         return a;
     }
 
@@ -262,11 +263,11 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
      * @param length the length of the resulting array list.
      * @return a new array list of the given size, wrapping the given array.
      */
-    public static <K> ObjArrayList<K> wrap(final K a[], final int length) {
+    public static NullArray wrap(final short[][] a[], final int length) {
         if (length > a.length) {
             throw new IllegalArgumentException("The specified length (" + length + ") is greater than the array size (" + a.length + ")");
         }
-        final ObjArrayList<K> l = new ObjArrayList(a, false);
+        final NullArray l = new NullArray(a, false);
         l.size = new AtomicInteger(length);
         return l;
     }
@@ -283,7 +284,7 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
      * @param a an array to wrap.
      * @return a new array list wrapping the given array.
      */
-    public static <K> ObjArrayList<K> wrap(final K a[]) {
+    public static NullArray wrap(final short[][] a[]) {
         return wrap(a, a.length);
     }
 
@@ -295,11 +296,11 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
      */
     public void ensureCapacity(final int capacity) {
         if (wrapped) {
-            a = ObjectArrays.ensureCapacity(a, capacity, size.get());
+            a = ObjectArrays.<short[][]>ensureCapacity(a, capacity, size.get());
         } else if (capacity > a.length) {
-            final Object t[] = new Object[capacity];
+            final short[][] t[] = new short[capacity][][];
             System.arraycopy(a, 0, t, 0, size.get());
-            a = (K[]) t;
+            a = t;
         }
     }
 
@@ -315,15 +316,15 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
             a = ObjectArrays.grow(a, capacity, size.get());
         } else if (capacity > a.length) {
             final int newLength = (int) Math.max(Math.min(2L * a.length, it.unimi.dsi.fastutil.Arrays.MAX_ARRAY_SIZE), capacity);
-            final Object t[] = new Object[newLength];
+            final short[][] t[] = new short[newLength][][];
             System.arraycopy(a, 0, t, 0, size.get());
-            a = (K[]) t;
+            a = t;
         }
     }
 
     @Override
-    public void add(final int index, final K k) {
-        System.out.println("used add(int, k)");
+    public void add(final int index, final short[][] k) {
+        System.err.println("used add(int, k)");
         ensureIndex(index);
         grow(size.get() + 1);
         if (index != size.get()) {
@@ -334,7 +335,7 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
     }
 
     @Override
-    public boolean add(final K k) {
+    public boolean add(final short[][] k) {
         if (size.get() < a.length) {
             a[size.getAndIncrement()] = k;
         } else {
@@ -357,7 +358,7 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
      * @param dummy //TODO
      * @return The index of where the object is added. -1 is no index was found.
      */
-    public int add(final K k, Object dummy) {
+    public int add(final short[][] k, Object dummy) {
         if (size.get() < a.length) {
             int index = size.getAndIncrement();
             a[index] = k;
@@ -379,7 +380,7 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
      * @param k
      * @return
      */
-    public int add(final ObjectArrayList<K> k) {
+    public int add(final ObjectArrayList<short[][]> k) {
         int r = k.size();
         if (size.get() < a.length) {
             int index = size.getAndAdd(r);
@@ -389,7 +390,7 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
             return index;
         } else {
             int i = 0;
-            ObjectListIterator<K> iter = k.iterator();
+            ObjectListIterator<short[][]> iter = k.iterator();
             while (iter.hasNext()) {
                 for (; i < a.length; i++) {
                     if (a[i] == null) {
@@ -406,7 +407,7 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
     }
 
     @Override
-    public K get(final int index) {
+    public short[][] get(final int index) {
         return a[index];
     }
 
@@ -437,7 +438,7 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
      * @return null.
      */
     @Override
-    public K remove(final int index) {
+    public short[][] remove(final int index) {
         /*
         if (index >= size.get()) { //Never happens anyway!
             throw new IndexOutOfBoundsException("Index (" + index + ") is greater than or equal to list size (" + size + ")");
@@ -461,7 +462,7 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
             int length = size.get();
             
             for (int i = length - 1; i >= 0; i--) {
-                if (a[i] == null) {
+                if (a[i] == null || a[i].length == 1) {
                     System.arraycopy(a, (i + 1), a, i, length - i - 1);
                     length--;
                 }
@@ -484,11 +485,16 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
         return rem(o);
     }
 
+    /**
+     * Does return old value.
+     * @param index
+     * @param k
+     * @return 
+     */
     @Override
-    public K set(final int index, final K k) {
-        K old = a[index];
+    public short[][] set(final int index, final short[][] k) {
         a[index] = k;
-        return old;
+        return null;
     }
 
     @Override
@@ -539,7 +545,7 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
         if (size.get() == a.length) {
             return;
         }
-        final K t[] = (K[]) new Object[size.get()];
+        final short[][] t[] = new short[size.get()][][];
         System.arraycopy(a, 0, t, 0, size.get());
         a = t;
     }
@@ -586,7 +592,7 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
      * @param length the number of elements to add.
      */
     @Override
-    public void addElements(final int index, final K a[], final int offset, final int length) {
+    public void addElements(final int index, final short[][] a[], final int offset, final int length) {
         ensureIndex(index);
         ObjectArrays.ensureOffsetLength(a, offset, length);
         grow(size.get() + length);
@@ -596,9 +602,9 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
     }
 
     @Override
-    public ObjectListIterator<K> listIterator(final int index) {
+    public ObjectListIterator<short[][]> listIterator(final int index) {
         ensureIndex(index);
-        return new AbstractObjectListIterator<K>() {
+        return new AbstractObjectListIterator<short[][]>() {
             int pos = index, last = -1;
 
             @Override
@@ -612,7 +618,7 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
             }
 
             @Override
-            public K next() {
+            public short[][] next() {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
@@ -620,7 +626,7 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
             }
 
             @Override
-            public K previous() {
+            public short[][] previous() {
                 if (!hasPrevious()) {
                     throw new NoSuchElementException();
                 }
@@ -638,20 +644,20 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
             }
 
             @Override
-            public void add(K k) {
+            public void add(short[][] k) {
                 if (last == -1) {
                     throw new IllegalStateException();
                 }
-                ObjArrayList.this.add(pos++, k);
+                NullArray.this.add(pos++, k);
                 last = -1;
             }
 
             @Override
-            public void set(K k) {
+            public void set(short[][] k) {
                 if (last == -1) {
                     throw new IllegalStateException();
                 }
-                ObjArrayList.this.set(last, k);
+                NullArray.this.set(last, k);
             }
 
             @Override
@@ -659,7 +665,7 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
                 if (last == -1) {
                     throw new IllegalStateException();
                 }
-                ObjArrayList.this.remove(last);
+                NullArray.this.remove(last);
                 /* If the last operation was a next(), we are removing an element *before* us, and we must decrease pos correspondingly. */
                 if (last < pos) {
                     pos--;
@@ -670,14 +676,14 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
     }
 
     @Override
-    public ObjArrayList<K> clone() {
-        ObjArrayList<K> c = new ObjArrayList(size.get());
+    public NullArray clone() {
+        NullArray c = new NullArray(size.get());
         System.arraycopy(a, 0, c.a, 0, size.get());
         c.size = size;
         return c;
     }
 
-    private boolean valEquals(final K a, final K b) {
+    private boolean valEquals(final short[][] a, final short[][] b) {
         return a == null ? b == null : a.equals(b);
     }
 
@@ -692,7 +698,7 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
      * @return true if the argument contains the same elements of this
      * type-specific array list.
      */
-    public boolean equals(final ObjArrayList<K> l) {
+    public boolean equals(final NullArray l) {
         if (l == this) {
             return true;
         }
@@ -700,8 +706,8 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
         if (s != l.size()) {
             return false;
         }
-        final K[] a1 = a;
-        final K[] a2 = l.a;
+        final short[][][] a1 = a;
+        final short[][][] a2 = l.a;
         while (s-- != 0) {
             if (!valEquals(a1[s], a2[s])) {
                 return false;
@@ -721,7 +727,7 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
      * @return a negative integer, zero, or a positive integer as this list is
      * lexicographically less than, equal to, or greater than the argument.
      */
-    public int compareTo(final ObjArrayList<? extends K> l) {
+    /*public int compareTo(final NullArray l) {
         final int s1 = size(), s2 = l.size();
         final K a1[] = a, a2[] = l.a;
         K e1, e2;
@@ -734,7 +740,7 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
             }
         }
         return i < s2 ? -1 : (i < s1 ? 1 : 0);
-    }
+    }*/
 
     private void writeObject(java.io.ObjectOutputStream s) throws java.io.IOException {
         s.defaultWriteObject();
@@ -745,9 +751,9 @@ public class ObjArrayList<K> extends AbstractObjectList<K> implements RandomAcce
 
     private void readObject(java.io.ObjectInputStream s) throws java.io.IOException, ClassNotFoundException {
         s.defaultReadObject();
-        a = (K[]) new Object[size.get()];
+        a = new short[size.get()][][];
         for (int i = 0; i < size.get(); i++) {
-            a[i] = (K) s.readObject();
+            a[i] = (short[][]) s.readObject();
         }
     }
 }
