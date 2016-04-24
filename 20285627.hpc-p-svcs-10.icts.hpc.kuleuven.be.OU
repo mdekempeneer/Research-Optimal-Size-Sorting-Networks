@@ -1,0 +1,634 @@
+time: 28800
+nodes: 1
+procs: 24
+account string: default_project
+queue: q24h
+========================================================================
+Will be using 24 threads
+Cycle complete with 2 comps and size 3 took 8 ms
+UniqueCounter_abs 1
+redundantCounter_abs 0
+kLengthCounter_abs 7
+pLengthCounter_abs 2
+lLengthCounter_abs 1
+networkPermCounter_abs 7
+emptyPosCounter_abs 0
+
+Cycle complete with 3 comps and size 4 took 1 ms
+UniqueCounter_abs 4
+redundantCounter_abs 2
+kLengthCounter_abs 25
+pLengthCounter_abs 0
+lLengthCounter_abs 0
+networkPermCounter_abs 16
+emptyPosCounter_abs 6
+
+Cycle complete with 4 comps and size 2 took 1 ms
+UniqueCounter_abs 6
+redundantCounter_abs 7
+kLengthCounter_abs 28
+pLengthCounter_abs 0
+lLengthCounter_abs 0
+networkPermCounter_abs 4
+emptyPosCounter_abs 0
+
+Cycle complete with 5 comps and size 1 took 1 ms
+UniqueCounter_abs 4
+redundantCounter_abs 5
+kLengthCounter_abs 4
+pLengthCounter_abs 0
+lLengthCounter_abs 0
+networkPermCounter_abs 0
+emptyPosCounter_abs 0
+
+Took 164166852 ns
+[3, 12, 5, 10, 6]
+Will be using 24 threads
+Cycle complete with 2 comps and size 3 took 3 ms
+UniqueCounter_abs 1
+redundantCounter_abs 0
+kLengthCounter_abs 12
+pLengthCounter_abs 3
+lLengthCounter_abs 3
+networkPermCounter_abs 15
+emptyPosCounter_abs 0
+
+Cycle complete with 3 comps and size 6 took 1 ms
+UniqueCounter_abs 5
+redundantCounter_abs 2
+kLengthCounter_abs 71
+pLengthCounter_abs 15
+lLengthCounter_abs 7
+networkPermCounter_abs 33
+emptyPosCounter_abs 10
+
+Cycle complete with 4 comps and size 11 took 2 ms
+UniqueCounter_abs 13
+redundantCounter_abs 9
+kLengthCounter_abs 296
+pLengthCounter_abs 23
+lLengthCounter_abs 31
+networkPermCounter_abs 37
+emptyPosCounter_abs 5
+
+Cycle complete with 5 comps and size 10 took 2 ms
+UniqueCounter_abs 32
+redundantCounter_abs 22
+kLengthCounter_abs 509
+pLengthCounter_abs 26
+lLengthCounter_abs 27
+networkPermCounter_abs 74
+emptyPosCounter_abs 13
+
+Cycle complete with 6 comps and size 7 took 2 ms
+UniqueCounter_abs 25
+redundantCounter_abs 35
+kLengthCounter_abs 198
+pLengthCounter_abs 1
+lLengthCounter_abs 0
+networkPermCounter_abs 37
+emptyPosCounter_abs 9
+
+Cycle complete with 7 comps and size 6 took 1 ms
+UniqueCounter_abs 23
+redundantCounter_abs 30
+kLengthCounter_abs 76
+pLengthCounter_abs 0
+lLengthCounter_abs 0
+networkPermCounter_abs 6
+emptyPosCounter_abs 0
+
+Cycle complete with 8 comps and size 4 took 1 ms
+UniqueCounter_abs 11
+redundantCounter_abs 39
+kLengthCounter_abs 28
+pLengthCounter_abs 0
+lLengthCounter_abs 0
+networkPermCounter_abs 0
+emptyPosCounter_abs 0
+
+Cycle complete with 9 comps and size 1 took 1 ms
+UniqueCounter_abs 7
+redundantCounter_abs 29
+kLengthCounter_abs 0
+pLengthCounter_abs 0
+lLengthCounter_abs 0
+networkPermCounter_abs 0
+emptyPosCounter_abs 0
+
+Took 28328582 ns
+[3, 6, 3, 24, 10, 20, 12, 5, 3]
+Will be using 24 threads
+Cycle complete with 2 comps and size 3 took 3 ms
+UniqueCounter_abs 1
+redundantCounter_abs 0
+kLengthCounter_abs 18
+pLengthCounter_abs 4
+lLengthCounter_abs 6
+networkPermCounter_abs 25
+emptyPosCounter_abs 0
+
+Cycle complete with 3 comps and size 7 took 2 ms
+UniqueCounter_abs 6
+redundantCounter_abs 2
+kLengthCounter_abs 128
+pLengthCounter_abs 35
+lLengthCounter_abs 20
+networkPermCounter_abs 54
+emptyPosCounter_abs 14
+
+Cycle complete with 4 comps and size 17 took 4 ms
+UniqueCounter_abs 20
+redundantCounter_abs 9
+kLengthCounter_abs 908
+pLengthCounter_abs 85
+lLengthCounter_abs 137
+networkPermCounter_abs 108
+emptyPosCounter_abs 16
+
+Cycle complete with 5 comps and size 36 took 9 ms
+UniqueCounter_abs 69
+redundantCounter_abs 31
+kLengthCounter_abs 4674
+pLengthCounter_abs 318
+lLengthCounter_abs 332
+networkPermCounter_abs 282
+emptyPosCounter_abs 33
+
+Cycle complete with 6 comps and size 53 took 14 ms
+UniqueCounter_abs 163
+redundantCounter_abs 96
+kLengthCounter_abs 14650
+pLengthCounter_abs 787
+lLengthCounter_abs 600
+networkPermCounter_abs 745
+emptyPosCounter_abs 175
+
+Cycle complete with 7 comps and size 53 took 10 ms
+UniqueCounter_abs 238
+redundantCounter_abs 200
+kLengthCounter_abs 17626
+pLengthCounter_abs 1056
+lLengthCounter_abs 923
+networkPermCounter_abs 850
+emptyPosCounter_abs 224
+
+Cycle complete with 8 comps and size 44 took 6 ms
+UniqueCounter_abs 224
+redundantCounter_abs 263
+kLengthCounter_abs 13107
+pLengthCounter_abs 346
+lLengthCounter_abs 320
+networkPermCounter_abs 789
+emptyPosCounter_abs 261
+
+Cycle complete with 9 comps and size 23 took 3 ms
+UniqueCounter_abs 178
+redundantCounter_abs 280
+kLengthCounter_abs 2415
+pLengthCounter_abs 14
+lLengthCounter_abs 19
+networkPermCounter_abs 247
+emptyPosCounter_abs 90
+
+Cycle complete with 10 comps and size 8 took 1 ms
+UniqueCounter_abs 89
+redundantCounter_abs 177
+kLengthCounter_abs 242
+pLengthCounter_abs 0
+lLengthCounter_abs 0
+networkPermCounter_abs 40
+emptyPosCounter_abs 0
+
+Cycle complete with 11 comps and size 4 took 1 ms
+UniqueCounter_abs 21
+redundantCounter_abs 83
+kLengthCounter_abs 42
+pLengthCounter_abs 0
+lLengthCounter_abs 0
+networkPermCounter_abs 2
+emptyPosCounter_abs 0
+
+Cycle complete with 12 comps and size 1 took 1 ms
+UniqueCounter_abs 11
+redundantCounter_abs 46
+kLengthCounter_abs 0
+pLengthCounter_abs 0
+lLengthCounter_abs 0
+networkPermCounter_abs 0
+emptyPosCounter_abs 0
+
+Took 67608895 ns
+[3, 6, 3, 24, 48, 24, 9, 18, 10, 36, 12, 24]
+Will be using 24 threads
+Cycle complete with 2 comps and size 3 took 5 ms
+UniqueCounter_abs 1
+redundantCounter_abs 0
+kLengthCounter_abs 25
+pLengthCounter_abs 5
+lLengthCounter_abs 10
+networkPermCounter_abs 37
+emptyPosCounter_abs 0
+
+Cycle complete with 3 comps and size 7 took 2 ms
+UniqueCounter_abs 7
+redundantCounter_abs 2
+kLengthCounter_abs 192
+pLengthCounter_abs 53
+lLengthCounter_abs 38
+networkPermCounter_abs 79
+emptyPosCounter_abs 18
+
+Cycle complete with 4 comps and size 19 took 3 ms
+UniqueCounter_abs 24
+redundantCounter_abs 9
+kLengthCounter_abs 1464
+pLengthCounter_abs 170
+lLengthCounter_abs 289
+networkPermCounter_abs 169
+emptyPosCounter_abs 23
+
+Cycle complete with 5 comps and size 51 took 20 ms
+UniqueCounter_abs 99
+redundantCounter_abs 33
+kLengthCounter_abs 10982
+pLengthCounter_abs 883
+lLengthCounter_abs 1429
+networkPermCounter_abs 579
+emptyPosCounter_abs 85
+
+Cycle complete with 6 comps and size 141 took 20 ms
+UniqueCounter_abs 309
+redundantCounter_abs 121
+kLengthCounter_abs 76433
+pLengthCounter_abs 4593
+lLengthCounter_abs 5072
+networkPermCounter_abs 2051
+emptyPosCounter_abs 398
+
+Cycle complete with 7 comps and size 325 took 22 ms
+UniqueCounter_abs 971
+redundantCounter_abs 436
+kLengthCounter_abs 448590
+pLengthCounter_abs 19824
+lLengthCounter_abs 18127
+networkPermCounter_abs 7510
+emptyPosCounter_abs 1886
+
+Cycle complete with 8 comps and size 564 took 54 ms
+UniqueCounter_abs 2165
+redundantCounter_abs 1356
+kLengthCounter_abs 1578675
+pLengthCounter_abs 52922
+lLengthCounter_abs 49036
+networkPermCounter_abs 21249
+emptyPosCounter_abs 5978
+
+Cycle complete with 9 comps and size 678 took 58 ms
+UniqueCounter_abs 3684
+redundantCounter_abs 3005
+kLengthCounter_abs 2398723
+pLengthCounter_abs 70334
+lLengthCounter_abs 63346
+networkPermCounter_abs 37201
+emptyPosCounter_abs 12599
+
+Cycle complete with 10 comps and size 510 took 31 ms
+UniqueCounter_abs 4213
+redundantCounter_abs 4496
+kLengthCounter_abs 1767601
+pLengthCounter_abs 49565
+lLengthCounter_abs 55025
+networkPermCounter_abs 34987
+emptyPosCounter_abs 14117
+
+Cycle complete with 11 comps and size 280 took 18 ms
+UniqueCounter_abs 3065
+redundantCounter_abs 4117
+kLengthCounter_abs 836799
+pLengthCounter_abs 15833
+lLengthCounter_abs 15973
+networkPermCounter_abs 18657
+emptyPosCounter_abs 7152
+
+Cycle complete with 12 comps and size 106 took 7 ms
+UniqueCounter_abs 1572
+redundantCounter_abs 2729
+kLengthCounter_abs 170441
+pLengthCounter_abs 1448
+lLengthCounter_abs 1354
+networkPermCounter_abs 6090
+emptyPosCounter_abs 2811
+
+Cycle complete with 13 comps and size 33 took 2 ms
+UniqueCounter_abs 554
+redundantCounter_abs 1225
+kLengthCounter_abs 12271
+pLengthCounter_abs 15
+lLengthCounter_abs 14
+networkPermCounter_abs 631
+emptyPosCounter_abs 265
+
+Cycle complete with 14 comps and size 11 took 1 ms
+UniqueCounter_abs 147
+redundantCounter_abs 444
+kLengthCounter_abs 1104
+pLengthCounter_abs 0
+lLengthCounter_abs 0
+networkPermCounter_abs 56
+emptyPosCounter_abs 8
+
+Cycle complete with 15 comps and size 6 took 1 ms
+UniqueCounter_abs 44
+redundantCounter_abs 173
+kLengthCounter_abs 66
+pLengthCounter_abs 0
+lLengthCounter_abs 0
+networkPermCounter_abs 0
+emptyPosCounter_abs 0
+
+Cycle complete with 16 comps and size 1 took 1 ms
+UniqueCounter_abs 17
+redundantCounter_abs 105
+kLengthCounter_abs 0
+pLengthCounter_abs 0
+lLengthCounter_abs 0
+networkPermCounter_abs 0
+emptyPosCounter_abs 0
+
+Took 264747896 ns
+[3, 6, 24, 96, 10, 72, 33, 3, 48, 24, 96, 10, 36, 20, 12, 96]
+Will be using 24 threads
+Cycle complete with 2 comps and size 3 took 4 ms
+UniqueCounter_abs 1
+redundantCounter_abs 0
+kLengthCounter_abs 33
+pLengthCounter_abs 6
+lLengthCounter_abs 15
+networkPermCounter_abs 51
+emptyPosCounter_abs 0
+
+Cycle complete with 3 comps and size 7 took 2 ms
+UniqueCounter_abs 8
+redundantCounter_abs 2
+kLengthCounter_abs 269
+pLengthCounter_abs 74
+lLengthCounter_abs 62
+networkPermCounter_abs 107
+emptyPosCounter_abs 22
+
+Cycle complete with 4 comps and size 20 took 11 ms
+UniqueCounter_abs 28
+redundantCounter_abs 9
+kLengthCounter_abs 2081
+pLengthCounter_abs 258
+lLengthCounter_abs 468
+networkPermCounter_abs 241
+emptyPosCounter_abs 31
+
+Cycle complete with 5 comps and size 57 took 29 ms
+UniqueCounter_abs 126
+redundantCounter_abs 33
+kLengthCounter_abs 18017
+pLengthCounter_abs 1525
+lLengthCounter_abs 3226
+networkPermCounter_abs 922
+emptyPosCounter_abs 140
+
+Cycle complete with 6 comps and size 189 took 20 ms
+UniqueCounter_abs 430
+redundantCounter_abs 130
+kLengthCounter_abs 162858
+pLengthCounter_abs 9237
+lLengthCounter_abs 18608
+networkPermCounter_abs 3705
+emptyPosCounter_abs 678
+
+Cycle complete with 7 comps and size 648 took 71 ms
+UniqueCounter_abs 1688
+redundantCounter_abs 533
+kLengthCounter_abs 1717001
+pLengthCounter_abs 75676
+lLengthCounter_abs 120400
+networkPermCounter_abs 18878
+emptyPosCounter_abs 4291
+
+Cycle complete with 8 comps and size 2088 took 263 ms
+UniqueCounter_abs 6224
+redundantCounter_abs 2318
+kLengthCounter_abs 17522729
+pLengthCounter_abs 557340
+lLengthCounter_abs 708485
+networkPermCounter_abs 120429
+emptyPosCounter_abs 34776
+
+Cycle complete with 9 comps and size 5703 took 604 ms
+UniqueCounter_abs 19783
+redundantCounter_abs 9629
+kLengthCounter_abs 145991797
+pLengthCounter_abs 3785448
+lLengthCounter_abs 3914890
+networkPermCounter_abs 817339
+emptyPosCounter_abs 268941
+
+Cycle complete with 10 comps and size 11668 took 1127 ms
+UniqueCounter_abs 53100
+redundantCounter_abs 32465
+kLengthCounter_abs 670594182
+pLengthCounter_abs 14399657
+lLengthCounter_abs 12738354
+networkPermCounter_abs 3285431
+emptyPosCounter_abs 1196380
+
+Cycle complete with 11 comps and size 16094 took 2171 ms
+UniqueCounter_abs 104837
+redundantCounter_abs 80856
+kLengthCounter_abs 1372678579
+pLengthCounter_abs 23763911
+lLengthCounter_abs 21229324
+networkPermCounter_abs 6479693
+emptyPosCounter_abs 2574343
+
+Cycle complete with 12 comps and size 13303 took 2384 ms
+UniqueCounter_abs 138583
+redundantCounter_abs 133247
+kLengthCounter_abs 1209071512
+pLengthCounter_abs 18768722
+lLengthCounter_abs 17256613
+networkPermCounter_abs 6645357
+emptyPosCounter_abs 2865842
+
+Cycle complete with 13 comps and size 6677 took 706 ms
+UniqueCounter_abs 109705
+redundantCounter_abs 129396
+kLengthCounter_abs 425654091
+pLengthCounter_abs 6503544
+lLengthCounter_abs 6752216
+networkPermCounter_abs 3203834
+emptyPosCounter_abs 1458595
+
+Cycle complete with 14 comps and size 2217 took 111 ms
+UniqueCounter_abs 50927
+redundantCounter_abs 76399
+kLengthCounter_abs 85974811
+pLengthCounter_abs 1075681
+lLengthCounter_abs 1220999
+networkPermCounter_abs 826148
+emptyPosCounter_abs 399461
+
+Cycle complete with 15 comps and size 503 took 45 ms
+UniqueCounter_abs 15935
+redundantCounter_abs 29351
+kLengthCounter_abs 9501038
+pLengthCounter_abs 84554
+lLengthCounter_abs 93616
+networkPermCounter_abs 137233
+emptyPosCounter_abs 71516
+
+Cycle complete with 16 comps and size 77 took 12 ms
+UniqueCounter_abs 3169
+redundantCounter_abs 7753
+kLengthCounter_abs 405604
+pLengthCounter_abs 1475
+lLengthCounter_abs 1529
+networkPermCounter_abs 10204
+emptyPosCounter_abs 5275
+
+Cycle complete with 17 comps and size 18 took 1 ms
+UniqueCounter_abs 431
+redundantCounter_abs 1360
+kLengthCounter_abs 2723
+pLengthCounter_abs 2
+lLengthCounter_abs 9
+networkPermCounter_abs 260
+emptyPosCounter_abs 35
+
+Cycle complete with 18 comps and size 9 took 0 ms
+UniqueCounter_abs 113
+redundantCounter_abs 350
+kLengthCounter_abs 157
+pLengthCounter_abs 0
+lLengthCounter_abs 0
+networkPermCounter_abs 11
+emptyPosCounter_abs 0
+
+Cycle complete with 19 comps and size 1 took 1 ms
+UniqueCounter_abs 38
+redundantCounter_abs 205
+kLengthCounter_abs 0
+pLengthCounter_abs 0
+lLengthCounter_abs 0
+networkPermCounter_abs 0
+emptyPosCounter_abs 0
+
+Took 7587661553 ns
+[3, 12, 48, 192, 5, 10, 80, 160, 36, 17, 136, 40, 66, 6, 20, 6, 96, 40, 24]
+Will be using 24 threads
+Cycle complete with 2 comps and size 3 took 9 ms
+UniqueCounter_abs 1
+redundantCounter_abs 0
+kLengthCounter_abs 42
+pLengthCounter_abs 7
+lLengthCounter_abs 21
+networkPermCounter_abs 67
+emptyPosCounter_abs 0
+
+Cycle complete with 3 comps and size 7 took 5 ms
+UniqueCounter_abs 9
+redundantCounter_abs 2
+kLengthCounter_abs 359
+pLengthCounter_abs 98
+lLengthCounter_abs 92
+networkPermCounter_abs 138
+emptyPosCounter_abs 26
+
+Cycle complete with 4 comps and size 20 took 13 ms
+UniqueCounter_abs 32
+redundantCounter_abs 9
+kLengthCounter_abs 2752
+pLengthCounter_abs 339
+lLengthCounter_abs 665
+networkPermCounter_abs 324
+emptyPosCounter_abs 40
+
+Cycle complete with 5 comps and size 59 took 20 ms
+UniqueCounter_abs 149
+redundantCounter_abs 33
+kLengthCounter_abs 24563
+pLengthCounter_abs 2243
+lLengthCounter_abs 4858
+networkPermCounter_abs 1261
+emptyPosCounter_abs 192
+
+Cycle complete with 6 comps and size 208 took 32 ms
+UniqueCounter_abs 532
+redundantCounter_abs 132
+kLengthCounter_abs 248109
+pLengthCounter_abs 14409
+lLengthCounter_abs 36876
+networkPermCounter_abs 5418
+emptyPosCounter_abs 991
+
+Cycle complete with 7 comps and size 807 took 170 ms
+UniqueCounter_abs 2275
+redundantCounter_abs 564
+kLengthCounter_abs 3175837
+pLengthCounter_abs 128183
+lLengthCounter_abs 350249
+networkPermCounter_abs 30715
+emptyPosCounter_abs 6536
+
+Cycle complete with 8 comps and size 3415 took 581 ms
+UniqueCounter_abs 9746
+redundantCounter_abs 2688
+kLengthCounter_abs 47864147
+pLengthCounter_abs 1439701
+lLengthCounter_abs 3398487
+networkPermCounter_abs 248317
+emptyPosCounter_abs 64958
+
+Cycle complete with 9 comps and size 14343 took 2249 ms
+UniqueCounter_abs 43464
+redundantCounter_abs 13933
+kLengthCounter_abs 851427132
+pLengthCounter_abs 19712816
+lLengthCounter_abs 38321582
+networkPermCounter_abs 2824405
+emptyPosCounter_abs 892832
+
+Cycle complete with 10 comps and size 55983 took 25746 ms
+UniqueCounter_abs 183320
+redundantCounter_abs 71547
+kLengthCounter_abs 11361143984
+pLengthCounter_abs 229034884
+lLengthCounter_abs 341604054
+networkPermCounter_abs 27832758
+emptyPosCounter_abs 9788129
+
+Cycle complete with 11 comps and size 188698 took 142751 ms
+UniqueCounter_abs 713523
+redundantCounter_abs 335842
+kLengthCounter_abs 110813202842
+pLengthCounter_abs 1889696414
+lLengthCounter_abs 2326227291
+networkPermCounter_abs 216744704
+emptyPosCounter_abs 79731223
+
+Cycle complete with 12 comps and size 490237 took 954578 ms
+UniqueCounter_abs 2335534
+redundantCounter_abs 1355798
+kLengthCounter_abs 760419237851
+pLengthCounter_abs 10459263985
+lLengthCounter_abs 11264328424
+networkPermCounter_abs 1258278337
+emptyPosCounter_abs 497607516
+
+Cycle complete with 13 comps and size 854552 took 3398333 ms
+UniqueCounter_abs 5831160
+redundantCounter_abs 4165541
+kLengthCounter_abs 2705016171371
+pLengthCounter_abs 29882873221
+lLengthCounter_abs 29964610822
+networkPermCounter_abs 4131737148
+emptyPosCounter_abs 1776805082
+
