@@ -15,6 +15,7 @@
 \usepackage{listings}
 \usepackage{color}
 \usepackage{wrapfig}
+\usepackage{tabu}
 
 \definecolor{dkgreen}{rgb}{0,0.6,0}
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
@@ -267,11 +268,29 @@ Wanneer het aantal outputs bij $C_a$ met $x$ $1$'en ($1 \leq x \leq n$) groter i
 Voor lemma \ref{lemma4} introduceren we extra informatie over het comparator netwerk, namelijk $w\left(C_a, x, k\right)$ met $x \in \{0,1\}$ en $0\leq k \leq n$.
 Dit representeert de set van posities $i$ waarvoor er een output bestaat in $C_a$ met $k$ $1$'en waarvoor geldt dat op de $i^{de}$ positie van deze output een $x$ voorkomt.
 Deze informatie voegen we bij elk netwerk toe in de vorm van een array van shorts, $w$.
-$w\left(C_a,0,k\right)$ houden we bij op positie  
+$w\left(C_a,0,k\right)$ houden we bij op index\footnote{In \texttt{Java} begint een array met index $0$.} $(k-1) \times 4$.
+$|w\left(C_a,0,k\right)|$ houden we bij op index $(k-1) \times 4 + 1$.
+\begin{table}[!h]
+\centering
+\begin{tabu}{|[1.25pt]l|[1.25pt]c|[1.25pt]c|[1.25pt]c|[1.25pt]}
+\tabucline[1.25pt]{-}
+$w\left(C_a, 0, 1\right)$ & $|w\left(C_a, 0, 1\right)|$  & $w\left(C_a, 1, 1\right)$ & $|w\left(C_a, 1, 1\right)|$\\ 
+\tabucline[1.25pt]{-}
+\end{tabu} 
+\caption{Test}
+\end{table}
 \begin{lemma}
 
 \label{lemma4}
 \end{lemma}
+%TODO Caption table
+%TODO De volgende zinnen lpaatsen.
+Voor efficient operaties te kunnen uitvoeren zullen voor de posities van w(Ca, x, k) een bitrepresentatie gebruiken. 
+Zo zal bijvoorbeeld w(Ca, 1, 2) = 0110 inhouden dat er bij de outputs met twee 1'en minstens één output bestaat met op de 2de positie een 1 en minstens één met op positie 3 een 1.
+
+Elk kanaal k van het netwerk Ca vereist 4 opeenvolgende indices zoals te zien in tabel 3.
+Voor elk kanaal k slaan we deze informatie op vanaf index (k-1) x 4.
+
 
 ~\\\\
 Uitleg hoe we de prune doen.\\
