@@ -265,11 +265,9 @@ Bij $9$ kanalen wordt de methode $1.07666 \times 10^{13}$ keer uitgevoerd waarbi
 Wanneer het aantal outputs bij $C_a$ met $x$ $1$'en ($1 \leq x \leq n$) groter is dan bij $C_b$ weten we dat $C_a \npreceq C_b$ met $C_a$ en $C_b$ twee comparator netwerken.
 \label{lemma3}
 \end{lemma}
-Voor lemma \ref{lemma4} introduceren we extra informatie over het comparator netwerk, namelijk $w\left(C_a, x, k\right)$ met $x \in \{0,1\}$ en $0\leq k \leq n$.
-Dit representeert de set van posities $i$ waarvoor er een output bestaat in $C_a$ met $k$ $1$'en waarvoor geldt dat op de $i^{de}$ positie van deze output een $x$ voorkomt.
-Deze informatie voegen we bij elk netwerk toe in de vorm van een array van shorts, $w$.
-$w\left(C_a,0,k\right)$ houden we bij op index\footnote{In \texttt{Java} begint een array met index $0$.} $(k-1) \times 4$.
-$|w\left(C_a,0,k\right)|$ houden we bij op index $(k-1) \times 4 + 1$.
+Voor lemma \ref{lemma4} van Codish (\cite{sortingNetworksSize2014}) introduceren we extra informatie over het comparator netwerk, namelijk $w\left(C_a, x, k\right)$ waarbij $x \in \{0,1\}$ en $0\leq k \leq n$.
+Dit representeert de set van posities $i$ waarvoor er een output bestaat in $C_a$ met $k$ $1$'en waarvoor geldt dat op de $i^{de}$ positie van deze output een $x$ voorkomt. Om effici\"ent operaties te kunnen uitvoeren zullen we de posities voorstellen door middel van een bit representatie. Zo zal bijvoorbeeld $w\left(C_a, 1, 2\right) = 0110$ inhouden dat er bij de outputs met twee $1$'en minstens \'e\'en output bestaat met een 1 op de $2^{de}$ positie, \'e\'en met een 1 op de $3_{de}$ positie en geen enkel met een 1 op positie 1 of 4. Deze informatie voegen we bij elk netwerk toe in de vorm van een array van shorts, $w$. Elk kanaal k van het netwerk $C_a$ vereist dan 4 opeenvolgende indices in $w$, zoals te zien in tabel \ref{tabel3}.
+Deze informatie slaan we voor elk kanaal $k$ op vanaf index\footnote{In \texttt{Java} begint een array met index $0$.} $(k-1) \times 4$.
 \begin{table}[!h]
 \centering
 \begin{tabu}{|[1.25pt]l|[1.25pt]c|[1.25pt]c|[1.25pt]c|[1.25pt]}
@@ -277,19 +275,16 @@ $|w\left(C_a,0,k\right)|$ houden we bij op index $(k-1) \times 4 + 1$.
 $w\left(C_a, 0, 1\right)$ & $|w\left(C_a, 0, 1\right)|$  & $w\left(C_a, 1, 1\right)$ & $|w\left(C_a, 1, 1\right)|$\\ 
 \tabucline[1.25pt]{-}
 \end{tabu} 
-\caption{Test}
+\caption{De inhoud van $w$ op indices $0-3$ voor kanaal 1.}
+\label{tabel3} 
 \end{table}
+
 \begin{lemma}
 
 \label{lemma4}
 \end{lemma}
-%TODO Caption table
-%TODO De volgende zinnen lpaatsen.
-Voor efficient operaties te kunnen uitvoeren zullen voor de posities van w(Ca, x, k) een bitrepresentatie gebruiken. 
-Zo zal bijvoorbeeld w(Ca, 1, 2) = 0110 inhouden dat er bij de outputs met twee 1'en minstens één output bestaat met op de 2de positie een 1 en minstens één met op positie 3 een 1.
-
-Elk kanaal k van het netwerk Ca vereist 4 opeenvolgende indices zoals te zien in tabel 3.
-Voor elk kanaal k slaan we deze informatie op vanaf index (k-1) x 4.
+%TODO Nakijken caption tabel + tekst erboven.
+%TODO te vaak van Codish et al. (centraliseer de verwijzing? of footnotes?)
 
 
 ~\\\\
