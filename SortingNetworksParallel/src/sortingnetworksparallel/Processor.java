@@ -512,7 +512,7 @@ public class Processor {
                     }
 
                     /* get # null in a row behind the first null*/
-                    short difference = (short) (index - outerIndex - 1); //TODO: possible overload.
+                    short difference = (short) (index - outerIndex - 1); //TODO: possible overload when null seq > 65000...
                     /* Store cNull */
                     if (difference > 0) {
                         short[][] cNull = new short[1][1];
@@ -521,7 +521,6 @@ public class Processor {
                         before = cNull;
                         outerIndex += difference;
                     }
-                    /*} else if(before == null) {*/
 
                 } else { //length == 1
                     before[0][0]++;
