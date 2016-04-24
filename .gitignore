@@ -5,6 +5,8 @@
 /SortingNetworksGenerator/nbproject/private/
 /SortingNetworksGenerator/build/
 /SortingNetworksGenerator/dist/
+/SortingNetworksPaper/nbproject/project.properties
+/SortingNetworksParallel/nbproject/project.properties
 /NetworkLib/nbproject/private/
 /NetworkLib/build/
 ~$tijdsbesteding.xlsx
@@ -28,7 +30,7 @@
 /C/C_WV/nbproject/Package-Debug.bash
 /C/C_WV/nbproject/configurations.xml
 /C/C_WV/nbproject/private/configurations.xml
-C/C_WV/nbproject/configurations.xml
+/C/C_WV/nbproject/configurations.xml
 C/C_WV/nbproject/Makefile-Debug.mk
 C/C_WV/nbproject/Makefile-impl.mk
 C/C_WV/nbproject/Makefile-variables.mk
@@ -43,12 +45,8 @@ id_rsa_vsc.pub
 .metadata/
 .metadata/*
 C/C_WV/nbproject/private/private.xml
-
 C/C_WV/nbproject/private/private.xml
 /SNPrinter/nbproject/private/
 /SNPrinter/build/
 
 Poster/~$Poster_herwerking.pptx
-
-SortingNetworksPaper/nbproject/project.properties
-SortingNetworksParallel/nbproject/project.properties
