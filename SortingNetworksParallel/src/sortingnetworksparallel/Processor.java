@@ -513,7 +513,7 @@ public class Processor {
                         int index = outerIndex + 1;
                         buffered = null;
                         /* find next non null */
-                        while ((buffered = networkList.get(index)) == null && index < bound) {
+                        while (index < bound && (buffered = networkList.get(index)) == null) {
                             index++;
                         }
 
@@ -578,7 +578,7 @@ public class Processor {
                         int index = outerIndex + 1;
                         buffered = null;
                         /* find next non null */
-                        while ((buffered = networkList.get(index)) == null && index < nSize) {
+                        while (index < nSize && (buffered = networkList.get(index)) == null) {
                             index++;
                         }
 
