@@ -477,255 +477,65 @@ public class Processor {
      *
      */
     public void prune(NullArray networkList, final int networkIndex, final int skipSize) {
-
-        int bound = networkList.size();
         short[][] buffered = null;
         short[][] before = null;
 
-        for (int outerIndex = 0; outerIndex < bound; outerIndex++) {
-            if (outerIndex != networkIndex) {
-                short[][] network2 = (buffered != null) ? buffered : networkList.get(outerIndex);
-                buffered = null;
+        for (int outerIndex = 0; outerIndex < networkIndex; outerIndex++) {
+            short[][] network2 = (buffered != null) ? buffered : networkList.get(outerIndex);
+            buffered = null;
 
-                if (network2 != null && network2.length != 1) {
-                    before = network2;
+            if (network2 != null && network2.length != 1) {
+                before = network2;
 
-                    for (int i = 0; i < skipSize; i++) { //for all in the innerPrune
-                        int innerIndex = networkIndex + i;
-                        short[][] network = networkList.get(innerIndex);
-                        if (network != null && network.length != 1) { //else already removed.
+                for (int i = 0; i < skipSize; i++) { //for all in the innerPrune
+                    int innerIndex = networkIndex + i;
+                    short[][] network = networkList.get(innerIndex);
+                    if (network != null && network.length != 1) { //else already removed.
 
-                            if (subsumes(network, network2)) {
-                                if (networkList.get(innerIndex) != null) { //recheck
-                                    networkList.remove(outerIndex);
-                                }
-                                break;
-                            } else if (subsumes(network2, network)) {
-                                networkList.remove(innerIndex);
-                                //break;
-                            }
-
-                        }
-                    }
-
-                } else if (network2 == null) {
-                    if (before == null || before.length != 1) {
-                        int index = outerIndex + 1;
-                        buffered = null;
-                        /* find next non null */
-                        while (index < bound && (buffered = networkList.get(index)) == null) {
-                            index++;
+                        if (subsumes(network, network2)) {
+                            networkList.remove(outerIndex);
+                            break;
+                        } else if (subsumes(network2, network)) {
+                            networkList.remove(innerIndex);
                         }
 
-                        /* get # null in a row behind the first null*/
-                        short difference = (short) (index - outerIndex - 1); //TODO: possible overload.
-                        /* Store cNull */
-                        if (difference > 0) {
-                            short[][] cNull = new short[1][1];
-                            cNull[0][0] = difference;
-                            networkList.set(outerIndex, cNull);
-                            before = cNull;
-                            outerIndex += difference;
-                        }
-                        /*} else if(before == null) {*/
-
-                    } else { //length == 1
-                        before[0][0]++;
-                    }
-                } else { //Cnull
-                    int skip = network2[0][0]; //Amount of nulls after this.
-                    outerIndex += skip;
-                    if (before != null && before.length == 1) { //came from cNull
-                        before[0][0] += skip + 1;
-                    } else {
-                        before = network2;
                     }
                 }
-            } else {
-                outerIndex += skipSize - 1;
-            }
-        }
-        int nSize;
 
-        for (int outerIndex = bound; outerIndex < (nSize = networkList.size()); outerIndex++) {
-            if (outerIndex != networkIndex) {
-                short[][] network2 = (buffered != null) ? buffered : networkList.get(outerIndex);
-                buffered = null;
-
-                if (network2 != null && network2.length != 1) {
-                    before = network2;
-
-                    for (int i = 0; i < skipSize; i++) { //for all in the innerPrune
-                        int innerIndex = networkIndex + i;
-                        short[][] network = networkList.get(innerIndex);
-                        if (network != null && network.length != 1) { //else already removed.
-
-                            if (subsumes(network, network2)) {
-                                if (networkList.get(innerIndex) != null) { //recheck
-                                    networkList.remove(outerIndex);
-                                }
-                                break;
-                            } else if (subsumes(network2, network)) {
-                                networkList.remove(innerIndex);
-                                //break;
-                            }
-
-                        }
-                    }
-
-                } else if (network2 == null) {
-                    if (before == null || before.length != 1) {
-                        int index = outerIndex + 1;
-                        buffered = null;
-                        /* find next non null */
-                        while (index < nSize && (buffered = networkList.get(index)) == null) {
-                            index++;
-                        }
-
-                        /* get # null in a row behind the first null*/
-                        short difference = (short) (index - outerIndex - 1); //TODO: possible overload.
-                        /* Store cNull */
-                        if (difference > 0) {
-                            short[][] cNull = new short[1][1];
-                            cNull[0][0] = difference;
-                            networkList.set(outerIndex, cNull);
-                            before = cNull;
-                            outerIndex += difference;
-                        }
-                        /*} else if(before == null) {*/
-
-                    } else { //length == 1
-                        before[0][0]++;
-                    }
-                } else { //Cnull
-                    int skip = network2[0][0]; //Amount of nulls after this.
-                    outerIndex += skip;
-                    if (before != null && before.length == 1) { //came from cNull
-                        before[0][0] += skip + 1;
-                    } else {
-                        before = network2;
-                    }
-                }
-            } else {
-                outerIndex += skipSize - 1;
-            }
-        }
-
-        /*
-        int bound = networkList.size();
-        short[][] buffered = null;
-
-        for (int outerIndex = 0; outerIndex < bound; outerIndex++) {
-            if (outerIndex != networkIndex) {
-                short[][] network2 = (buffered != null) ? buffered : networkList.get(outerIndex);
-                buffered = null;
-                
-                if (network2 != null && network2.length != 1) {
-                    for (int i = 0; i < skipSize; i++) { //for all in the innerPrune
-                        int innerIndex = networkIndex + i;
-                        short[][] network = networkList.get(innerIndex);
-                        if (network != null && network.length != 1) { //else already removed.
-
-                            if (subsumes(network, network2)) {
-                                if (networkList.get(innerIndex) != null) { //recheck
-                                    networkList.remove(outerIndex);
-                                }
-                                break;
-                            } else if (subsumes(network2, network)) {
-                                networkList.remove(innerIndex);
-                                //break;
-                            }
-
-                        }
-                    }
-                } else if(network2 == null) {
-                    //TODO: What if just came from cNull
+            } else if (network2 == null) {
+                if (before == null || before.length != 1) {
                     int index = outerIndex + 1;
                     buffered = null;
-                    // find next non null
-                    while((buffered = networkList.get(index)) == null && index < bound) {
+                    /* find next non null */
+                    while (index < networkIndex && (buffered = networkList.get(index)) == null) {
                         index++;
                     }
-                    
-                    // get # null in a row behind the first null
+
+                    /* get # null in a row behind the first null*/
                     short difference = (short) (index - outerIndex - 1); //TODO: possible overload.
-                    // Store cNull
-                    if(difference > 1) {
+                    /* Store cNull */
+                    if (difference > 0) {
                         short[][] cNull = new short[1][1];
                         cNull[0][0] = difference;
                         networkList.set(outerIndex, cNull);
+                        before = cNull;
+                        outerIndex += difference;
                     }
-                } else { //Cnull
-                    int skip = network2[0][0]; //Amount of nulls after this.
-                    outerIndex += skip;
-                    //TODO: What if just came from cNull.
+                    /*} else if(before == null) {*/
+
+                } else { //length == 1
+                    before[0][0]++;
                 }
-            } else {
-                outerIndex += skipSize - 1;
+            } else { //Cnull
+                int skip = network2[0][0]; //Amount of nulls after this.
+                outerIndex += skip;
+                if (before != null && before.length == 1) { //came from cNull
+                    before[0][0] += skip + 1;
+                } else {
+                    before = network2;
+                }
             }
         }
-
-        // The same but using the updated size
-        int nSize;
-        for (int outerIndex = bound; outerIndex < (nSize = networkList.size()); outerIndex++) {
-            if (outerIndex != networkIndex) {
-                short[][] network2 = (buffered != null) ? buffered : networkList.get(outerIndex);
-                buffered = null;
-                
-                if (network2 != null && network2.length != 1) {
-                    for (int i = 0; i < skipSize; i++) { //for all in the innerPrune
-                        int innerIndex = networkIndex + i;
-                        short[][] network = networkList.get(innerIndex);
-                        if (network != null && network.length != 1) { //else already removed.
-
-                            if (subsumes(network, network2)) {
-                                if (networkList.get(innerIndex) != null) { //recheck
-                                    networkList.remove(outerIndex);
-                                }
-                                break;
-                            } else if (subsumes(network2, network)) {
-                                networkList.remove(innerIndex);
-                                //break;
-                            }
-
-                        }
-                    }
-                } else if(network2 == null) {
-                    //TODO: What if just came from cNull
-                    int index = outerIndex + 1;
-                    buffered = null;
-                    // find next non null
-                    while((buffered = networkList.get(index)) == null && index < nSize) {
-                        index++;
-                    }
-                    
-                    // get # null in a row behind the first null
-                    //short difference = (short) (index - outerIndex - 1); //TODO: Handle possible overload by placing max and skip max.
-                    int tempDiff = index - outerIndex - 1;
-                    if(tempDiff > Short.MAX_VALUE) {
-                        System.err.println("Difference of null was too big.");
-                    }
-                    short difference = (short) tempDiff;
-                    
-                    // Store cNull
-                    if(difference > 1) {
-                        short[][] cNull = new short[1][1];
-                        cNull[0][0] = difference;
-                        networkList.set(outerIndex, cNull);
-                    }
-                    
-                    // skip self 
-                    outerIndex += difference;
-                } else { //Cnull
-                    int skip = network2[0][0]; //Amount of nulls after this.
-                    outerIndex += skip;
-                    buffered = null;
-                    //TODO: What if just came from cNull.
-                }
-            } else {
-                outerIndex += skipSize - 1;
-            }
-        }*/
     }
     //}
 
