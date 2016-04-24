@@ -15,36 +15,56 @@ public class TestNullArray {
     @Before
     public void setUp() {
         elementsCount = 0;
-        int nb = 1000000;
+        int nb = 100000;
         a = new NullArray(nb);
 
         Random rand = new Random();
         for (int i = 0; i < nb - 2; i++) {
             int random = rand.nextInt(3);
 
-            if (random == 0) { //null
-                short[][] box = null;
-                a.add(box);
-            } else if (random == 1) { //value
-                a.add(new short[2][]);
-                elementsCount++;
-            } else if (random == 2) { //cNull
-                short random2 = (short) (1 + rand.nextInt(10));
-                short[][] cNull = new short[1][1];
-                a.add(cNull);
-
-                random2 = (short) Math.min(random2, nb - a.size() - 1);
-                cNull[0][0] = random2;
-
-                short[][] box = null;
-                for (int j = 1; j <= random2; j++) {
-                    a.add(box);
-                    i++;
+            switch (random) {
+                case 1: {
+                    //null
+                    short[][] box = null;
+                    if (!a.add(box)) {
+                        System.out.println("shouldn't");
+                    }
+                    break;
                 }
+                case 2: {
+                    //value
+                    if (!a.add(new short[2][])) {
+                        System.out.println("shouldn't");
+                    }
+                    elementsCount++;
+                    break;
+                }
+                case 0: {
+                    //cNull
+                    short random2 = (short) (1 + rand.nextInt(10));
+                    random2 = (short) Math.min(random2, nb - a.size() - 4);
+                    if (random2 >= 1) {
+                        short[][] cNull = new short[1][1];
+                        a.add(cNull);
+
+                        short[][] box = null;
+                        for (int j = 1; j <= random2; j++) {
+                            a.add(box);
+                            cNull[0][0]++;
+                            i++;
+                        }
+                    } else {
+                        short[][] box = null;
+                        a.add(box);
+                    }
+                    break;
+                }
+                default:
+                    break;
             }
         }
 
-        for (int i = 0; i < 2; i++) {
+        /*for (int i = 0; i < 2; i++) {
             int random = rand.nextInt(2);
             if (random == 0) {
                 short[][] box = null;
@@ -54,10 +74,9 @@ public class TestNullArray {
                 a.add(box);
                 elementsCount++;
             }
-        }
-
+        }*/
         clone = a.clone();
-        assertEquals(a.size(), nb);
+        assertEquals(a.size(), nb - 2);
     }
 
     int elementsCount;
@@ -95,7 +114,7 @@ public class TestNullArray {
 
                     /* get # null in a row behind the first null*/
                     int diff = index - outerIndex - 1;
-                    if(diff > Short.MAX_VALUE) {
+                    if (diff > Short.MAX_VALUE) {
                         System.out.println("error " + diff);
                     }
                     short difference = (short) diff; //TODO: possible overload.
@@ -160,7 +179,7 @@ public class TestNullArray {
         assertEquals(0, error);
         assertEquals(0, errorE);
     }
-    
+
     private void check() {
         int errorE = 0; //skipped elements
 
@@ -184,7 +203,8 @@ public class TestNullArray {
             }
 
         }
-        assertEquals(0, errorE);
+        boolean err = errorE == 0;
+        assertTrue(err);
     }
 
 }

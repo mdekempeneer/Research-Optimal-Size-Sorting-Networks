@@ -108,7 +108,7 @@ public class NullArray extends AbstractObjectList<short[][]> implements RandomAc
      * The backing array.
      */
     protected transient short[][] a[];
-    
+
     /**
      * The current actual size of the list (never greater than the backing-array
      * length).
@@ -129,6 +129,7 @@ public class NullArray extends AbstractObjectList<short[][]> implements RandomAc
     protected NullArray(final short[][] a[], boolean dummy) {
         this.a = a;
         this.wrapped = true;
+        size = new AtomicInteger(0);
     }
 
     /**
@@ -139,6 +140,7 @@ public class NullArray extends AbstractObjectList<short[][]> implements RandomAc
     public NullArray(final int capacity) {
         a = new short[capacity][][];
         wrapped = false;
+        size = new AtomicInteger(0);
     }
 
     /**
@@ -432,9 +434,11 @@ public class NullArray extends AbstractObjectList<short[][]> implements RandomAc
     }
 
     /**
-     * Remove the object from the given index.
-     * The result will be a null value on that index.
-     * @param index The index to set to null. A index higher than it should be causes unwanted results.
+     * Remove the object from the given index. The result will be a null value
+     * on that index.
+     *
+     * @param index The index to set to null. A index higher than it should be
+     * causes unwanted results.
      * @return null.
      */
     @Override
@@ -460,7 +464,7 @@ public class NullArray extends AbstractObjectList<short[][]> implements RandomAc
         if (nullFlag) {
             nullFlag = false;
             int length = size.get();
-            
+
             for (int i = length - 1; i >= 0; i--) {
                 if (a[i] == null || a[i].length == 1) {
                     System.arraycopy(a, (i + 1), a, i, length - i - 1);
@@ -487,9 +491,10 @@ public class NullArray extends AbstractObjectList<short[][]> implements RandomAc
 
     /**
      * Does return old value.
+     *
      * @param index
      * @param k
-     * @return 
+     * @return
      */
     @Override
     public short[][] set(final int index, final short[][] k) {
@@ -741,7 +746,6 @@ public class NullArray extends AbstractObjectList<short[][]> implements RandomAc
         }
         return i < s2 ? -1 : (i < s1 ? 1 : 0);
     }*/
-
     private void writeObject(java.io.ObjectOutputStream s) throws java.io.IOException {
         s.defaultWriteObject();
         for (int i = 0; i < size.get(); i++) {
