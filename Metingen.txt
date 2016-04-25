@@ -11,3 +11,8 @@ test20160415.pbs	: ch=4-9; innerSize=256; Haswell;	output=20283061.o
 
 20/04/2016
 test20160420_PS.pbs	: ch=4-9; innerSize=256; Haswell;	output=20285627.o (master debug check=checkAll + meting counters)
+
+25/04/2016
+test20160425_NullJump.pbs ch=4-9; innerSize=256: Haswell;	output=20290068.o (nullJump -> jump over null values.)
+
+
