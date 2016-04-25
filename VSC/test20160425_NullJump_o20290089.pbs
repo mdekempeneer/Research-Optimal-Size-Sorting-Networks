@@ -1,0 +1,146 @@
+time: 18000
+nodes: 1
+procs: 24
+account string: default_project
+queue: q24h
+========================================================================
+Will be using 24 threads
+Cycle complete with 2 comps and size 3 took 9 ms
+Cycle complete with 3 comps and size 4 took 1 ms
+Cycle complete with 4 comps and size 2 took 2 ms
+Cycle complete with 5 comps and size 1 took 1 ms
+Took 135640546 ns
+[3, 12, 5, 10, 6]
+Will be using 24 threads
+Cycle complete with 2 comps and size 3 took 2 ms
+Cycle complete with 3 comps and size 6 took 1 ms
+Cycle complete with 4 comps and size 11 took 2 ms
+Cycle complete with 5 comps and size 10 took 2 ms
+Cycle complete with 6 comps and size 7 took 1 ms
+Cycle complete with 7 comps and size 6 took 1 ms
+Cycle complete with 8 comps and size 4 took 1 ms
+Cycle complete with 9 comps and size 1 took 1 ms
+Took 25331106 ns
+[3, 6, 3, 24, 10, 20, 12, 5, 3]
+Will be using 24 threads
+Cycle complete with 2 comps and size 3 took 3 ms
+Cycle complete with 3 comps and size 7 took 2 ms
+Cycle complete with 4 comps and size 17 took 4 ms
+Cycle complete with 5 comps and size 36 took 8 ms
+Cycle complete with 6 comps and size 53 took 13 ms
+Cycle complete with 7 comps and size 53 took 10 ms
+Cycle complete with 8 comps and size 44 took 5 ms
+Cycle complete with 9 comps and size 23 took 2 ms
+Cycle complete with 10 comps and size 8 took 1 ms
+Cycle complete with 11 comps and size 4 took 1 ms
+Cycle complete with 12 comps and size 1 took 0 ms
+Took 61339344 ns
+[3, 6, 3, 24, 48, 24, 9, 18, 10, 36, 12, 24]
+Will be using 24 threads
+Cycle complete with 2 comps and size 3 took 3 ms
+Cycle complete with 3 comps and size 7 took 1 ms
+Cycle complete with 4 comps and size 19 took 4 ms
+Cycle complete with 5 comps and size 51 took 19 ms
+Cycle complete with 6 comps and size 141 took 19 ms
+Cycle complete with 7 comps and size 325 took 21 ms
+Cycle complete with 8 comps and size 564 took 54 ms
+Cycle complete with 9 comps and size 678 took 51 ms
+Cycle complete with 10 comps and size 510 took 30 ms
+Cycle complete with 11 comps and size 280 took 16 ms
+Cycle complete with 12 comps and size 106 took 8 ms
+Cycle complete with 13 comps and size 33 took 2 ms
+Cycle complete with 14 comps and size 11 took 1 ms
+Cycle complete with 15 comps and size 6 took 0 ms
+Cycle complete with 16 comps and size 1 took 1 ms
+Took 245313463 ns
+[3, 6, 24, 96, 10, 72, 33, 3, 48, 24, 96, 10, 36, 20, 12, 96]
+Will be using 24 threads
+Cycle complete with 2 comps and size 3 took 4 ms
+Cycle complete with 3 comps and size 7 took 2 ms
+Cycle complete with 4 comps and size 20 took 10 ms
+Cycle complete with 5 comps and size 57 took 27 ms
+Cycle complete with 6 comps and size 189 took 18 ms
+Cycle complete with 7 comps and size 648 took 68 ms
+Cycle complete with 8 comps and size 2088 took 244 ms
+Cycle complete with 9 comps and size 5701 took 587 ms
+Cycle complete with 10 comps and size 11669 took 953 ms
+Cycle complete with 11 comps and size 16093 took 1684 ms
+Cycle complete with 12 comps and size 13306 took 1440 ms
+Cycle complete with 13 comps and size 6678 took 571 ms
+Cycle complete with 14 comps and size 2221 took 120 ms
+Cycle complete with 15 comps and size 507 took 41 ms
+Cycle complete with 16 comps and size 77 took 11 ms
+Cycle complete with 17 comps and size 18 took 1 ms
+Cycle complete with 18 comps and size 9 took 0 ms
+Cycle complete with 19 comps and size 1 took 0 ms
+Took 5804849367 ns
+[3, 12, 48, 192, 5, 10, 80, 160, 36, 17, 20, 136, 66, 6, 20, 40, 96, 40, 24]
+Will be using 24 threads
+Cycle complete with 2 comps and size 3 took 9 ms
+Cycle complete with 3 comps and size 7 took 5 ms
+Cycle complete with 4 comps and size 20 took 13 ms
+Cycle complete with 5 comps and size 59 took 19 ms
+Cycle complete with 6 comps and size 208 took 33 ms
+Cycle complete with 7 comps and size 807 took 167 ms
+Cycle complete with 8 comps and size 3415 took 582 ms
+Cycle complete with 9 comps and size 14342 took 2166 ms
+Cycle complete with 10 comps and size 55977 took 11700 ms
+Cycle complete with 11 comps and size 188704 took 117072 ms
+Cycle complete with 12 comps and size 490253 took 889036 ms
+Cycle complete with 13 comps and size 854578 took 3202815 ms
+Cycle complete with 14 comps and size 914375 took 4588983 ms
+Cycle complete with 15 comps and size 607345 took 2702186 ms
+Cycle complete with 16 comps and size 274259 took 730903 ms
+Cycle complete with 17 comps and size 94086 took 109257 ms
+Cycle complete with 18 comps and size 25780 took 11086 ms
+Cycle complete with 19 comps and size 5705 took 838 ms
+Cycle complete with 20 comps and size 1121 took 60 ms
+Cycle complete with 21 comps and size 250 took 15 ms
+Cycle complete with 22 comps and size 73 took 3 ms
+Cycle complete with 23 comps and size 27 took 0 ms
+Cycle complete with 24 comps and size 8 took 1 ms
+Cycle complete with 25 comps and size 1 took 0 ms
+Took 12366987991024 ns
+[3, 12, 48, 10, 34, 68, 129, 192, 160, 272, 320, 66, 264, 384, 5, 20, 40, 24, 80, 24, 96, 5, 6, 12, 192]
+========================================================================
+Epilogue args:
+Date: Mon Apr 25 15:39:30 CEST 2016
+Allocated nodes:
+r4i2n4
+r4i2n4
+r4i2n4
+r4i2n4
+r4i2n4
+r4i2n4
+r4i2n4
+r4i2n4
+r4i2n4
+r4i2n4
+r4i2n4
+r4i2n4
+r4i2n4
+r4i2n4
+r4i2n4
+r4i2n4
+r4i2n4
+r4i2n4
+r4i2n4
+r4i2n4
+r4i2n4
+r4i2n4
+r4i2n4
+r4i2n4
+Job ID: 20290089.hpc-p-svcs-10.icts.hpc.kuleuven.be
+User ID: vsc31468
+Group ID: vsc31468
+Job Name: test20160425_NullJump.pbs
+Session ID: 25019
+Resource List: neednodes=1:ppn=24:haswell,nodes=1:ppn=24:haswell,pmem=2500mb,walltime=05:00:00
+Resources Used: cput=69:33:40,energy_used=0,mem=4255884kb,vmem=21003520kb,walltime=03:26:15
+Queue Name: q24h
+Account String: 
+-------------------------------------------------------------------------
+time: 12375
+nodes: 1
+procs: 24
+account: default_project
