@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.29)  25 APR 2016 12:38
+=======
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.29)  25 APR 2016 11:35
+>>>>>>> master
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -854,34 +858,60 @@ ptm/m/n/10 ka-na-len
  []
 
 
+<<<<<<< HEAD
 Overfull \hbox (10.53934pt too wide) in paragraph at lines 291--293
+=======
+Overfull \hbox (10.53934pt too wide) in paragraph at lines 292--294
+>>>>>>> master
 []\OT1/ptm/b/n/10 Lemma 5. []$[] \OMS/cmsy/m/n/10 )
  []
 
 [3]
+<<<<<<< HEAD
 Underfull \hbox (badness 10000) in paragraph at lines 350--353
 
  []
 
 LaTeX Font Info:    Try loading font information for OMS+ptm on input line 354.
+=======
+Underfull \hbox (badness 10000) in paragraph at lines 351--354
+
+ []
+
+LaTeX Font Info:    Try loading font information for OMS+ptm on input line 355.
+>>>>>>> master
 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/psnfss/omsptm.fd
 File: omsptm.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10> not available
+<<<<<<< HEAD
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 354.
 
 Underfull \hbox (badness 10000) in paragraph at lines 365--369
+=======
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 355.
+
+Underfull \hbox (badness 10000) in paragraph at lines 366--370
+>>>>>>> master
 
  []
 
 
+<<<<<<< HEAD
 Underfull \hbox (badness 10000) in paragraph at lines 365--369
+=======
+Underfull \hbox (badness 10000) in paragraph at lines 366--370
+>>>>>>> master
 
  []
 
 
+<<<<<<< HEAD
 Underfull \hbox (badness 10000) in paragraph at lines 365--369
+=======
+Underfull \hbox (badness 10000) in paragraph at lines 366--370
+>>>>>>> master
 
  []
 
@@ -893,7 +923,11 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 Here is how much of TeX's memory you used:
  26143 strings out of 493089
  643533 string characters out of 6134842
+<<<<<<< HEAD
  826991 words of memory out of 5000000
+=======
+ 827991 words of memory out of 5000000
+>>>>>>> master
  29151 multiletter control sequences out of 15000+600000
  30428 words of font info for 79 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -914,7 +948,11 @@ nts/symbols/msbm10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/cour
 ier/ucrr8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/times/utmb8a
 .pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr
 /local/texlive/2015/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+<<<<<<< HEAD
 Output written on SortingNetworks.pdf (4 pages, 197782 bytes).
+=======
+Output written on SortingNetworks.pdf (4 pages, 197777 bytes).
+>>>>>>> master
 PDF statistics:
  84 PDF objects out of 1000 (max. 8388607)
  60 compressed objects within 1 object stream
