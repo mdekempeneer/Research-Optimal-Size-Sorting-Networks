@@ -13,20 +13,23 @@ Y5 = [10.09, 25.75, 66.82, 254.44, 6797.80, 12615521.41]; % improv delete/add
 % Y6- 'Job20281806 - noTrim - 256'
 Y6 = [11.39, 25.03, 68.52, 254.52, 9434.95, 0]; % No trim
 Y7 = [22.82, 24.77, 65.81, 252.66, 6104.70, 13208016.36]; % prune. cut only check front
-T = [Y1 ; Y5 ; Y7];
+Y8 = [13.56, 25.33, 61.34, 245.31, 5804.48, 0]; % nullJump - Job20290089 - 256
+
+T = [Y1 ; Y5 ; Y7 ; Y8];
 
 
 figure
 bar(X, T')
 set(gca,'YScale','log')
 title('runtime ms');
-legend('Vorige', 'Job20281753 - 256', 'Job20283061 - pruneCut - 256','Location','northwest')
+legend('Vorige', 'Job20281753 - 256', 'Job20283061 - pruneCut - 256', 'Job20290089 - nullJump - 256','Location','northwest')
 
 figure
 X5 = (Y1 - Y5)/1000;
 X7 = (Y5 - Y7)/1000;
-bar(X, [X5 ; X7]');
+X8 = (Y7 - Y8)/1000;
+bar(X, [X5 ; X7 ; X8]');
 set(gca, 'YScale', 'log')
 title('runtime diff in s');
-legend('1 - 5', '5 - 7', 'Location', 'northwest');
+legend('1 - 5', '5 - 7', '7 - 8' , 'Location', 'northwest');
 

@@ -17,8 +17,8 @@ Y3       = [8,  5, 12, 20, 33, 173, 605, 2228, 17128, 139224, 945710,  3287401, 
 Y4(1:11)  = [9,  6, 12, 20, 32, 173, 609, 2494, 27697, 238346, 1408245];
 % Y5 - :  - pruneFrontOnly - Job20283061 - pruneCut - 256
 Y5        = [9,  5, 12, 20, 31, 173, 599, 2380, 13088, 124332, 922677, 3345395, 4873226, 2967767, 821732, 123315, 12223, 908, 68, 13, 3, 0, 0, 0];  
-%Y6 - nullJump - Job20290089 - 256
-Y6(1:12)  = [9, 5, 13, 19, 33, 167, 582, 2166, 11700, 117072, 889036, 3202815];
+% Y6 - nullJump - Job20290089 - 256
+Y6(1:12)  = [9,  5, 13, 19, 33, 167, 582, 2166, 11700, 117072, 889036, 3202815];
 
 T = [Y1 ; Y3 ; Y6];
 figure
@@ -32,12 +32,12 @@ N = zeros([1 24]);
 O = zeros([1 24]);
 M(1:21) = (Y1(1:21) - Y2(1:21))/1000;
 N       = (Y1 - Y3)/1000;
-O       = (Y3 - Y5)/1000;
+O       = (Y3 - Y6)/1000;
 figure
 bar(X, [M ; N ; O]')
 set(gca,'YScale','log')
 title('Running time difference in s')
-legend('1 tov 2', '1 tov 3', '3 tov 5');
+legend('1 tov 2', '1 tov 3', '3 tov 6');
 
 % Diff acc
 AccM = cumsum(M);
@@ -47,25 +47,25 @@ figure
 bar(X, [AccM ; AccN ; AccO]')
 set(gca, 'YScale', 'log')
 title('Acc diff run time in s')
-legend('1 tov 2', '1 tov 3', '3 tov 5');
+legend('1 tov 2', '1 tov 3', '3 tov 6');
 
 % Acc 
 Acc1 = cumsum(Y1/1000);
 Acc3 = cumsum(Y3/1000);
-Acc5 = cumsum(Y5/1000);
+Acc6 = cumsum(Y6/1000);
 figure
-bar(X, [Acc1 ; Acc3 ; Acc5]')
+bar(X, [Acc1 ; Acc3 ; Acc6]')
 set(gca,'YScale','log')
 title('Acc run time in s')
-legend('Acc 1', 'Acc 3', 'Acc 5');
+legend('Acc 1', 'Acc 3', 'Acc 6');
 
 
 DiffAcc3 = Acc1 - Acc3;
-DiffAcc5 = Acc3 - Acc5;
+DiffAcc6 = Acc3 - Acc6;
 figure
-bar(X, [DiffAcc3 ; DiffAcc5]')
+bar(X, [DiffAcc3 ; DiffAcc6]')
 set(gca,'YScale','log')
 title('Acc run time difference in s')
-legend('1 tov 3', '3 tov 5');
+legend('1 tov 3', '3 tov 6');
 
 
