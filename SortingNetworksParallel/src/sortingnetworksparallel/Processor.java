@@ -2,7 +2,6 @@ package sortingnetworksparallel;
 
 import it.unimi.dsi.fastutil.objects.AbstractObjectList;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import it.unimi.dsi.fastutil.objects.ObjectBigArrayBigList;
 import it.unimi.dsi.fastutil.objects.ObjectListIterator;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -10,7 +9,7 @@ import java.io.ObjectOutputStream;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import sortingnetworksparallel.memory.ObjArrayList;
+import sortingnetworksparallel.memory.NullArray;
 
 /**
  *
@@ -53,7 +52,7 @@ public class Processor {
      * thread.
      * @param percThreads The percentage of usage of the threads.
      */
-    public Processor(short nbChannels, int upperBound, String savePath, int innerSize, double percThreads) {
+    public Processor(final short nbChannels, final int upperBound, final String savePath, final int innerSize, final double percThreads) {
         this.nbChannels = nbChannels;
         this.upperBound = upperBound;
         this.maxOuterComparator = ((1 << (nbChannels - 1)) | 1);
@@ -78,14 +77,14 @@ public class Processor {
      * thread.
      * @param percThreads The percentage of usage of the threads.
      */
-    public Processor(short nbChannels, int upperBound, int innerSize, double percThreads) {
+    public Processor(final short nbChannels, final int upperBound, final int innerSize, final double percThreads) {
         this(nbChannels, upperBound, "", innerSize, percThreads);
     }
 
-    public short[] process(ObjArrayList<short[][]> oldL, int startIndex, ObjArrayList<short[][]> newL, short nbComp) {
+    public short[] process(NullArray oldL, final int startIndex, NullArray newL, short nbComp) {
         /* Initialize inputs */
         long begin = System.currentTimeMillis();
-        ObjArrayList<short[][]> NList = workPool.performCycle(oldL, startIndex, newL, nbComp);
+        NullArray NList = workPool.performCycle(oldL, startIndex, newL, nbComp);
         oldL = null;
         newL = null;
         long took = System.currentTimeMillis() - begin;
@@ -138,16 +137,16 @@ public class Processor {
      */
     public short[] process() {
         /* Initialize inputs */
-        ObjArrayList<short[][]> NList = firstTimeGenerate(getOriginalInputs(upperBound));
+        NullArray NList = firstTimeGenerate(getOriginalInputs(upperBound));
         innerPrune(NList);
         NList.fixNulls();
         NList.trim();
         short nbComp = 1;
 
         do {
-            long begin = System.currentTimeMillis();
+            final long begin = System.currentTimeMillis();
             NList = workPool.performCycle(NList, nbComp);
-            long took = System.currentTimeMillis() - begin;
+            final long took = System.currentTimeMillis() - begin;
             nbComp++;
 
             System.out.println("Cycle complete with " + nbComp + " comps and size " + NList.size() + " took " + took + " ms");
@@ -184,7 +183,7 @@ public class Processor {
      *
      * @return
      */
-//    public short[] process(ObjArrayList<short[][]> loadedN) {
+//    public short[] process(NullArray<short[][]> loadedN) {
 //
 //        /* Initialize inputs */
 //        N = loadedN;
@@ -227,18 +226,16 @@ public class Processor {
      * has all possible outputs.
      * @return A list of all possible networks with 1 comparator.
      */
-    private ObjArrayList<short[][]> firstTimeGenerate(short[][] defaultNetwork) {
-        int capacity = (nbChannels * (nbChannels - 1)) / 2;
-        ObjArrayList<short[][]> networkList = new ObjArrayList(capacity);
+    private NullArray firstTimeGenerate(short[][] defaultNetwork) {
+        final int capacity = (nbChannels * (nbChannels - 1)) / 2;
+        NullArray networkList = new NullArray(capacity);
         int cMaxShifts = maxShifts;
         short comp;
-        int number;
-        int outerShift;
 
         /* For all comparators */
-        for (number = 3; number <= maxOuterComparator; number = (number << 1) - 1, cMaxShifts--) { //x*2 - 1
+        for (int number = 3; number <= maxOuterComparator; number = (number << 1) - 1, cMaxShifts--) { //x*2 - 1
             comp = (short) number;
-            for (outerShift = 0; outerShift <= cMaxShifts; outerShift++, comp <<= 1) { //shift n-2, n-3, ... keer
+            for (int outerShift = 0; outerShift <= cMaxShifts; outerShift++, comp <<= 1) { //shift n-2, n-3, ... keer
                 //new Network (via clone)
                 short[][] data = defaultNetwork.clone();
                 //Fill
@@ -263,7 +260,7 @@ public class Processor {
      * @param startIndex The outerIndex of where to start. (= 1 will cover
      * everything.)
      */
-    public void processData(short[][] data, short newComp, int startIndex) {
+    public void processData(short[][] data, final short newComp, final int startIndex) {
         short[] processed;
         boolean found;
 
@@ -315,7 +312,7 @@ public class Processor {
      * comparators to the given network.
      * @see #isRedundantComp(short[][], short)
      */
-    public ObjectArrayList<short[][]> generate(final ObjArrayList<short[][]> networkList, final int startIndex, final int length, final short nbComp) {
+    public ObjectArrayList<short[][]> generate(final NullArray networkList, final int startIndex, final int length, final short nbComp) {
         /* Setup environment */
         ObjectArrayList<short[][]> result = new ObjectArrayList();
         int cMaxShifts;
@@ -368,7 +365,7 @@ public class Processor {
      * comparators to the given network.
      * @see #isRedundantComp(short[][], short)
      */
-    public ObjectArrayList<short[][]> generate(short[][] network, short nbComp) {
+    public ObjectArrayList<short[][]> generate(final short[][] network, final short nbComp) {
         /* Setup environment */
         ObjectArrayList<short[][]> result = new ObjectArrayList();
         int cMaxShifts;
@@ -479,6 +476,41 @@ public class Processor {
      * skipSize+networkIndex aren't checked.
      *
      */
+<<<<<<< HEAD
+    public void prune(NullArray networkList, final int networkIndex, final int skipSize) {
+        short[][] buffered = null;
+        short[][] before = null;
+
+        for (int outerIndex = 0; outerIndex < networkIndex; outerIndex++) {
+            short[][] network2 = (buffered != null) ? buffered : networkList.get(outerIndex);
+            buffered = null;
+
+            if (network2 != null && network2.length != 1) {
+                before = network2;
+
+                for (int i = 0; i < skipSize; i++) { //for all in the innerPrune
+                    int innerIndex = networkIndex + i;
+                    short[][] network = networkList.get(innerIndex);
+                    if (network != null && network.length != 1) { //else already removed.
+
+                        if (subsumes(network, network2)) {
+                            networkList.remove(outerIndex);
+                            break;
+                        } else if (subsumes(network2, network)) {
+                            networkList.remove(innerIndex);
+                        }
+
+                    }
+                }
+
+            } else if (network2 == null) {
+                if (before == null || before.length != 1) {
+                    int index = outerIndex + 1;
+                    buffered = null;
+                    /* find next non null */
+                    while (index < networkIndex && (buffered = networkList.get(index)) == null) {
+                        index++;
+=======
     public void prune(ObjArrayList<short[][]> networkList, final int networkIndex, final int skipSize) {
         for (int outerIndex = 0; outerIndex < networkIndex; outerIndex++) {
             short[][] network2 = networkList.get(outerIndex);
@@ -497,12 +529,35 @@ public class Processor {
                             networkList.remove(innerIndex);
                         }
 
+>>>>>>> master
                     }
+
+                    /* get # null in a row behind the first null*/
+                    short difference = (short) (index - outerIndex - 1); //TODO: possible overload when null seq > 65000...
+                    /* Store cNull */
+                    if (difference > 0) {
+                        short[][] cNull = new short[1][1];
+                        cNull[0][0] = difference;
+                        networkList.set(outerIndex, cNull);
+                        before = cNull;
+                        outerIndex += difference;
+                    }
+
+                } else { //length == 1
+                    before[0][0]++;
+                }
+            } else { //Cnull
+                int skip = network2[0][0]; //Amount of nulls after this.
+                outerIndex += skip;
+                if (before != null && before.length == 1) { //came from cNull
+                    before[0][0] += skip + 1;
+                } else {
+                    before = network2;
                 }
             }
         }
     }
-//}
+    //}
 
     /**
      * Check whether the output of network1 is a part of or equal to the output
@@ -513,7 +568,7 @@ public class Processor {
      * @return Whether outputs(network1) is equal to or part of
      * outputs(network2).
      */
-    private boolean isValidPermutation(short[][] network1, short[][] network2) {
+    private boolean isValidPermutation(final short[][] network1, final short[][] network2) {
         /*  Reduce work: Lemma 6:
          C1 subsumes C2 => P(getLengthOfW(C1, x, k)) C= getLengthOfW(C2, x, k)
          */
@@ -540,7 +595,7 @@ public class Processor {
         return true;
     }
 
-    private boolean isValidPermutation(short[][] network1, short[][] network2, byte[] permutor) {
+    private boolean isValidPermutation(final short[][] network1, final short[][] network2, final byte[] permutor) {
         /*  Reduce work: Lemma 6:
          C1 subsumes C2 => P(w(C1, x, k)) C= w(C2, x, k)
          */
@@ -585,7 +640,7 @@ public class Processor {
      * @param network2 The second network as part of network1 subsumes? network2
      * @return Whether network1 subsumes network2.
      */
-    private boolean subsumes(short[][] network1, short[][] network2) {
+    private boolean subsumes(final short[][] network1, final short[][] network2) {
         for (int nbOnes = 1; nbOnes < nbChannels; nbOnes++) {
             if (network1[nbOnes].length > network2[nbOnes].length) {
                 //kLengthCounter++;
@@ -647,9 +702,9 @@ public class Processor {
      * @param network2
      * @return
      */
-    public boolean existsAValidPerm(short[][] network1, short[][] network2) {
+    public boolean existsAValidPerm(final short[][] network1, final short[][] network2) {
         //Create a list full of allOnes - on every Position can be every number.
-        int allOnes = (1 << nbChannels) - 1;
+        final int allOnes = (1 << nbChannels) - 1;
         int[] posList = new int[nbChannels];
         System.arraycopy(this.allOnesList, 0, posList, 0, nbChannels);
 
@@ -738,8 +793,8 @@ public class Processor {
     }
 
     public boolean testPossiblePermutations(short[][] network1, short[][] network2, byte[][] Ps) {
-        int allOnes = (1 << nbChannels) - 1; //TODO: Delete if not used.
-        int lastOuterIndex = nbChannels - 1;
+        final int allOnes = (1 << nbChannels) - 1; //TODO: Delete if not used.
+        final int lastOuterIndex = nbChannels - 1;
         int currOuterIndex = 0;
         int takenNumbers = 0;
 
@@ -825,7 +880,7 @@ public class Processor {
         return false;
     }
 
-    public boolean checkAllRelevantPermutations(short[][] network1, short[][] network2, byte[][] Ps, int currIndex, byte[] soFar, int posTaken) {
+    public boolean checkAllRelevantPermutations(final short[][] network1, final short[][] network2, byte[][] Ps, int currIndex, byte[] soFar, int posTaken) {
         if (currIndex == nbChannels - 1) {
             //Reached last permNumber.
             for (byte p : Ps[currIndex]) {
@@ -862,7 +917,7 @@ public class Processor {
      * @return range from 2 to (2^nbChannels-1) excluding all sorted (binary)
      * ones.
      */
-    public short[][] getOriginalInputs(int upperBound) {
+    public short[][] getOriginalInputs(final int upperBound) {
         /* 
          data[0] holds the lengths of the other shorts.
          data[1] holds outputs with 1 '1's.
@@ -895,7 +950,7 @@ public class Processor {
      * @param comp The comparator to get the output from.
      * @return The result by switching the bits in the input according to comp.
      */
-    private static short swapCompare(short input, short comp) {
+    private static short swapCompare(final short input, final short comp) {
         int pos1 = 31 - Integer.numberOfLeadingZeros(comp);
         int pos2 = Integer.numberOfTrailingZeros(comp);
         //(input >> pos1) & 1 = first (front bit)
@@ -999,8 +1054,8 @@ public class Processor {
      * @param nbChannels The amount of the elements and the amount of 1's.
      * @return The created array.
      */
-    private static int[] getAllOnesList(byte nbChannels) {
-        int allOnes = (1 << nbChannels) - 1;
+    private static int[] getAllOnesList(final byte nbChannels) {
+        final int allOnes = (1 << nbChannels) - 1;
         int[] list = new int[nbChannels];
 
         for (int i = 0; i < list.length; i++) {
@@ -1049,7 +1104,11 @@ public class Processor {
      * @return -1 If the comparator is redundant else a number 0 &lt= x &lt
      * nbChannels
      */
+<<<<<<< HEAD
+    private int getChangeIndex(final short[][] data, final short comp) {
+=======
     private int getChangeIndex(short[][] data, short comp) {
+>>>>>>> master
 
         //for all W( k=0)
         //gesorteerd => alle 1 'en rechts => geen 0 rechts => een 0 rechts
@@ -1057,7 +1116,7 @@ public class Processor {
         //TODO: If one uses sorted channel, also redundant.
         for (int nbOnes = 1; nbOnes < nbChannels; nbOnes++) {
             for (int innerIndex = 0; innerIndex < data[nbOnes].length; innerIndex++) {
-                short output = data[nbOnes][innerIndex];
+                final short output = data[nbOnes][innerIndex];
                 if (output != swapCompare(output, comp)) {
                     return nbOnes;
                 }
@@ -1071,7 +1130,7 @@ public class Processor {
     /*  Reduce work: Lemma 6:
      C1 subsumes C2 => P(w(C1, x, k)) C= w(C2, x, k)
      */
-    public boolean checkPermutationPartOf(short[][] network1, short[][] network2) {
+    public boolean checkPermutationPartOf(final short[][] network1, final short[][] network2) {
         for (int nbOnes = 1; nbOnes < nbChannels; nbOnes++) {
             int P1 = network1[nbChannels][(nbOnes - 1) << 2];
             int L1 = network1[nbChannels][(nbOnes << 2) - 2];
@@ -1094,7 +1153,7 @@ public class Processor {
      * @param comp
      * @param startIndex
      */
-    public void processW(short[][] data, short comp, int startIndex) {
+    public void processW(short[][] data, final short comp, final int startIndex) {
         short[] wResult = new short[data[nbChannels].length];
 
         int wIndexCounter;
@@ -1108,8 +1167,8 @@ public class Processor {
         for (int nbOnes = startIndex; nbOnes < nbChannels; nbOnes++) {
             wIndexCounter = (nbOnes - 1) << 2;
 
-            int oldP = data[nbChannels][wIndexCounter];
-            int oldL = data[nbChannels][wIndexCounter + 2];
+            final int oldP = data[nbChannels][wIndexCounter];
+            final int oldL = data[nbChannels][wIndexCounter + 2];
 
             int P = (comp ^ ((1 << nbChannels) - 1)) & oldP;
             int L = (comp ^ ((1 << nbChannels) - 1)) & oldL;
@@ -1153,7 +1212,7 @@ public class Processor {
         workPool.shutDownAndSave();
     }
 
-    private void save(ObjArrayList<short[][]> NList, short nbComp) {
+    private void save(NullArray NList, short nbComp) {
         if (savePath != null && !savePath.equals("")) {
             ObjectOutputStream oos = null;
             try {
@@ -1179,7 +1238,7 @@ public class Processor {
         }
     }
 
-    public void save(ObjArrayList<short[][]> oldL, int startIndex, ObjArrayList<short[][]> newL, short nbComp) {
+    public void save(NullArray oldL, int startIndex, NullArray newL, short nbComp) {
         if (savePath != null && !savePath.equals("")) {
             ObjectOutputStream oos = null;
             try {
@@ -1207,7 +1266,7 @@ public class Processor {
         }
     }
 
-    public void processData(short[][] data, short newComp) {
+    public void processData(short[][] data, final short newComp) {
         processData(data, newComp, 1);
     }
 }

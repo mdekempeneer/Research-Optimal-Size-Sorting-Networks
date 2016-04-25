@@ -1,0 +1,8 @@
+#!/bin/bash -l
+module load Java/1.7.0_51
+java -jar "SortingNetworksParallel_20160420_PS.jar" 4 5 256 1
+java -jar "SortingNetworksParallel_20160420_PS.jar" 5 9 256 1
+java -jar "SortingNetworksParallel_20160420_PS.jar" 6 12 256 1
+java -jar "SortingNetworksParallel_20160420_PS.jar" 7 16 256 1
+java -jar "SortingNetworksParallel_20160420_PS.jar" 8 19 256 1
+java -jar "SortingNetworksParallel_20160420_PS.jar" 9 25 256 1

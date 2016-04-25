@@ -1,0 +1,72 @@
+time: 21600
+nodes: 1
+procs: 24
+account string: default_project
+queue: q24h
+========================================================================
+Will be using 24 threads
+Cycle complete with 5 comps and size 5 took 9 ms
+Cycle complete with 6 comps and size 37 took 45 ms
+Cycle complete with 7 comps and size 280 took 47 ms
+Cycle complete with 8 comps and size 1773 took 172 ms
+Cycle complete with 9 comps and size 9333 took 757 ms
+Cycle complete with 10 comps and size 41291 took 8135 ms
+Cycle complete with 11 comps and size 148315 took 94262 ms
+Cycle complete with 12 comps and size 400241 took 758891 ms
+Cycle complete with 13 comps and size 728132 took 3120876 ms
+Cycle complete with 14 comps and size 817296 took 5381489 ms
+Cycle complete with 15 comps and size 569466 took 3600445 ms
+Cycle complete with 16 comps and size 266310 took 1036725 ms
+Cycle complete with 17 comps and size 93151 took 151184 ms
+Cycle complete with 18 comps and size 25760 took 13904 ms
+Cycle complete with 19 comps and size 5689 took 980 ms
+Cycle complete with 20 comps and size 1103 took 62 ms
+Cycle complete with 21 comps and size 248 took 6 ms
+Cycle complete with 22 comps and size 73 took 1 ms
+Cycle complete with 23 comps and size 27 took 0 ms
+Cycle complete with 24 comps and size 8 took 0 ms
+Cycle complete with 25 comps and size 1 took 0 ms
+Took 14168158108062 ns
+[3, 12, 48, 192, 5, 10, 320, 80, 17, 68, 20, 160, 96, 136, 258, 34, 6, 264, 40, 24, 12, 320, 96, 48, 384]
+========================================================================
+Epilogue args:
+Date: Fri Mar  4 16:10:42 CET 2016
+Allocated nodes:
+r5i2n2
+r5i2n2
+r5i2n2
+r5i2n2
+r5i2n2
+r5i2n2
+r5i2n2
+r5i2n2
+r5i2n2
+r5i2n2
+r5i2n2
+r5i2n2
+r5i2n2
+r5i2n2
+r5i2n2
+r5i2n2
+r5i2n2
+r5i2n2
+r5i2n2
+r5i2n2
+r5i2n2
+r5i2n2
+r5i2n2
+r5i2n2
+Job ID: 20261249.icts-p-svcs-1
+User ID: vsc31468
+Group ID: vsc31468
+Job Name: test9_shortComp.pbs
+Session ID: 21277
+Resource List: neednodes=1:ppn=24,nodes=1:ppn=24,pmem=1gb,walltime=06:00:00
+Resources Used: cput=82:15:12,mem=6065112kb,vmem=21003520kb,walltime=03:56:10
+Queue Name: q24h
+Account String: 
+-------------------------------------------------------------------------
+time: 14170
+nodes: 1
+procs: 24
+account: default_project
