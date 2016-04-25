@@ -1,0 +1,45 @@
+time: 14400
+nodes: 1
+procs: 20
+account string: default_project
+queue: q24h
+========================================================================
+Will be using 20 threads
+========================================================================
+Epilogue args:
+Date: Thu Mar  3 14:44:08 CET 2016
+Allocated nodes:
+r5i1n4
+r5i1n4
+r5i1n4
+r5i1n4
+r5i1n4
+r5i1n4
+r5i1n4
+r5i1n4
+r5i1n4
+r5i1n4
+r5i1n4
+r5i1n4
+r5i1n4
+r5i1n4
+r5i1n4
+r5i1n4
+r5i1n4
+r5i1n4
+r5i1n4
+r5i1n4
+Job ID: 20260499.icts-p-svcs-1
+User ID: vsc31468
+Group ID: vsc31468
+Job Name: test9_shortComp.pbs
+Session ID: 64630
+Resource List: neednodes=1:ppn=20,nodes=1:ppn=20,pmem=1gb,walltime=04:00:00
+Resources Used: cput=00:00:00,mem=0kb,vmem=0kb,walltime=00:00:01
+Queue Name: q24h
+Account String: 
+-------------------------------------------------------------------------
+time: 1
+nodes: 1
+procs: 20
+account: default_project

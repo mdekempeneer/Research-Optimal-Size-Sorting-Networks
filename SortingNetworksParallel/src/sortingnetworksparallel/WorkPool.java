@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import sortingnetworksparallel.memory.ObjArrayList;
+import sortingnetworksparallel.memory.NullArray;
 
 /**
  * A Pool that when given a task will hand over the tasks to multiple threads.
@@ -55,7 +55,7 @@ public class WorkPool {
      * currently have.
      * @return A pruned list.
      */
-    public ObjArrayList<short[][]> performCycle(final ObjArrayList<short[][]> oldL, int startIndex, final ObjArrayList<short[][]> resultN, final short nbComp) {
+    public NullArray performCycle(final NullArray oldL, int startIndex, final NullArray resultN, final short nbComp) {
         final int nb = INNER_SIZE;
         latch = new CountDownLatch((int) Math.ceil((oldL.size() - startIndex) / (double) nb));
         resultN.ensureCapacity(oldL.size() * nbComps);
@@ -110,12 +110,12 @@ public class WorkPool {
      * currently have.
      * @return A pruned list.
      */
-    public ObjArrayList<short[][]> performCycle(final ObjArrayList<short[][]> N, final short nbComp) {
+    public NullArray performCycle(final NullArray N, final short nbComp) {
         long capacity = N.size() * nbComps;
         if (capacity > Integer.MAX_VALUE) {
             System.out.println("[WARNING]: Ensured capacity (" + capacity + ") exceeds Integer.MAX_VALUE. Hopefully we didn't need that much.");
         }
-        final ObjArrayList<short[][]> resultN = new ObjArrayList((int) Math.min(capacity, Integer.MAX_VALUE));
+        final NullArray resultN = new NullArray((int) Math.min(capacity, Integer.MAX_VALUE));
         final int nb = INNER_SIZE;
         latch = new CountDownLatch((int) Math.ceil(N.size() / (double) nb));
 

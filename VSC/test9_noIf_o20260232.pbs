@@ -1,0 +1,71 @@
+time: 36000
+nodes: 1
+procs: 20
+account string: default_project
+queue: q24h
+========================================================================
+Will be using 20 threads
+Cycle complete with 2 comps and size 3 took 7 ms
+Cycle complete with 3 comps and size 7 took 6 ms
+Cycle complete with 4 comps and size 20 took 14 ms
+Cycle complete with 5 comps and size 59 took 25 ms
+Cycle complete with 6 comps and size 208 took 43 ms
+Cycle complete with 7 comps and size 807 took 95 ms
+Cycle complete with 8 comps and size 3415 took 302 ms
+Cycle complete with 9 comps and size 14343 took 2174 ms
+Cycle complete with 10 comps and size 55991 took 21908 ms
+Cycle complete with 11 comps and size 188730 took 217007 ms
+Cycle complete with 12 comps and size 490322 took 1516202 ms
+Cycle complete with 13 comps and size 854638 took 5464997 ms
+Cycle complete with 14 comps and size 914444 took 8292447 ms
+Cycle complete with 15 comps and size 607164 took 5157433 ms
+Cycle complete with 16 comps and size 274212 took 1410896 ms
+Cycle complete with 17 comps and size 94085 took 204397 ms
+Cycle complete with 18 comps and size 25786 took 19468 ms
+Cycle complete with 19 comps and size 5699 took 1336 ms
+Cycle complete with 20 comps and size 1107 took 80 ms
+Cycle complete with 21 comps and size 250 took 6 ms
+Cycle complete with 22 comps and size 73 took 1 ms
+Cycle complete with 23 comps and size 27 took 0 ms
+Cycle complete with 24 comps and size 8 took 0 ms
+Cycle complete with 25 comps and size 1 took 0 ms
+Took 22308959989475 ns
+[3, 12, 48, 192, 10, 160, 136, 5, 80, 36, 66, 96, 264, 40, 6, 320, 96, 17, 24, 10, 20, 3, 12, 48, 384]
+========================================================================
+Epilogue args:
+Date: Thu Mar  3 14:12:26 CET 2016
+Allocated nodes:
+r1i0n9
+r1i0n9
+r1i0n9
+r1i0n9
+r1i0n9
+r1i0n9
+r1i0n9
+r1i0n9
+r1i0n9
+r1i0n9
+r1i0n9
+r1i0n9
+r1i0n9
+r1i0n9
+r1i0n9
+r1i0n9
+r1i0n9
+r1i0n9
+r1i0n9
+r1i0n9
+Job ID: 20260232.icts-p-svcs-1
+User ID: vsc31468
+Group ID: vsc31468
+Job Name: test9_noIf.pbs
+Session ID: 30504
+Resource List: neednodes=1:ppn=20,nodes=1:ppn=20,pmem=1gb,walltime=10:00:00
+Resources Used: cput=107:42:28,mem=4733912kb,vmem=20551672kb,walltime=06:11:49
+Queue Name: q24h
+Account String: 
+-------------------------------------------------------------------------
+time: 22309
+nodes: 1
+procs: 20
+account: default_project
