@@ -476,7 +476,6 @@ public class Processor {
      * skipSize+networkIndex aren't checked.
      *
      */
-<<<<<<< HEAD
     public void prune(NullArray networkList, final int networkIndex, final int skipSize) {
         short[][] buffered = null;
         short[][] before = null;
@@ -510,26 +509,6 @@ public class Processor {
                     /* find next non null */
                     while (index < networkIndex && (buffered = networkList.get(index)) == null) {
                         index++;
-=======
-    public void prune(ObjArrayList<short[][]> networkList, final int networkIndex, final int skipSize) {
-        for (int outerIndex = 0; outerIndex < networkIndex; outerIndex++) {
-            short[][] network2 = networkList.get(outerIndex);
-
-            if (network2 != null) {
-
-                for (int i = 0; i < skipSize; i++) { //for all in the innerPrune
-                    int innerIndex = networkIndex + i;
-                    short[][] network = networkList.get(innerIndex);
-                    if (network != null) { //else already removed.
-
-                        if (subsumes(network, network2)) {
-                            networkList.remove(outerIndex);
-                            break;
-                        } else if (subsumes(network2, network)) {
-                            networkList.remove(innerIndex);
-                        }
-
->>>>>>> master
                     }
 
                     /* get # null in a row behind the first null*/
@@ -1104,12 +1083,7 @@ public class Processor {
      * @return -1 If the comparator is redundant else a number 0 &lt= x &lt
      * nbChannels
      */
-<<<<<<< HEAD
     private int getChangeIndex(final short[][] data, final short comp) {
-=======
-    private int getChangeIndex(short[][] data, short comp) {
->>>>>>> master
-
         //for all W( k=0)
         //gesorteerd => alle 1 'en rechts => geen 0 rechts => een 0 rechts
         //een 0 op de plaats van de channel voor k = het tegengestelde van het verwachte = goed.
