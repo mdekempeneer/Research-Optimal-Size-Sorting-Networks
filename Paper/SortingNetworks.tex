@@ -7,12 +7,15 @@
 \usepackage{capt-of}
 \usepackage[dutch]{babel}
 \usepackage{amsthm}
+\usepackage{amssymb}
 \usetikzlibrary{arrows,automata}
 \newtheorem{lemma}{Lemma}
 \newtheorem{definitie}{Definitie}
 \usepackage{subcaption}
 \usepackage{listings}
 \usepackage{color}
+\usepackage{wrapfig}
+\usepackage{tabu}
 
 \definecolor{dkgreen}{rgb}{0,0.6,0}
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
@@ -31,7 +34,7 @@
   stringstyle=\color{mauve},
   breaklines=true,
   breakatwhitespace=true,
-  tabsize=3
+  tabsize=1
 }
 \renewcommand{\lstlistingname}{Code}
 
@@ -86,9 +89,10 @@ Bla\\
 \section{Probleemstelling}
 Een \textit{comparator netwerk} $C^n_k$ bestaat uit $n$ kanalen en $k$ \textit{comparatoren}.
 Een comparator $\left(i, j\right)$ verbindt twee verschillende kanalen $i$ en $j$ waarbij $0 < i < j \leq n$.
-We nemen $x_l^m$ als waarde op kanaal $m$ net voor comparator $l$.
+We nemen $x_l^m$ als waarde op kanaal $m$ net voor comparator $l$, deze waarde is een element uit een totaal geordende set. 
 De $l^{de}$ comparator  vergelijkt de huidige waarden van beide kanalen en plaatst de kleinste waarde op kanaal $i$ en de grootste waarde op kanaal $j$ zodat $x_{l+1}^i = \min(x_l^i,x_l^j)$ en $x_{l+1}^j = \max(x_l^i,x_l^j)$.
-De uitvoer van een comparator netwerk verwijst naar de partieel geordende vector $\vec{x} = \{x^1_{k+1} \dots x^n_{k+1} \} $. %TODO voeg toe: "elementen uit een totaal geordende set", invoer
+De uitvoer van een comparator netwerk verwijst naar de partieel geordende vector $\vec{x} = \{x^1_{k+1} \dots x^n_{k+1} \} $.
+De invoer wordt voorgesteld door $\vec{x} = \{x^1_{0} \dots x^n_{0} \} $. 
 
 Een \textit{sorteernetwerk} is een comparator netwerk met als eigenschap dat de uitvoer gesorteerd is ongeacht de invoer.
 Een sorteernetwerk $C^n_k$ van optimale grootte houdt in dat er geen ander sorteernetwerk $C^n_l$ bestaat waarbij $l < k$. %TODO grootte = aantal comparatoren
@@ -127,8 +131,7 @@ $S(n+1) \geq S(n) + \lceil \log_2(n) \rceil, \forall n \geq 1$
 \newcommand*\rfrac[2]{{}^{#1}\!/_{#2}}
 \section{Voorgestelde oplossing}
 Om te bewijzen dat een sorteernetwerk $C^n_k$ een sorteernetwerk is van optimale grootte, moeten we bewijzen dat er geen sorteernetwerk $C^n_{k-1}$ bestaat.
-$n$ kanalen zorgen voor $\frac{n \left(n-1\right)}{2}$ verschillende comparatoren.
-Wanneer een netwerk $k$ comparatoren bevat, kunnen er $\left(\rfrac{n \left(n-1\right)}{2}\right) ^k$ verschillende netwerken gevormd worden.
+Aangezien $n$ kanalen zorgen voor $\frac{n \left(n-1\right)}{2}$ verschillende comparatoren, kunnen er $\left(\rfrac{n \left(n-1\right)}{2}\right) ^k$ verschillende netwerken gevormd worden met  $k$ comparatoren.
 Voor $9$ kanalen en $24$ comparatoren betekent dit $2.245 \times 10^{37}$ verschillende netwerken, dit maakt het overlopen van alle netwerken niet aantrekkelijk.
 %TODO Aaneenpraten
 Door gebruik te maken van symmetrie\"en willen we snoeien in het aanmaken van deze netwerken.
@@ -154,7 +157,7 @@ Bij de genereer-stap zullen we aan elk netwerk van $R^n_k$ alle mogelijke compar
 %TODO aanelkaarpraten zin misschien aanpassen)
 Bij de snoei-stap zullen we dan netwerken verwijderen volgens het subsumes principe beschreven in definitie \ref{definitie1}.
 \begin{definitie}[Subsumes] %TODO VRAGEN SUBSUMES => TOM NEDERLANDS/ENGELS
-We zeggen ``Comparator netwerk $C^n_{k,a}$ subsumes comparator netwerk $C^n_{k,b}$'' wanneer een permuntatie $\pi$ bestaat zodat $\pi\left(outputs\left(C_{a}\right)\right) \subseteq outputs\left(C_{b}\right)$. Dit wordt genoteerd als $ C_{a} \preceq C_{b}$ om aan te duiden dat er een permutatie $\pi$ bestaat zodat $C_{a}\leq_\pi C_{b}$. %TODO Vincent weent om dit te kunnen herzien
+We zeggen ``Comparator netwerk $C^n_{k,a}$ subsumes comparator netwerk $C^n_{k,b}$'' wanneer een permuntatie $\pi$ bestaat zodat ${\pi\left(outputs\left(C_{a}\right)\right) \subseteq outputs\left(C_{b}\right)}$. Dit wordt genoteerd als $ C_{a} \preceq C_{b}$ om aan te duiden dat er een permutatie $\pi$ bestaat zodat $C_{a}\leq_\pi C_{b}$. %TODO Vincent weent om dit te kunnen herzien
 \label{definitie1}
 \end{definitie}
 \begin{lemma}
@@ -165,7 +168,7 @@ Concreet kunnen we de definitie van subsumes en lemma \ref{lemma2} beschreven do
 Wanneer een set van netwerken een sorteernetwerk bevat, zal het snoeien van deze set resulteren in het bekomen van het sorteernetwerk.
 Dit kan gebruikt worden om de eindigheid van het algoritme aan te tonen.
 
-Het overlopen van alle permutaties om na te gaan of er een permutatie $\pi$ bestaat zodat $\pi\left(Outputs\left(C_{a}\right)\right) \subseteq Outputs\left(C_{b}\right)$, en dus $C_a \preceq C_{b}$, is een kostelijke bewerking.
+Het overlopen van alle permutaties om na te gaan of er een permutatie $\pi$ bestaat zodat ${\pi\left(Outputs\left(C_{a}\right)\right) \subseteq Outputs\left(C_{b}\right)}$, en dus $C_a \preceq C_{b}$, is een kostelijke bewerking.
 Om deze bewerkingen te vermijden en te versnellen, zullen we extra methoden moeten invoeren om snellere beslissingen te maken over het ``subsumen van een ander netwerk''. 
 
 \subsection{Representatie van comparator netwerken}
@@ -191,18 +194,9 @@ Outputs drie 1'en & $\left[0111\right]$ & $\left[1011\right]$ &  \\
 \end{table}
 
 \subsection{Genereren}
-Bij de genereer-stap lopen we over de set $R^n_k$ en voegen we bij elk netwerk alle mogelijke comparatoren toe.
-Aangezien een netwerk dat wordt uitgebreid met een overbodige comparator, \'e\'en waarbij de outputs ongewijzigd blijven, gesubsumed zal worden door een uitbreiding van dat netwerk met een niet overbodige comparator, kunnen we deze meteen verwijderen uit de set $N^n_{k+1}$. 
-Alvorens deze beslissing te maken door alle outputs te overlopen, kunnen we ook eerst kijken of de comparator gelijk is aan de vorige in het netwerk.
-Wanneer 2 netwerken op de volgorde van hun parallelle comparatoren na gelijk zijn zoals in figuur \ref{fig1} en \ref{fig2} zullen deze elkaar subsumen en \'e\'en van de twee verwijderd worden.
-Dit kan reeds bij de generatie-stap gemakkelijk opgevangen worden door bij het toevoegen van een nieuwe comparator x na te gaan of x een kanaal gemeenschappelijk heeft met de vorige comparator (Code \ref{code1}).
-\begin{lstlisting}[caption={Test op parallelle comparatoren},label=code1]
-x  & vorigeComp != 0
-\end{lstlisting}
-Wanneer dit niet het geval is en het dus parallelle comparatoren zijn, kunnen we bijvoorbeeld kiezen om het netwerk weg te gooien waarbij de nieuwe comparator kleiner is dan de vorige comparator.
-\begin{figure}[!h]
-	\centering
-	\begin{subfigure}[b]{0.3\textwidth}
+\begin{wrapfigure}{r}{0.12\textwidth}
+	\vspace{-15pt}
+	\begin{subfigure}[b]{0.10\textwidth}
 	\centering
     		\begin{tikzpicture}
 			\def\x{3.5}
@@ -224,7 +218,7 @@ Wanneer dit niet het geval is en het dus parallelle comparatoren zijn, kunnen we
 		\label{fig1}
     \end{subfigure}
     
-    \begin{subfigure}[b]{0.3\textwidth}
+    \begin{subfigure}[b]{0.10\textwidth}
     \centering
 		\begin{tikzpicture}
 			\def\x{3.5}
@@ -246,10 +240,114 @@ Wanneer dit niet het geval is en het dus parallelle comparatoren zijn, kunnen we
 		\label{fig2}
     \end{subfigure}
     \caption{}
-\end{figure}
+    \vspace{-10pt}
+\end{wrapfigure}
+Bij de genereer-stap lopen we over de set $R^n_k$ en voegen we bij elk netwerk alle mogelijke comparatoren toe.
+Aangezien een netwerk dat wordt uitgebreid met een overbodige comparator, \'e\'en waarbij de outputs ongewijzigd blijven, gesubsumed zal worden door een uitbreiding van dat netwerk met een niet overbodige comparator, kunnen we deze meteen verwijderen uit de set $N^n_{k+1}$. 
+Alvorens deze beslissing te maken door alle outputs te overlopen, kunnen we ook eerst kijken of de comparator gelijk is aan de vorige in het netwerk.
+%TODO zin bekijken: aaneenpraten
+Wanneer 2 netwerken op de volgorde van hun parallelle comparatoren na gelijk zijn, zoals in figuur \ref{fig1} en \ref{fig2}, zullen deze elkaar subsumen en \'e\'en van de twee verwijderd worden.
+Dit kan reeds bij de generatie-stap gemakkelijk opgevangen worden door bij het toevoegen van een nieuwe comparator x na te gaan of x een kanaal gemeenschappelijk heeft met de vorige comparator (Code \ref{code1}).
+\begin{lstlisting}[caption={Test op parallelle comparatoren},label=code1]
+x  & vorigeComp != 0
+\end{lstlisting}
+Wanneer dit niet het geval is en het dus parallelle comparatoren zijn, kunnen we bijvoorbeeld kiezen om het netwerk weg te gooien waarbij de nieuwe comparator kleiner is dan de vorige comparator.
 %TODO Het vermelden van procesdata()
 
+Tenslotte, na het toevoegen van de comparator, kunnen we de nieuwe outputs berekenen door de huidig bijgehouden outputs te gebruiken als invoer voor de nieuwe comparator.
+
 \subsection{Snoeien}
+Bij de snoei-stap lopen we over de set $N^n_{k+1}$ en verwijderen we alle netwerken die gesubsumed worden door een ander netwerk in de resterende set.
+Om het aflopen van alle permutaties te vermijden, en sneller te beslissen of $C_a \preceq C_b$ met $C_a$ en $C_b$ twee comparator netwerken, voeren we enkele methoden in.
+Zo gebruiken we onder meer lemma \ref{lemma3}, beschreven in de paper van Codish \textit{et al.}\cite{sortingNetworksSize2014}.
+Bij $9$ kanalen wordt de methode $1.07666 \times 10^{13}$ keer uitgevoerd waarbij $1.05438 \times 10^{13}$ keer een beslissing genomen wordt. %TODO
+\begin{lemma}
+Wanneer het aantal outputs bij $C_a$ met $x$ $1$'en ($1 \leq x \leq n$) groter is dan bij $C_b$ weten we dat $C_a \npreceq C_b$ met $C_a$ en $C_b$ twee comparator netwerken.
+\label{lemma3}
+\end{lemma}
+Voor lemma \ref{lemma4} van Codish (\cite{sortingNetworksSize2014}) introduceren we extra informatie over het comparator netwerk, namelijk $w\left(C_a, x, k\right)$ waarbij $x \in \{0,1\}$ en $0\leq k \leq n$.
+Dit representeert de set van posities $i$ waarvoor er een output bestaat in $C_a$ met $k$ $1$'en waarvoor geldt dat op de $i^{de}$ positie van deze output een $x$ voorkomt. Om effici\"ent operaties te kunnen uitvoeren zullen we de posities voorstellen door middel van een bit representatie. Zo zal bijvoorbeeld $w\left(C_a, 1, 2\right) = 0110$ inhouden dat er bij de outputs met twee $1$'en minstens \'e\'en output bestaat met een $1$ op de $2^{de}$ positie, \'e\'en met een $1$ op de $3{de}$ positie en geen enkel met een $1$ op positie $1$ of $4$. Deze informatie voegen we bij elk netwerk toe in de vorm van een array van shorts, $w$. Elk kanaal $k$ van het netwerk $C_a$ vereist dan 4 opeenvolgende indices in $w$, zoals te zien in tabel \ref{tabel3}.
+Deze informatie slaan we voor elk kanaal $k$ op vanaf index\footnote{In \texttt{Java} begint een array met index $0$.} $(k-1) \times 4$.
+\begin{table}[!h]
+\centering
+\begin{tabu}{|[1.25pt]l|[1.25pt]c|[1.25pt]c|[1.25pt]c|[1.25pt]}
+\tabucline[1.25pt]{-}
+$w\left(C_a, 0, 1\right)$ & $|w\left(C_a, 0, 1\right)|$  & $w\left(C_a, 1, 1\right)$ & $|w\left(C_a, 1, 1\right)|$\\ 
+\tabucline[1.25pt]{-}
+\end{tabu} 
+\caption{De inhoud van $w$ op indices $0-3$ voor kanaal 1.}
+\label{tabel3} 
+\end{table}
+\begin{lemma}
+Wanneer voor een comparator netwerk $C_a$ en $C_b$ met $n$ kanalen geldt dat $|w\left(C_a, x, k\right)| > |w\left(C_b, x, k\right)|$ voor $x \in \{0,1\}$ en $0 \leq k \leq n$ dan $C_a \npreceq C_b$.
+\label{lemma4}
+\end{lemma}
+De methode van lemma \ref{lemma4} wordt bij $9$ kanalen ${2.22803 \times 10^{11}}$ keer uitgevoerd waarbij $2.05631 \times 10^{11}$ keer een beslissing genomen wordt.
+%TODO te vaak van Codish et al. (centraliseer de verwijzing? of footnotes?)
+
+Tenslotte komen we aan het nagaan van de permutaties, een na\"ieve methode zou zijn om alle $n!$ permutaties te overlopen.
+In de plaats daarvan zullen we enkel permutaties afgaan die voldoen aan lemma \ref{lemma5}.
+\begin{lemma}
+${C_a \preceq C_b  \Rightarrow \pi\left(Outputs\left(C_{a}\right)\right) \subseteq Outputs\left(C_{b}\right)} \Rightarrow \pi\left(w\left(C_a, x, k\right)\right) \subseteq w\left(C_b, x, k\right)$, ${\forall x \in \{0,1\}, \forall k \in \{1..n\}}$.
+\label{lemma5}
+\end{lemma} 
+
+\begin{lstlisting}[caption={Hallo},label=code2]
+public boolean existsAValidPerm(short[][] network1, short[][] network2) {
+	int allOnes = (1 << nbChannels) - 1;
+	int[] posList = new int[nbChannels];
+	
+	for (int nbOnes = 1; nbOnes < nbChannels; nbOnes++) {
+		int L2 = network2[nbChannels][(nbOnes << 2) - 2];
+		int P2 = network2[nbChannels][(nbOnes - 1) << 2];
+		
+		int revLPos = allOnes ^ network1[nbChannels][(nbOnes << 2) - 2];
+		int revPPos = allOnes ^ network1[nbChannels][(nbOnes - 1) << 2];
+		
+		if (L2 != allOnes || P2 != allOnes) {
+			for (int i = 0; i < posList.length; i++) {
+				int mask = 1 << i;
+				if ((mask & L2) == 0) {
+					posList[i] &= revLPos;
+				}
+				if ((mask & P2) == 0) {
+					posList[i] &= revPPos;
+				}
+				if (posList[i] == 0) {
+					return false;
+				}
+			}
+		}
+	}
+	
+	for (int i = 0; i < posList.length; i++) {
+		int value = posList[i];
+		if (Integer.bitCount(value) == 1) {
+			for (int j = 0; j < posList.length; j++) {
+				if (((value & posList[j]) != 0) && (i != j)) {
+					posList[j] -= value;
+					if (posList[j] == 0) {
+						return false;
+					}
+				}
+			}
+		}
+	}
+	
+	int checkAll = allOnes;
+	for(int i = 0; i < posList.length; i++) {
+		checkAll &= (~posList[i] & allOnes);
+	}
+	
+	if(checkAll != 0) {
+		return false;
+	}
+	
+	return checkAllRelevantPermutations(network1, network2, posList, 0, new byte[nbChannels], 0);
+}
+\end{lstlisting}
+
+~\\\\
 Uitleg hoe we de prune doen.\\
 Checken  van alle netwerken met alle netwerken voor de prune stap.
 \begin{itemize}
