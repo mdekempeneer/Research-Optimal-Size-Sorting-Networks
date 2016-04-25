@@ -34,7 +34,7 @@
   stringstyle=\color{mauve},
   breaklines=true,
   breakatwhitespace=true,
-  tabsize=3
+  tabsize=1
 }
 \renewcommand{\lstlistingname}{Code}
 
@@ -157,7 +157,7 @@ Bij de genereer-stap zullen we aan elk netwerk van $R^n_k$ alle mogelijke compar
 %TODO aanelkaarpraten zin misschien aanpassen)
 Bij de snoei-stap zullen we dan netwerken verwijderen volgens het subsumes principe beschreven in definitie \ref{definitie1}.
 \begin{definitie}[Subsumes] %TODO VRAGEN SUBSUMES => TOM NEDERLANDS/ENGELS
-We zeggen ``Comparator netwerk $C^n_{k,a}$ subsumes comparator netwerk $C^n_{k,b}$'' wanneer een permuntatie $\pi$ bestaat zodat $\pi\left(outputs\left(C_{a}\right)\right) \subseteq outputs\left(C_{b}\right)$. Dit wordt genoteerd als $ C_{a} \preceq C_{b}$ om aan te duiden dat er een permutatie $\pi$ bestaat zodat $C_{a}\leq_\pi C_{b}$. %TODO Vincent weent om dit te kunnen herzien
+We zeggen ``Comparator netwerk $C^n_{k,a}$ subsumes comparator netwerk $C^n_{k,b}$'' wanneer een permuntatie $\pi$ bestaat zodat ${\pi\left(outputs\left(C_{a}\right)\right) \subseteq outputs\left(C_{b}\right)}$. Dit wordt genoteerd als $ C_{a} \preceq C_{b}$ om aan te duiden dat er een permutatie $\pi$ bestaat zodat $C_{a}\leq_\pi C_{b}$. %TODO Vincent weent om dit te kunnen herzien
 \label{definitie1}
 \end{definitie}
 \begin{lemma}
@@ -168,7 +168,7 @@ Concreet kunnen we de definitie van subsumes en lemma \ref{lemma2} beschreven do
 Wanneer een set van netwerken een sorteernetwerk bevat, zal het snoeien van deze set resulteren in het bekomen van het sorteernetwerk.
 Dit kan gebruikt worden om de eindigheid van het algoritme aan te tonen.
 
-Het overlopen van alle permutaties om na te gaan of er een permutatie $\pi$ bestaat zodat $\pi\left(Outputs\left(C_{a}\right)\right) \subseteq Outputs\left(C_{b}\right)$, en dus $C_a \preceq C_{b}$, is een kostelijke bewerking.
+Het overlopen van alle permutaties om na te gaan of er een permutatie $\pi$ bestaat zodat ${\pi\left(Outputs\left(C_{a}\right)\right) \subseteq Outputs\left(C_{b}\right)}$, en dus $C_a \preceq C_{b}$, is een kostelijke bewerking.
 Om deze bewerkingen te vermijden en te versnellen, zullen we extra methoden moeten invoeren om snellere beslissingen te maken over het ``subsumen van een ander netwerk''. 
 
 \subsection{Representatie van comparator netwerken}
@@ -266,7 +266,7 @@ Wanneer het aantal outputs bij $C_a$ met $x$ $1$'en ($1 \leq x \leq n$) groter i
 \label{lemma3}
 \end{lemma}
 Voor lemma \ref{lemma4} van Codish (\cite{sortingNetworksSize2014}) introduceren we extra informatie over het comparator netwerk, namelijk $w\left(C_a, x, k\right)$ waarbij $x \in \{0,1\}$ en $0\leq k \leq n$.
-Dit representeert de set van posities $i$ waarvoor er een output bestaat in $C_a$ met $k$ $1$'en waarvoor geldt dat op de $i^{de}$ positie van deze output een $x$ voorkomt. Om effici\"ent operaties te kunnen uitvoeren zullen we de posities voorstellen door middel van een bit representatie. Zo zal bijvoorbeeld $w\left(C_a, 1, 2\right) = 0110$ inhouden dat er bij de outputs met twee $1$'en minstens \'e\'en output bestaat met een 1 op de $2^{de}$ positie, \'e\'en met een 1 op de $3_{de}$ positie en geen enkel met een 1 op positie 1 of 4. Deze informatie voegen we bij elk netwerk toe in de vorm van een array van shorts, $w$. Elk kanaal k van het netwerk $C_a$ vereist dan 4 opeenvolgende indices in $w$, zoals te zien in tabel \ref{tabel3}.
+Dit representeert de set van posities $i$ waarvoor er een output bestaat in $C_a$ met $k$ $1$'en waarvoor geldt dat op de $i^{de}$ positie van deze output een $x$ voorkomt. Om effici\"ent operaties te kunnen uitvoeren zullen we de posities voorstellen door middel van een bit representatie. Zo zal bijvoorbeeld $w\left(C_a, 1, 2\right) = 0110$ inhouden dat er bij de outputs met twee $1$'en minstens \'e\'en output bestaat met een $1$ op de $2^{de}$ positie, \'e\'en met een $1$ op de $3{de}$ positie en geen enkel met een $1$ op positie $1$ of $4$. Deze informatie voegen we bij elk netwerk toe in de vorm van een array van shorts, $w$. Elk kanaal $k$ van het netwerk $C_a$ vereist dan 4 opeenvolgende indices in $w$, zoals te zien in tabel \ref{tabel3}.
 Deze informatie slaan we voor elk kanaal $k$ op vanaf index\footnote{In \texttt{Java} begint een array met index $0$.} $(k-1) \times 4$.
 \begin{table}[!h]
 \centering
@@ -278,14 +278,75 @@ $w\left(C_a, 0, 1\right)$ & $|w\left(C_a, 0, 1\right)|$  & $w\left(C_a, 1, 1\rig
 \caption{De inhoud van $w$ op indices $0-3$ voor kanaal 1.}
 \label{tabel3} 
 \end{table}
-
 \begin{lemma}
-
+Wanneer voor een comparator netwerk $C_a$ en $C_b$ met $n$ kanalen geldt dat $|w\left(C_a, x, k\right)| > |w\left(C_b, x, k\right)|$ voor $x \in \{0,1\}$ en $0 \leq k \leq n$ dan $C_a \npreceq C_b$.
 \label{lemma4}
 \end{lemma}
-%TODO Nakijken caption tabel + tekst erboven.
+De methode van lemma \ref{lemma4} wordt bij $9$ kanalen ${2.22803 \times 10^{11}}$ keer uitgevoerd waarbij $2.05631 \times 10^{11}$ keer een beslissing genomen wordt.
 %TODO te vaak van Codish et al. (centraliseer de verwijzing? of footnotes?)
 
+Tenslotte komen we aan het nagaan van de permutaties.
+Een na\"ieve methode zou zijn om alle $n!$ permutaties te overlopen.
+In de plaats hiervan zullen we enkel permutaties afgaan die voldoen aan lemma \ref{lemma5}.
+\begin{lemma}
+${C_a \preceq C_b  \Rightarrow \pi\left(Outputs\left(C_{a}\right)\right) \subseteq Outputs\left(C_{b}\right)} \Rightarrow \pi\left(w\left(C_a, x, k\right)\right) \subseteq w\left(C_b, x, k\right)$, ${\forall x \in \{0,1\}, \forall k \in \{1..n\}}$.
+\label{lemma5}
+\end{lemma} 
+
+\begin{lstlisting}[caption={Hallo},label=code2]
+public boolean existsAValidPerm(short[][] network1, short[][] network2) {
+	int allOnes = (1 << nbChannels) - 1;
+	int[] posList = new int[nbChannels];
+	
+	for (int nbOnes = 1; nbOnes < nbChannels; nbOnes++) {
+		int L2 = network2[nbChannels][(nbOnes << 2) - 2];
+		int P2 = network2[nbChannels][(nbOnes - 1) << 2];
+		
+		int revLPos = allOnes ^ network1[nbChannels][(nbOnes << 2) - 2];
+		int revPPos = allOnes ^ network1[nbChannels][(nbOnes - 1) << 2];
+		
+		if (L2 != allOnes || P2 != allOnes) {
+			for (int i = 0; i < posList.length; i++) {
+				int mask = 1 << i;
+				if ((mask & L2) == 0) {
+					posList[i] &= revLPos;
+				}
+				if ((mask & P2) == 0) {
+					posList[i] &= revPPos;
+				}
+				if (posList[i] == 0) {
+					return false;
+				}
+			}
+		}
+	}
+	
+	for (int i = 0; i < posList.length; i++) {
+		int value = posList[i];
+		if (Integer.bitCount(value) == 1) {
+			for (int j = 0; j < posList.length; j++) {
+				if (((value & posList[j]) != 0) && (i != j)) {
+					posList[j] -= value;
+					if (posList[j] == 0) {
+						return false;
+					}
+				}
+			}
+		}
+	}
+	
+	int checkAll = allOnes;
+	for(int i = 0; i < posList.length; i++) {
+		checkAll &= (~posList[i] & allOnes);
+	}
+	
+	if(checkAll != 0) {
+		return false;
+	}
+	
+	return checkAllRelevantPermutations(network1, network2, posList, 0, new byte[nbChannels], 0);
+}
+\end{lstlisting}
 
 ~\\\\
 Uitleg hoe we de prune doen.\\
