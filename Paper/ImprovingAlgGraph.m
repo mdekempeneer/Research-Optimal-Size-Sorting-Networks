@@ -17,7 +17,6 @@ Y8 = [13.56, 25.33, 61.34, 245.31, 5804.48, 0]; % nullJump - Job20290089 - 256
 
 T = [Y1 ; Y5 ; Y7 ; Y8];
 
-
 figure
 bar(X, T')
 set(gca,'YScale','log')
