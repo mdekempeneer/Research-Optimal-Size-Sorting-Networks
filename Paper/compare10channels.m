@@ -4,6 +4,7 @@ clear all
 xas             = 2:29;
 old             = zeros([1 28]);
 old(1:12)       = [6 13 21 44 102 159 391 3436 56887 1237241 26637970 489689647]; % ms
+
 old_s           = old ./ 1000; % s
 old_m           = old_s ./ 60; % min
 old_u           = old_m ./ 60; % uur
@@ -59,16 +60,16 @@ set(gca, 'Yscale', 'log')
 T  = table(xas(1:12), old(1:12));
 T2 = table(xas(1:11), new(1:11));
 figure
-plot(xas(1:12),old(1:12),'o')
+plot(xas(1:12),old(1:12),'ro')
 hold on
-plot(xas(1:11),new(1:11),'o')
+plot(xas(1:11),new(1:11),'bo', 'LineWidth', 2)
 set(gca,'YScale','log')
 [p, ~,mu ] = polyfit(T.Var1,  T.Var2,  11);
 [p2,~,mu2] = polyfit(T2.Var1, T2.Var2, 10);
 f  = polyval(p,  xas, [], mu);
 f2 = polyval(p2, xas, [], mu2);
-plot(xas,f)
-plot(xas,f2)
+plot(xas,f, 'r--')
+plot(xas,f2, 'b--', 'LineWidth',  2)
 ylabel('nanoseconden')
 xlabel('comparator')
 legend('old', 'new', 'benadering old', 'benadering new', 'Location', 'northwest')

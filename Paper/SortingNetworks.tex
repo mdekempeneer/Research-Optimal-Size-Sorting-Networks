@@ -399,6 +399,24 @@ Schatting runtime voor 10 kanalen.\\\\
 \caption{Resultaten}
 \end{figure}
 
+\begin{figure}
+	\begin{tikzpicture}
+		\begin{axis} [
+			xlabel={Aantal kanalen},
+			ylabel={Tijd (nanoseconden)},
+			ymode = log,
+			log basis y = 10]
+		\addplot [only marks, red] file {dataAllChan.dat};
+		\addplot [red] file {dataAllChan.dat};
+		\addplot [only marks, blue] coordinates {(9, 1101480000000000)};
+		\addplot [green, domain=5:9, samples=1000] {exp(x)};
+		\addplot [green, domain=5:9, samples=1000] {exp(x^2)};
+		\addplot [purple, domain=5:9, samples=1000] {2^x};
+		\addplot [purple, domain=5:9, samples=1000] {2^(x^2)};
+		\end{axis}
+	\end{tikzpicture}
+\end{figure}
+
 \begin{figure}[!h]
 \centering
 \begin{tikzpicture}
