@@ -48,63 +48,6 @@ public class WorkPool {
      * Get a pruned list by Performing a generate&Prune cycle on N. N will not
      * be modified.
      *
-     * @param oldL //TODO
-     * @param startIndex //TODO
-     * @param resultN //TODO
-     * @param nbComp One more than the amount of comparators the networks in N
-     * currently have.
-     * @return A pruned list.
-     */
-    public NullArray performCycle(final NullArray oldL, int startIndex, final NullArray resultN, final short nbComp) {
-        final int nb = INNER_SIZE;
-        latch = new CountDownLatch((int) Math.ceil((oldL.size() - startIndex) / (double) nb));
-        resultN.ensureCapacity(oldL.size() * nbComps);
-
-        final AtomicInteger doneIndex = new AtomicInteger();
-
-        //Perform generate & prune for every batch of old networks.
-        for (int index = startIndex; index < oldL.size(); index += nb) {
-            final int startIndexT = index;
-
-            //Give task to thread
-            executor.execute(new Runnable() {
-                @Override
-                public void run() {
-                    ObjectArrayList<short[][]> prunedList = processor.generate(oldL, startIndexT, nb, nbComp);
-                    processor.innerPrune(prunedList);
-
-                    int networkIndex = resultN.add(prunedList);
-                    processor.prune(resultN, networkIndex, prunedList.size());
-
-                    latch.countDown();
-                    doneIndex.getAndAdd(nb);
-                }
-            });
-        }
-
-        try {
-            latch.await();
-        } catch (InterruptedException E) {
-            System.out.println("An interruptException happened in the workPool.");
-        }
-
-        if (shouldSave) {
-            processor.save(oldL, doneIndex.get(), resultN, nbComp);
-            System.exit(0);
-        }
-
-        //Adjust sizes.
-        resultN.fixNulls();
-        resultN.trim();
-
-        return resultN;
-    }
-
-    //TODO: Will modifying N (remove instead of only iterating over be a memory boost?
-    /**
-     * Get a pruned list by Performing a generate&Prune cycle on N. N will not
-     * be modified.
-     *
      * @param N The list to perform a generate & prune cycle on.
      * @param nbComp One more than the amount of comparators the networks in N
      * currently have.
@@ -132,7 +75,7 @@ public class WorkPool {
                 public void run() {
                     ObjectArrayList<short[][]> prunedList = processor.generate(N, startIndex, nb, nbComp);
                     processor.innerPrune(prunedList);
- 
+
                     int networkIndex = resultN.add(prunedList);
                     processor.prune(resultN, networkIndex, prunedList.size());
 
@@ -149,35 +92,11 @@ public class WorkPool {
             System.out.println("An interruptException happened in the workPool.");
         }
 
-        if (shouldSave) {
-            processor.save(N, doneIndex.get(), resultN, nbComp);
-            System.exit(0);
-        }
-
         //Adjust sizes.
         resultN.fixNulls();
         resultN.trim();
 
         return resultN;
-    }
-
-    /**
-     * TODO
-     */
-    public void shutDownAndSave() {
-        executor.shutdownNow();
-        shouldSave = true;
-
-        try {
-            executor.awaitTermination(2, TimeUnit.HOURS);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(WorkPool.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        long r = latch.getCount();
-        for (long i = 0; i < r; i++) {
-            latch.countDown();
-        }
     }
 
     /**
