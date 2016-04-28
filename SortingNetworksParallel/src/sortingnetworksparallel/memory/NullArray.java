@@ -1,25 +1,4 @@
-/* Generic definitions */
- /* Assertions (useful to generate conditional code) */
- /* Current type and class (and size, if applicable) */
- /* Value methods */
- /* Interfaces (keys) */
- /* Interfaces (values) */
- /* Abstract implementations (keys) */
- /* Abstract implementations (values) */
- /* Static containers (keys) */
- /* Static containers (values) */
- /* Implementations */
- /* Synchronized wrappers */
- /* Unmodifiable wrappers */
- /* Other wrappers */
- /* Methods (keys) */
- /* Methods (values) */
- /* Methods (keys/values) */
- /* Methods that have special names depending on keys (but the special names depend on values) */
- /* Equality */
- /* Object/Reference-only definitions (keys) */
- /* Object/Reference-only definitions (values) */
- /*		 
+/**
  * Copyright (C) 2002-2015 Sebastiano Vigna
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -32,7 +11,14 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- * limitations under the License. 
+ * limitations under the License.
+ *
+ * <br>
+ * This work has been altered by Mathias Dekempeneer and Vincent Derkinderen.
+ * Adding is now concurrent in that it provides an index where in to store a
+ * object.
+ *
+ * @author Sebastiano Vigna
  */
 package sortingnetworksparallel.memory;
 
@@ -89,7 +75,6 @@ import java.util.concurrent.atomic.AtomicInteger;
  * {@link System#arraycopy(Object,int,Object,int,int) System.arraycopy()}
  * instead of expensive loops.
  *
- * @param <K> //TODO
  * @see java.util.ArrayList
  */
 public class NullArray extends AbstractObjectList<short[][]> implements RandomAccess, Cloneable, java.io.Serializable {
@@ -260,7 +245,6 @@ public class NullArray extends AbstractObjectList<short[][]> implements RandomAc
      * {@link #elements()} will be the same (see the comments in the class
      * documentation).
      *
-     * @param <K> //TODO
      * @param a an array to wrap.
      * @param length the length of the resulting array list.
      * @return a new array list of the given size, wrapping the given array.
@@ -282,7 +266,6 @@ public class NullArray extends AbstractObjectList<short[][]> implements RandomAc
      * {@link #elements()} will be the same (see the comments in the class
      * documentation).
      *
-     * @param <K> //TODO
      * @param a an array to wrap.
      * @return a new array list wrapping the given array.
      */
@@ -357,7 +340,7 @@ public class NullArray extends AbstractObjectList<short[][]> implements RandomAc
      * }.
      *
      * @param k The object to add.
-     * @param dummy //TODO
+     * @param dummy dummy.
      * @return The index of where the object is added. -1 is no index was found.
      */
     public int add(final short[][] k, Object dummy) {
@@ -377,10 +360,11 @@ public class NullArray extends AbstractObjectList<short[][]> implements RandomAc
     }
 
     /**
-     * TODO Add comments
+     * Add the elements of the given object list.<br>
+     * Precondition: size this array should be sufficient.
      *
-     * @param k
-     * @return
+     * @param k The elements to add.
+     * @return The index where the first element is added.
      */
     public int add(final ObjectArrayList<short[][]> k) {
         int r = k.size();
@@ -475,6 +459,18 @@ public class NullArray extends AbstractObjectList<short[][]> implements RandomAc
         }
     }
 
+    /**
+     * Removes the first occurrence of the specified element from this list, if
+     * it is present (optional operation). If this list does not contain the
+     * element, it is unchanged. More formally, removes the element with the
+     * lowest index i such that (o==null ? get(i)==null : o.equals(get(i))) (if
+     * such an element exists). Returns true if this list contained the
+     * specified element (or equivalently, if this list changed as a result of
+     * the call).
+     *
+     * @param k element to be removed from this list, if present
+     * @return true if this list contained the specified element
+     */
     public boolean rem(final Object k) {
         int index = indexOf(k);
         if (index == -1) {
@@ -490,11 +486,11 @@ public class NullArray extends AbstractObjectList<short[][]> implements RandomAc
     }
 
     /**
-     * Does return old value.
+     * Set the element on a certain index.
      *
-     * @param index
-     * @param k
-     * @return
+     * @param index The index to set the element
+     * @param k The element to set
+     * @return null
      */
     @Override
     public short[][] set(final int index, final short[][] k) {
@@ -719,45 +715,5 @@ public class NullArray extends AbstractObjectList<short[][]> implements RandomAc
             }
         }
         return true;
-    }
-
-    /**
-     * Compares this array list to another array list.
-     *
-     * <P>
-     * This method exists only for sake of efficiency. The implementation
-     * inherited from the abstract implementation would already work.
-     *
-     * @param l an array list.
-     * @return a negative integer, zero, or a positive integer as this list is
-     * lexicographically less than, equal to, or greater than the argument.
-     */
-    /*public int compareTo(final NullArray l) {
-        final int s1 = size(), s2 = l.size();
-        final K a1[] = a, a2[] = l.a;
-        K e1, e2;
-        int r, i;
-        for (i = 0; i < s1 && i < s2; i++) {
-            e1 = a1[i];
-            e2 = a2[i];
-            if ((r = (((Comparable<K>) (e1)).compareTo(e2))) != 0) {
-                return r;
-            }
-        }
-        return i < s2 ? -1 : (i < s1 ? 1 : 0);
-    }*/
-    private void writeObject(java.io.ObjectOutputStream s) throws java.io.IOException {
-        s.defaultWriteObject();
-        for (int i = 0; i < size.get(); i++) {
-            s.writeObject(a[i]);
-        }
-    }
-
-    private void readObject(java.io.ObjectInputStream s) throws java.io.IOException, ClassNotFoundException {
-        s.defaultReadObject();
-        a = new short[size.get()][][];
-        for (int i = 0; i < size.get(); i++) {
-            a[i] = (short[][]) s.readObject();
-        }
     }
 }
