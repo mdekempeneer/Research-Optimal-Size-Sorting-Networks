@@ -292,74 +292,54 @@ In de plaats daarvan zullen we enkel permutaties afgaan die voldoen aan lemma \r
 ${C_a \preceq C_b  \Rightarrow \pi\left(Outputs\left(C_{a}\right)\right) \subseteq Outputs\left(C_{b}\right)} \Rightarrow \pi\left(w\left(C_a, x, k\right)\right) \subseteq w\left(C_b, x, k\right)$, ${\forall x \in \{0,1\}, \forall k \in \{1..n\}}$.
 \label{lemma5}
 \end{lemma} 
+Om de mogelijke permutaties bij te houden zullen we gebruik maken van een voorstelling die te zien is in tabel \ref{tabel4}. De waarden in een kolom stellen alle mogelijke posities voor die op die plaats kunnen voorkomen. Wanneer we tabel  \ref{tabel4} gebruiken om de mogelijke permutaties weer te geven dan zullen we permutatie $4321$ en $1324$  bekomen, waarbij $4321$ een eenheidspermutatie zal voorstellen. Bij het begin van het algoritme zullen we starten met tabel \ref{tabel5}, waarna we lemma \ref{lemma5} gebruiken om posities te verwijderen.
+\begin{table}[!h]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+1 & 2 & 2 & 1 \\ 
+2 & 3 &  &  \\ 
+4 &  &  &  \\ 
+\hline 
+\end{tabular}
+\caption{Een voorbeeld van een permutatietabel voor 4 kanalen.}
+\label{tabel4}
+\end{table}
+\begin{table}[!h]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+1 & 1 & 1 & 1 \\ 
+2 & 2 & 2 & 2\\ 
+3 & 3 & 3 & 3 \\
+4 & 4 & 4 & 4\\ 
+\hline 
+\end{tabular}
+\caption{Een permutatietabel in het begin van het algoritme voor 4 kanalen.}
+\label{tabel5}
+\end{table}
 
-\begin{lstlisting}[caption={Hallo},label=code2]
-public boolean existsAValidPerm(short[][] network1, short[][] network2) {
-	int allOnes = (1 << nbChannels) - 1;
-	int[] posList = new int[nbChannels];
-	
-	for (int nbOnes = 1; nbOnes < nbChannels; nbOnes++) {
-		int L2 = network2[nbChannels][(nbOnes << 2) - 2];
-		int P2 = network2[nbChannels][(nbOnes - 1) << 2];
-		
-		int revLPos = allOnes ^ network1[nbChannels][(nbOnes << 2) - 2];
-		int revPPos = allOnes ^ network1[nbChannels][(nbOnes - 1) << 2];
-		
-		if (L2 != allOnes || P2 != allOnes) {
-			for (int i = 0; i < posList.length; i++) {
-				int mask = 1 << i;
-				if ((mask & L2) == 0) {
-					posList[i] &= revLPos;
-				}
-				if ((mask & P2) == 0) {
-					posList[i] &= revPPos;
-				}
-				if (posList[i] == 0) {
-					return false;
-				}
-			}
-		}
-	}
-	
-	for (int i = 0; i < posList.length; i++) {
-		int value = posList[i];
-		if (Integer.bitCount(value) == 1) {
-			for (int j = 0; j < posList.length; j++) {
-				if (((value & posList[j]) != 0) && (i != j)) {
-					posList[j] -= value;
-					if (posList[j] == 0) {
-						return false;
-					}
-				}
-			}
-		}
-	}
-	
-	int checkAll = allOnes;
-	for(int i = 0; i < posList.length; i++) {
-		checkAll &= (~posList[i] & allOnes);
-	}
-	
-	if(checkAll != 0) {
-		return false;
-	}
-	
-	return checkAllRelevantPermutations(network1, network2, posList, 0, new byte[nbChannels], 0);
-}
-\end{lstlisting}
+We weten namelijk dat als ${\pi\left(outputs\left(C_a\right)\right) \subseteq outputs\left(C_b\right)}$ er bij de gepermuteerde outputs enkel een $1$ kan komen op de plaats waar dit bij $C_b$ ook het geval is. Op de plaats waar $C_b$ een $0$ heeft, kunnen dus enkel de posities komen waar $C_a$ een $0$ heeft. Nemen we bijvoorbeeld $w\left(C_a,1,1\right) = 0101$ en ${w\left(C_b,1,1\right)=0111}$ dan kunnen we tabel \ref{tabel5} reduceren tot tabel \ref{tabel6}. We kunnen voor $w\left(C_a, x, k\right)$ deze methode doortrekken voor elke $1 \leq k \leq n$ en voor zowel $x = 0$ als $x = 1$. Wanneer we elke kolom bijhouden door een bit representatie kunnen we gemakkelijk de doorsnede van de mogelijke posities nemen na elke berekening voor een bepaalde $k$ en $x$ door middel van de $\&$-operatie. 
+\begin{table}[!h]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+2 & 1 & 1 & 1 \\ 
+4 & 2 & 2 & 2\\ 
+ & 3 & 3 & 3 \\
+ & 4 & 4 & 4\\ 
+\hline 
+\end{tabular}
+\caption{Een permutatietabel voor 4 kanalen.}
+\label{tabel6}
+\end{table}
 
-~\\\\
-Uitleg hoe we de prune doen.\\
-Checken  van alle netwerken met alle netwerken voor de prune stap.
-\begin{itemize}
-\item Aantal 1en bij $C_a > C_b \Rightarrow C_a$ subsumes niet $C_b$ 
-\item $|W(C_a, x, k)| > |W(C_b, x, k)| \Rightarrow C_a$ subsumes niet $C_b$
-\item Uitleggen reductie van permutaties
-\end{itemize}
+Wanneer tijdens het algoritme een kolom leeg zou komen te staan, kunnen we het algoritme stopzetten. Dit betekent namelijk dat er geen enkele permutatie bestaat die niet door lemma \ref{lemma5} wordt afgekeurd. Mocht op het einde een kolom $1$ element hebben, kunnen we dit element uit alle andere kolommen verwijderen. We kunnen nadien ook nagaan of alle elementen minstens \'e\'enmaal voorkomen in de hele tabel. Tot slot kunnen we de overblijvende permutatietabel gebruiken om onze mogelijke permutaties, die aan lemma \ref{lemma5} voldoen, na te gaan. 
 
 \subsection{Parallellisatie}
 Parallellisatie uitleggen\\
-Uitleg hoe generate and prune verandert door elke thread zijn stuk te laten generate en prunen en vervolgens in een groter geheel te prunen en hoe dit groter geheel prunen werkt zonder locks.
+Uitleg hoe generate and prune verandert door elke thread zijn stuk te laten generate en prunen en vervolgens in een groter geheel te prunen en hoe dit groter geheel prunen werkt zonder locks.\\
+Uitleg $0$ jump
 %TODO ZIe pagina 4 in paper => definitie 2: Observe that ......
 
 \section{Evaluatie}
@@ -405,14 +385,12 @@ Schatting runtime voor 10 kanalen.\\\\
 			xlabel={Aantal kanalen},
 			ylabel={Tijd (nanoseconden)},
 			ymode = log,
-			log basis y = 10]
+			log basis y = 10,
+			legend pos = north west]
 		\addplot [only marks, red] file {dataAllChan.dat};
 		\addplot [red] file {dataAllChan.dat};
 		\addplot [only marks, blue] coordinates {(9, 1101480000000000)};
-		\addplot [green, domain=5:9, samples=1000] {exp(x)};
-		\addplot [green, domain=5:9, samples=1000] {exp(x^2)};
-		\addplot [purple, domain=5:9, samples=1000] {2^x};
-		\addplot [purple, domain=5:9, samples=1000] {2^(x^2)};
+		\legend{Dekempeneer \& Derkinderen, ,\cite{sortingNetworksSize2014}};
 		\end{axis}
 	\end{tikzpicture}
 \end{figure}
