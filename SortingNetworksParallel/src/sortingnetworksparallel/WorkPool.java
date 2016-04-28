@@ -1,36 +1,59 @@
+/**
+ * MIT License
+ *
+ * Copyright (c) 2015-2016 Mathias DEKEMPENEER, Vincent DERKINDEREN
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 package sortingnetworksparallel;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import sortingnetworksparallel.memory.NullArray;
 
 /**
  * A Pool that when given a task will hand over the tasks to multiple threads.
  *
- * @author Admin
+ * @author Mathias Dekempeneer and Vincent Derkinderen
+ * @version 1.0
  */
 public class WorkPool {
 
     private final Processor processor;
     private final ThreadPoolExecutor executor;
     private final int nbComps;
-    private boolean shouldSave = false;
     private CountDownLatch latch;
     private final int INNER_SIZE;
 
     /**
+     * Create a workpool that can be used to assign work to a thread.
      *
      * @param processor The {@link Processor} that uses this. Methods of this
      * {@link Processor} will be used.
      * @param nbChannels The amount of channels used in the network.
-     * @param innerSize //TODO
-     * @param percThreads //TODO
+     * @param innerSize The size of the list of networks the thread will
+     * generate on.
+     * @param percThreads The percentage (0-1) of the amount of threads obtained
+     * by Runtime#getRuntime()#availableProcessors()
      */
     public WorkPool(Processor processor, short nbChannels, int innerSize, double percThreads) {
         this.processor = processor;
@@ -45,10 +68,10 @@ public class WorkPool {
     }
 
     /**
-     * Get a pruned list by Performing a generate&Prune cycle on N. N will not
-     * be modified.
+     * Get a pruned list by Performing a generate &amp; Prune cycle on N. N will
+     * not be modified.
      *
-     * @param N The list to perform a generate & prune cycle on.
+     * @param N The list to perform a generate &amp; prune cycle on.
      * @param nbComp One more than the amount of comparators the networks in N
      * currently have.
      * @return A pruned list.
@@ -100,7 +123,7 @@ public class WorkPool {
     }
 
     /**
-     * TODO
+     * Shut down the executor.
      */
     public void shutDown() {
         executor.shutdownNow();

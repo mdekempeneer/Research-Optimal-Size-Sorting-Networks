@@ -1,3 +1,26 @@
+/**
+ * MIT License
+ *
+ * Copyright (c) 2015-2016 Mathias DEKEMPENEER, Vincent DERKINDEREN
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 package sortingnetworksparallel;
 
 import it.unimi.dsi.fastutil.objects.AbstractObjectList;
@@ -7,6 +30,9 @@ import java.util.Arrays;
 import sortingnetworksparallel.memory.NullArray;
 
 /**
+ * Processes the given amount of channels and the maximum amount of comparators
+ * (upperbound) and returns a sorting network of optimal size when the
+ * upperbound is high enough.
  *
  * @author Mathias Dekempeneer and Vincent Derkinderen
  * @version 1.0
@@ -45,13 +71,14 @@ public class Processor {
     }
 
     /**
-     * TODO
+     * For a given nbChannels and upperBound find a minimal sorting network if
+     * there is one with less than or equal to upperBound.
      *
-     * @return
+     * @return The found optimal size sorting network.
      */
     public short[] process() {
         /* Initialize inputs */
-        NullArray NList = firstTimeGenerate(getOriginalInputs(upperBound));
+        NullArray NList = firstTimeGenerate(getOriginalInputs());
         innerPrune(NList);
         NList.fixNulls();
         NList.trim();
@@ -167,7 +194,7 @@ public class Processor {
      * working on.
      * @return A list of generated networks, expanded by all possible
      * comparators to the given network.
-     * @see #isRedundantComp(short[][], short)
+     * @see #getChangeIndex(short[][], short)
      */
     public ObjectArrayList<short[][]> generate(final NullArray networkList, final int startIndex, final int length, final short nbComp) {
         /* Setup environment */
@@ -251,7 +278,7 @@ public class Processor {
      * @param networkList The list of networks to prune on.
      * @param networkIndex The outerIndex of the network located in the
      * networkList used to perform subsumes with (in 2 directions).
-     * @param skipSize The networks with outerIndex >= networkIndex and &lt
+     * @param skipSize The networks with outerIndex &gt;= networkIndex and &lt;
      * skipSize+networkIndex aren't checked.
      *
      */
@@ -315,7 +342,6 @@ public class Processor {
             }
         }
     }
-    //}
 
     /**
      * Check whether the output of network1 is a part of or equal to the output
@@ -353,12 +379,18 @@ public class Processor {
         return true;
     }
 
+    /**
+     * Check whether the permutation(output of network1) is a part of or equal
+     * to the output of network2.
+     *
+     * @param network1 The first network.
+     * @param network2 The second network.
+     * @param permutor The permutation to use on network1
+     * @return Whether permutor(outputs(network1)) is equal to or part of
+     * outputs(network2).
+     */
     private boolean isValidPermutation(final short[][] network1, final short[][] network2, final byte[] permutor) {
-        /*  Reduce work: Lemma 6:
-         C1 subsumes C2 => P(w(C1, x, k)) C= w(C2, x, k)
-         */
-
- /* Permute & Check outputs */
+        /* Permute & Check outputs */
         for (int nbOnes = 1; nbOnes < nbChannels; nbOnes++) {
             for (int innerIndex = 0; innerIndex < network1[nbOnes].length; innerIndex++) {
                 int output = 0;
@@ -369,7 +401,6 @@ public class Processor {
                     output <<= 1;
                     output |= ((network1[nbOnes][innerIndex] >> permutor[pIndex]) & 1);
                 }
-                //}
 
                 /* Check if output is partof network2 */
                 for (short output2 : network2[nbOnes]) {
@@ -429,9 +460,10 @@ public class Processor {
      * permutations that might work by using the network information (P and L)
      * and iterates trying these permutations to find a correct one.
      *
-     * @param network1 The
-     * @param network2
-     * @return
+     * @param network1 The first network as part of network1 subsumes? network2
+     * @param network2 The second network as part of network1 subsumes? network2
+     * @return Whether there exists a valid permutation by which
+     * p(outputs(network1)) C= outputs(network2)
      */
     public boolean existsAValidPerm(final short[][] network1, final short[][] network2) {
         //Create a list full of allOnes - on every Position can be every number.
@@ -523,6 +555,15 @@ public class Processor {
         //return testPossiblePermutations(network1, network2, Ps);
     }
 
+    /**
+     * Iterative method to check all permutations of the permutation table Ps.
+     *
+     * @param network1 The first network as part of network1 subsumes? network2
+     * @param network2 The second network as part of network1 subsumes? network2
+     * @param Ps The permutation table
+     * @return Whether or not there exists a permutation such that network1
+     * subsumes network2.
+     */
     public boolean testPossiblePermutations(short[][] network1, short[][] network2, byte[][] Ps) {
         final int allOnes = (1 << nbChannels) - 1; //TODO: Delete if not used.
         final int lastOuterIndex = nbChannels - 1;
@@ -612,15 +653,20 @@ public class Processor {
     }
 
     /**
-     * TODO
+     * Recursive method to check all permutations of the permutation table Ps.
      *
-     * @param network1
-     * @param network2
-     * @param Ps
-     * @param currIndex
-     * @param soFar
-     * @param posTaken
-     * @return
+     * @param network1 The first network as part of network1 subsumes? network2
+     * @param network2 The second network as part of network1 subsumes? network2
+     * @param Ps The permutation table
+     * @param currIndex Used by the recursive algorithm, when calling this
+     * method you should use 0
+     * @param soFar The permutation so far, when calling this method you should
+     * use new byte[nbChannels]
+     * @param posTaken The positions already taken, when calling this method you
+     * should use 0
+     *
+     * @return Whether or not there exists a permutation such that network1
+     * subsumes network2
      */
     public boolean checkAllRelevantPermutations(final short[][] network1, final short[][] network2, byte[][] Ps, int currIndex, byte[] soFar, int posTaken) {
         if (currIndex == nbChannels - 1) {
@@ -655,11 +701,10 @@ public class Processor {
     /**
      * Get all original inputs excluding the already sorted ones.
      *
-     * @param upperBound
      * @return range from 2 to (2^nbChannels-1) excluding all sorted (binary)
      * ones.
      */
-    public short[][] getOriginalInputs(final int upperBound) {
+    public short[][] getOriginalInputs() {
         /* 
          data[0] holds the lengths of the other shorts.
          data[1] holds outputs with 1 '1's.
@@ -803,8 +848,13 @@ public class Processor {
         return -1;
     }
 
-    /*  Reduce work: Lemma 6:
-     C1 subsumes C2 => P(w(C1, x, k)) C= w(C2, x, k)
+    /**
+     * Reduce work: Lemma 6: C1 subsumes C2 =&gt; P(w(C1, x, k)) C= w(C2, x, k)
+     *
+     * @param network1 C1
+     * @param network2 C2
+     * @return Whether or not network1 is maybe part of network2 according to
+     * lemma 6
      */
     public boolean checkPermutationPartOf(final short[][] network1, final short[][] network2) {
         for (int nbOnes = 1; nbOnes < nbChannels; nbOnes++) {
@@ -823,11 +873,12 @@ public class Processor {
     }
 
     /**
-     * TODO
+     * Change the w(data, x, k) according to the new comparator and the already
+     * existing data.
      *
-     * @param data
-     * @param comp
-     * @param startIndex
+     * @param data The network to update
+     * @param comp The comparator which was added
+     * @param startIndex The index where the first change should be made
      */
     public void processW(short[][] data, final short comp, final int startIndex) {
         short[] wResult = new short[data[nbChannels].length];

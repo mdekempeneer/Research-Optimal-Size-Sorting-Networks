@@ -17,8 +17,6 @@
  * This work has been altered by Mathias Dekempeneer and Vincent Derkinderen.
  * Adding is now concurrent in that it provides an index where in to store a
  * object.
- *
- * @author Sebastiano Vigna
  */
 package sortingnetworksparallel.memory;
 
@@ -60,8 +58,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  *
  * <p>
  * The backing array is exposed by the {@link #elements()} method. If an
- * instance of this class was created
- * {@linkplain #wrap(Object[],int) by wrapping}, backing-array reallocations
+ * instance of this class was created, backing-array reallocations
  * will be performed using reflection, so that {@link #elements()} can return an
  * array of the same type of the original array: the comments about efficiency
  * made in {@link it.unimi.dsi.fastutil.objects.ObjectArrays} apply here.
@@ -76,6 +73,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  * instead of expensive loops.
  *
  * @see java.util.ArrayList
+ *
+ * @author Sebastiano Vigna
  */
 public class NullArray extends AbstractObjectList<short[][]> implements RandomAccess, Cloneable, java.io.Serializable {
 
@@ -336,7 +335,7 @@ public class NullArray extends AbstractObjectList<short[][]> implements RandomAc
     }
 
     /**
-     * Add object k to the list as specified by {@link ObjArrayList#add(java.lang.Object)
+     * Add object k to the list as specified by {@link NullArray#add(java.lang.Object)
      * }.
      *
      * @param k The object to add.
