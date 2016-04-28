@@ -15,4 +15,5 @@ test20160420_PS.pbs	: ch=4-9; innerSize=256; Haswell;	output=20285627.o (master 
 25/04/2016
 test20160425_NullJump.pbs ch=4-9; innerSize=256: Haswell;	output=20290089.o (nullJump -> jump over null values.)
 
-
+26/04/2016
+10channels.pbs		: ch=10; innerSize=256: Haswell;	output=20292270.o (nullJump.)
