@@ -1,20 +1,12 @@
 package sortingnetworksparallel;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.util.Arrays;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import sortingnetworksparallel.memory.NullArray;
 
 /**
  *
- * @author Admin
+ * @author Mathias Dekempeneer and Vincent Derkinderen
+ * @version 1.0
  */
 public class Main {
 
@@ -22,36 +14,25 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        int loadMode = JOptionPane.NO_OPTION;
-        int saveMode = JOptionPane.NO_OPTION;
-        
+
         int nbChannels = 8;
         int upperBound = 19;
         int innerSize = 128;
         double percThreads = 1;
-        
+
         if (args.length == 0) {
-            loadMode = getYesNoCancelFromUser("Resume from saved file?");
-            saveMode = getYesNoCancelFromUser("Save on prune?");
-
-            //Cancelled
-            if (loadMode == JOptionPane.CANCEL_OPTION || saveMode == JOptionPane.CANCEL_OPTION
-                    || loadMode == JOptionPane.CLOSED_OPTION || saveMode == JOptionPane.CLOSED_OPTION) {
-                System.exit(0);
-            }
-
             nbChannels = getAnswerFromUser("Amount of channels?", nbChannels);
             upperBound = getAnswerFromUser("Expected upperBound?", upperBound);
         } else {
             nbChannels = Integer.parseInt(args[0]);
             upperBound = Integer.parseInt(args[1]);
-            
-            if(args.length == 4) {
+
+            if (args.length == 4) {
                 innerSize = Integer.parseInt(args[2]);
                 percThreads = Double.parseDouble(args[3]);
             }
         }
-        
+
         if (nbChannels <= 1 || nbChannels > 16) {
             System.err.println("Algorithm/Datastructures can only handle 2-16 channels.");
             return;
@@ -61,67 +42,17 @@ public class Main {
             System.err.println("Less than 1 comparator makes no sense.");
         }
 
-        //Load input
-        String loadPath = null;
-        if (loadMode == JOptionPane.YES_OPTION) {
-            loadPath = askPath("load");
-        }
-
-        //Save input
-        String savePath = null;
-        if (saveMode == JOptionPane.YES_OPTION) {
-            savePath = askPath("save");
-        }
-
-        /* Load start */
-        NullArray oldL = null;
-        int startIndex = 0;
-        NullArray newL = null;
-        short nbComp = 0;
-        if (loadMode == (JOptionPane.YES_OPTION)) {
-            ObjectInputStream iis = null;
-            try {
-                iis = new ObjectInputStream(new BufferedInputStream(new FileInputStream(loadPath)));
-                oldL = (NullArray) iis.readObject();
-                startIndex = iis.readInt();
-                newL = (NullArray) iis.readObject();
-                nbComp = iis.readShort();
-            } catch (IOException | ClassNotFoundException ex) {
-                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-            } finally {
-                try {
-                    if (iis != null) {
-                        iis.close();
-                    }
-                } catch (IOException ex) {
-                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            if (oldL != null && newL != null) {
-                System.out.println("Loaded " + oldL.size() + " networks w comp " + nbComp + " and new " + newL.size() + " and index " + startIndex);
-            }
-        }
-
-        /* Clean start */
+        /* Start */
         long begin;
         long caseTime = 0;
         short[] result = null;
         begin = System.nanoTime();
 
         //Init
-        if (savePath != null && !savePath.equals("")) {
-            IOThread.start();
-            processor = new Processor((short) nbChannels, upperBound, savePath, innerSize, percThreads);
-        } else {
-            processor = new Processor((short) nbChannels, upperBound, innerSize, percThreads);
-        }
+        processor = new Processor((short) nbChannels, upperBound, innerSize, percThreads);
 
         //Process
-        if (loadPath != null && !loadPath.equals("")) {
-            result = processor.process(oldL, startIndex, newL, nbComp);
-        } else {
-            result = processor.process();
-        }
+        result = processor.process();
 
         caseTime = System.nanoTime() - begin;
         System.out.println("Took " + caseTime + " ns");
@@ -148,74 +79,6 @@ public class Main {
         return result;
     }
 
-    //TODO: Comment
-    private static int getYesNoCancelFromUser(String question) {
-        return JOptionPane.showConfirmDialog(null, question);
-    }
 
     private static Processor processor;
-
-    private static final Thread IOThread = new Thread(new Runnable() {
-
-        @Override
-        public void run() {
-            int n = JOptionPane.showOptionDialog(null,
-                    "Would you like to stop generate and prune?",
-                    "Stop",
-                    JOptionPane.YES_NO_OPTION,
-                    JOptionPane.QUESTION_MESSAGE,
-                    null, //do not use a custom Icon
-                    new Object[]{"Yes"}, //the titles of buttons
-                    "Yes"); //default button title
-
-            if (processor != null) {
-                processor.initiateSave();
-            }
-            System.out.println("Saving process will start at the end of the current cycle.");
-        }
-    });
-
-    /**
-     * Uses the JFileChooser to ask a savePath.
-     *
-     * @return The savePath, null when canceled.
-     */
-    private static String askPath(String type) {
-        JFileChooser jfc = new JFileChooser();
-        jfc.setCurrentDirectory(new File(System.getProperty("user.home")));
-
-        if (type.equals("load")) {
-            if (jfc.showDialog(null, "load") == JFileChooser.APPROVE_OPTION) {
-                return jfc.getSelectedFile().getAbsolutePath();
-            } else {
-                System.out.println("Failed chosing a file.");
-            }
-        } else {
-            if (jfc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
-                return jfc.getSelectedFile().getAbsolutePath();
-            } else {
-                System.out.println("Failed chosing a file.");
-            }
-        }
-        return null;
-    }
-
-    private static NullArray getN(String loadPath) {
-        ObjectInputStream iis = null;
-        try {
-            iis = new ObjectInputStream(new BufferedInputStream(new FileInputStream(loadPath)));
-            return (NullArray) iis.readObject();
-        } catch (IOException | ClassNotFoundException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                if (iis != null) {
-                    iis.close();
-                }
-            } catch (IOException ex) {
-                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        return null;
-    }
 }
