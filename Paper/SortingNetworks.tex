@@ -401,15 +401,40 @@ Schatting runtime voor 10 kanalen.\\\\
 			ymode = log,
 			log basis y = 10,
 			legend pos = north west]
-		\addplot [only marks, red] file {netwerkVerloop9kanalen.dat};
+		\addplot [only marks, green] file {netwerkVerloop7kanalen.dat};
 		\addplot [only marks, blue] file {netwerkVerloop8kanalen.dat};
+		\addplot [only marks, red] file {netwerkVerloop9kanalen.dat};
+		\addplot [green] file {netwerkVerloop7kanalen.dat};
+		\addplot [blue] file {netwerkVerloop8kanalen.dat};
 		\addplot [red] file {netwerkVerloop9kanalen.dat};
 		%\addplot [blue] file {netwerkVerloop9kanalenCodish.dat};
-		%\legend{Dekempeneer \& Derkinderen};
+		\legend{7 kanalen, 8 kanalen, 9 kanalen};
 		\end{axis}
 	\end{tikzpicture}
 	\caption{netwerkVerloop9kanalen}
 	\label{netwerkVerloop9kanalen}
+\end{figure}
+
+\begin{figure}
+	\begin{tikzpicture}
+		\begin{axis} [
+			xlabel={Aantal comparatoren},
+			ylabel={Tijd (miliseconden)},
+			ymode = log,
+			log basis y = 10,
+			legend pos = north west]
+		\addplot [only marks, green] file {tijdVerloop7kanalen.dat};
+		\addplot [only marks, blue] file {tijdVerloop8kanalen.dat};
+		\addplot [only marks, red] file {tijdVerloop9kanalen.dat};
+		\addplot [green] file {tijdVerloop7kanalen.dat};
+		\addplot [blue] file {tijdVerloop8kanalen.dat};
+		\addplot [red] file {tijdVerloop9kanalen.dat};
+		%\addplot [blue] file {netwerkVerloop9kanalenCodish.dat};
+		\legend{7 kanalen, 8 kanalen, 9 kanalen};
+		\end{axis}
+	\end{tikzpicture}
+	\caption{tijdVerloop9kanalen}
+	\label{tijdVerloop9kanalen}
 \end{figure}
 
 \begin{figure}[!h]
