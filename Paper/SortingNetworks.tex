@@ -364,12 +364,8 @@ Schatting runtime voor 10 kanalen.\\\\
 		ymajorgrids = true, 
 		legend pos = north west
 ]
-%\addplot
-%    coordinates {(4, 16.93) (5, 25.05) (6, 82.44) (7, 141.48) (8, 6680.31) (9, 15135358.01)};
-
 \addplot
 	coordinates {(4, 10.9026077) (5, 25.748741) (6, 66.820104) (7, 254.444729) (8, 6797.797437) (9, 12615521.409224)};	
-	
 \addplot
 	coordinates {(9, 1101480000)};
 	
@@ -393,6 +389,27 @@ Schatting runtime voor 10 kanalen.\\\\
 		\legend{Dekempeneer \& Derkinderen, ,\cite{sortingNetworksSize2014}};
 		\end{axis}
 	\end{tikzpicture}
+	\caption{dataAllChan}
+	\label{dataAllChan}
+\end{figure}
+
+\begin{figure}
+	\begin{tikzpicture}
+		\begin{axis} [
+			xlabel={Aantal comparatoren},
+			ylabel={Aantal netwerken},
+			ymode = log,
+			log basis y = 10,
+			legend pos = north west]
+		\addplot [only marks, red] file {netwerkVerloop9kanalen.dat};
+		\addplot [only marks, blue] file {netwerkVerloop8kanalen.dat};
+		\addplot [red] file {netwerkVerloop9kanalen.dat};
+		%\addplot [blue] file {netwerkVerloop9kanalenCodish.dat};
+		%\legend{Dekempeneer \& Derkinderen};
+		\end{axis}
+	\end{tikzpicture}
+	\caption{netwerkVerloop9kanalen}
+	\label{netwerkVerloop9kanalen}
 \end{figure}
 
 \begin{figure}[!h]
