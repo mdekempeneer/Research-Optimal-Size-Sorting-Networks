@@ -16,6 +16,7 @@
 \usepackage{color}
 \usepackage{wrapfig}
 \usepackage{tabu}
+\usetikzlibrary{arrows.meta,calc,positioning}
 
 \definecolor{dkgreen}{rgb}{0,0.6,0}
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
@@ -292,7 +293,10 @@ In de plaats daarvan zullen we enkel permutaties afgaan die voldoen aan lemma \r
 ${C_a \preceq C_b  \Rightarrow \pi\left(Outputs\left(C_{a}\right)\right) \subseteq Outputs\left(C_{b}\right)} \Rightarrow \pi\left(w\left(C_a, x, k\right)\right) \subseteq w\left(C_b, x, k\right)$, ${\forall x \in \{0,1\}, \forall k \in \{1..n\}}$.
 \label{lemma5}
 \end{lemma} 
-Om de mogelijke permutaties bij te houden zullen we gebruik maken van een voorstelling die te zien is in tabel \ref{tabel4}. De waarden in een kolom stellen alle mogelijke posities voor die op die plaats kunnen voorkomen. Wanneer we tabel  \ref{tabel4} gebruiken om de mogelijke permutaties weer te geven dan zullen we permutatie $4321$ en $1324$  bekomen, waarbij $4321$ een eenheidspermutatie zal voorstellen. Bij het begin van het algoritme zullen we starten met tabel \ref{tabel5}, waarna we lemma \ref{lemma5} gebruiken om posities te verwijderen.
+Om de mogelijke permutaties bij te houden zullen we gebruik maken van een voorstelling die te zien is in tabel \ref{tabel4}.
+De waarden in een kolom stellen alle mogelijke posities voor die op die plaats kunnen voorkomen.
+Wanneer we tabel  \ref{tabel4} gebruiken om de mogelijke permutaties weer te geven dan zullen we permutatie $4321$ en $1324$  bekomen, waarbij $4321$ een eenheidspermutatie zal voorstellen.
+Bij het begin van het algoritme zullen we starten met tabel \ref{tabel5}, waarna we lemma \ref{lemma5} gebruiken om posities te verwijderen.
 \begin{table}[!h]
 \centering
 \begin{tabular}{|c|c|c|c|}
@@ -319,7 +323,11 @@ Om de mogelijke permutaties bij te houden zullen we gebruik maken van een voorst
 \label{tabel5}
 \end{table}
 
-We weten namelijk dat als ${\pi\left(outputs\left(C_a\right)\right) \subseteq outputs\left(C_b\right)}$ er bij de gepermuteerde outputs enkel een $1$ kan komen op de plaats waar dit bij $C_b$ ook het geval is. Op de plaats waar $C_b$ een $0$ heeft, kunnen dus enkel de posities komen waar $C_a$ een $0$ heeft. Nemen we bijvoorbeeld $w\left(C_a,1,1\right) = 0101$ en ${w\left(C_b,1,1\right)=0111}$ dan kunnen we tabel \ref{tabel5} reduceren tot tabel \ref{tabel6}. We kunnen voor $w\left(C_a, x, k\right)$ deze methode doortrekken voor elke $1 \leq k \leq n$ en voor zowel $x = 0$ als $x = 1$. Wanneer we elke kolom bijhouden door een bit representatie kunnen we gemakkelijk de doorsnede van de mogelijke posities nemen na elke berekening voor een bepaalde $k$ en $x$ door middel van de $\&$-operatie. 
+We weten namelijk dat als ${\pi\left(outputs\left(C_a\right)\right) \subseteq outputs\left(C_b\right)}$ er bij de gepermuteerde outputs enkel een $1$ kan komen op de plaats waar dit bij $C_b$ ook het geval is.
+Op de plaats waar $C_b$ een $0$ heeft, kunnen dus enkel de posities komen waar $C_a$ een $0$ heeft.
+Nemen we bijvoorbeeld $w\left(C_a,1,1\right) = 0101$ en ${w\left(C_b,1,1\right)=0111}$ dan kunnen we tabel \ref{tabel5} reduceren tot tabel \ref{tabel6}.
+We kunnen voor $w\left(C_a, x, k\right)$ deze methode doortrekken voor elke $1 \leq k \leq n$ en voor zowel $x = 0$ als $x = 1$.
+Wanneer we elke kolom bijhouden door een bit representatie kunnen we gemakkelijk de doorsnede van de mogelijke posities nemen na elke berekening voor een bepaalde $k$ en $x$ door middel van de $\&$-operatie. 
 \begin{table}[!h]
 \centering
 \begin{tabular}{|c|c|c|c|}
@@ -334,11 +342,78 @@ We weten namelijk dat als ${\pi\left(outputs\left(C_a\right)\right) \subseteq ou
 \label{tabel6}
 \end{table}
 
-Wanneer tijdens het algoritme een kolom leeg zou komen te staan, kunnen we het algoritme stopzetten. Dit betekent namelijk dat er geen enkele permutatie bestaat die niet door lemma \ref{lemma5} wordt afgekeurd. Mocht op het einde een kolom $1$ element hebben, kunnen we dit element uit alle andere kolommen verwijderen. We kunnen nadien ook nagaan of alle elementen minstens \'e\'enmaal voorkomen in de hele tabel. Tot slot kunnen we de overblijvende permutatietabel gebruiken om onze mogelijke permutaties, die aan lemma \ref{lemma5} voldoen, na te gaan. 
+Wanneer tijdens het algoritme een kolom leeg zou komen te staan, kunnen we het algoritme stopzetten.
+Dit betekent namelijk dat er geen enkele permutatie bestaat die niet door lemma \ref{lemma5} wordt afgekeurd.
+Mocht op het einde een kolom $1$ element hebben, mogen we dit element uit alle andere kolommen verwijderen.
+We kunnen nadien ook nagaan of alle elementen minstens \'e\'enmaal voorkomen in de hele tabel.
+Tot slot gebruiken we de overblijvende permutatietabel om onze mogelijke permutaties, die aan lemma \ref{lemma5} voldoen, na te gaan. 
 
 \subsection{Parallellisatie}
-Parallellisatie uitleggen\\
-Uitleg hoe generate and prune verandert door elke thread zijn stuk te laten generate en prunen en vervolgens in een groter geheel te prunen en hoe dit groter geheel prunen werkt zonder locks.\\
+Om het algoritme te laten functioneren met meerdere processoren, zullen we enkele aanpassingen doorvoeren.
+Bij de overgang van $R^n_k$ naar $N^n_{k+1}$ zal elke thread een aantal netwerken uit $R^n_k$ nemen, in ons geval $256$, hierop de genereer-stap uitvoeren en vervolgens binnen de resterende set de snoei-stap uitvoeren.
+Op dat moment beschikt elke thread over een set van netwerken met $k+1$ comparatoren waarop de snoei-stap nog moet worden uitgevoerd ten opzichte van alle andere sets.
+Elke thread zal vervolgens zijn set in een gedeelde lijst in het centraal geheugen plaatsen.
+Om deze operatie mogelijk te maken zonder al te veel locks en zonder het te moeten vergroten van de lijst, zullen we in het begin van de cyclus zorgen dat deze lijst groot genoeg is en zullen we gebruik maken van een variabele die bijhoudt wat de volgende index is waar een volgend netwerk moet worden bijgevoegd.
+In onze \texttt{Java} implementatie zullen we voor deze variabele een \texttt{AtomicInteger} gebruiken, deze variabele garandeert een atomische \texttt{getAndIncrement(int)} functie.
+Een thread kan deze functie gebruiken om voldoende plaats in de lijst op te eisen voor zijn set door de grootte van zijn set mee te geven als parameter.
+%TODO Foto inbouwen van de opbouw (p10 paper)
+\begin{figure}[!h]
+\centering
+\begin{tikzpicture}[
+node distance= 9mm and 3 mm,
+inout/.style = {minimum width=#1,
+                draw, thick, rounded corners, 
+                minimum height=9mm, align=center},
+inter/.style = {minimum width=#1,
+                draw, thick, minimum height=9mm,
+                font=\Large\bfseries},
+Arrow/.style = {line width=2mm, draw=gray, 
+                -{Triangle[length=3mm,width=4mm]},
+                shorten >=1mm, shorten <=1mm},
+                    ]
+\node[inout=40mm]               (a)   {$R^n_k$};
+
+\node[inout=10mm,below =of a] (b) { };
+\node[inout=10mm,left =of b] (c) { };
+\node[inout=10mm,right =of b] (d) {};
+
+\node[inout=12mm,below =of b] (e) { };
+\node[inout=12mm,below =of c] (f) { };
+\node[inout=12mm,below =of d] (g) { };
+
+\node[inout=10mm,below =of e] (h) { };
+\node[inout=10mm,below =of f] (i) { };
+\node[inout=10mm,below =of g] (j) { };
+
+\node[inout=45mm,below =of h] (k) {$N^n_{k+1}$};
+\node[inout=45mm,below =of k] (l) {splits};
+\node[inout=45mm,below =of l] (m) {genereer};
+\node[inout=45mm,below =of m] (n) {snoei};
+\node[inout=45mm,below =of n] (o) {samenvoegen};
+\node[inout=45mm,below =of o] (p) {$R_i$};
+\node[inout=45mm,below =of p] (q) {$S_i$};
+
+\draw[Arrow]    (a) -- (b);
+
+\draw[Arrow]    (b) -- (e);
+\draw[Arrow]    (c) -- (f);
+\draw[Arrow]    (d) -- (g);
+
+\draw[Arrow]    (e) -- (h);
+\draw[Arrow]    (f) -- (i);
+\draw[Arrow]    (g) -- (j);
+
+\draw[Arrow]    (h) -- (k);
+\end{tikzpicture}
+\caption{NIEUW}
+\label{nieuw}
+\end{figure}
+
+Na het toevoegen aan de gedeelde lijst, zal elke thread subsumes moeten nagaan tussen elk netwerk met een kleinere index dan zijn eerste netwerk en alle netwerken in zijn set, dit is dan de snoei-stap.  %TODO Pseudo code %TODO Big O ??
+
+
+
+~\\\\
 Uitleg $0$ jump
 %TODO ZIe pagina 4 in paper => definitie 2: Observe that ......
 

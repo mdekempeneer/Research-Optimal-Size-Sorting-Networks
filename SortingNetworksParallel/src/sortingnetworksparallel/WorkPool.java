@@ -85,8 +85,6 @@ public class WorkPool {
         final int nb = INNER_SIZE;
         latch = new CountDownLatch((int) Math.ceil(N.size() / (double) nb));
 
-        final AtomicInteger doneIndex = new AtomicInteger();
-
         //Perform generate & prune for every batch of old networks.
         for (int index = 0; index < N.size(); index += nb) {
             final int startIndex = index;
@@ -103,7 +101,6 @@ public class WorkPool {
                     processor.prune(resultN, networkIndex, prunedList.size());
 
                     latch.countDown();
-                    doneIndex.getAndAdd(nb);
                 }
 
             });
