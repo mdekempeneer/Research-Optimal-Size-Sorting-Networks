@@ -360,7 +360,7 @@ public class NullArray extends AbstractObjectList<short[][]> implements RandomAc
 
     /**
      * Add the elements of the given object list.<br>
-     * Precondition: size this array should be sufficient.
+     * Precondition: size of this array should be sufficient.
      *
      * @param k The elements to add.
      * @return The index where the first element is added.
@@ -374,19 +374,8 @@ public class NullArray extends AbstractObjectList<short[][]> implements RandomAc
             }
             return index;
         } else {
-            int i = 0;
-            ObjectListIterator<short[][]> iter = k.iterator();
-            while (iter.hasNext()) {
-                for (; i < a.length; i++) {
-                    if (a[i] == null) {
-                        a[i] = iter.next();
-                        break;
-                    }
-                }
-                if (i == a.length) {
-                    return -1;
-                }
-            }
+            System.out.println("NullArray overflowed.");
+            System.exit(-1);
             return -2;
         }
     }
