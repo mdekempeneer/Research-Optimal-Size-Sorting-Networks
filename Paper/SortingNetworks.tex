@@ -349,80 +349,59 @@ We kunnen nadien ook nagaan of alle elementen minstens \'e\'enmaal voorkomen in 
 Tot slot gebruiken we de overblijvende permutatietabel om onze mogelijke permutaties, die aan lemma \ref{lemma5} voldoen, na te gaan. 
 
 \subsection{Parallellisatie}
+\begin{wrapfigure}{l}{0.20\textwidth}
+\centering
+\includegraphics[scale=0.5]{Gen_Prune_Opbouw.png}
+\caption{Opbouw parallelle genereer \& snoei}
+\label{opbouwGenPrune}
+\end{wrapfigure}
 Om het algoritme te laten functioneren met meerdere processoren, zullen we enkele aanpassingen doorvoeren.
 Bij de overgang van $R^n_k$ naar $N^n_{k+1}$ zal elke thread een aantal netwerken uit $R^n_k$ nemen, in ons geval $256$, hierop de genereer-stap uitvoeren en vervolgens binnen de resterende set de snoei-stap uitvoeren.
 Op dat moment beschikt elke thread over een set van netwerken met $k+1$ comparatoren waarop de snoei-stap nog moet worden uitgevoerd ten opzichte van alle andere sets.
 Elke thread zal vervolgens zijn set in een gedeelde lijst in het centraal geheugen plaatsen.
-Om deze operatie mogelijk te maken zonder al te veel locks en zonder het te moeten vergroten van de lijst, zullen we in het begin van de cyclus zorgen dat deze lijst groot genoeg is en zullen we gebruik maken van een variabele die bijhoudt wat de volgende index is waar een volgend netwerk moet worden bijgevoegd.
+Om deze operatie zo effici\"ent mogelijk te maken, vermijden we zowel locks als het moeten vergroten van de lijst. 
+Daarom zullen we in het begin van de cyclus zorgen dat deze lijst groot genoeg is en gebruik maken van een variabele die bijhoudt op welke index een volgend netwerk moet worden bijgevoegd.
 In onze \texttt{Java} implementatie zullen we voor deze variabele een \texttt{AtomicInteger} gebruiken, deze variabele garandeert een atomische \texttt{getAndIncrement(int)} functie.
 Een thread kan deze functie gebruiken om voldoende plaats in de lijst op te eisen voor zijn set door de grootte van zijn set mee te geven als parameter.
-%TODO Foto inbouwen van de opbouw (p10 paper)
-\begin{figure}[!h]
-\centering
-\begin{tikzpicture}[
-node distance= 9mm and 3 mm,
-inout/.style = {minimum width=#1,
-                draw, thick, rounded corners, 
-                minimum height=9mm, align=center},
-inter/.style = {minimum width=#1,
-                draw, thick, minimum height=9mm,
-                font=\Large\bfseries},
-Arrow/.style = {line width=2mm, draw=gray, 
-                -{Triangle[length=3mm,width=4mm]},
-                shorten >=1mm, shorten <=1mm},
-                    ]
-\node[inout=40mm]               (a)   {$R^n_k$};
 
-\node[inout=10mm,below =of a] (b) { };
-\node[inout=10mm,left =of b] (c) { };
-\node[inout=10mm,right =of b] (d) {};
-
-\node[inout=12mm,below =of b] (e) { };
-\node[inout=12mm,below =of c] (f) { };
-\node[inout=12mm,below =of d] (g) { };
-
-\node[inout=10mm,below =of e] (h) { };
-\node[inout=10mm,below =of f] (i) { };
-\node[inout=10mm,below =of g] (j) { };
-
-\node[inout=45mm,below =of h] (k) {$N^n_{k+1}$};
-\node[inout=45mm,below =of k] (l) {splits};
-\node[inout=45mm,below =of l] (m) {genereer};
-\node[inout=45mm,below =of m] (n) {snoei};
-\node[inout=45mm,below =of n] (o) {samenvoegen};
-\node[inout=45mm,below =of o] (p) {$R_i$};
-\node[inout=45mm,below =of p] (q) {$S_i$};
-
-\draw[Arrow]    (a) -- (b);
-
-\draw[Arrow]    (b) -- (e);
-\draw[Arrow]    (c) -- (f);
-\draw[Arrow]    (d) -- (g);
-
-\draw[Arrow]    (e) -- (h);
-\draw[Arrow]    (f) -- (i);
-\draw[Arrow]    (g) -- (j);
-
-\draw[Arrow]    (h) -- (k);
-\end{tikzpicture}
-\caption{NIEUW}
-\label{nieuw}
-\end{figure}
-
-Na het toevoegen aan de gedeelde lijst, zal elke thread subsumes moeten nagaan tussen elk netwerk met een kleinere index dan zijn eerste netwerk en alle netwerken in zijn set, dit is dan de snoei-stap.  %TODO Pseudo code %TODO Big O ??
-
-
-
-~\\\\
-Uitleg $0$ jump
+Na het toevoegen aan de gedeelde lijst volgt de snoei-stap. Hier zal elke thread subsumes moeten nagaan tussen alle netwerken in zijn set en elk ander reeds toegevoegd netwerk.
+Door het (hopelijk) vele verwijderen van netwerken ontstaan er veel opeenvolgende lege plaatsen in de lijst\footnote{Bij de \texttt{Java} implementatie zullen we verwijderen via  ``${= null}$''.}.
+Hierdoor zal het algoritme vaak overbodig het netwerk opvragen.
+Om dit aantal, dat groter wordt naarmate het aantal kanalen stijgt, te verminderen, introduceren we een manier om deze opeenvolgende lege indices over te slaan. 
+Telkens wanneer een lege index wordt gedetecteerd door een thread zal de thread het aantal opeenvolgende lege indices tellen en dit aantal opslaan op de eerste lege plaats in deze reeks.
+Wanneer een thread dit getal tegenkomt, kan hij het opgeslagen aantal indices overslaan.
+%TODO Pseudo code
+%TODO Big O ??
 %TODO ZIe pagina 4 in paper => definitie 2: Observe that ......
 
 \section{Evaluatie}
-Empirische evaluaties + grafiekjes\\
-Tabel geven van hoeveel beslissingen er op welke plaats genomen worden.\\ \\
-Vergelijken runtime voor 9 kanalen met Codish.\\
-Schatting runtime voor 10 kanalen.\\\\
+Door het grote aantal netwerken is het testen op subsumes en de effici\"entie van de datastructuren van groot belang. In figuur \ref{netwerkVerloop9kanalen} zien we dat dit aantal voor $9$ kanalen kan oplopen tot meer dan $900000$ netwerken.
+\begin{figure}[!h]
+	\begin{tikzpicture}
+		\begin{axis} [
+			xlabel={Aantal comparatoren},
+			ylabel={Aantal netwerken},
+			ymode = log,
+			log basis y = 10,
+			legend pos = north west,
+			ymajorgrids=true]
+		\addplot [only marks, green] file {netwerkVerloop7kanalen.dat};
+		\addplot [only marks, blue] file {netwerkVerloop8kanalen.dat};
+		\addplot [only marks, red] file {netwerkVerloop9kanalen.dat};
+		\addplot [green] file {netwerkVerloop7kanalen.dat};
+		\addplot [blue] file {netwerkVerloop8kanalen.dat};
+		\addplot [red] file {netwerkVerloop9kanalen.dat};
+		%\addplot [blue] file {netwerkVerloop9kanalenCodish.dat};
+		\legend{7 kanalen, 8 kanalen, 9 kanalen};
+		\end{axis}
+	\end{tikzpicture}
+	\caption{Aantal resterende netwerken na het uitvoeren van genereer en snoei bij toevoegen van de $k^{de}$ comparator.}
+	\label{netwerkVerloop9kanalen}
+\end{figure}
 
+Het beschreven algoritme, ge\"implementeerd in \texttt{Java}, vindt voor $9$ kanalen reeds na $3$ uur en $25$ minuten een oplossing.
+Bij eerder onderzoek gebeurde dit in ongeveer $12$ dagen $17$ uur en $58$ minuten \cite{sortingNetworksSize2014}.
+De tijdsmetingen voor het vinden van een sorteernetwerk van $5$ tot en met $9$ kanalen zijn te zien op figuur \ref{Tijdsresultaten}. Op deze figuur is ook de tijdsmeting van eerder werk te zien.
 \begin{figure}[!h]
 \centering
 \begin{tikzpicture} 
@@ -438,85 +417,22 @@ Schatting runtime voor 10 kanalen.\\\\
 		point meta=10^y,
 		ymajorgrids = true, 
 		legend pos = north west
-]
+		]
 \addplot
-	coordinates {(4, 10.9026077) (5, 25.748741) (6, 66.820104) (7, 254.444729) (8, 6797.797437) (9, 12615521.409224)};	
+	coordinates {(5, 25.331106) (6, 61.339344) (7, 245.313463) (8, 5804.849367) (9, 12366987.991024)};	
 \addplot
 	coordinates {(9, 1101480000)};
-	
 \legend{Dekempeneer \& Derkinderen, \cite{sortingNetworksSize2014}};
 \end{axis}
 \end{tikzpicture}
 \caption{Resultaten}
+\label{Tijdsresultaten}
 \end{figure}
 
-\begin{figure}
-	\begin{tikzpicture}
-		\begin{axis} [
-			xlabel={Aantal kanalen},
-			ylabel={Tijd (nanoseconden)},
-			ymode = log,
-			log basis y = 10,
-			legend pos = north west]
-		\addplot [only marks, red] file {dataAllChan.dat};
-		\addplot [red] file {dataAllChan.dat};
-		\addplot [only marks, blue] coordinates {(9, 1101480000000000)};
-		\legend{Dekempeneer \& Derkinderen, ,\cite{sortingNetworksSize2014}};
-		\end{axis}
-	\end{tikzpicture}
-	\caption{dataAllChan}
-	\label{dataAllChan}
-\end{figure}
-
-\begin{figure}
-	\begin{tikzpicture}
-		\begin{axis} [
-			xlabel={Aantal comparatoren},
-			ylabel={Aantal netwerken},
-			ymode = log,
-			log basis y = 10,
-			legend pos = north west]
-		\addplot [only marks, green] file {netwerkVerloop7kanalen.dat};
-		\addplot [only marks, blue] file {netwerkVerloop8kanalen.dat};
-		\addplot [only marks, red] file {netwerkVerloop9kanalen.dat};
-		\addplot [green] file {netwerkVerloop7kanalen.dat};
-		\addplot [blue] file {netwerkVerloop8kanalen.dat};
-		\addplot [red] file {netwerkVerloop9kanalen.dat};
-		%\addplot [blue] file {netwerkVerloop9kanalenCodish.dat};
-		\legend{7 kanalen, 8 kanalen, 9 kanalen};
-		\end{axis}
-	\end{tikzpicture}
-	\caption{netwerkVerloop9kanalen}
-	\label{netwerkVerloop9kanalen}
-\end{figure}
-
-\begin{figure}
-	\begin{tikzpicture}
-		\begin{axis} [
-			xlabel={Aantal comparatoren},
-			ylabel={Tijd (miliseconden)},
-			ymode = log,
-			log basis y = 10,
-			legend pos = north west]
-		\addplot [only marks, green] file {tijdVerloop7kanalen.dat};
-		\addplot [only marks, blue] file {tijdVerloop8kanalen.dat};
-		\addplot [only marks, red] file {tijdVerloop9kanalen.dat};
-		\addplot [green] file {tijdVerloop7kanalen.dat};
-		\addplot [blue] file {tijdVerloop8kanalen.dat};
-		\addplot [red] file {tijdVerloop9kanalen.dat};
-		%\addplot [blue] file {netwerkVerloop9kanalenCodish.dat};
-		\legend{7 kanalen, 8 kanalen, 9 kanalen};
-		\end{axis}
-	\end{tikzpicture}
-	\caption{tijdVerloop9kanalen}
-	\label{tijdVerloop9kanalen}
-\end{figure}
-
+Figuur \ref{Sorteernetwerk9kanalen} toont \'e\'en van de sorteernetwerken voor $9$ kanalen en $25$ comparatoren.
 \begin{figure}[!h]
 \centering
 \begin{tikzpicture}
-%\fill [gray!15] (1.5,1.5) -- (2.5,1.5) -- (2.5,2.5) -- (1.5,2.5) -- cycle;
-%\foreach \a in {1,..,9}
 \def\x{3.5}
 \foreach \a in {1/\x, 2/\x, 3/\x, 4/\x, 5/\x, 6/\x, 7/\x, 8/\x, 9/\x}
   \draw[thick] (0,\a) -- ++(17/\x,0);
@@ -549,6 +465,32 @@ Schatting runtime voor 10 kanalen.\\\\
 \draw[thick] (16/\x,7/\x) -- (16/\x,8/\x);
 \end{tikzpicture}
 \caption{Sorteernetwerk 9 kanalen, 25 comparatoren}
+\label{Sorteernetwerk9kanalen}
+\end{figure}
+
+
+~\\\\
+Empirische evaluaties + grafiekjes\\
+Tabel geven van hoeveel beslissingen er op welke plaats genomen worden.\\ \\
+Vergelijken runtime voor 9 kanalen met Codish.\\
+Schatting runtime voor 10 kanalen.\\\\
+
+\begin{figure}
+	\begin{tikzpicture}
+		\begin{axis} [
+			xlabel={Aantal kanalen},
+			ylabel={Tijd (nanoseconden)},
+			ymode = log,
+			log basis y = 10,
+			legend pos = north west]
+		\addplot [only marks, red] file {dataAllChan.dat};
+		\addplot [red] file {dataAllChan.dat};
+		\addplot [only marks, blue] coordinates {(9, 1101480000000000)};
+		\legend{Dekempeneer \& Derkinderen, ,\cite{sortingNetworksSize2014}};
+		\end{axis}
+	\end{tikzpicture}
+	\caption{dataAllChan}
+	\label{dataAllChan}
 \end{figure}
 
 \section{Conclusies}

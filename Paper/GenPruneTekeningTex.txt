@@ -1,0 +1,51 @@
+\begin{figure}[!h]
+\centering
+\begin{tikzpicture}[
+node distance= 9mm and 3 mm,
+inout/.style = {minimum width=#1,
+                draw, thick, rounded corners, 
+                minimum height=9mm, align=center},
+inter/.style = {minimum width=#1,
+                draw, thick, minimum height=9mm,
+                font=\Large\bfseries},
+Arrow/.style = {line width=2mm, draw=gray, 
+                -{Triangle[length=3mm,width=4mm]},
+                shorten >=1mm, shorten <=1mm},
+                    ]
+\node[inout=40mm]               (a)   {$R^n_k$};
+
+\node[inout=10mm,below =of a] (b) { };
+\node[inout=10mm,left =of b] (c) { };
+\node[inout=10mm,right =of b] (d) {};
+
+\node[inout=12mm,below =of b] (e) { };
+\node[inout=12mm,below =of c] (f) { };
+\node[inout=12mm,below =of d] (g) { };
+
+\node[inout=10mm,below =of e] (h) { };
+\node[inout=10mm,below =of f] (i) { };
+\node[inout=10mm,below =of g] (j) { };
+
+\node[inout=45mm,below =of h] (k) {$N^n_{k+1}$};
+\node[inout=45mm,below =of k] (l) {splits};
+\node[inout=45mm,below =of l] (m) {genereer};
+\node[inout=45mm,below =of m] (n) {snoei};
+\node[inout=45mm,below =of n] (o) {samenvoegen};
+\node[inout=45mm,below =of o] (p) {$R_i$};
+\node[inout=45mm,below =of p] (q) {$S_i$};
+
+\draw[Arrow]    (a) -- (b);
+
+\draw[Arrow]    (b) -- (e);
+\draw[Arrow]    (c) -- (f);
+\draw[Arrow]    (d) -- (g);
+
+\draw[Arrow]    (e) -- (h);
+\draw[Arrow]    (f) -- (i);
+\draw[Arrow]    (g) -- (j);
+
+\draw[Arrow]    (h) -- (k);
+\end{tikzpicture}
+\caption{NIEUW}
+\label{nieuw}
+\end{figure}
