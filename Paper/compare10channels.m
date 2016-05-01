@@ -60,16 +60,16 @@ set(gca, 'Yscale', 'log')
 T  = table(xas(1:12), old(1:12));
 T2 = table(xas(1:11), new(1:11));
 figure
-plot(xas(1:12),old(1:12),'ro')
+plot(xas(1:12),old(1:12),'o')
 hold on
-plot(xas(1:11),new(1:11),'bo', 'LineWidth', 2)
+plot(xas(1:11),new(1:11),'o')
 set(gca,'YScale','log')
 [p, ~,mu ] = polyfit(T.Var1,  T.Var2,  11);
 [p2,~,mu2] = polyfit(T2.Var1, T2.Var2, 10);
 f  = polyval(p,  xas, [], mu);
 f2 = polyval(p2, xas, [], mu2);
-plot(xas,f, 'r--')
-plot(xas,f2, 'b--', 'LineWidth',  2)
+plot(xas,f)
+plot(xas,f2)
 ylabel('nanoseconden')
 xlabel('comparator')
 legend('old', 'new', 'benadering old', 'benadering new', 'Location', 'northwest')
@@ -77,3 +77,22 @@ legend('old', 'new', 'benadering old', 'benadering new', 'Location', 'northwest'
 %%
 benadering_uur = f2(12) / (1000 * 60 * 60)
 benadering_dag = benadering_uur /24
+
+%%
+
+T3  = table(xas(1:12), old_d(1:12));
+T4 = table(xas(1:11), new_d(1:11));
+figure
+plot(xas(1:12),old_d(1:12),'o')
+hold on
+plot(xas(1:11),new_d(1:11),'o')
+set(gca,'YScale','log')
+[p3,~,mu3] = polyfit(T3.Var1, T3.Var2, 11);
+[p4,~,mu4] = polyfit(T4.Var1, T4.Var2, 10);
+f3 = polyval(p3, xas(1:14), [], mu3);
+f4 = polyval(p4, xas(1:14), [], mu4);
+plot(xas(1:14),f3)
+plot(xas(1:14),f4)
+ylabel('dagen')
+xlabel('comparator')
+legend('old', 'new', 'benadering old', 'benadering new', 'Location', 'northwest')
