@@ -399,9 +399,12 @@ Door het grote aantal netwerken is het testen op subsumes en de effici\"entie va
 	\label{netwerkVerloop9kanalen}
 \end{figure}
 
-Het beschreven algoritme, ge\"implementeerd in \texttt{Java}, vindt voor $9$ kanalen reeds na $3$ uur en $25$ minuten een oplossing.
-Bij eerder onderzoek gebeurde dit in ongeveer $12$ dagen $17$ uur en $58$ minuten \cite{sortingNetworksSize2014}.
+Het beschreven algoritme, ge\"implementeerd in \texttt{Java}, vindt voor $9$ kanalen reeds na $3$ uur en $25$ minuten een oplossing met $25$ comparatoren die gevisualiseerd wordt in figuur~\ref{Sorteernetwerk9kanalen}.
+Dit bevestigt wat reeds geweten was door Codish \textit{et al}. 
+Bij eerder onderzoek vereistte men ongeveer $12$ dagen $17$ uur en $58$ minuten aan rekentijd voor het vinden van het sorteernetwerk van optimale grootte van $9$ kanalen \cite{sortingNetworksSize2014}.
 De tijdsmetingen voor het vinden van een sorteernetwerk van $5$ tot en met $9$ kanalen zijn te zien op figuur \ref{Tijdsresultaten}. Op deze figuur is ook de tijdsmeting van eerder werk te zien.
+De bekomen resultaten van dit werk zijn afkomstig van het uitvoeren op \'e\'en node bestaande uit twee $12$-core ``Haswell'' Xeon E$5$-$2680$v$3$ processoren ($2.5$GHz, $30$MB level $3$ cache met $64$GB RAM) op de rekeninfrastructuur van het Vlaamse Supercomputer Centrum.
+
 \begin{figure}[!h]
 \centering
 \begin{tikzpicture} 
@@ -429,7 +432,7 @@ De tijdsmetingen voor het vinden van een sorteernetwerk van $5$ tot en met $9$ k
 \label{Tijdsresultaten}
 \end{figure}
 
-Figuur \ref{Sorteernetwerk9kanalen} toont \'e\'en van de sorteernetwerken voor $9$ kanalen en $25$ comparatoren.
+
 \begin{figure}[!h]
 \centering
 \begin{tikzpicture}
