@@ -13,7 +13,14 @@ test20160415.pbs	: ch=4-9; innerSize=256; Haswell;	output=20283061.o
 test20160420_PS.pbs	: ch=4-9; innerSize=256; Haswell;	output=20285627.o (master debug check=checkAll + meting counters)
 
 25/04/2016
-test20160425_NullJump.pbs ch=4-9; innerSize=256: Haswell;	output=20290089.o (nullJump -> jump over null values.)
+test20160425_NullJump.pbs ch=4-9; innerSize=256; Haswell;	output=20290089.o (nullJump -> jump over null values.)
 
 26/04/2016
-10channels.pbs		: ch=10; innerSize=256: Haswell;	output=20292270.o (nullJump.)
+10channels.pbs		: ch=10; innerSize=256; Haswell;	output=20292270.o (nullJump.)
+
+02/05/2016
+8channels.pbs M		: ch=8; innerSize=256; Haswell;		output=20298050.o (Added mem print + gc + initPrint)
+9channels.pbs v		: ch=9;	innerSize=256; Haswell;		output=20298053.o (Added mem print + gc)
+8channels.pbs v		: ch=8;	innerSize=256; Haswell;		output=20298054.o (Added mem print + gc)
+9channels.pbs v		: ch=9;	innerSize=256; Haswell;		output=20298066.o (Added mem print + gc + initPrint)
+8channels.pbs v		: ch=8;	innerSize=256; Haswell;		output=20298067.o (Added mem print + gc + initPrint)
