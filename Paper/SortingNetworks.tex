@@ -378,17 +378,18 @@ Door het grote aantal netwerken is het testen op subsumes en de effici\"entie va
 		\addplot [only marks, green] file {netwerkVerloop7kanalen.dat};
 		\addplot [only marks, blue] file {netwerkVerloop8kanalen.dat};
 		\addplot [only marks, red] file {netwerkVerloop9kanalen.dat};
-		\addplot [green] file {netwerkVerloop7kanalen.dat};
-		\addplot [blue] file {netwerkVerloop8kanalen.dat};
-		\addplot [red] file {netwerkVerloop9kanalen.dat};
-		%\addplot [blue] file {netwerkVerloop9kanalenCodish.dat};
-		\legend{7 kanalen, 8 kanalen, 9 kanalen};
+		\addplot [only marks, cyan] file {netwerkVerloop10kanalen.dat};
+		\addplot [smooth, green] file {netwerkVerloop7kanalen.dat};
+		\addplot [smooth, blue] file {netwerkVerloop8kanalen.dat};
+		\addplot [smooth, red] file {netwerkVerloop9kanalen.dat};
+		\addplot [smooth, cyan] file {netwerkVerloop10kanalen.dat};
+		\legend{7 kanalen, 8 kanalen, 9 kanalen, 10 kanalen\footnotemark};
 		\end{axis}
 	\end{tikzpicture}
 	\caption{Aantal resterende netwerken na het uitvoeren van genereer en snoei bij toevoegen van de $k^{de}$ comparator.}
 	\label{netwerkVerloop9kanalen}
 \end{figure}
-
+\footnotetext{Voor $10$ kanalen is het aantal comparatoren slechts berekend tot en met comparator $13$.} %TODO UPDATE??
 
 \section{Evaluatie}
 Het beschreven algoritme, ge\"implementeerd in \texttt{Java}, vindt voor $9$ kanalen reeds na $3$ uur en $25$ minuten een oplossing met $25$ comparatoren die gevisualiseerd wordt in figuur~\ref{Sorteernetwerk9kanalen}.
