@@ -3,7 +3,7 @@
 <DL>
 
 <DT>Instructies</DT>
-	<DD><i>('argName' : arg : comment)</i>
+<i>('argName' : arg : comment)</i>
 	
 <DT>SortingNetworksParallel:</DT>
 &ltn&gt &ltk&gt &ltinnerSize&gt &ltThreadPercentage&gt
