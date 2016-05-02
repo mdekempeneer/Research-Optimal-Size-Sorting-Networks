@@ -1,3 +1,0 @@
-#!/bin/bash -l
-module load Java/1.7.0_51
-java -jar "SortingNetworksParallel.jar" 10 29 2048 2

@@ -1,0 +1,56 @@
+time: 60
+nodes: 1
+procs: 24
+account string: default_project
+queue: q1h
+========================================================================
+Will be using 24 threads
+Cycle complete with 2 comps and size 3 took 14 ms
+Cycle complete with 3 comps and size 7 took 12 ms
+Cycle complete with 4 comps and size 20 took 18 ms
+Cycle complete with 5 comps and size 60 took 29 ms
+Cycle complete with 6 comps and size 214 took 30 ms
+Took 143416902 ns
+[3, 12, 48, 10, 40, 10]
+========================================================================
+Epilogue args:
+Date: Mon May  2 15:32:50 CEST 2016
+Allocated nodes:
+r5i2n9
+r5i2n9
+r5i2n9
+r5i2n9
+r5i2n9
+r5i2n9
+r5i2n9
+r5i2n9
+r5i2n9
+r5i2n9
+r5i2n9
+r5i2n9
+r5i2n9
+r5i2n9
+r5i2n9
+r5i2n9
+r5i2n9
+r5i2n9
+r5i2n9
+r5i2n9
+r5i2n9
+r5i2n9
+r5i2n9
+r5i2n9
+Job ID: 20297905.hpc-p-svcs-10.icts.hpc.kuleuven.be
+User ID: vsc31479
+Group ID: vsc31479
+Job Name: 6channels.pbs
+Session ID: 20825
+Resource List: neednodes=1:ppn=24:haswell,nodes=1:ppn=24:haswell,pmem=2500mb,walltime=00:01:00
+Resources Used: cput=00:00:00,energy_used=0,mem=0kb,vmem=0kb,walltime=00:00:01
+Queue Name: q1h
+Account String: 
+-------------------------------------------------------------------------
+time: 1
+nodes: 1
+procs: 24
+account: default_project

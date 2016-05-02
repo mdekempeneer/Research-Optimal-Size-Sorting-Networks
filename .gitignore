@@ -57,3 +57,5 @@ Poster/~$Poster_herwerking.pptx
 /SortingNetworksPaper/nbproject/project.properties
 
 *.properties
+/memTestTemp/nbproject/private/
+/memTestTemp/build/
