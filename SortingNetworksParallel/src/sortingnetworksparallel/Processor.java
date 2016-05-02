@@ -77,6 +77,7 @@ public class Processor {
      * @return The found optimal size sorting network.
      */
     public short[] process() {
+        long initMem = Runtime.getRuntime().totalMemory();
         /* Initialize inputs */
         NullArray NList = firstTimeGenerate(getOriginalInputs());
         innerPrune(NList);
@@ -90,8 +91,9 @@ public class Processor {
             final long took = System.currentTimeMillis() - begin;
             nbComp++;
 
-            System.out.println("Cycle complete with " + nbComp + " comps and size " + NList.size() + " took " + took + " ms");
-
+            System.gc();
+            long mem = (Runtime.getRuntime().totalMemory() - initMem) / 1000;
+            System.out.println("Cycle complete with " + nbComp + " comps and size " + NList.size() + "(" + mem + " kB)" + " took " + took + " ms");
         } while (NList.size() > 1 && nbComp < upperBound);
 
         workPool.shutDown();
