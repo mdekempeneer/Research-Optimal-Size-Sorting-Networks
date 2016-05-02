@@ -32,6 +32,16 @@ import javax.swing.JOptionPane;
  * @version 1.0
  */
 public class Main {
+    
+    /**
+     * Known constraints
+     * 
+     * 1. Maximum amount of channels = 16. (short = 16 bits)
+     * 2. Maximum amount of networks in a list = Integer.MAX_VALUE (2147m)
+     * 3. Maximum amount of consecutive null indices = Short.MAX_VALUE (65k)
+     * 
+     */
+    
 
     /**
      * @param args the command line arguments
