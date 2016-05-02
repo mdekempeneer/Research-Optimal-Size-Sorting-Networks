@@ -391,11 +391,16 @@ Door het grote aantal netwerken is het testen op subsumes en de effici\"entie va
 \end{figure}
 \footnotetext{Voor $10$ kanalen is het aantal comparatoren slechts berekend tot en met comparator $13$.} %TODO UPDATE??
 
-In \texttt{Java} hebben we het voordeel dat we niet aan expliciet geheugenbeheer te doen. We gaan anderzijds wel enkele maatregelen nemen om de vereiste hoeveelheid geheugen te verlagen.
+In \texttt{Java} hebben we het voordeel dat we niet expliciet aan geheugenbeheer moeten doen.
+We gaan anderzijds wel enkele maatregelen nemen om de vereiste hoeveelheid geheugen te verlagen.
+E\'en van de mogelijke plaatsen waar we dit kunnen doen, is bij de representatie van een netwerk.
+Wanneer een comparator aan een netwerk wordt toegevoegd is het mogelijk dat een lijst van outputs met $x$~$1$'en ongewijzigd blijft.
+Om te vermijden dat we hierdoor meerdere malen dezelfde lijst in het geheugen hebben, zullen we een referentie doorgeven van deze lijst en slechts een nieuwe lijst gebruiken wanneer de lijst gewijzigd wordt.
+Aangezien bij \texttt{Java} een $2$-dimensionale lijst wordt aanzien als een lijst van referenties naar andere lijsten kan de oude referentie gemakkelijk herbruikt worden. 
 
-E\'en van de mogelijke plaatsen waar we de vereiste hoeveelheid geheugen kunnen verlagen is bij de representatie van een netwerk. Wanneer een comparator aan een netwerk wordt toegevoegd is het mogelijk dat een lijst van outputs met $x$~$1$'en ongewijzigd blijft. Om te vermijden dat we hierdoor meerdere malen dezelfde lijst in het geheugen hebben, zullen we een referentie doorgeven van deze lijst en slechts een nieuwe lijst gebruiken wanneer de lijst gewijzigd wordt. Aangezien bij \texttt{Java} een $2$-dimensionale lijst wordt aanzien als een lijst van referenties naar andere lijsten kan de oude referentie gemakkelijk herbruikt worden.
+Een andere plaats is bij de parallellisatie, hier daalt de hoeveelheid geheugen doordat een thread enerzijds zal snoeien binnen zijn set alvorens de set toe te voegen.
+Anderzijds doordat de genereer- en snoei-stap door elkaar worden uitgevoerd.
 
-Door de parallellisatie is de hoeveelheid geheugen gedaald doordat een thread enerzijds zal snoeien binnen zijn set alvorens de set toe te voegen en anderzijds doordat het genereren en snoeien door elkaar gebruikt worden.
 
 \section{Evaluatie}
 Het beschreven algoritme, ge\"implementeerd in \texttt{Java}, vindt voor $9$ kanalen reeds na $3$ uur en $25$ minuten een oplossing met $25$ comparatoren die gevisualiseerd wordt in figuur~\ref{Sorteernetwerk9kanalen}.
