@@ -21,22 +21,7 @@
 \definecolor{dkgreen}{rgb}{0,0.6,0}
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
 \definecolor{mauve}{rgb}{0.58,0,0.82}
-\lstset{frame=tb,
-  language=Java,
-  aboveskip=3mm,
-  belowskip=3mm,
-  showstringspaces=false,
-  columns=flexible,
-  basicstyle={\small\ttfamily},
-  numbers=none,
-  numberstyle=\tiny\color{gray},
-  keywordstyle=\color{blue},
-  commentstyle=\color{dkgreen},
-  stringstyle=\color{mauve},
-  breaklines=true,
-  breakatwhitespace=true,
-  tabsize=1
-}
+\lstset{frame=tb, language=Java, aboveskip=3mm, belowskip=3mm, showstringspaces=false, columns=flexible, basicstyle={\small\ttfamily}, numbers=none, numberstyle=\tiny\color{gray}, keywordstyle=\color{blue}, commentstyle=\color{dkgreen}, stringstyle=\color{mauve}, breaklines=true, breakatwhitespace=true, tabsize=1}
 \renewcommand{\lstlistingname}{Code}
 
 \title{Sorteernetwerken van Optimale Grootte}%\thanks{Dankwoord}}
@@ -105,33 +90,33 @@ Een sorteernetwerk $C^n_k$ van optimale grootte houdt in dat er geen ander sorte
 Figuur \ref{Werking} is een voorbeeld van zo een netwerk waarop ook de werking gedemonstreerd wordt.
 Deze figuur toont ook twee parallelle comparatoren $(1,2)$ en $(3,4)$, comparatoren die geen kanaal gemeenschappelijk hebben en van volgorde omgewisseld kunnen worden.
 \begin{figure}[h!]
-\centering
-\includegraphics[scale=0.275]{NetworkTransparent.png} 
-\caption{Sorteernetwerk 4 kanalen, 5 comparatoren}
-\label{Werking}
+	\centering
+	\includegraphics[scale=0.275]{NetworkTransparent.png} 
+	\caption{Sorteernetwerk 4 kanalen, 5 comparatoren}
+	\label{Werking}
 \end{figure}
 %TODO Hard enter?
 Om te onderzoeken of een comparator netwerk een sorteernetwerk is, kunnen we gebruik maken van het \textit{nul - \'e\'en principe}. 
 Dit principe, zoals beschreven volgens Knuth \cite{Knuth3}, stelt dat wanneer een comparator netwerk met $n$ kanalen alle $2^n$ mogelijke sequenties van $n$ $0$- en $1$-en sorteert, het een sorteernetwerk is.
 De optimale grootte van een sorteernetwerk met $n$ kanalen is reeds bewezen tot en met $n \leq 10$ (Tabel \ref{tabel1} \cite{sortingNetworksSize2014}).
 \begin{table}[h!]
-\centering
-\begin{tabular}{r|c|c|c|c|c|c|c}
-n & 6 & 7 & 8 & 9 & 10 & 11 & 12\\ 
-\hline 
-bovengrens & 12 & 16 & 19 & 25 & 29 & 35 & 39\\ 
-\hline 
-ondergrens & 12 & 16 & 19 & 25& 29 & 33 & 37\\
-\end{tabular} 
-\caption{Minimaal aantal comparatoren bij $6 \leq n \leq 12$ kanalen.}
-\label{tabel1}
+	\centering
+	\begin{tabular}{r|c|c|c|c|c|c|c}
+	n & 6 & 7 & 8 & 9 & 10 & 11 & 12\\ 
+	\hline 
+	bovengrens & 12 & 16 & 19 & 25 & 29 & 35 & 39\\ 
+	\hline 
+	ondergrens & 12 & 16 & 19 & 25& 29 & 33 & 37\\
+	\end{tabular} 
+	\caption{Minimaal aantal comparatoren bij $6 \leq n \leq 12$ kanalen.}
+	\label{tabel1}
 \end{table}
 %TODO Hard enter?
 Voor $n > 10$ zijn er bovengrenzen gekend door zowel concrete voorbeelden als de systematische constructie van Batcher \cite{sortingNetworksApplications}. 
 De ondergrenzen werden gevonden via bewijzen en lemma \ref{lemma1} \cite{Voorhis1972}.
 \begin{lemma}
-$S(n+1) \geq S(n) + \lceil \log_2(n) \rceil, \forall n \geq 1$
-\label{lemma1}
+	$S(n+1) \geq S(n) + \lceil \log_2(n) \rceil, \forall n \geq 1$
+	\label{lemma1}
 \end{lemma}
 
 \newcommand*\rfrac[2]{{}^{#1}\!/_{#2}}
@@ -145,30 +130,30 @@ Door gebruik te maken van symmetrie\"en willen we snoeien in het aanmaken van de
 We gebruiken de \textit{genereer- en snoei-methode} zoals beschreven door Codish \textit{et al.} (sectie 3, \cite{sortingNetworksSize2014}).
 Deze methode heeft een cyclisch verloop waarbij men bij elke cyclus de set $R^n_k$ uitbreidt naar $N^n_{k+1}$ om vervolgens te snoeien en de set $R^n_{k+1}$ te bekomen (Figuur \ref{GenereerSnoei}).
 \begin{figure}[!h]
-\centering
-\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,semithick]
-  \tikzstyle{every state}=[fill=white,draw=none,text=black]
+	\centering
+	\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,semithick]
+	  \tikzstyle{every state}=[fill=white,draw=none,text=black]
 
-  \node[state] (A)                    {$R^n_k$};
-  \node[state] (B) [right of=A] {$N^n_{k+1}$};
+	  \node[state] (A)                    {$R^n_k$};
+	  \node[state] (B) [right of=A] {$N^n_{k+1}$};
 
-  \path (A) edge [bend left] node {genereer} (B)
-  		  (B) edge [bend left] node {snoei} (A);
-\end{tikzpicture}
-\caption{Genereer en snoei principe}
-\label{GenereerSnoei}
+	  \path (A) edge [bend left] node {genereer} (B)
+	  		  (B) edge [bend left] node {snoei} (A);
+	\end{tikzpicture}
+	\caption{Genereer en snoei principe}
+	\label{GenereerSnoei}
 \end{figure}
 Specifiek zullen we vertrekken van een netwerk zonder comparatoren om te eindigen bij $R^n_k$ bestaande uit \'e\'en sorteernetwerk van optimale grootte.
 Bij de genereer-stap zullen we aan elk netwerk van $R^n_k$ alle mogelijke comparatoren toevoegen zodat $|N^n_{k+1}| = |R^n_{k}| \times \frac{n\left(n-1\right)}{2}$.
 %TODO aanelkaarpraten zin misschien aanpassen)
 Bij de snoei-stap zullen we dan netwerken verwijderen volgens het subsumes principe beschreven in definitie \ref{definitie1}.
 \begin{definitie}[Subsumes] %TODO VRAGEN SUBSUMES => TOM NEDERLANDS/ENGELS
-We zeggen ``Comparator netwerk $C^n_{k,a}$ subsumes comparator netwerk $C^n_{k,b}$'' wanneer een permuntatie $\pi$ bestaat zodat ${\pi\left(outputs\left(C_{a}\right)\right) \subseteq outputs\left(C_{b}\right)}$. Dit wordt genoteerd als $ C_{a} \preceq C_{b}$ om aan te duiden dat er een permutatie $\pi$ bestaat zodat $C_{a}\leq_\pi C_{b}$. %TODO Vincent weent om dit te kunnen herzien
-\label{definitie1}
+	We zeggen ``Comparator netwerk $C^n_{k,a}$ subsumes comparator netwerk $C^n_{k,b}$'' wanneer een permuntatie $\pi$ bestaat zodat ${\pi\left(outputs\left(C_{a}\right)\right) \subseteq outputs\left(C_{b}\right)}$. Dit wordt genoteerd als $ C_{a} \preceq C_{b}$ om aan te duiden dat er een permutatie $\pi$ bestaat zodat $C_{a}\leq_\pi C_{b}$. %TODO Vincent weent om dit te kunnen herzien
+	\label{definitie1}
 \end{definitie}
 \begin{lemma}
-Wanneer voor comparator netwerk $C^n_{k,a}, C^n_{k,b}$ geldt dat $ C_{a} \preceq C_{b}$ en er bestaat een sorteernetwerk $C_b;C$\footnote{$C_b;C$ is een concatenatie van netwerk $C_b$ en $C$.} van grootte $m$ dan bestaat er ook een sorteernetwerk $C_a;C'$ van grootte $m$.
-\label{lemma2}
+	Wanneer voor comparator netwerk $C^n_{k,a}, C^n_{k,b}$ geldt dat $ C_{a} \preceq C_{b}$ en er bestaat een sorteernetwerk $C_b;C$\footnote{$C_b;C$ is een concatenatie van netwerk $C_b$ en $C$.} van grootte $m$ dan bestaat er ook een sorteernetwerk $C_a;C'$ van grootte $m$.
+	\label{lemma2}
 \end{lemma}
 Concreet kunnen we de definitie van subsumes en lemma \ref{lemma2} beschreven door Codish \textit{et al.} \cite{sortingNetworksSize2014} gebruiken om in te zien dat we netwerken die gesubsumed worden door andere netwerken kunnen verwijderen.
 Wanneer een set van netwerken een sorteernetwerk bevat, zal het snoeien van deze set resulteren in het bekomen van het sorteernetwerk.
@@ -185,18 +170,18 @@ Buiten de comparatoren worden ook de outputs van het netwerk bijgehouden, opgede
 In de \texttt{Java} implementatie kiezen we er voor om een comparator netwerk voor te stellen door een tweedimensionale array van shorts, short[][], en laten we de rij van $n$ $1$'en weg.
 Een voorbeeld van zo een representatie staat in tabel \ref{tabel2}.
 \begin{table}[!h]
-\centering
-\begin{tabular}{r|ccc}
-Comparators & $\left[0011\right]$ & $\left[1010\right]$ & \\ 
-\hline 
-Outputs \'e\'en 1& $\left[0001\right]$ & $\left[0100\right]$ & $\left[0010\right]$ \\ 
-\hline 
-Outputs twee 1'en &$\left[0011\right]$ & $\left[0101\right]$ & $\left[0110\right]$\\ 
-\hline 
-Outputs drie 1'en & $\left[0111\right]$ & $\left[1011\right]$ &  \\ 
-\end{tabular}
-\caption{Representatie $C^4_2$: $(1,2)(2,4)$}
-\label{tabel2}
+	\centering
+	\begin{tabular}{r|ccc}
+	Comparators & $\left[0011\right]$ & $\left[1010\right]$ & \\ 
+	\hline 
+	Outputs \'e\'en 1& $\left[0001\right]$ & $\left[0100\right]$ & $\left[0010\right]$ \\ 
+	\hline 
+	Outputs twee 1'en &$\left[0011\right]$ & $\left[0101\right]$ & $\left[0110\right]$\\ 
+	\hline 
+	Outputs drie 1'en & $\left[0111\right]$ & $\left[1011\right]$ &  \\ 
+	\end{tabular}
+	\caption{Representatie $C^4_2$: $(1,2)(2,4)$}
+	\label{tabel2}
 \end{table}
 
 \subsection{Genereren}
@@ -268,34 +253,33 @@ Om het aflopen van alle permutaties te vermijden, en sneller te beslissen of $C_
 Zo gebruiken we onder meer lemma \ref{lemma3}, beschreven in de paper van Codish \textit{et al.}\cite{sortingNetworksSize2014}.
 Bij $9$ kanalen wordt de methode $1.07666 \times 10^{13}$ keer uitgevoerd waarbij $1.05438 \times 10^{13}$ keer een beslissing genomen wordt. %TODO
 \begin{lemma}
-Wanneer het aantal outputs bij $C_a$ met $x$ $1$'en ($1 \leq x \leq n$) groter is dan bij $C_b$ weten we dat $C_a \npreceq C_b$ met $C_a$ en $C_b$ twee comparator netwerken.
+	Wanneer het aantal outputs bij $C_a$ met $x$ $1$'en ($1 \leq x \leq n$) groter is dan bij $C_b$ weten we dat $C_a \npreceq C_b$ met $C_a$ en $C_b$ twee comparator netwerken.
 \label{lemma3}
 \end{lemma}
 Voor lemma \ref{lemma4} van Codish (\cite{sortingNetworksSize2014}) introduceren we extra informatie over het comparator netwerk, namelijk $w\left(C_a, x, k\right)$ waarbij $x \in \{0,1\}$ en $0\leq k \leq n$.
 Dit representeert de set van posities $i$ waarvoor er een output bestaat in $C_a$ met $k$ $1$'en waarvoor geldt dat op de $i^{de}$ positie van deze output een $x$ voorkomt. Om effici\"ent operaties te kunnen uitvoeren zullen we de posities voorstellen door middel van een bit representatie. Zo zal bijvoorbeeld $w\left(C_a, 1, 2\right) = 0110$ inhouden dat er bij de outputs met twee $1$'en minstens \'e\'en output bestaat met een $1$ op de $2^{de}$ positie, \'e\'en met een $1$ op de $3{de}$ positie en geen enkel met een $1$ op positie $1$ of $4$. Deze informatie voegen we bij elk netwerk toe in de vorm van een array van shorts, $w$. Elk kanaal $k$ van het netwerk $C_a$ vereist dan 4 opeenvolgende indices in $w$, zoals te zien in tabel \ref{tabel3}.
 Deze informatie slaan we voor elk kanaal $k$ op vanaf index\footnote{In \texttt{Java} begint een array met index $0$.} $(k-1) \times 4$.
 \begin{table}[!h]
-\centering
-\begin{tabu}{|[1.25pt]l|[1.25pt]c|[1.25pt]c|[1.25pt]c|[1.25pt]}
-\tabucline[1.25pt]{-}
-$w\left(C_a, 0, 1\right)$ & $|w\left(C_a, 0, 1\right)|$  & $w\left(C_a, 1, 1\right)$ & $|w\left(C_a, 1, 1\right)|$\\ 
-\tabucline[1.25pt]{-}
-\end{tabu} 
-\caption{De inhoud van $w$ op indices $0-3$ voor kanaal 1.}
-\label{tabel3} 
+	\centering
+	\begin{tabu}{|[1.25pt]l|[1.25pt]c|[1.25pt]c|[1.25pt]c|[1.25pt]}
+	\tabucline[1.25pt]{-}
+	$w\left(C_a, 0, 1\right)$ & $|w\left(C_a, 0, 1\right)|$  & $w\left(C_a, 1, 1\right)$ & $|w\left(C_a, 1, 1\right)|$\\ 
+	\tabucline[1.25pt]{-}
+	\end{tabu} 
+	\caption{De inhoud van $w$ op indices $0-3$ voor kanaal 1.}
+	\label{tabel3} 
 \end{table}
 \begin{lemma}
-Wanneer voor een comparator netwerk $C_a$ en $C_b$ met $n$ kanalen geldt dat $|w\left(C_a, x, k\right)| > |w\left(C_b, x, k\right)|$ voor $x \in \{0,1\}$ en $0 \leq k \leq n$ dan $C_a \npreceq C_b$.
-\label{lemma4}
+	Wanneer voor een comparator netwerk $C_a$ en $C_b$ met $n$ kanalen geldt dat $|w\left(C_a, x, k\right)| > |w\left(C_b, x, k\right)|$ voor $x \in \{0,1\}$ en $0 \leq k \leq n$ dan $C_a \npreceq C_b$.
+	\label{lemma4}
 \end{lemma}
 De methode van lemma \ref{lemma4} wordt bij $9$ kanalen ${2.22803 \times 10^{11}}$ keer uitgevoerd waarbij $2.05631 \times 10^{11}$ keer een beslissing genomen wordt.
 %TODO te vaak van Codish et al. (centraliseer de verwijzing? of footnotes?)
 
-
 Tenslotte komen we aan het nagaan van de permutaties, een na\"ieve methode zou zijn om alle $n!$ permutaties te overlopen.
 In de plaats daarvan zullen we enkel permutaties afgaan die voldoen aan lemma \ref{lemma5}.
 \begin{lemma}
-${C_a \preceq C_b  \Rightarrow \pi\left(Outputs\left(C_{a}\right)\right) \subseteq Outputs\left(C_{b}\right)} \Rightarrow \pi\left(w\left(C_a, x, k\right)\right) \subseteq w\left(C_b, x, k\right)$, ${\forall x \in \{0,1\}, \forall k \in \{1..n\}}$.
+	${C_a \preceq C_b  \Rightarrow \pi\left(Outputs\left(C_{a}\right)\right) \subseteq Outputs\left(C_{b}\right)} \Rightarrow \pi\left(w\left(C_a, x, k\right)\right) \subseteq w\left(C_b, x, k\right)$, ${\forall x \in \{0,1\}, \forall k \in \{1..n\}}$.
 \label{lemma5}
 \end{lemma} 
 Om de mogelijke permutaties bij te houden zullen we gebruik maken van een voorstelling die te zien is in tabel \ref{tabel4}.
@@ -303,28 +287,28 @@ De waarden in een kolom stellen alle mogelijke posities voor die op die plaats k
 Wanneer we tabel  \ref{tabel4} gebruiken om de mogelijke permutaties weer te geven dan zullen we permutatie $4321$ en $1324$  bekomen, waarbij $4321$ een eenheidspermutatie zal voorstellen.
 Bij het begin van het algoritme zullen we starten met tabel \ref{tabel5}, waarna we lemma \ref{lemma5} gebruiken om posities te verwijderen.
 \begin{table}[!h]
-\centering
-\begin{tabular}{|c|c|c|c|}
-\hline
-1 & 2 & 2 & 1 \\ 
-2 & 3 &  &  \\ 
-4 &  &  &  \\ 
-\hline 
-\end{tabular}
-\caption{Een voorbeeld van een permutatietabel voor 4 kanalen.}
-\label{tabel4}
+	\centering
+	\begin{tabular}{|c|c|c|c|}
+	\hline
+	1 & 2 & 2 & 1 \\ 
+	2 & 3 &  &  \\ 
+	4 &  &  &  \\ 
+	\hline 
+	\end{tabular}
+	\caption{Een voorbeeld van een permutatietabel voor 4 kanalen.}
+	\label{tabel4}
 \end{table}
 \begin{table}[!h]
-\centering
-\begin{tabular}{|c|c|c|c|}
-\hline
-1 & 1 & 1 & 1 \\ 
-2 & 2 & 2 & 2\\ 
-3 & 3 & 3 & 3 \\
-4 & 4 & 4 & 4\\ 
-\hline 
-\end{tabular}
-\caption{Een permutatietabel in het begin van het algoritme voor 4 kanalen.}
+	\centering
+	\begin{tabular}{|c|c|c|c|}
+	\hline
+	1 & 1 & 1 & 1 \\ 
+	2 & 2 & 2 & 2\\ 
+	3 & 3 & 3 & 3 \\
+	4 & 4 & 4 & 4\\ 
+	\hline 
+	\end{tabular}
+	\caption{Een permutatietabel in het begin van het algoritme voor 4 kanalen.}
 \label{tabel5}
 \end{table}
 
@@ -334,17 +318,17 @@ Nemen we bijvoorbeeld $w\left(C_a,1,1\right) = 0101$ en ${w\left(C_b,1,1\right)=
 We kunnen voor $w\left(C_a, x, k\right)$ deze methode doortrekken voor elke $1 \leq k \leq n$ en voor zowel $x = 0$ als $x = 1$.
 Wanneer we elke kolom bijhouden door een bit representatie kunnen we gemakkelijk de doorsnede van de mogelijke posities nemen na elke berekening voor een bepaalde $k$ en $x$ door middel van de $\&$-operatie. 
 \begin{table}[!h]
-\centering
-\begin{tabular}{|c|c|c|c|}
-\hline
-2 & 1 & 1 & 1 \\ 
-4 & 2 & 2 & 2\\ 
- & 3 & 3 & 3 \\
- & 4 & 4 & 4\\ 
-\hline 
-\end{tabular}
-\caption{Een permutatietabel voor 4 kanalen.}
-\label{tabel6}
+	\centering
+	\begin{tabular}{|c|c|c|c|}
+	\hline
+	2 & 1 & 1 & 1 \\ 
+	4 & 2 & 2 & 2\\ 
+	 & 3 & 3 & 3 \\
+	 & 4 & 4 & 4\\ 
+	\hline 
+	\end{tabular}
+	\caption{Een permutatietabel voor 4 kanalen.}
+	\label{tabel6}
 \end{table}
 
 Wanneer tijdens het algoritme een kolom leeg zou komen te staan, kunnen we het algoritme stopzetten.
@@ -355,10 +339,10 @@ Tot slot gebruiken we de overblijvende permutatietabel om onze mogelijke permuta
 
 \subsection{Parallellisatie}
 \begin{wrapfigure}{l}{0.20\textwidth}
-\centering
-\includegraphics[scale=0.5]{Gen_Prune_Opbouw.png}
-\caption{Opbouw parallelle genereer \& snoei}
-\label{opbouwGenPrune}
+	\centering
+	\includegraphics[scale=0.5]{Gen_Prune_Opbouw.png}
+	\caption{Opbouw parallelle genereer \& snoei}
+	\label{opbouwGenPrune}
 \end{wrapfigure}
 Om het algoritme te laten functioneren met meerdere processoren, zullen we enkele aanpassingen doorvoeren.
 Bij de overgang van $R^n_k$ naar $N^n_{k+1}$ zal elke thread een aantal netwerken uit $R^n_k$ nemen, in ons geval $256$, hierop de genereer-stap uitvoeren en vervolgens binnen de resterende set de snoei-stap uitvoeren.
@@ -379,9 +363,10 @@ Wanneer een thread dit getal tegenkomt, kan hij het opgeslagen aantal indices ov
 %TODO Big O ??
 %TODO ZIe pagina 4 in paper => definitie 2: Observe that ......
 
-\section{Evaluatie}
-Door het grote aantal netwerken is het testen op subsumes en de effici\"entie van de datastructuren van groot belang. In figuur \ref{netwerkVerloop9kanalen} zien we dat dit aantal voor $9$ kanalen kan oplopen tot meer dan $900000$ netwerken.
+\subsection{Geheugen}
+Door het grote aantal netwerken is het testen op subsumes en de effici\"entie van de datastructuren van groot belang. In figuur \ref{netwerkVerloop9kanalen} zien we dat dit aantal voor $9$ kanalen kan oplopen tot meer dan $900000$ netwerken. Bij het stijgend van het aantal kanalen wordt dan ook het geheugenbeheer des te belangrijker.
 \begin{figure}[!h]
+	\centering
 	\begin{tikzpicture}
 		\begin{axis} [
 			xlabel={Aantal comparatoren},
@@ -404,13 +389,14 @@ Door het grote aantal netwerken is het testen op subsumes en de effici\"entie va
 	\label{netwerkVerloop9kanalen}
 \end{figure}
 
+
+\section{Evaluatie}
 Het beschreven algoritme, ge\"implementeerd in \texttt{Java}, vindt voor $9$ kanalen reeds na $3$ uur en $25$ minuten een oplossing met $25$ comparatoren die gevisualiseerd wordt in figuur~\ref{Sorteernetwerk9kanalen}.
 Dit bevestigt wat reeds geweten was door Codish \textit{et al}. 
 Bij eerder onderzoek vereistte men ongeveer $12$ dagen $17$ uur en $58$ minuten aan rekentijd voor het vinden van het sorteernetwerk van optimale grootte van $9$ kanalen \cite{sortingNetworksSize2014}.
 De tijdsmetingen voor het vinden van een sorteernetwerk van $5$ tot en met $9$ kanalen zijn te zien op figuur \ref{Tijdsresultaten}. Op deze figuur is ook de tijdsmeting van eerder werk te zien.
 De bekomen resultaten van dit werk zijn afkomstig van het uitvoeren op \'e\'en node bestaande uit twee $12$-core ``Haswell'' Xeon E$5$-$2680$v$3$ processoren ($2.5$GHz, $30$MB level $3$ cache met $64$GB RAM) op de rekeninfrastructuur van het Vlaamse Supercomputer Centrum.
-
-\begin{figure}[!h]
+\begin{figure}
 \centering
 \begin{tikzpicture} 
 	\begin{axis}[
@@ -438,7 +424,7 @@ De bekomen resultaten van dit werk zijn afkomstig van het uitvoeren op \'e\'en n
 \end{figure}
 
 
-\begin{figure}[!h]
+\begin{figure}
 \centering
 \begin{tikzpicture}
 \def\x{3.5}
