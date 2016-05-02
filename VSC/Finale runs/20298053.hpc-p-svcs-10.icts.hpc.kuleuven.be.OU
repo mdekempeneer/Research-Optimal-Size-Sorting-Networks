@@ -1,0 +1,16 @@
+time: 18000
+nodes: 1
+procs: 24
+account string: default_project
+queue: q24h
+========================================================================
+Will be using 24 threads
+Cycle complete with 2 comps and size 3(0 kB) took 12 ms
+Cycle complete with 3 comps and size 7(0 kB) took 5 ms
+Cycle complete with 4 comps and size 20(0 kB) took 12 ms
+Cycle complete with 5 comps and size 59(0 kB) took 17 ms
+Cycle complete with 6 comps and size 208(0 kB) took 36 ms
+Cycle complete with 7 comps and size 807(0 kB) took 176 ms
+Cycle complete with 8 comps and size 3415(0 kB) took 569 ms
+Cycle complete with 9 comps and size 14342(0 kB) took 2168 ms
+Cycle complete with 10 comps and size 55978(1418199 kB) took 11693 ms
