@@ -484,19 +484,19 @@ Schatting runtime voor 10 kanalen.\\\\
 \begin{figure}
 	\begin{tikzpicture}
 		\begin{axis} [
-			xlabel={Aantal kanalen},
-			ylabel={Tijd (nanoseconden)},
+			xlabel={Aantal comparatoren},
+			ylabel={Tijd (miliseconden)},
+			ymajorgrids = true,
+			xmajorgrids = true,
 			ymode = log,
 			log basis y = 10,
 			legend pos = north west]
-		\addplot [only marks, red] file {dataAllChan.dat};
-		\addplot [red] file {dataAllChan.dat};
-		\addplot [only marks, blue] coordinates {(9, 1101480000000000)};
-		\legend{Dekempeneer \& Derkinderen, ,\cite{sortingNetworksSize2014}};
+		\addplot [only marks, red] file {tijdverloop10kanalen.dat};
+		\addplot [smooth, red] file {tijdverloop10kanalen.dat};
 		\end{axis}
 	\end{tikzpicture}
-	\caption{dataAllChan}
-	\label{dataAllChan}
+	\caption{Tijdsverloop $10$ kanalen tot en met de  $13^{de}$ comparator}
+	\label{tijdverloop10kanalen}
 \end{figure}
 
 \section{Conclusies}

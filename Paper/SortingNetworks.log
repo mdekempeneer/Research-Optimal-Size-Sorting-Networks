@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.29)  2 MAY 2016 17:51
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.29)  2 MAY 2016 18:00
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -952,17 +952,25 @@ Underfull \hbox (badness 10000) in paragraph at lines 478--483
 
  []
 
-PGFPlots: reading {dataAllChan.dat}
-PGFPlots: reading {dataAllChan.dat}
-Missing character: There is no ; in font nullfont!
+PGFPlots: reading {tijdverloop10kanalen.dat}
+NOTE: coordinate (1,0) has been dropped because it is unbounded (in y). (see al
+so unbounded coords=jump). 
+PGFPlots: reading {tijdverloop10kanalen.dat}
+NOTE: coordinate (1,0) has been dropped because it is unbounded (in y). (see al
+so unbounded coords=jump). 
+
+Overfull \hbox (0.76973pt too wide) in paragraph at lines 497--498
+[][] 
+ []
+
 (./SortingNetworks.bbl [5]) [6
 
 ] (./SortingNetworks.aux) ) 
 Here is how much of TeX's memory you used:
- 26575 strings out of 493089
- 655286 string characters out of 6134842
+ 26566 strings out of 493089
+ 655052 string characters out of 6134842
  826442 words of memory out of 5000000
- 29570 multiletter control sequences out of 15000+600000
+ 29561 multiletter control sequences out of 15000+600000
  30428 words of font info for 79 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  62i,21n,100p,786b,2213s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -982,7 +990,7 @@ sr/local/texlive/2015/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local
 /texlive/2015/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2
 015/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2015/texmf-
 dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on SortingNetworks.pdf (6 pages, 225660 bytes).
+Output written on SortingNetworks.pdf (6 pages, 226457 bytes).
 PDF statistics:
  91 PDF objects out of 1000 (max. 8388607)
  64 compressed objects within 1 object stream
