@@ -78,6 +78,7 @@ public class Processor {
      */
     public short[] process() {
         long initMem = Runtime.getRuntime().totalMemory();
+        System.out.println(initMem + " bytes at startup");
         /* Initialize inputs */
         NullArray NList = firstTimeGenerate(getOriginalInputs());
         innerPrune(NList);
