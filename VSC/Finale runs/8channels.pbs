@@ -1,0 +1,6 @@
+#!/bin/bash -l
+#PBS -l nodes=1:ppn=24:haswell
+#PBS -l walltime=01:00
+#PBS -M mathias.dekempeneer@student.kuleuven.be
+module load Java/1.7.0_51
+java -jar "SortingNetworksParallel_20160502_memory.jar" 8 19 256 1
