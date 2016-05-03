@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.29)  3 MAY 2016 14:47
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.29)  3 MAY 2016 15:07
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -800,6 +800,91 @@ Underfull \hbox (badness 10000) in paragraph at lines 47--48
  []
 
 
+Underfull \hbox (badness 10000) in paragraph at lines 47--48
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 47--48
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 47--48
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 47--48
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 47--48
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 47--48
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 47--48
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 47--48
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 47--48
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 47--48
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 47--48
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 47--48
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 47--48
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 47--48
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 47--48
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 47--48
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 47--48
+
+ []
+
+
 Underfull \hbox (badness 10000) in paragraph at lines 49--51
 
  []
@@ -810,9 +895,13 @@ File: NetworkTransparent.png Graphic file (type png)
 <use NetworkTransparent.png>
 Package pdftex.def Info: NetworkTransparent.png used on input line 67.
 (pdftex.def)             Requested size: 166.64975pt x 77.21783pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 91.
- [1{/usr/local/texlive/2015/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
+[1{/usr/local/texlive/2015/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
 
 
@@ -876,12 +965,6 @@ Overfull \hbox (10.53934pt too wide) in paragraph at lines 255--257
  []
 
 
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-
 Underfull \hbox (badness 10000) in paragraph at lines 288--306
 []\OT1/ptm/m/n/10 We we-ten na-me-lijk dat als
  []
@@ -891,7 +974,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 288--306
 []$ \OT1/ptm/m/n/10 er bij de ge-per-mu-
  []
 
-<Gen_Prune_Opbouw.png, id=29, 225.09094pt x 435.12563pt>
+[3] <Gen_Prune_Opbouw.png, id=33, 225.09094pt x 435.12563pt>
 File: Gen_Prune_Opbouw.png Graphic file (type png)
 
 <use Gen_Prune_Opbouw.png>
@@ -923,7 +1006,7 @@ Underfull \hbox (badness 1796) in paragraph at lines 320--328
 \OT1/ptm/m/n/10 ma-ken van een va-ri-a-bele die bij-houdt op welke in-dex
  []
 
-[3 <./Gen_Prune_Opbouw.png>]
+
 Underfull \hbox (badness 4254) in paragraph at lines 330--330
 [][]\OT1/ptm/m/n/9 Bij de \OT1/pcr/m/n/9 Java \OT1/ptm/m/n/9 im-ple-men-ta-tie 
 zul-len we ver-wij-de-ren via
@@ -938,23 +1021,18 @@ PGFPlots: reading {netwerkVerloop8kanalen.dat}
 PGFPlots: reading {netwerkVerloop9kanalen.dat}
 PGFPlots: reading {netwerkVerloop10kanalen.dat}
 Missing character: There is no ; in font nullfont!
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
 Missing character: There is no ; in font nullfont!
 
-LaTeX Warning: `!h' float specifier changed to `!ht'.
+Underfull \vbox (badness 2753) has occurred while \output is active []
 
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-<Benadering10_paper.png, id=34, 358.33875pt x 298.11375pt>
+ [4 <./Gen_Prune_Opbouw.png>] <Benadering10_paper.png, id=37, 358.33875pt x 298
+.11375pt>
 File: Benadering10_paper.png Graphic file (type png)
 
 <use Benadering10_paper.png>
 Package pdftex.def Info: Benadering10_paper.png used on input line 458.
 (pdftex.def)             Requested size: 227.64894pt x 189.3911pt.
- [4]
+
 Underfull \hbox (badness 10000) in paragraph at lines 463--465
 
  []
@@ -980,9 +1058,6 @@ Overfull \hbox (9.03374pt too wide) in paragraph at lines 468--469
  [][] 
  []
 
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
 (./SortingNetworks.bbl [5 <./Benadering10_paper.png> <./Profile_Time_8.png>])
 [6
 
@@ -990,7 +1065,7 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 Here is how much of TeX's memory you used:
  26573 strings out of 493089
  655182 string characters out of 6134842
- 826736 words of memory out of 5000000
+ 826580 words of memory out of 5000000
  29564 multiletter control sequences out of 15000+600000
  33836 words of font info for 83 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1011,7 +1086,7 @@ sr/local/texlive/2015/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local
 /texlive/2015/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2
 015/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2015/texmf-
 dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on SortingNetworks.pdf (6 pages, 270690 bytes).
+Output written on SortingNetworks.pdf (6 pages, 270523 bytes).
 PDF statistics:
  95 PDF objects out of 1000 (max. 8388607)
  64 compressed objects within 1 object stream
