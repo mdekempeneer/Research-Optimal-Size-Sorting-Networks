@@ -1,0 +1,168 @@
+\begin{figure}
+	\begin{tikzpicture}
+		\begin{axis} [
+			xlabel={Aantal comparatoren},
+			ylabel={Geheugen (kB)},
+			ymajorgrids = true,
+			xmajorgrids = true,
+			ymode = log,
+			log basis y = 10,
+			legend pos = north west]
+		\addplot [only marks, red] file {geheugenVerloop9kanalen.dat};
+		\addplot [red] file {geheugenVerloop9kanalen.dat};
+		\end{axis}
+	\end{tikzpicture}
+	\caption{Geheugen bij $k^{de}$ comparator voor $9$ kanalen}
+	\label{geheugenverloop9kanalen}
+\end{figure}
+
+\begin{figure}
+	\begin{tikzpicture}
+		\begin{axis} [
+			xlabel={Aantal comparatoren},
+			ylabel={Geheugen (kB)},
+			ymajorgrids = true,
+			xmajorgrids = true,
+			%ymode = log,
+			%log basis y = 10,
+			legend pos = north west]
+		\addplot [only marks, red] file {geheugenVerloop9kanalen.dat};
+		\addplot [red] file {geheugenVerloop9kanalen.dat};
+		\end{axis}
+	\end{tikzpicture}
+	\caption{Geheugen bij $k^{de}$ comparator voor $9$ kanalen}
+	\label{geheugenverloop9kanalen2}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\begin{tikzpicture} 
+		\begin{axis}[
+			xlabel={Aantal comparatoren},
+			ylabel={Geheugen (kB)},
+			enlargelimits=0.15,
+			ybar=1pt,
+			ymode = log,
+			log basis y = 10,
+			bar width=9pt,
+			%nodes near coords,
+			point meta=10^y,
+			ymajorgrids = true,
+			legend pos = north west
+			]
+		\addplot file {geheugenVerloop9kanalen.dat};
+		\end{axis}
+	\end{tikzpicture}
+	\caption{Geheugen bij $k^{de}$ comparator voor $9$ kanalen}
+	\label{geheugenverloop9kanalen3}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\begin{tikzpicture} 
+		\begin{axis}[
+			xlabel={Aantal comparatoren},
+			ylabel={Geheugen (kB)},
+			enlargelimits=0.15,
+			ybar=1pt,
+			%ymode = log,
+			%log basis y = 10,
+			bar width=5pt,
+			%nodes near coords,
+			point meta=10^y,
+			ymajorgrids = true,
+			legend pos = north west
+			]
+		\addplot file {geheugenVerloop9kanalen.dat};
+		\end{axis}
+	\end{tikzpicture}
+	\caption{Geheugen bij $k^{de}$ comparator voor $9$ kanalen}
+	\label{geheugenverloop9kanalen4}
+\end{figure}
+
+\begin{figure}
+	\begin{tikzpicture}
+		\begin{axis} [
+			xlabel={Aantal comparatoren},
+			ylabel={Geheugen (kB)},
+			ymajorgrids = true,
+			xmajorgrids = true,
+			ymode = log,
+			log basis y = 10,
+			legend pos = north west]
+		\addplot [only marks, red] file {geheugenVerloop9kanalen.dat};
+		\addplot [red] file {geheugenVerloop9kanalen.dat};
+		\addplot [only marks, blue] file {geheugenVerloop10kanalen.dat}; % eigenlijk is dit de 8 kanalen
+		\addplot [blue] file {geheugenVerloop10kanalen.dat};
+		\legend{9,, 8};
+		\end{axis}
+		
+	\end{tikzpicture}
+	\caption{Geheugen bij $k^{de}$ comparator}
+	\label{geheugenverloop9kanalen5}
+\end{figure}
+
+\begin{figure}
+	\begin{tikzpicture}
+		\begin{axis} [
+			xlabel={Aantal comparatoren},
+			ylabel={Geheugen (kB)},
+			ymajorgrids = true,
+			xmajorgrids = true,
+			%ymode = log,
+			%log basis y = 10,
+			legend pos = north west]
+		\addplot [only marks, red] file {geheugenVerloop9kanalen.dat};
+		\addplot [red] file {geheugenVerloop9kanalen.dat};
+		\addplot [only marks, blue] file {geheugenVerloop10kanalen.dat}; % eigenlijk is dit de 8 kanalen
+		\addplot [blue] file {geheugenVerloop10kanalen.dat};
+		\legend{9,,8};
+		\end{axis}
+		
+	\end{tikzpicture}
+	\caption{Geheugen bij $k^{de}$ comparator}
+	\label{geheugenverloop9kanalen6}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\begin{tikzpicture} 
+		\begin{axis}[
+			xlabel={Aantal comparatoren},
+			ylabel={Geheugen (kB)},
+			enlargelimits=0.15,
+			ybar=0pt,
+			ymode = log,
+			log basis y = 10,
+			bar width=4pt,
+			%nodes near coords,
+			point meta=10^y,
+			ymajorgrids = true,
+			legend pos = north west
+			]
+		\addplot file {geheugenVerloop9kanalen.dat};
+		\addplot file {geheugenVerloop10kanalen.dat};
+		\legend{9, 8};
+		\end{axis}
+	\end{tikzpicture}
+	\caption{Geheugen bij $k^{de}$ comparator}
+	\label{geheugenverloop9kanalen7}
+\end{figure}
+
+\begin{figure}
+	\begin{tikzpicture}
+		\begin{axis} [
+			xlabel={Aantal comparatoren},
+			ylabel={Tijd (miliseconden)},
+			ymajorgrids = true,
+			xmajorgrids = true,
+			ymode = log,
+			log basis y = 10,
+			legend pos = north west]
+		\addplot [only marks, red] file {tijdverloop10kanalen.dat};
+		\addplot [smooth, red] file {tijdverloop10kanalen.dat};
+		\end{axis}
+	\end{tikzpicture}
+	\caption{Tijdsverloop $10$ kanalen tot en met de  $13^{de}$ comparator.}
+	\label{tijdverloop10kanalen}
+\end{figure}
