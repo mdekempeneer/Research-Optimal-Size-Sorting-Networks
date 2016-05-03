@@ -24,16 +24,10 @@
 \lstset{frame=tb, language=Java, aboveskip=3mm, belowskip=3mm, showstringspaces=false, columns=flexible, basicstyle={\small\ttfamily}, numbers=none, numberstyle=\tiny\color{gray}, keywordstyle=\color{blue}, commentstyle=\color{dkgreen}, stringstyle=\color{mauve}, breaklines=true, breakatwhitespace=true, tabsize=1}
 \renewcommand{\lstlistingname}{Code}
 
-\title{Sorteernetwerken van Optimale Grootte}%\thanks{Dankwoord}}
-\author{Mathias Dekempeneer\\
-Bachelor Informatica\\
-Katholieke Universiteit Leuven \\
-mathias.dekempeneer@student.kuleuven.be
+\title{Sorteernetwerken van Optimale Grootte}%\thanks{Dankwoord}} %TODO Originelere titel?
+\author{Mathias Dekempeneer\\Bachelor Informatica\\Katholieke Universiteit Leuven \\mathias.dekempeneer@student.kuleuven.be
 \And
-Vincent Derkinderen\\
-Bachelor Informatica\\
-Katholieke Universiteit Leuven \\
-vincent.derkinderen@student.kuleuven.be}
+Vincent Derkinderen\\Bachelor Informatica\\Katholieke Universiteit Leuven \\vincent.derkinderen@student.kuleuven.be}
 
 \begin{document}
 
@@ -42,7 +36,7 @@ vincent.derkinderen@student.kuleuven.be}
 \begin{abstract}
 Korte samenvatting van wat we doen en wat de conclusie is.\\
 Verder werken op paper van Codish et al. Sorteer optimal size sorting network.\\
-Tijdsverbetering van x?
+Tijdsverbetering van x?\\
 Bla\\
 Bla\\
 Bla\\
@@ -389,7 +383,7 @@ Door het grote aantal netwerken is het testen op subsumes en de effici\"entie va
 	\caption{Aantal resterende netwerken na het uitvoeren van genereer en snoei bij toevoegen van de $k^{de}$ comparator.}
 	\label{netwerkVerloop9kanalen}
 \end{figure}
-\footnotetext{Voor $10$ kanalen is het aantal comparatoren berekend tot en met comparator $13$.} %TODO UPDATE??
+\footnotetext{Voor $10$ kanalen is het aantal netwerken berekend tot en met comparator $13$.} %TODO UPDATE??
 
 In \texttt{Java} hebben we het voordeel dat we niet expliciet aan geheugenbeheer moeten doen.
 We gaan anderzijds wel enkele maatregelen nemen om de vereiste hoeveelheid geheugen te verlagen.
@@ -400,6 +394,9 @@ Aangezien bij \texttt{Java} een $2$-dimensionale lijst wordt aanzien als een lij
 
 Een andere plaats is bij de parallellisatie, hier daalt de hoeveelheid geheugen doordat een thread enerzijds zal snoeien binnen zijn set alvorens de set toe te voegen.
 Anderzijds doordat de genereer- en snoei-stap door elkaar worden uitgevoerd.
+
+Onze \texttt{Java} implementatie gebruikte bij de uitvoering voor $8$ en $9$ kanalen respectievelijk $208$MB en $3951$MB.
+Deze hoeveelheid kan verschillen naargelang de frequentie waarbij de \texttt{Java Virtual Machine} de \textit{Garbage Collection} uitvoert.
 
 \section{Evaluatie}
 Het beschreven algoritme, ge\"implementeerd in \texttt{Java}, vindt voor $9$ kanalen reeds na $3$ uur en $25$ minuten een oplossing met $25$ comparatoren die gevisualiseerd wordt in figuur~\ref{Sorteernetwerk9kanalen}.
@@ -434,7 +431,7 @@ De bekomen resultaten van dit werk zijn afkomstig van het uitvoeren op \'e\'en n
 \label{Tijdsresultaten}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[!h]
 \centering
 \begin{tikzpicture}
 \def\x{3.5}
@@ -473,43 +470,19 @@ De bekomen resultaten van dit werk zijn afkomstig van het uitvoeren op \'e\'en n
 \end{figure}
 
 \subsection{Benadering 10 en 11 kanalen}
-De uitvoering van het programma voor $10$ kanalen is na $299$~uur\footnote{$12$ dagen, $11$ uur} stopgezet. %TODO Aanpassen naar het effectieve
+De uitvoering van het programma voor $10$ kanalen is na $299$~uur\footnote{$12$ dagen en $11$ uur} stopgezet. %TODO Aanpassen naar het effectieve
 De tussentijdse resultaten met betrekking tot de uitvoeringstijd zijn te zien in figuur \ref{tijdverloop10kanalen} en met betrekking tot het aantal netwerken zijn te zien in figuur \ref{netwerkVerloop9kanalen}.
 Voor 10, en dus ook voor 11, kanalen is de \texttt{Java} implementatie met de gebruikte hardware onvoldoende om resultaten binnen een redelijk tijdsbestek te bekomen.
-Gebaseerd op figuur \ref{tijdverloop10kanalen} schatten we dat voor $10$ kanalen meer dan $1500$ dagen vereist zijn. 
-
-~\\\\
-Empirische evaluaties + grafiekjes\\
-Tabel geven van hoeveel beslissingen er op welke plaats genomen worden.\\ \\
-Vergelijken runtime voor 9 kanalen met Codish.\\
-Schatting runtime voor 10 kanalen.\\\\
-
-\begin{figure}
-	\begin{tikzpicture}
-		\begin{axis} [
-		     grid=both,
-			xlabel={Aantal comparatoren},
-			ylabel={Tijd (uur)},
-			ymode = log,
-			ymin=3e-6,
-             ymax=200,
-			log basis y = 10,
-			legend pos = north west]
-		\addplot [only marks, red] file {tijdverloop10kanalen_uur.dat};
-		\addplot [smooth, red] file {tijdverloop10kanalen_uur.dat};
-		\end{axis}
-	\end{tikzpicture}
-	\caption{Tijdsverloop $10$ kanalen tot en met de  $13^{de}$ comparator.}
-	\label{tijdverloop10kanalen}
-\end{figure}
-
+Gebaseerd op figuur \ref{tijdverloop10kanalen} schatten we dat voor $10$ kanalen meer dan $1500$ dagen\footnote{Berekend op basis van polynomiaal verloop van graad $11$.} vereist zijn. 
 \begin{figure}
 \centering
 \includegraphics[width = 0.45\textwidth]{Benadering10_paper.png}
-\caption{Voorspelling tijdsverloop $10$ kanalen.}
-\label{voorspellingTijdsverloop10kanalen}
+\caption{Tijdsverloop $10$ kanalen tot en met de  $13^{de}$ comparator en benadering van tijdsverloop tot en met de $16^{de}$ comparator.}
+\label{tijdverloop10kanalen}
 \end{figure}
 
+~\\\\
+Tabel geven van hoeveel beslissingen er op welke plaats genomen worden.\\ \\
 
 \section{Conclusies}
 Conclusie\cite{sortingNetworksSize2014}\\

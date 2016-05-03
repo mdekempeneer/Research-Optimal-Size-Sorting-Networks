@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.29)  3 MAY 2016 13:04
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.29)  3 MAY 2016 13:52
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -681,19 +681,19 @@ File: lstlang1.sty 2014/09/06 1.5e listings language file
 (./SortingNetworks.aux)
 \openout1 = `SortingNetworks.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 38.
-LaTeX Font Info:    ... okay on input line 38.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 38.
-LaTeX Font Info:    ... okay on input line 38.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 38.
-LaTeX Font Info:    ... okay on input line 38.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 38.
-LaTeX Font Info:    ... okay on input line 38.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 38.
-LaTeX Font Info:    ... okay on input line 38.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 38.
-LaTeX Font Info:    ... okay on input line 38.
-LaTeX Font Info:    Try loading font information for OT1+ptm on input line 38.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 32.
+LaTeX Font Info:    ... okay on input line 32.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 32.
+LaTeX Font Info:    ... okay on input line 32.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 32.
+LaTeX Font Info:    ... okay on input line 32.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 32.
+LaTeX Font Info:    ... okay on input line 32.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 32.
+LaTeX Font Info:    ... okay on input line 32.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 32.
+LaTeX Font Info:    ... okay on input line 32.
+LaTeX Font Info:    Try loading font information for OT1+ptm on input line 32.
 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/psnfss/ot1ptm.fd
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
@@ -764,7 +764,7 @@ e
 Package pgfplots Warning: running in backwards compatibility mode (unsuitable t
 ick labels; missing features). Consider writing \pgfplotsset{compat=1.12} into 
 your preamble.
- on input line 38.
+ on input line 32.
 
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: listings package is loaded.
@@ -772,30 +772,30 @@ Package caption Info: wrapfig package is loaded.
 Package caption Info: End \AtBeginDocument code.
 \c@lstlisting=\count143
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14.4> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 40.
-LaTeX Font Info:    Try loading font information for U+lasy on input line 40.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 34.
+LaTeX Font Info:    Try loading font information for U+lasy on input line 34.
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/ulasy.fd
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 )
-LaTeX Font Info:    Try loading font information for U+msa on input line 40.
+LaTeX Font Info:    Try loading font information for U+msa on input line 34.
 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 40.
+LaTeX Font Info:    Try loading font information for U+msb on input line 34.
 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 40.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 34.
 
-Underfull \hbox (badness 10000) in paragraph at lines 43--57
+Underfull \hbox (badness 10000) in paragraph at lines 37--51
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 61--79
+Underfull \hbox (badness 10000) in paragraph at lines 55--73
 
  []
 
@@ -803,84 +803,84 @@ Underfull \hbox (badness 10000) in paragraph at lines 61--79
 File: NetworkTransparent.png Graphic file (type png)
 
 <use NetworkTransparent.png>
-Package pdftex.def Info: NetworkTransparent.png used on input line 94.
+Package pdftex.def Info: NetworkTransparent.png used on input line 88.
 (pdftex.def)             Requested size: 166.64975pt x 77.21783pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 118.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 112.
 [1{/usr/local/texlive/2015/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
 
 
  <./NetworkTransparent.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 162--164
+Underfull \hbox (badness 10000) in paragraph at lines 156--158
 []\OT1/ptm/m/n/10 Het over-lo-pen van alle per-mu-ta-ties om na
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 162--164
+Underfull \hbox (badness 10000) in paragraph at lines 156--158
 \OT1/ptm/m/n/10 te gaan of er een per-mu-ta-tie $\OML/cmm/m/it/10 ^^Y$ \OT1/ptm
 /m/n/10 be-staat zo-dat
  []
 
 
-Underfull \hbox (badness 1960) in paragraph at lines 162--164
+Underfull \hbox (badness 1960) in paragraph at lines 156--158
 []$\OT1/ptm/m/n/10 , en dus $\OML/cmm/m/it/10 C[] \OMS/cmsy/m/n/10 ^^V \OML/cmm
 /m/it/10 C[]$\OT1/ptm/m/n/10 ,
  []
 
 
-Underfull \hbox (badness 1112) in paragraph at lines 162--164
+Underfull \hbox (badness 1112) in paragraph at lines 156--158
 \OT1/ptm/m/n/10 is een kos-te-lijke be-wer-king. Om deze be-wer-kin-gen te
  []
 
 
-Underfull \hbox (badness 2205) in paragraph at lines 162--164
+Underfull \hbox (badness 2205) in paragraph at lines 156--158
 \OT1/ptm/m/n/10 ver-mij-den en te ver-snel-len, zul-len we ex-tra me-tho-den
  []
 
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 165.
-LaTeX Font Info:    Try loading font information for OT1+pcr on input line 168.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 159.
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 162.
 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
-Overfull \hbox (7.11339pt too wide) in paragraph at lines 207--208
+Overfull \hbox (7.11339pt too wide) in paragraph at lines 201--202
  [][] 
  []
 
 
-Overfull \hbox (7.11339pt too wide) in paragraph at lines 229--230
+Overfull \hbox (7.11339pt too wide) in paragraph at lines 223--224
  [][] 
  []
 
 [2]
-Overfull \hbox (15.76875pt too wide) in paragraph at lines 264--269
+Overfull \hbox (15.76875pt too wide) in paragraph at lines 258--263
  [][] 
  []
 
 
-Underfull \hbox (badness 7888) in paragraph at lines 276--278
+Underfull \hbox (badness 7888) in paragraph at lines 270--272
 []\OT1/ptm/m/n/10 De me-thode van lemma 4[] wordt bij $\OT1/cmr/m/n/10 9$ \OT1/
 ptm/m/n/10 ka-na-len
  []
 
 
-Overfull \hbox (10.53934pt too wide) in paragraph at lines 282--284
+Overfull \hbox (10.53934pt too wide) in paragraph at lines 276--278
 []\OT1/ptm/b/n/10 Lemma 5. []$[] \OMS/cmsy/m/n/10 )
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 315--333
+Underfull \hbox (badness 10000) in paragraph at lines 309--327
 []\OT1/ptm/m/n/10 We we-ten na-me-lijk dat als
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 315--333
+Underfull \hbox (badness 10000) in paragraph at lines 309--327
 []$ \OT1/ptm/m/n/10 er bij de ge-per-mu-
  []
 
@@ -888,36 +888,36 @@ Underfull \hbox (badness 10000) in paragraph at lines 315--333
 File: Gen_Prune_Opbouw.png Graphic file (type png)
 
 <use Gen_Prune_Opbouw.png>
-Package pdftex.def Info: Gen_Prune_Opbouw.png used on input line 343.
+Package pdftex.def Info: Gen_Prune_Opbouw.png used on input line 337.
 (pdftex.def)             Requested size: 112.54518pt x 217.56227pt.
 
-Overfull \hbox (11.36873pt too wide) in paragraph at lines 343--344
+Overfull \hbox (11.36873pt too wide) in paragraph at lines 337--338
  [][] 
  []
 
 
-Underfull \hbox (badness 1275) in paragraph at lines 347--355
+Underfull \hbox (badness 1275) in paragraph at lines 341--349
 \OT1/ptm/m/n/10 stap uit-voe-ren en ver-vol-gens
  []
 
 
-Underfull \hbox (badness 2027) in paragraph at lines 347--355
+Underfull \hbox (badness 2027) in paragraph at lines 341--349
 \OT1/ptm/m/n/10 bin-nen de res-te-rende set de
  []
 
 
-Underfull \hbox (badness 1406) in paragraph at lines 347--355
+Underfull \hbox (badness 1406) in paragraph at lines 341--349
 \OML/cmm/m/it/10 k \OT1/cmr/m/n/10 + 1$ \OT1/ptm/m/n/10 com-pa-ra-to-ren waarop
 
  []
 
 
-Underfull \hbox (badness 1796) in paragraph at lines 347--355
+Underfull \hbox (badness 1796) in paragraph at lines 341--349
 \OT1/ptm/m/n/10 ma-ken van een va-ri-a-bele die bij-houdt op welke in-dex
  []
 
 
-Underfull \hbox (badness 4254) in paragraph at lines 357--357
+Underfull \hbox (badness 4254) in paragraph at lines 351--351
 [][]\OT1/ptm/m/n/9 Bij de \OT1/pcr/m/n/9 Java \OT1/ptm/m/n/9 im-ple-men-ta-tie 
 zul-len we ver-wij-de-ren via
  []
@@ -932,71 +932,60 @@ PGFPlots: reading {netwerkVerloop9kanalen.dat}
 PGFPlots: reading {netwerkVerloop10kanalen.dat}
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
-[4 <./Gen_Prune_Opbouw.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 481--486
 
- []
+Underfull \vbox (badness 2753) has occurred while \output is active []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 481--486
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 481--486
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 481--486
-
- []
-
-PGFPlots: reading {tijdverloop10kanalen_uur.dat}
-NOTE: coordinate (1,0) has been dropped because it is unbounded (in y). (see al
-so unbounded coords=jump). 
-PGFPlots: reading {tijdverloop10kanalen_uur.dat}
-NOTE: coordinate (1,0) has been dropped because it is unbounded (in y). (see al
-so unbounded coords=jump). 
-
-Overfull \hbox (0.76973pt too wide) in paragraph at lines 501--502
-[][] 
- []
-
-<Benadering10_paper.png, id=37, 358.33875pt x 298.11375pt>
+ [4 <./Gen_Prune_Opbouw.png>] <Benadering10_paper.png, id=37, 358.33875pt x 298
+.11375pt>
 File: Benadering10_paper.png Graphic file (type png)
 
 <use Benadering10_paper.png>
-Package pdftex.def Info: Benadering10_paper.png used on input line 508.
+Package pdftex.def Info: Benadering10_paper.png used on input line 479.
 (pdftex.def)             Requested size: 227.64894pt x 189.3911pt.
- (./SortingNetworks.bbl [5 <./Benadering10_paper.png>]) [6
 
-] (./SortingNetworks.aux) ) 
+Underfull \hbox (badness 10000) in paragraph at lines 484--486
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 484--486
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 484--486
+
+ []
+
+(./SortingNetworks.bbl [5 <./Benadering10_paper.png>]) [6
+
+]
+(./SortingNetworks.aux) ) 
 Here is how much of TeX's memory you used:
- 26573 strings out of 493089
- 655237 string characters out of 6134842
- 838586 words of memory out of 5000000
- 29567 multiletter control sequences out of 15000+600000
+ 26562 strings out of 493089
+ 655011 string characters out of 6134842
+ 826572 words of memory out of 5000000
+ 29557 multiletter control sequences out of 15000+600000
  30428 words of font info for 79 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  62i,21n,100p,786b,2213s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/
-base/8r.enc}</usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/
-cmex10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/c
-mmi10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cm
-mi6.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi
-7.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.
-pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pf
-b></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb><
-/usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></us
-r/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr
-/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/l
-ocal/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></u
-sr/local/texlive/2015/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local
-/texlive/2015/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2
-015/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2015/texmf-
-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on SortingNetworks.pdf (6 pages, 248594 bytes).
+{/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/ba
+se/8r.enc}</usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cm
+ex10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmm
+i10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi
+6.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.
+pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pf
+b></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb>
+</usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></u
+sr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/
+local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/l
+ocal/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/loc
+al/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr
+/local/texlive/2015/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/t
+exlive/2015/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/201
+5/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2015/texmf-di
+st/fonts/type1/urw/times/utmri8a.pfb>
+Output written on SortingNetworks.pdf (6 pages, 245641 bytes).
 PDF statistics:
  93 PDF objects out of 1000 (max. 8388607)
  64 compressed objects within 1 object stream
