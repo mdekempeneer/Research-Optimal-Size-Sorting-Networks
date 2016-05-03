@@ -33,43 +33,22 @@ Vincent Derkinderen\\Bachelor Informatica\\Katholieke Universiteit Leuven \\vinc
 
 \maketitle
 %TODO check dat elke caption eindigt op een punt! 
+
 \begin{abstract}
-Korte samenvatting van wat we doen en wat de conclusie is.\\
-Verder werken op paper van Codish et al. Sorteer optimal size sorting network.\\
-Tijdsverbetering van x?\\
-Bla\\
-Bla\\
-Bla\\
-Bla\\
-Bla\\
-Bla\\
-Bla\\
-Bla\\
-Bla\\
-Bla\\
-Bla\\
+Verdergaand op eerder werk omtrent sorteernetwerken van optimale grootte wordt het algoritme beschreven door de onderzoeksgroep van onder meer Codish gereproduceerd\cite{sortingNetworksSize2014}.
+Het doel van deze reproductie bestaat eruit om bij te dragen tot een effici\"entere tijdsmeting om verder onderzoek mogelijk te maken.
+Net als bij \small{\textsc{Twenty-Five Comparators is Optimal when Sorting Nine Inputs (and Twenty-Nine for Ten)}} maakt de implementatie gebruik van een \textit{genereer- en snoei-methode}.
+De resulterende code bewijst de optimale grootte voor $9$ kanalen in $3$~uur en $25$~minuten en zet zo een stap dichter naar een uitvoering voor $10$ en $11$ kanalen.
 \end{abstract}
 
 \section{Introductie}
 
+
+~\\\\
+
 Situering + bijdrage.\\
 Sorting Network (high level), Optimal Size (high level), contributies andere papers rond deze twee, enkele getallen rond grootte orde van het probleem, wat er al geprobeerd is (SAT, generate \& prune,...), hoe wij het probleem zullen aanpakken (hoe wij prunen (high level)), gebruikte hardware...\\
-Bla\\
-Bla\\
-Bla\\
-Bla\\
-Bla\\
-Bla\\
-Bla\\
-Bla\\
-Bla\\
-Bla\\
-Bla\\
-Bla\\
-Bla\\
-Bla\\
-Bla\\
-Bla\\
+
 
 \section{Probleemstelling}
 Een \textit{comparator netwerk} $C^n_k$ bestaat uit $n$ kanalen en $k$ \textit{comparatoren}.
@@ -483,6 +462,13 @@ Gebaseerd op figuur \ref{tijdverloop10kanalen} schatten we dat voor $10$ kanalen
 
 ~\\\\
 Tabel geven van hoeveel beslissingen er op welke plaats genomen worden.\\ \\
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=0.5\textwidth]{Profile_Time_8.png}
+\caption{Profile time 8} %TODO
+\label{ProfileTime8}
+\end{figure}
 
 \section{Conclusies}
 Conclusie\cite{sortingNetworksSize2014}\\
