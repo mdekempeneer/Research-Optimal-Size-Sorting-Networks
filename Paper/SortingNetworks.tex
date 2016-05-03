@@ -539,8 +539,8 @@ Schatting runtime voor 10 kanalen.\\\\
 	\centering
 	\begin{tikzpicture} 
 		\begin{axis}[
-			ylabel = Tijd (miliseconde),
-			xlabel = Aantal kanalen,
+			xlabel={Aantal comparatoren},
+			ylabel={Geheugen (kB)},
 			enlargelimits=0.15,
 			ybar=1pt,
 			ymode = log,
@@ -562,8 +562,8 @@ Schatting runtime voor 10 kanalen.\\\\
 	\centering
 	\begin{tikzpicture} 
 		\begin{axis}[
-			ylabel = Tijd (miliseconde),
-			xlabel = Aantal kanalen,
+			xlabel={Aantal comparatoren},
+			ylabel={Geheugen (kB)},
 			enlargelimits=0.15,
 			ybar=1pt,
 			%ymode = log,
@@ -623,6 +623,31 @@ Schatting runtime voor 10 kanalen.\\\\
 	\end{tikzpicture}
 	\caption{Geheugen bij $k^{de}$ comparator}
 	\label{geheugenverloop9kanalen6}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\begin{tikzpicture} 
+		\begin{axis}[
+			xlabel={Aantal comparatoren},
+			ylabel={Geheugen (kB)},
+			enlargelimits=0.15,
+			ybar=0pt,
+			ymode = log,
+			log basis y = 10,
+			bar width=4pt,
+			%nodes near coords,
+			point meta=10^y,
+			ymajorgrids = true,
+			legend pos = north west
+			]
+		\addplot file {geheugenVerloop9kanalen.dat};
+		\addplot file {geheugenVerloop10kanalen.dat};
+		\legend{9, 8};
+		\end{axis}
+	\end{tikzpicture}
+	\caption{Geheugen bij $k^{de}$ comparator}
+	\label{geheugenverloop9kanalen7}
 \end{figure}
 
 \section{Conclusies}
