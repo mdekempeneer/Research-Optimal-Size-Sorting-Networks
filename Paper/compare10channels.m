@@ -81,11 +81,11 @@ benadering_dag = benadering_uur /24
 %%
 
 T3  = table(xas(1:12), old_d(1:12));
-T4 = table(xas(1:12), new_d(1:12));
+T4 = table(xas(1:12), new_u(1:12));
 figure
 plot(xas(1:12),old_d(1:12),'o')
 hold on
-plot(xas(1:12),new_d(1:12),'o')
+plot(xas(1:12),new_u(1:12),'o')
 set(gca,'YScale','log')
 [p3,~,mu3] = polyfit(T3.Var1, T3.Var2, 11);
 [p4,~,mu4] = polyfit(T4.Var1, T4.Var2, 11);
@@ -113,23 +113,24 @@ new_u           = new_m ./ 60; % uur
 new_d           = new_u ./ 24; % dag
 
 T5 = table(xas(17:28), old_d(17:28));
-T6 = table(xas(17:28), new_d(17:28));
+T6 = table(xas(17:28), new_u(17:28));
 figure
-plot(xas(17:28),old_d(17:28),'ro')
-hold on
-plot(xas(17:28),new_d(17:28),'bo')
-plot(xas(1:12),new_d(1:12),'bo')
-plot(xas(1:12),old_d(1:12),'ro')
+%plot(xas(17:28),old_d(17:28),'ro')
+%hold on
+%plot(xas(17:28),new_d(17:28),'bo')
+plot(xas(1:12),new_u(1:12),'bo')
+%plot(xas(1:12),old_d(1:12),'ro')
 set(gca,'YScale','log')
 grid on
-[p5,~,mu5] = polyfit(T5.Var1, T5.Var2, 11);
+%[p5,~,mu5] = polyfit(T5.Var1, T5.Var2, 11);
 [p6,~,mu6] = polyfit(T6.Var1, T6.Var2, 11);
-f5 = polyval(p5, xas, [], mu5);
+%f5 = polyval(p5, xas, [], mu5);
 f6 = polyval(p6, xas, [], mu6);
-plot(xas(1:15),f3, 'r')
+hold on
+%plot(xas(1:15),f3, 'r')
 plot(xas(1:15),f4, 'b')
-plot(xas(14:28),f5(14:28), 'r')
-plot(xas(14:28),f6(14:28), 'b')
+%plot(xas(14:28),f5(14:28), 'r')
+%plot(xas(14:28),f6(14:28), 'b')
 % ylabel('dagen')
 % xlabel('comparator')
 % legend('old', 'new', 'benadering old', 'benadering new', 'Location', 'northwest')
