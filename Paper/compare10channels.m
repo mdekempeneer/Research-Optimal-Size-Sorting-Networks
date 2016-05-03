@@ -118,10 +118,14 @@ figure
 %plot(xas(17:28),old_d(17:28),'ro')
 %hold on
 %plot(xas(17:28),new_d(17:28),'bo')
-plot(xas(1:12),new_u(1:12),'bo')
+plot(xas(1:12),new_u(1:12),'ro')
 %plot(xas(1:12),old_d(1:12),'ro')
-set(gca,'YScale','log')
+set(gca,'YScale','log','YLim',[1e-6 1e5],'YGrid','on');
+set(gca,'YTick',[1e-6 1e-5 1e-4 1e-3 1e-2 1e-1 1e0 1e1 1e2 1e3 1e4 1e5]);
+%set(gca,'xtick',[1e0 1e2 1e3 1e4 1e5]);
+
 grid on
+%grid minor
 %[p5,~,mu5] = polyfit(T5.Var1, T5.Var2, 11);
 [p6,~,mu6] = polyfit(T6.Var1, T6.Var2, 11);
 %f5 = polyval(p5, xas, [], mu5);
@@ -129,6 +133,7 @@ f6 = polyval(p6, xas, [], mu6);
 hold on
 %plot(xas(1:15),f3, 'r')
 plot(xas(1:15),f4, 'b')
+legend('Werkelijke waarden', 'Benadering', 'Location', 'northwest');
 %plot(xas(14:28),f5(14:28), 'r')
 %plot(xas(14:28),f6(14:28), 'b')
 % ylabel('dagen')
