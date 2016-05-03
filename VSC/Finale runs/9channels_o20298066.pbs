@@ -1,0 +1,76 @@
+time: 18000
+nodes: 1
+procs: 24
+account string: default_project
+queue: q24h
+========================================================================
+Will be using 24 threads
+1009778688 bytes at startup
+Cycle complete with 2 comps and size 3(0 kB) took 12 ms
+Cycle complete with 3 comps and size 7(0 kB) took 5 ms
+Cycle complete with 4 comps and size 20(0 kB) took 11 ms
+Cycle complete with 5 comps and size 59(0 kB) took 14 ms
+Cycle complete with 6 comps and size 208(0 kB) took 35 ms
+Cycle complete with 7 comps and size 807(0 kB) took 166 ms
+Cycle complete with 8 comps and size 3415(0 kB) took 567 ms
+Cycle complete with 9 comps and size 14342(264241 kB) took 2115 ms
+Cycle complete with 10 comps and size 55979(3951034 kB) took 11821 ms
+Cycle complete with 11 comps and size 188708(1776287 kB) took 115215 ms
+Cycle complete with 12 comps and size 490278(-105906 kB) took 891622 ms
+Cycle complete with 13 comps and size 854626(591396 kB) took 3245376 ms
+Cycle complete with 14 comps and size 914364(1163395 kB) took 4668732 ms
+Cycle complete with 15 comps and size 607210(1585971 kB) took 2694634 ms
+Cycle complete with 16 comps and size 274247(997195 kB) took 718535 ms
+Cycle complete with 17 comps and size 94094(1096810 kB) took 103496 ms
+Cycle complete with 18 comps and size 25802(2177892 kB) took 10099 ms
+Cycle complete with 19 comps and size 5697(2177892 kB) took 749 ms
+Cycle complete with 20 comps and size 1117(2176843 kB) took 62 ms
+Cycle complete with 21 comps and size 250(2176843 kB) took 14 ms
+Cycle complete with 22 comps and size 73(2176319 kB) took 3 ms
+Cycle complete with 23 comps and size 27(2202009 kB) took 0 ms
+Cycle complete with 24 comps and size 8(2176319 kB) took 0 ms
+Cycle complete with 25 comps and size 1(2201485 kB) took 0 ms
+Took 12467400915686 ns
+[3, 12, 48, 10, 34, 68, 129, 192, 160, 272, 320, 66, 264, 384, 5, 20, 5, 6, 40, 80, 24, 12, 96, 48, 192]
+========================================================================
+Epilogue args:
+Date: Mon May  2 20:45:48 CEST 2016
+Allocated nodes:
+r4i2n16
+r4i2n16
+r4i2n16
+r4i2n16
+r4i2n16
+r4i2n16
+r4i2n16
+r4i2n16
+r4i2n16
+r4i2n16
+r4i2n16
+r4i2n16
+r4i2n16
+r4i2n16
+r4i2n16
+r4i2n16
+r4i2n16
+r4i2n16
+r4i2n16
+r4i2n16
+r4i2n16
+r4i2n16
+r4i2n16
+r4i2n16
+Job ID: 20298066.hpc-p-svcs-10.icts.hpc.kuleuven.be
+User ID: vsc31468
+Group ID: vsc31468
+Job Name: 9channels.pbs
+Session ID: 27048
+Resource List: neednodes=1:ppn=24:haswell,nodes=1:ppn=24:haswell,pmem=2500mb,walltime=05:00:00
+Resources Used: cput=69:56:10,energy_used=0,mem=4253624kb,vmem=21003524kb,walltime=03:27:48
+Queue Name: q24h
+Account String: 
+-------------------------------------------------------------------------
+time: 12468
+nodes: 1
+procs: 24
+account: default_project

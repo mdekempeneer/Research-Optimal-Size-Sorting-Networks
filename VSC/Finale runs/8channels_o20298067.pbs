@@ -1,0 +1,70 @@
+time: 60
+nodes: 1
+procs: 24
+account string: default_project
+queue: q1h
+========================================================================
+Will be using 24 threads
+1009778688 bytes at startup
+Cycle complete with 2 comps and size 3(0 kB) took 6 ms
+Cycle complete with 3 comps and size 7(0 kB) took 3 ms
+Cycle complete with 4 comps and size 20(0 kB) took 10 ms
+Cycle complete with 5 comps and size 57(0 kB) took 23 ms
+Cycle complete with 6 comps and size 189(0 kB) took 19 ms
+Cycle complete with 7 comps and size 648(0 kB) took 68 ms
+Cycle complete with 8 comps and size 2088(0 kB) took 242 ms
+Cycle complete with 9 comps and size 5701(0 kB) took 572 ms
+Cycle complete with 10 comps and size 11668(264241 kB) took 921 ms
+Cycle complete with 11 comps and size 16097(792723 kB) took 1601 ms
+Cycle complete with 12 comps and size 13309(1820327 kB) took 1321 ms
+Cycle complete with 13 comps and size 6677(1821376 kB) took 524 ms
+Cycle complete with 14 comps and size 2217(1820327 kB) took 121 ms
+Cycle complete with 15 comps and size 503(1820852 kB) took 38 ms
+Cycle complete with 16 comps and size 77(1819803 kB) took 12 ms
+Cycle complete with 17 comps and size 18(1820327 kB) took 1 ms
+Cycle complete with 18 comps and size 9(1819279 kB) took 0 ms
+Cycle complete with 19 comps and size 1(1806696 kB) took 1 ms
+Took 5811990324 ns
+[3, 12, 48, 192, 5, 80, 17, 68, 20, 40, 130, 10, 6, 20, 160, 96, 40, 24, 96]
+========================================================================
+Epilogue args:
+Date: Mon May  2 17:37:54 CEST 2016
+Allocated nodes:
+r8i0n1
+r8i0n1
+r8i0n1
+r8i0n1
+r8i0n1
+r8i0n1
+r8i0n1
+r8i0n1
+r8i0n1
+r8i0n1
+r8i0n1
+r8i0n1
+r8i0n1
+r8i0n1
+r8i0n1
+r8i0n1
+r8i0n1
+r8i0n1
+r8i0n1
+r8i0n1
+r8i0n1
+r8i0n1
+r8i0n1
+r8i0n1
+Job ID: 20298067.hpc-p-svcs-10.icts.hpc.kuleuven.be
+User ID: vsc31468
+Group ID: vsc31468
+Job Name: 8channels.pbs
+Session ID: 28911
+Resource List: neednodes=1:ppn=24:haswell,nodes=1:ppn=24:haswell,pmem=2500mb,walltime=00:01:00
+Resources Used: cput=00:00:00,energy_used=0,mem=0kb,vmem=0kb,walltime=00:00:06
+Queue Name: q1h
+Account String: 
+-------------------------------------------------------------------------
+time: 6
+nodes: 1
+procs: 24
+account: default_project
