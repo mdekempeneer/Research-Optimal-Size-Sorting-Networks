@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.29)  3 MAY 2016 11:56
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.29)  3 MAY 2016 13:04
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -963,14 +963,20 @@ Overfull \hbox (0.76973pt too wide) in paragraph at lines 501--502
 [][] 
  []
 
-(./SortingNetworks.bbl [5]) [6
+<Benadering10_paper.png, id=37, 358.33875pt x 298.11375pt>
+File: Benadering10_paper.png Graphic file (type png)
+
+<use Benadering10_paper.png>
+Package pdftex.def Info: Benadering10_paper.png used on input line 508.
+(pdftex.def)             Requested size: 227.64894pt x 189.3911pt.
+ (./SortingNetworks.bbl [5 <./Benadering10_paper.png>]) [6
 
 ] (./SortingNetworks.aux) ) 
 Here is how much of TeX's memory you used:
- 26567 strings out of 493089
- 655073 string characters out of 6134842
- 838578 words of memory out of 5000000
- 29562 multiletter control sequences out of 15000+600000
+ 26573 strings out of 493089
+ 655237 string characters out of 6134842
+ 838586 words of memory out of 5000000
+ 29567 multiletter control sequences out of 15000+600000
  30428 words of font info for 79 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  62i,21n,100p,786b,2213s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -990,10 +996,10 @@ sr/local/texlive/2015/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local
 /texlive/2015/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2
 015/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2015/texmf-
 dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on SortingNetworks.pdf (6 pages, 228431 bytes).
+Output written on SortingNetworks.pdf (6 pages, 248594 bytes).
 PDF statistics:
- 91 PDF objects out of 1000 (max. 8388607)
+ 93 PDF objects out of 1000 (max. 8388607)
  64 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 23 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 28 words of extra memory for PDF output out of 10000 (max. 10000000)
 
