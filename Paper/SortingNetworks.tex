@@ -310,7 +310,7 @@ Mocht op het einde een kolom $1$ element hebben, mogen we dit element uit alle a
 We kunnen nadien ook nagaan of alle elementen minstens \'e\'enmaal voorkomen in de hele tabel.
 Tot slot gebruiken we de overblijvende permutatietabel om onze mogelijke permutaties, die aan lemma \ref{lemma5} voldoen, na te gaan. 
 
-\subsection{Parallellisatie}
+\subsection{Parallellisatie}\label{Parallellisatie}
 \begin{wrapfigure}{l}{0.20\textwidth}
 	\centering
 	\includegraphics[scale=0.5]{Gen_Prune_Opbouw.png}
@@ -460,15 +460,24 @@ Gebaseerd op figuur \ref{tijdverloop10kanalen} schatten we dat voor $10$ kanalen
 \label{tijdverloop10kanalen}
 \end{figure}
 
-~\\\\
-Tabel geven van hoeveel beslissingen er op welke plaats genomen worden.\\ \\
+\subsection{Profilering}
+Via een profilering, zoals in figuur \ref{ProfileTime9}, kunnen we de bottleneck vaststellen met als doel de uitvoeringstijd te verbeteren.
+In dit profiel zien we dat de snoei-methode, de prune-methode in de figuur, duidelijk de bottleneck is.
+In deze methode wordt er door een thread voor elk netwerk in de gedeelde lijst subsumes uitgevoerd met elk netwerk in zijn eigen lijst, zoals beschreven in sectie \ref{Parallellisatie}.
+Wanneer we de uitvoeringstijd willen verbeteren, kunnen we enerzijds proberen deze prune methode te voorkomen zoals bijvoorbeeld in de genereer-stap en anderzijds door deze prune-methode effici\"enter te maken.
+Hier kan bijvoorbeeld onderzoek gedaan worden naar of men al dan niet onder een bepaalde voorwaarde netwerken van de eigen lijst kan overslaan.
 
 \begin{figure}[!h]
 \centering
-\includegraphics[width=0.5\textwidth]{Profile_Time_8.png}
-\caption{Profile time 8} %TODO
-\label{ProfileTime8}
+\includegraphics[width=0.5\textwidth]{Profile_Time_9.png}
+\caption{Profile van een parti\"ele uitvoering voor $9$ kanalen.} %TODO
+\label{ProfileTime9}
 \end{figure}
+
+~\\\\
+Tabel geven van hoeveel beslissingen er op welke plaats genomen worden.\\ \\
+
+
 
 \section{Conclusies}
 Conclusie\cite{sortingNetworksSize2014}\\

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.29)  3 MAY 2016 15:07
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.29)  3 MAY 2016 20:11
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1033,60 +1033,65 @@ File: Benadering10_paper.png Graphic file (type png)
 Package pdftex.def Info: Benadering10_paper.png used on input line 458.
 (pdftex.def)             Requested size: 227.64894pt x 189.3911pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 463--465
+<Profile_Time_9.png, id=38, 331.99031pt x 136.25906pt>
+File: Profile_Time_9.png Graphic file (type png)
 
- []
+<use Profile_Time_9.png>
+Package pdftex.def Info: Profile_Time_9.png used on input line 472.
+(pdftex.def)             Requested size: 252.94499pt x 103.81784pt.
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 463--465
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 463--465
-
- []
-
-<Profile_Time_8.png, id=38, 444.15938pt x 218.31563pt>
-File: Profile_Time_8.png Graphic file (type png)
-
-<use Profile_Time_8.png>
-Package pdftex.def Info: Profile_Time_8.png used on input line 468.
-(pdftex.def)             Requested size: 252.94499pt x 124.32793pt.
-
-Overfull \hbox (9.03374pt too wide) in paragraph at lines 468--469
+Overfull \hbox (9.03374pt too wide) in paragraph at lines 472--473
  [][] 
  []
 
-(./SortingNetworks.bbl [5 <./Benadering10_paper.png> <./Profile_Time_8.png>])
+
+Underfull \hbox (badness 10000) in paragraph at lines 477--479
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 477--479
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 477--479
+
+ []
+
+
+Underfull \vbox (badness 3861) has occurred while \output is active []
+
+ [5 <./Benadering10_paper.png> <./Profile_Time_9.png>] (./SortingNetworks.bbl) 
 [6
 
-] (./SortingNetworks.aux) ) 
+]
+(./SortingNetworks.aux) ) 
 Here is how much of TeX's memory you used:
- 26573 strings out of 493089
- 655182 string characters out of 6134842
- 826580 words of memory out of 5000000
- 29564 multiletter control sequences out of 15000+600000
+ 26574 strings out of 493089
+ 655199 string characters out of 6134842
+ 826627 words of memory out of 5000000
+ 29565 multiletter control sequences out of 15000+600000
  33836 words of font info for 83 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  62i,21n,100p,786b,2213s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/
-base/8r.enc}</usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/
-cmex10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/c
-mmi10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cm
-mi6.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi
-7.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.
-pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pf
-b></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb><
-/usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></us
-r/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr
-/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/l
-ocal/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></u
-sr/local/texlive/2015/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local
-/texlive/2015/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2
-015/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2015/texmf-
-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on SortingNetworks.pdf (6 pages, 270523 bytes).
+{/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/ba
+se/8r.enc}</usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cm
+ex10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmm
+i10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi
+6.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.
+pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pf
+b></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb>
+</usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></u
+sr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/
+local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/l
+ocal/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/loc
+al/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr
+/local/texlive/2015/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/t
+exlive/2015/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/201
+5/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2015/texmf-di
+st/fonts/type1/urw/times/utmri8a.pfb>
+Output written on SortingNetworks.pdf (6 pages, 259464 bytes).
 PDF statistics:
  95 PDF objects out of 1000 (max. 8388607)
  64 compressed objects within 1 object stream
