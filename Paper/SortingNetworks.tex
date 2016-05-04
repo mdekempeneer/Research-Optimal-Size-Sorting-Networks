@@ -37,18 +37,40 @@ Vincent Derkinderen\\Bachelor Informatica\\Katholieke Universiteit Leuven \\vinc
 \begin{abstract}
 Verdergaand op eerder werk omtrent sorteernetwerken van optimale grootte wordt het algoritme beschreven door de onderzoeksgroep van onder meer Codish gereproduceerd\cite{sortingNetworksSize2014}.
 Het doel van deze reproductie bestaat eruit om bij te dragen tot een effici\"entere tijdsmeting om verder onderzoek mogelijk te maken.
-Net als bij \small{\textsc{Twenty-Five Comparators is Optimal when Sorting Nine Inputs (and Twenty-Nine for Ten)}} maakt de implementatie gebruik van een \textit{genereer- en snoei-methode}.
+Net als bij
+\begin{small}
+\textsc{Twenty-Five Comparators is Optimal when Sorting Nine Inputs (and Twenty-Nine for Ten)}
+\end{small}
+maakt de implementatie gebruik van een \textit{genereer- en snoei-methode}.
 De resulterende code bewijst de optimale grootte voor $9$ kanalen in $3$~uur en $25$~minuten en zet zo een stap dichter naar een uitvoering voor $10$ en $11$ kanalen.
 \end{abstract}
 
 \section{Introductie}
+Comparator netwerken bestaan uit zowel kanalen als comparatoren.
+De kanalen dienen voor invoer van data en de comparatoren, dewelke elk twee kanalen verbinden, zorgen ervoor dat de uitvoer van het netwerk partieel gesorteerd is.
+Een comparator zal namelijk de data verkregen van de twee verbonden kanalen vergelijken en gesorteerd terugplaatsen op deze twee kanalen.
+Sorteernetwerken daarentegen zijn comparator netwerken waarvoor geldt dat bij elke mogelijke input de uitvoer een volledig gesorteerde sequentie is.
+Wanneer twee of meerdere opeenvolgende comparatoren geen gemeenschappelijk kanaal hebben, worden deze aanschouwd als een parallelle laag. 
+
+Voor sorteernetwerken is er zowel onderzoek naar optimale diepte als optimale grootte.
+Een sorteernetwerk van optimale diepte houdt in dat er geen sorteernetwerk bestaat met even veel kanalen maar met minder parallelle lagen.
+Een sorteernetwerk van optimale grootte daarentegen houdt in dat er geen sorteernetwerk bestaat met even veel kanalen maar met minder comparatoren.
+Het onderzoek in deze paper spitst zich toe op het bewijzen van optimale grootte.
+
+Voor optimale diepte was het kleinste open probleem het bewijs voor $17$ kanalen, bewezen door Codish \textit{et al}\cite{CodishBackAgain}.
+Voor optimale grootte was dit voor $9$ kanalen, ook bewezen door Codish \textit{et al}\cite{sortingNetworksSize2014}.
+Bij dit bewijs maakten ze gebruik van zowel een genereer- en snoei-aanpak als een \textit{SAT}-aanpak.
+Dit onderzoek bouwt verder op het voorgaande en tracht dichter bij een bewijs voor $11$ kanalen te komen.
+Enkel gebruik makend van de genereer- en snoei-aanpak zal voor $9$ kanalen de optimale grootte bewezen worden in $3$~uur en $26$~minuten op \'e\'en node bestaande uit twee $12$-core ``Haswell'' Xeon E$5$-$2680$v$3$ processoren ($2.5$GHz, $30$MB level $3$ cache met $64$GB RAM) op de rekeninfrastructuur van het Vlaamse Supercomputer Centrum.
+Dit is een verbetering van $194$~uur ten opzichte van de \textit{SAT}-aanpak en $302$ uur ten opzichte van de genereer- en snoei-aanpak.
+Deze zijn beide parallel uitgevoerd op $144$ Intel E$8400$ cores ($3.0$GHz) met elk $2$ threads.
+
+De volgende sectie licht de relevante concepten en het probleem toe.
+Vervolgens kan men de voorgestelde oplossing lezen in sectie \ref{VoorgesteldeOplossing}, deze omvat onder meer de genereer- en snoei-aanpak, de representatie van een comparator netwerk en de parallellisatie.
 
 
-~\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-
-Situering + bijdrage.\\
-Sorting Network (high level), Optimal Size (high level), contributies andere papers rond deze twee, enkele getallen rond grootte orde van het probleem, wat er al geprobeerd is (SAT, generate \& prune,...), hoe wij het probleem zullen aanpakken (hoe wij prunen (high level)), gebruikte hardware...\\
-
+%TODO Situering + bijdrage.\\
+%TODO Sorting Network (high level), Optimal Size (high level), contributies andere papers rond deze twee, enkele getallen rond grootte orde van het probleem, wat er al geprobeerd is (SAT, generate \& prune,...), hoe wij het probleem zullen aanpakken (hoe wij prunen (high level)), gebruikte hardware...\\
 
 \section{Probleemstelling}
 Een \textit{comparator netwerk} $C^n_k$ bestaat uit $n$ kanalen en $k$ \textit{comparatoren}.
@@ -60,14 +82,15 @@ De invoer wordt voorgesteld door $\vec{x} = \{x^1_{0} \dots x^n_{0} \} $.
 
 Een \textit{sorteernetwerk} is een comparator netwerk met als eigenschap dat de uitvoer gesorteerd is ongeacht de invoer.
 Een sorteernetwerk $C^n_k$ van optimale grootte houdt in dat er geen ander sorteernetwerk $C^n_l$ bestaat waarbij $l < k$. %TODO grootte = aantal comparatoren
-Figuur \ref{Werking} is een voorbeeld van zo een netwerk waarop ook de werking gedemonstreerd wordt.
-Deze figuur toont ook twee parallelle comparatoren $(1,2)$ en $(3,4)$, comparatoren die geen kanaal gemeenschappelijk hebben en van volgorde omgewisseld kunnen worden.
-\begin{figure}[h!]
+\begin{figure}[!h]
 	\centering
 	\includegraphics[scale=0.275]{NetworkTransparent.png} 
 	\caption{Sorteernetwerk 4 kanalen, 5 comparatoren}
 	\label{Werking}
 \end{figure}
+Figuur \ref{Werking} is een voorbeeld van zo een netwerk waarop ook de werking gedemonstreerd wordt.
+Deze figuur toont ook twee parallelle comparatoren $(1,2)$ en $(3,4)$, comparatoren die geen kanaal gemeenschappelijk hebben en van volgorde omgewisseld kunnen worden.
+
 %TODO Hard enter?
 Om te onderzoeken of een comparator netwerk een sorteernetwerk is, kunnen we gebruik maken van het \textit{nul - \'e\'en principe}. 
 Dit principe, zoals beschreven volgens Knuth \cite{Knuth3}, stelt dat wanneer een comparator netwerk met $n$ kanalen alle $2^n$ mogelijke sequenties van $n$ $0$- en $1$-en sorteert, het een sorteernetwerk is.
@@ -93,7 +116,7 @@ De ondergrenzen werden gevonden via bewijzen en lemma \ref{lemma1} \cite{Voorhis
 \end{lemma}
 
 \newcommand*\rfrac[2]{{}^{#1}\!/_{#2}}
-\section{Voorgestelde oplossing}
+\section{Voorgestelde oplossing}\label{VoorgesteldeOplossing}
 Om te bewijzen dat een sorteernetwerk $C^n_k$ een sorteernetwerk is van optimale grootte, moeten we bewijzen dat er geen sorteernetwerk $C^n_{k-1}$ bestaat.
 Aangezien $n$ kanalen zorgen voor $\frac{n \left(n-1\right)}{2}$ verschillende comparatoren, kunnen er $\left(\rfrac{n \left(n-1\right)}{2}\right) ^k$ verschillende netwerken gevormd worden met  $k$ comparatoren.
 Voor $9$ kanalen en $24$ comparatoren betekent dit $2.245 \times 10^{37}$ verschillende netwerken, dit maakt het overlopen van alle netwerken niet aantrekkelijk.

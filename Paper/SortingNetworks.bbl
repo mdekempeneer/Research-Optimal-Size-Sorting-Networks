@@ -16,7 +16,14 @@ Michael Codish, Luis Cruz-Filipe, Michael Frank, and Peter Schneider-Kamp.
   Artificial Intelligence (ICTAI), November 2014.
 
 \bibitem[\protect\citeauthoryear{Codish \bgroup \em et al.\egroup
-  }{2015}]{sortingNetworksTheEndGame}
+  }{2015a}]{CodishBackAgain}
+Michael Codish, Lu{\'{\i}}s Cruz{-}Filipe, Thorsten Ehlers, Mike M{\"{u}}ller,
+  and Peter Schneider{-}Kamp.
+\newblock Sorting networks: to the end and back again.
+\newblock {\em CoRR}, abs/1507.01428, 2015.
+
+\bibitem[\protect\citeauthoryear{Codish \bgroup \em et al.\egroup
+  }{2015b}]{sortingNetworksTheEndGame}
 Michael Codish, Luis Cruz-Filipe, and Peter Schneider-Kamp.
 \newblock Sorting networks: the end game.
 \newblock In {\em Proceedings of the 9th International Conference on Language
@@ -24,8 +31,7 @@ Michael Codish, Luis Cruz-Filipe, and Peter Schneider-Kamp.
 
 \bibitem[\protect\citeauthoryear{{Knuth}}{1973}]{Knuth3}
 D.~E. {Knuth}.
-\newblock {\em {The art of computer programming. Vol.3: Sorting and
-  searching}}.
+\newblock {\em The art of computer programming. Vol.3: Sorting and searching}.
 \newblock 1973.
 
 \bibitem[\protect\citeauthoryear{Voorhis}{1972}]{Voorhis1972}
