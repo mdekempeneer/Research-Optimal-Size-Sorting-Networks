@@ -404,36 +404,6 @@ Deze hoeveelheid kan verschillen naargelang de frequentie waarbij de \texttt{Jav
 \section{Evaluatie}
 Het beschreven algoritme, ge\"implementeerd in \texttt{Java}, vindt voor $9$ kanalen reeds na $3$ uur en $25$ minuten een oplossing met $25$ comparatoren die gevisualiseerd wordt in figuur~\ref{Sorteernetwerk9kanalen}.
 Dit bevestigt wat reeds geweten was door Codish \textit{et al}.
-De tijdsmetingen voor het vinden van een sorteernetwerk van optimale grootte van $5$ tot en met $9$ kanalen zijn te zien op figuur \ref{Tijdsresultaten}.
-Op deze figuur is ook de tijdsmeting van eerder werk te zien, ongeveer $12$ dagen $17$ uur en $58$ minuten\cite{sortingNetworksSize2014}.
-De bekomen resultaten van dit werk zijn afkomstig van het uitvoeren op \'e\'en node bestaande uit twee $12$-core ``Haswell'' Xeon E$5$-$2680$v$3$ processoren ($2.5$GHz, $30$MB level $3$ cache met $64$GB RAM) op de rekeninfrastructuur van het Vlaamse Supercomputer Centrum.
-\begin{figure}[!h]
-\centering
-\begin{tikzpicture} 
-	\begin{axis}[
-		ylabel = Tijd (miliseconde),
-		xlabel = Aantal kanalen,
-		enlargelimits=0.15,
-		ybar=1pt,
-		ymode = log,
-		log basis y = 10,
-		bar width=9pt,
-		nodes near coords,
-		point meta=10^y,
-		ymajorgrids = true,
-		legend pos = north west
-		]
-\addplot
-	coordinates {(5, 25.331106) (6, 61.339344) (7, 245.313463) (8, 5804.849367) (9, 12366987.991024)};	
-\addplot
-	coordinates {(9, 1101480000)};
-\legend{Dekempeneer \& Derkinderen, \cite{sortingNetworksSize2014}};
-\end{axis}
-\end{tikzpicture}
-\caption{Tijdsmetingen voor uitvoer bij $5$ tot en met $9$ kanalen.}
-\label{Tijdsresultaten}
-\end{figure}
-
 \begin{figure}[!h]
 \centering
 \begin{tikzpicture}
@@ -472,36 +442,104 @@ De bekomen resultaten van dit werk zijn afkomstig van het uitvoeren op \'e\'en n
 \label{Sorteernetwerk9kanalen}
 \end{figure}
 
+De tijdsmetingen voor het vinden van een sorteernetwerk van optimale grootte van $5$ tot en met $9$ kanalen zijn te zien op figuur \ref{Tijdsresultaten}.
+Op deze figuur is ook de tijdsmeting van eerder werk te zien, ongeveer $12$ dagen $17$ uur en $58$ minuten\cite{sortingNetworksSize2014}.
+De bekomen resultaten van dit werk zijn afkomstig van het uitvoeren op \'e\'en node bestaande uit twee $12$-core ``Haswell'' Xeon E$5$-$2680$v$3$ processoren ($2.5$GHz, $30$MB level $3$ cache met $64$GB RAM) op de rekeninfrastructuur van het Vlaamse Supercomputer Centrum.
+\begin{figure}[!h]
+\centering
+\begin{tikzpicture} 
+	\begin{axis}[
+		ylabel = Tijd (miliseconde),
+		xlabel = Aantal kanalen,
+		enlargelimits=0.15,
+		ybar=1pt,
+		ymode = log,
+		log basis y = 10,
+		bar width=9pt,
+		nodes near coords,
+		point meta=10^y,
+		ymajorgrids = true,
+		legend pos = north west
+		]
+\addplot
+	coordinates {(5, 25.331106) (6, 61.339344) (7, 245.313463) (8, 5804.849367) (9, 12366987.991024)};	
+\addplot
+	coordinates {(9, 1101480000)};
+\legend{Dekempeneer \& Derkinderen, \cite{sortingNetworksSize2014}};
+\end{axis}
+\end{tikzpicture}
+\caption{Tijdsmetingen voor uitvoer bij $5$ tot en met $9$ kanalen.}
+\label{Tijdsresultaten}
+\end{figure}
+
 \subsection{Benadering 10 en 11 kanalen}
 De uitvoering van het programma voor $10$ kanalen is na $299$~uur\footnote{$12$ dagen en $11$ uur} stopgezet. %TODO Aanpassen naar het effectieve
 De tussentijdse resultaten met betrekking tot de uitvoeringstijd zijn te zien in figuur \ref{tijdverloop10kanalen} en met betrekking tot het aantal netwerken zijn te zien in figuur \ref{netwerkVerloop9kanalen}.
 Voor 10, en dus ook voor 11, kanalen is de \texttt{Java} implementatie met de gebruikte hardware onvoldoende om resultaten binnen een redelijk tijdsbestek te bekomen.
 Gebaseerd op figuur \ref{tijdverloop10kanalen} schatten we dat voor $10$ kanalen meer dan $1500$ dagen\footnote{Berekend op basis van polynomiaal verloop van graad $11$.} vereist zijn. 
-\begin{figure}
+\begin{figure}[!h]
 \centering
-\includegraphics[width = 0.45\textwidth]{Benadering10_paper.png}
+\includegraphics[width = 0.49\textwidth]{Benadering10_paper.png}
 \caption{Tijdsverloop $10$ kanalen tot en met de  $13^{de}$ comparator en benadering van tijdsverloop tot en met de $16^{de}$ comparator.}
 \label{tijdverloop10kanalen}
 \end{figure}
 
 \subsection{Profilering}
+\begin{figure}[!h]
+\centering
+\vspace{10pt}
+\includegraphics[width=0.49\textwidth]{Profile_Time_9.png}
+\caption{Profile van een parti\"ele uitvoering voor $9$ kanalen.} %TODO
+\label{ProfileTime9}
+\end{figure}
 Via een profilering, zoals in figuur \ref{ProfileTime9}, kunnen we de bottleneck vaststellen met als doel de uitvoeringstijd te verbeteren.
 In dit profiel zien we dat de snoei-methode, de prune-methode in de figuur, duidelijk de bottleneck is.
 In deze methode wordt er door een thread voor elk netwerk in de gedeelde lijst subsumes uitgevoerd met elk netwerk in zijn eigen lijst, zoals beschreven in sectie \ref{Parallellisatie}.
 Wanneer we de uitvoeringstijd willen verbeteren, kunnen we enerzijds proberen deze prune methode te voorkomen zoals bijvoorbeeld in de genereer-stap en anderzijds door deze prune-methode effici\"enter te maken.
 Hier kan bijvoorbeeld onderzoek gedaan worden naar of men al dan niet onder een bepaalde voorwaarde netwerken van de eigen lijst kan overslaan.
 
+\subsection{Beslissingen}
+Door de genereer- en snoei-aanpak mag het totaal aantal te overlopen netwerken dan wel gedaald zijn, de hoeveelheid beslissingen dat er genomen moeten worden blijft nog steeds hoog zoals te zien in figuur \ref{AantalBeslissingen9Kanalen}.
+In deze figuur zien we dat de meeste beslissingen genomen worden tijdens het snoeien.
+Er moet echter wel een onderscheid gemaakt worden in het soort van beslissingen.
+De beslissingen genomen in de genereer-stap zijn beslissingen die het genereren van een netwerk voorkomen en zijn gebaseerd op redundante comparatoren.
+Deze beslissingen zorgen voor minder netwerken in de gedeelde lijst en dus voor zowel minder snoei-operaties als geheugenverbruik.
+
+De beslissingen genomen in de snoei-stap daarentegen, zijn beslissingen die enkel voorkomen dat er permutaties moeten worden opgebouwd om na te gaan of $C_a \preceq C_b$ geldt.
+Deze zorgen er dus niet voor dat een netwerk uit de gedeelde lijst verdwijnt, enkel dat er niet al te veel tijd gespendeerd wordt aan het onnodig nagaan van permutaties.
+Hier wordt onder meer lemma~\ref{lemma3} en lemma~\ref{lemma4} gebruikt.
+
+Vervolgens zijn er nog de beslissingen die genomen worden tijdens de opbouw van de mogelijke permutaties en tijdens het aflopen van deze permutaties.
+Tijdens de opbouw gebeurt deze beslissing wanneer er geen geschikte permutatie bestaat doordat de permutatietabel een lege kolom bevat.
+
 \begin{figure}[!h]
 \centering
-\includegraphics[width=0.47\textwidth]{Profile_Time_9.png}
-\caption{Profile van een parti\"ele uitvoering voor $9$ kanalen.} %TODO
-\label{ProfileTime9}
+      \begin{tikzpicture}
+          \begin{axis}[
+              ybar,
+              ymode = log,
+			log basis y = 10,
+              ymajorgrids,
+              yminorgrids,
+              bar width=30pt,
+              ylabel=Aantal beslissingen,
+              xticklabels={},
+              xtick=\empty,
+              nodes near coords align={vertical},
+			legend image code/.code={ \draw[#1, draw=none] (0cm,-0.1cm) rectangle (0.6cm,0.1cm);},              
+              legend style={font=\tiny}
+              ]
+
+              \addplot+[error bars/.cd, y dir=both, y explicit] coordinates{ (1,78145401)};
+              \addplot+[error bars/.cd, y dir=both, y explicit] coordinates{ (1,10749500000000)};
+              \addplot+[error bars/.cd, y dir=both, y explicit] coordinates{ (1,7815523091)};
+              \addplot+[error bars/.cd, y dir=both, y explicit] coordinates{ (1,9357151347)};
+             \legend{genereer,snoei,opbouw permutatie,permutatie}
+          \end{axis}
+      \end{tikzpicture}
+\caption{Aantal beslissingen bij een uitvoer voor $9$ kanalen.}
+\label{AantalBeslissingen9Kanalen}
 \end{figure}
-
-~\\\\
-Tabel geven van hoeveel beslissingen er op welke plaats genomen worden.\\ \\
-
-
 
 \section{Conclusies}
 Onze implementatie van de genereer- en snoei-aanpak van Codish \textit{et al} zorgde voor een bewijs voor $9$ kanalen na $3$~uur en $26$~min, een versnelling ten opzichte van de eerdere $305$~uur.
