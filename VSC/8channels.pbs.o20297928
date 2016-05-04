@@ -1,0 +1,69 @@
+time: 60
+nodes: 1
+procs: 24
+account string: default_project
+queue: q1h
+========================================================================
+Will be using 24 threads
+Cycle complete with 2 comps and size 3 took 5 ms
+Cycle complete with 3 comps and size 7 took 3 ms
+Cycle complete with 4 comps and size 20 took 10 ms
+Cycle complete with 5 comps and size 57 took 29 ms
+Cycle complete with 6 comps and size 189 took 19 ms
+Cycle complete with 7 comps and size 648 took 73 ms
+Cycle complete with 8 comps and size 2088 took 246 ms
+Cycle complete with 9 comps and size 5701 took 596 ms
+Cycle complete with 10 comps and size 11671 took 888 ms
+Cycle complete with 11 comps and size 16092 took 1606 ms
+Cycle complete with 12 comps and size 13305 took 1447 ms
+Cycle complete with 13 comps and size 6679 took 627 ms
+Cycle complete with 14 comps and size 2217 took 134 ms
+Cycle complete with 15 comps and size 503 took 37 ms
+Cycle complete with 16 comps and size 77 took 7 ms
+Cycle complete with 17 comps and size 18 took 1 ms
+Cycle complete with 18 comps and size 9 took 0 ms
+Cycle complete with 19 comps and size 1 took 0 ms
+Took 5750360653 ns
+[3, 12, 48, 192, 5, 10, 6, 80, 160, 96, 17, 34, 18, 68, 20, 136, 40, 24, 96]
+========================================================================
+Epilogue args:
+Date: Mon May  2 15:48:13 CEST 2016
+Allocated nodes:
+r4i2n16
+r4i2n16
+r4i2n16
+r4i2n16
+r4i2n16
+r4i2n16
+r4i2n16
+r4i2n16
+r4i2n16
+r4i2n16
+r4i2n16
+r4i2n16
+r4i2n16
+r4i2n16
+r4i2n16
+r4i2n16
+r4i2n16
+r4i2n16
+r4i2n16
+r4i2n16
+r4i2n16
+r4i2n16
+r4i2n16
+r4i2n16
+Job ID: 20297928.hpc-p-svcs-10.icts.hpc.kuleuven.be
+User ID: vsc31479
+Group ID: vsc31479
+Job Name: 8channels.pbs
+Session ID: 30606
+Resource List: neednodes=1:ppn=24:haswell,nodes=1:ppn=24:haswell,pmem=2500mb,walltime=00:01:00
+Resources Used: cput=00:00:00,energy_used=0,mem=0kb,vmem=0kb,walltime=00:00:06
+Queue Name: q1h
+Account String: 
+-------------------------------------------------------------------------
+time: 6
+nodes: 1
+procs: 24
+account: default_project
