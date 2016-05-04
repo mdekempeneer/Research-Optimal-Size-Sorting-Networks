@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.29)  4 MAY 2016 11:49
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.29)  4 MAY 2016 15:48
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -948,11 +948,7 @@ File: Profile_Time_9.png Graphic file (type png)
 
 <use Profile_Time_9.png>
 Package pdftex.def Info: Profile_Time_9.png used on input line 496.
-(pdftex.def)             Requested size: 252.94499pt x 103.81784pt.
-
-Overfull \hbox (9.03374pt too wide) in paragraph at lines 496--497
- [][] 
- []
+(pdftex.def)             Requested size: 237.7689pt x 97.58873pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
@@ -1007,7 +1003,7 @@ onts/symbols/msbm10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/cou
 rier/ucrr8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/times/utmb8
 a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></us
 r/local/texlive/2015/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on SortingNetworks.pdf (6 pages, 261180 bytes).
+Output written on SortingNetworks.pdf (6 pages, 261782 bytes).
 PDF statistics:
  95 PDF objects out of 1000 (max. 8388607)
  64 compressed objects within 1 object stream
