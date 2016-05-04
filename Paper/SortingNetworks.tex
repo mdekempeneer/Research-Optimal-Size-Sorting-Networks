@@ -120,8 +120,7 @@ De ondergrenzen werden gevonden via bewijzen en lemma \ref{lemma1} \cite{Voorhis
 Om te bewijzen dat een sorteernetwerk $C^n_k$ een sorteernetwerk is van optimale grootte, moeten we bewijzen dat er geen sorteernetwerk $C^n_{k-1}$ bestaat.
 Aangezien $n$ kanalen zorgen voor $\frac{n \left(n-1\right)}{2}$ verschillende comparatoren, kunnen er $\left(\rfrac{n \left(n-1\right)}{2}\right) ^k$ verschillende netwerken gevormd worden met  $k$ comparatoren.
 Voor $9$ kanalen en $24$ comparatoren betekent dit $2.245 \times 10^{37}$ verschillende netwerken, dit maakt het overlopen van alle netwerken niet aantrekkelijk.
-%TODO Aaneenpraten
-Door gebruik te maken van symmetrie\"en willen we snoeien in het aanmaken van deze netwerken.
+Om dit aantal te reduceren zullen we gebruik maken van symmetrie\"en waardoor we bepaalde netwerken reeds kunnen verwijderen bij het aanmaken.
 
 We gebruiken de \textit{genereer- en snoei-methode} zoals beschreven door Codish \textit{et al.} (sectie 3, \cite{sortingNetworksSize2014}).
 Deze methode heeft een cyclisch verloop waarbij men bij elke cyclus de set $R^n_k$ uitbreidt naar $N^n_{k+1}$ om vervolgens te snoeien en de set $R^n_{k+1}$ te bekomen (Figuur \ref{GenereerSnoei}).
@@ -157,11 +156,13 @@ Dit kan gebruikt worden om de eindigheid van het algoritme aan te tonen.
 
 Het overlopen van alle permutaties om na te gaan of er een permutatie $\pi$ bestaat zodat ${\pi\left(Outputs\left(C_{a}\right)\right) \subseteq Outputs\left(C_{b}\right)}$, en dus $C_a \preceq C_{b}$, is een kostelijke bewerking.
 Om deze bewerkingen te vermijden en te versnellen, zullen we extra methoden moeten invoeren om snellere beslissingen te maken over het ``subsumen van een ander netwerk''. 
+Deze beslissingen kunnen zowel tijdens de genereer-stap als de snoei-stap plaats vinden.
 
 \subsection{Representatie van comparator netwerken}
-Bij de representatie van comparator netwerken moeten we rekening houden met geheugengebruik en de mogelijkheid om effici\"ente bewerkingen te kunnen uitvoeren.
+Bij de representatie van comparator netwerken moeten we rekening houden met het geheugengebruik en de mogelijkheid om effici\"ente bewerkingen te kunnen uitvoeren.
 Concreet zullen we comparatoren voorstellen door een sequentie van bits, waarbij twee bits op \'e\'en staan. Bijvoorbeeld  $ \left[ 0 1 0 0 1 0 \right]$ stelt de comparator $\left(2,5\right)$ voor bij een netwerk van $6$ kanalen.
 Om de hoeveelheid overbodige bits te beperken, zullen we bij de \texttt{Java} implementatie gebruik maken van shorts\footnote{In \texttt{Java} bestaat een short uit $16$ bits.}.
+Dit is voldoende voor een bewijs tot en met $16$ kanalen.
 Buiten de comparatoren worden ook de outputs van het netwerk bijgehouden, opgedeeld per aantal $1$'en. %TODO OUTPUTS - UITVOEREN?
 In de \texttt{Java} implementatie kiezen we er voor om een comparator netwerk voor te stellen door een tweedimensionale array van shorts, short[][], en laten we de rij van $n$ $1$'en weg.
 Een voorbeeld van zo een representatie staat in tabel \ref{tabel2}.
@@ -179,7 +180,7 @@ Een voorbeeld van zo een representatie staat in tabel \ref{tabel2}.
 	\caption{Representatie $C^4_2$: $(1,2)(2,4)$}
 	\label{tabel2}
 \end{table}
-
+\\
 \subsection{Genereren}
 \begin{wrapfigure}{r}{0.12\textwidth}
 	\vspace{-15pt}
