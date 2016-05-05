@@ -178,7 +178,8 @@ Om de hoeveelheid overbodige bits te beperken, zullen we bij de \texttt{Java} im
 Dit is voldoende voor een bewijs tot en met $16$ kanalen.
 Buiten de comparatoren worden ook de mogelijke uitvoer van het netwerk bijgehouden.
 Aangezien het nul-\'e\'en-principe stelt dat enkel sequenties van nullen en enen getest moeten worden, kunnen we de uitvoer opdelen per aantal enen.
-Bij een leeg netwerk 
+Voor een netwerk zonder comparatoren betekent dit $2^n$ mogelijke uitvoer sequenties.
+Dit aantal zal echter dalen naarmate er meer en meer comparatoren worden toegevoegd om uiteindelijk te eindigen met slechts $n$ uitvoer sequenties.
 In de \texttt{Java} implementatie kiezen we er voor om een comparator netwerk voor te stellen door een tweedimensionale array van shorts, short[][], en laten we de rij van $n$ nullen en $n$ enen  weg.
 Een voorbeeld van zo een representatie staat in tabel \ref{tabel2}.
 \begin{table}[!h]
