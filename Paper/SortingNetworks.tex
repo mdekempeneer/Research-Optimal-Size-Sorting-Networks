@@ -180,8 +180,8 @@ Buiten de comparatoren worden ook de mogelijke uitvoer van het netwerk bijgehoud
 Aangezien het nul-\'e\'en-principe stelt dat enkel sequenties van nullen en enen getest moeten worden, kunnen we de uitvoer opdelen per aantal enen.
 Voor een netwerk zonder comparatoren betekent dit $2^n$ mogelijke uitvoer sequenties.
 Dit aantal zal echter dalen naarmate er meer en meer comparatoren worden toegevoegd om uiteindelijk te eindigen met slechts $n$ uitvoer sequenties.
-Door de gekozen representatie van invoer en comparatoren kunnen we Code \ref{SwapCompare} gebruiken om de uitvoer van een comparator te bepalen gegeven een bepaalde invoer.
-\begin{lstlisting}[caption={swapCompare}, label=SwapCompare]
+Door de gekozen representatie van invoer en comparatoren kunnen we Code \ref{SwapCompare}\footnote{Zie appendix \ref{UitlegCode} voor de uitleg over het return-statement.} gebruiken om de uitvoer van een comparator te bepalen gegeven een bepaalde invoer.
+\begin{lstlisting}[caption={swapCompare},label=SwapCompare]
 /**
 input - De invoer voor de comparator.
 comp - De comparator (bv. 00101)
@@ -621,7 +621,16 @@ Er zou nog extra werk geleverd kunnen worden omtrent het effici\"ent overlopen v
 \section*{Erkenning}
 Graag willen we Professor Dr. Ir. Tom Schrijvers bedanken voor zijn begeleiding doorheen dit onderzoek.\\
 De rekeninfrastructuur en dienstverlening gebruikt in dit werk, werd voorzien door het VSC (Vlaams Supercomputer Centrum), gefinancierd door het FWO en de Vlaamse regering - departement EWI.
-Bijgevolg willen we de onderzoeksgroep DTAI bedanken voor de aangeboden credits voor deze rekeninfrastructuur.
+Bijgevolg willen we de onderzoeksgroep \textit{DTAI} bedanken voor de aangeboden credits voor deze rekeninfrastructuur.
+
+\appendix
+\section{Uitleg code}\label{UitlegCode}
+In Code \ref{toekenningsmethode} zien we een manier om een waarde toe te kennen afhankelijk van een conditie.
+Wanneer in het voorbeeld de conditie waar is, zal \texttt{waarde1} worden teruggegeven en \texttt{waarde2} in het andere geval.
+\begin{lstlisting}[caption=Speciale toekenningsstructuur, label=toekenningsmethode]
+(conditie) ? waarde1 : waarde 2;
+\end{lstlisting}
+
 
 \bibliographystyle{named}
 \bibliography{SortingNetworks}
