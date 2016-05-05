@@ -279,8 +279,8 @@ Wanneer dit niet het geval is en het dus parallelle comparatoren zijn, kunnen we
 
 Tenslotte kunnen we, na het toevoegen van de comparator, de nieuwe uitvoer berekenen door de huidig bijgehouden uitvoer als invoer te gebruiken voor de nieuwe comparator.
 Om de effici\"entie te verhogen kunnen we bij de omzetting van de uitvoer eerder verkregen informatie gebruiken.
-Een comparator is namelijk niet overbodig wanneer er een uitvoer bestaat met een $x$ aantal enen waarvoor geldt dat de comparator deze uitvoer wijzigt.
-Deze informatie kan gebruikt worden om bij de omzetting slechts te beginnen bij uitvoer met het aantal enen groter of gelijk aan $x$.
+Een comparator is namelijk niet overbodig wanneer er een uitvoer bestaat met een $s$ aantal enen waarvoor geldt dat de comparator deze uitvoer wijzigt.
+Deze informatie kan gebruikt worden om bij de omzetting slechts te beginnen bij uitvoer met het aantal enen gelijk aan $s$.
 %TODO Pseudocode?
 
 \subsection{Snoeien}\label{Snoeien}
@@ -301,33 +301,44 @@ Voor lemma \ref{lemma4} introduceren we extra informatie over het comparator net
 Dit representeert de set van posities $i$ waarvoor er een uitvoer bestaat in $C_a$ met $k$ enen waarvoor geldt dat op de $i^{de}$ positie van deze uitvoer een $x$ voorkomt.
 Om effici\"ent operaties te kunnen uitvoeren, zullen we de posities voorstellen door middel van een bit representatie.
 Zo zal bijvoorbeeld $w\left(C_a, 1, 2\right) = 0110$ inhouden dat er bij de uitvoerverzameling met twee enen minstens \'e\'en uitvoer bestaat met een $1$ op de $2^{de}$ positie, \'e\'en met een $1$ op de $3^{de}$ positie en geen enkel met een $1$ op positie $1$ of $4$.
-Deze informatie voegen we bij elk netwerk toe in de vorm van een array van shorts, $w$.
-Voor elke hoeveelheid enen ($0 \leq x \leq n$) zullen we zowel $w$ als de grootte van $w$ bijhouden.
-Dit vereist dan, voor elke hoeveelheid enen, vier opeenvolgende indices in $w$, zoals te zien in tabel \ref{tabel3}.
-Deze informatie slaan we voor elk kanaal $k$ op vanaf index\footnote{In \texttt{Java} begint een array met index $0$.} $(k-1) \times 4$.
-\begin{table}[!h]
+Deze informatie voegen we bij elk netwerk toe in de vorm van een array van shorts, $w^*$.
+Aangezien er geen uitvoer wordt bijgehouden met $0$ enen en $n$ enen zullen we enkel voor $k \geq 1 $ en $k \leq n-1$ zowel $w$ als de grootte van $w$ bijhouden.
+Dit vereist voor elk dan vier opeenvolgende indices in $w^*$, zoals te zien in figuur \ref{tabel3}.
+Deze informatie slaan we voor elke $k$ op vanaf index\footnote{In \texttt{Java} begint een array met index $0$.} $(k-1) \times 4$.
+Wanneer we bij het toevoegen van een comparator $w^*$ herberekenen, kunnen we net zoals bij de omzetting van de uitvoer slechts beginnen bij de uitvoerverzameling met het aantal enen gelijk aan $s$.
+%\begin{table}[!h]
+%	\centering
+%	\begin{tabu}{|[1.2pt]l|[1.2pt]c|[1.2pt]c|[1.2pt]c|[1.2pt]}
+%	\tabucline[1.2pt]{-}
+%	$w\left(C_a, 0, 1\right)$ & $|w\left(C_a, 0, 1\right)|$  & $w\left(C_a, 1, 1\right)$ & $|w\left(C_a, 1, 1\right)|$\\ 
+%	\tabucline[1.2pt]{-}
+%	\end{tabu} 
+%	\caption{De inhoud van $w$ op indices $0-3$ voor \'e\'en 1.}
+%	\label{tabel3} 
+%\end{table}
+\begin{figure}[!h]
 	\centering
-	\begin{tabu}{|[1.2pt]l|[1.2pt]c|[1.2pt]c|[1.2pt]c|[1.2pt]}
-	\tabucline[1.2pt]{-}
-	$w\left(C_a, 0, 1\right)$ & $|w\left(C_a, 0, 1\right)|$  & $w\left(C_a, 1, 1\right)$ & $|w\left(C_a, 1, 1\right)|$\\ 
-	\tabucline[1.2pt]{-}
-	\end{tabu} 
-	\caption{De inhoud van $w$ op indices $0-3$ voor \'e\'en 1.}
+	\includegraphics[width = 0.45\textwidth]{Tabel3_OpbouwW.png}
+	\caption{De inhoud van $w^*$ op indices $0-3$ voor $k = 1$.}
 	\label{tabel3} 
-\end{table}
+\end{figure}
+
 \begin{lemma}
 	Wanneer voor een comparator netwerk $C_a$ en $C_b$ met $n$ kanalen geldt dat $|w\left(C_a, x, k\right)| > |w\left(C_b, x, k\right)|$ voor $x \in \{0,1\}$ en $0 \leq k \leq n$ dan $C_a \npreceq C_b$.
 	\label{lemma4}
 \end{lemma}
 De methode van lemma \ref{lemma4} wordt bij $9$ kanalen ${2.22803 \times 10^{11}}$ keer uitgevoerd waarbij $2.05631 \times 10^{11}$ keer een beslissing genomen wordt.
-%TODO te vaak van Codish et al. (centraliseer de verwijzing? of footnotes?)
+Dit lemma voorkomt, net zoals lemma \ref{lemma3}, dat er permutaties getest moeten worden.
 
-Tenslotte komen we aan het nagaan van de permutaties, een na\"ieve methode zou zijn om alle $n!$ permutaties te overlopen.
-In de plaats daarvan zullen we enkel permutaties afgaan die voldoen aan lemma \ref{lemma5}.
+Als beide lemma's geen uitsluiting bieden, zullen we permutaties moeten nagaan.
+Een na\"ieve methode zou zijn om alle $n!$ permutaties te overlopen.
+In de plaats daarvan zullen we enkel permutaties afgaan die voldoen aan lemma \ref{lemma5}\cite{sortingNetworksSize2014}.
 \begin{lemma}
-	${C_a \preceq C_b  \Rightarrow \pi\left(Outputs\left(C_{a}\right)\right) \subseteq Outputs\left(C_{b}\right)} \Rightarrow \pi\left(w\left(C_a, x, k\right)\right) \subseteq w\left(C_b, x, k\right)$, ${\forall x \in \{0,1\}, \forall k \in \{1..n\}}$.
+	${C_a \preceq C_b  \Rightarrow \pi\left(Outputs\left(C_{a}\right)\right) \subseteq Outputs\left(C_{b}\right)} \Rightarrow \pi\left(w\left(C_a, x, k\right)\right) \subseteq w\left(C_b, x, k\right)$,
+	${\forall x \in \{0,1\}, \forall k \in \{1..n\}}$.
 \label{lemma5}
-\end{lemma} 
+\end{lemma}
+
 Om de mogelijke permutaties bij te houden zullen we gebruik maken van een voorstelling die te zien is in tabel \ref{tabel4}.
 De waarden in een kolom stellen alle mogelijke posities voor die op die plaats kunnen voorkomen.
 Wanneer we tabel  \ref{tabel4} gebruiken om de mogelijke permutaties weer te geven dan zullen we permutatie $4321$ en $1324$  bekomen, waarbij $4321$ een eenheidspermutatie zal voorstellen.
@@ -358,7 +369,7 @@ Bij het begin van het algoritme zullen we starten met tabel \ref{tabel5}, waarna
 \label{tabel5}
 \end{table}
 
-We weten namelijk dat als ${\pi\left(outputs\left(C_a\right)\right) \subseteq outputs\left(C_b\right)}$ er bij de gepermuteerde outputs enkel een $1$ kan komen op de plaats waar dit bij $C_b$ ook het geval is.
+We weten namelijk dat als \[{\pi\left(outputs\left(C_a\right)\right) \subseteq outputs\left(C_b\right)}\] er bij de gepermuteerde outputs enkel een $1$ kan komen op de plaats waar dit bij $C_b$ ook het geval is.
 Op de plaats waar $C_b$ een $0$ heeft, kunnen dus enkel de posities komen waar $C_a$ een $0$ heeft.
 Nemen we bijvoorbeeld $w\left(C_a,1,1\right) = 0101$ en ${w\left(C_b,1,1\right)=0111}$ dan kunnen we tabel \ref{tabel5} reduceren tot tabel \ref{tabel6}.
 We kunnen voor $w\left(C_a, x, k\right)$ deze methode doortrekken voor elke $1 \leq k \leq n$ en voor zowel $x = 0$ als $x = 1$.
