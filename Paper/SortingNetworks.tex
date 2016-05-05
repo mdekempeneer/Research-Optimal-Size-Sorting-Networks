@@ -221,7 +221,6 @@ Een voorbeeld van zo een representatie staat in tabel \ref{tabel2}.
 		\caption{Netwerk 1}
 		\label{fig1}
     \end{subfigure}
-    
     \begin{subfigure}[b]{0.10\textwidth}
     \centering
 		\begin{tikzpicture}
@@ -246,9 +245,12 @@ Een voorbeeld van zo een representatie staat in tabel \ref{tabel2}.
     \caption{}
     \vspace{-10pt}
 \end{wrapfigure}
-Bij de genereer-stap lopen we over de set $R^n_k$ en voegen we bij elk netwerk alle mogelijke comparatoren toe.
-Aangezien een netwerk dat wordt uitgebreid met een overbodige comparator, \'e\'en waarbij de outputs ongewijzigd blijven, gesubsumed zal worden door een uitbreiding van dat netwerk met een niet overbodige comparator, kunnen we deze meteen verwijderen uit de set $N^n_{k+1}$. 
-Alvorens deze beslissing te maken door alle outputs te overlopen, kunnen we ook eerst kijken of de comparator gelijk is aan de vorige in het netwerk.
+Bij de genereer-stap itereren we over de set $R^n_k$ en voegen we bij elk netwerk alle mogelijke comparatoren toe.
+Een overbodige comparator voor een bepaald comparator netwerk is een comparator die, wanneer toegevoegd aan het comparator netwerk, geen wijziging veroorzaakt in de mogelijke uitvoer.
+Wanneer een overbodige comparator wordt toegevoegd aan een comparator netwerk, zal deze gesubsumed worden door een uitbreiding van dat netwerk met een niet overbodige comparator.
+Bijgevolg kunnen we deze meteen uit de set $N^n_{k+1}$ verwijderen. 
+Om te beslissen of een comparator al dan niet overbodig is, moeten we voor elke mogelijke uitvoer nagaan of deze een wijziging teweegbrengt.
+Om dit sneller te doen verlopen kunnen we eerst kijken of de comparator al dan niet identiek is met de vorige comparator in het netwerk.
 %TODO zin bekijken: aaneenpraten
 Wanneer 2 netwerken op de volgorde van hun parallelle comparatoren na gelijk zijn, zoals in figuur \ref{fig1} en \ref{fig2}, zullen deze elkaar subsumen en \'e\'en van de twee verwijderd worden.
 Dit kan reeds bij de generatie-stap gemakkelijk opgevangen worden door bij het toevoegen van een nieuwe comparator x na te gaan of x een kanaal gemeenschappelijk heeft met de vorige comparator (Code \ref{code1}).
