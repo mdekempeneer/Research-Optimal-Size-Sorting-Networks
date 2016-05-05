@@ -886,6 +886,7 @@ public class Processor {
     public void processW(short[][] data, final short comp, final int startIndex) {
         short[] wResult = new short[data[nbChannels].length];
 
+        final int allOnes = (1 << nbChannels) - 1;
         int wIndexCounter;
         boolean foundL;
         boolean foundP;
@@ -900,22 +901,22 @@ public class Processor {
             final int oldP = data[nbChannels][wIndexCounter];
             final int oldL = data[nbChannels][wIndexCounter + 2];
 
-            int P = (comp ^ ((1 << nbChannels) - 1)) & oldP;
-            int L = (comp ^ ((1 << nbChannels) - 1)) & oldL;
+            int P = (comp ^ allOnes) & oldP;
+            int L = (comp ^ allOnes) & oldL;
 
             foundP = (oldP == P);
             foundL = (oldL == L);
 
             for (short output : data[nbOnes]) {
                 if (!foundL) {
-                    L = L | (output & comp);
+                    L |= (output & comp);
                     if ((L & comp) == comp) {
                         foundL = true;
                     }
                 }
 
                 if (!foundP) {
-                    P = P | ((output ^ ((1 << nbChannels) - 1)) & comp);
+                    P |= ((output ^ allOnes) & comp);
                     if ((P & comp) == comp) {
                         foundP = true;
                     }
