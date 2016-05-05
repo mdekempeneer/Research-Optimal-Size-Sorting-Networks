@@ -741,11 +741,11 @@ public class Processor {
      * @return The result by switching the bits in the input according to comp.
      */
     private static short swapCompare(final short input, final short comp) {
-        int pos1 = 31 - Integer.numberOfLeadingZeros(comp);
-        int pos2 = Integer.numberOfTrailingZeros(comp);
+        int posChannel1 = 31 - Integer.numberOfLeadingZeros(comp);
+        int posChannel2 = Integer.numberOfTrailingZeros(comp);
         //(input >> pos1) & 1 = first (front bit)
         //(input >> pos2) & 1 = 2nd (back bit)
-        return (((input >> pos1) & 1) <= ((input >> pos2) & 1)) ? input : (short) (input ^ comp);
+        return (((input >> posChannel1) & 1) <= ((input >> posChannel2) & 1)) ? input : (short) (input ^ comp);
     }
 
     /**
