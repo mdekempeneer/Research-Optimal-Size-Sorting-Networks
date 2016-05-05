@@ -180,6 +180,23 @@ Buiten de comparatoren worden ook de mogelijke uitvoer van het netwerk bijgehoud
 Aangezien het nul-\'e\'en-principe stelt dat enkel sequenties van nullen en enen getest moeten worden, kunnen we de uitvoer opdelen per aantal enen.
 Voor een netwerk zonder comparatoren betekent dit $2^n$ mogelijke uitvoer sequenties.
 Dit aantal zal echter dalen naarmate er meer en meer comparatoren worden toegevoegd om uiteindelijk te eindigen met slechts $n$ uitvoer sequenties.
+Door de gekozen representatie van invoer en comparatoren kunnen we Code \ref{SwapCompare} gebruiken om de uitvoer van een comparator te bepalen gegeven een bepaalde invoer.
+\begin{lstlisting}[caption={swapCompare}, label=SwapCompare]
+/**
+input - De invoer voor de comparator.
+comp - De comparator (bv. 00101)
+return - Het resultaat bekomen door de bits van de input om te wisselen afhankelijk van de comparator.
+*/
+short swapCompare(short input, short comp) {
+	int channel1 = 31 - Integer.numberOfLeadingZeros(comp);
+	int channel2 = Integer.numberOfTrailingZeros(comp);
+	int firstBit = (input >> channel1) & 1;
+	int secondBit = (input >> channel2) & 1;
+	
+	return (firstBit <= secondBit) ? input : (input ^ comp);
+}
+\end{lstlisting}
+
 In de \texttt{Java} implementatie kiezen we er voor om een comparator netwerk voor te stellen door een tweedimensionale array van shorts, short[][], en laten we de rij van $n$ nullen en $n$ enen  weg.
 Een voorbeeld van zo een representatie staat in tabel \ref{tabel2}.
 \begin{table}[!h]
@@ -250,17 +267,21 @@ Een overbodige comparator voor een bepaald comparator netwerk is een comparator 
 Wanneer een overbodige comparator wordt toegevoegd aan een comparator netwerk, zal deze gesubsumed worden door een uitbreiding van dat netwerk met een niet overbodige comparator.
 Bijgevolg kunnen we deze meteen uit de set $N^n_{k+1}$ verwijderen. 
 Om te beslissen of een comparator al dan niet overbodig is, moeten we voor elke mogelijke uitvoer nagaan of deze een wijziging teweegbrengt.
-Om dit sneller te doen verlopen kunnen we eerst kijken of de comparator al dan niet identiek is met de vorige comparator in het netwerk.
-%TODO zin bekijken: aaneenpraten
-Wanneer 2 netwerken op de volgorde van hun parallelle comparatoren na gelijk zijn, zoals in figuur \ref{fig1} en \ref{fig2}, zullen deze elkaar subsumen en \'e\'en van de twee verwijderd worden.
-Dit kan reeds bij de generatie-stap gemakkelijk opgevangen worden door bij het toevoegen van een nieuwe comparator x na te gaan of x een kanaal gemeenschappelijk heeft met de vorige comparator (Code \ref{code1}).
-\begin{lstlisting}[caption={Test op parallelle comparatoren},label=code1]
-x  & vorigeComp != 0
-\end{lstlisting}
-Wanneer dit niet het geval is en het dus parallelle comparatoren zijn, kunnen we bijvoorbeeld kiezen om het netwerk weg te gooien waarbij de nieuwe comparator kleiner is dan de vorige comparator.
-%TODO Het vermelden van procesdata()
+We kunnen dit sneller laten verlopen door eerst te kijken of de comparator al dan niet identiek is met de vorige comparator in het netwerk.
 
-Tenslotte, na het toevoegen van de comparator, kunnen we de nieuwe outputs berekenen door de huidig bijgehouden outputs te gebruiken als invoer voor de nieuwe comparator.
+Wanneer twee netwerken, op de volgorde van hun parallelle comparatoren na, gelijk zijn, zoals in figuur \ref{fig1} en \ref{fig2}, zullen deze elkaar subsumen en zal \'e\'en van de twee verwijderd worden.
+Dit kan opgevangen worden in de generatie-stap om zo extra werk in de snoei-stap te vermijden.
+Bij het toevoegen van een nieuwe comparator $(a,b)$ moet er dan gecontroleerd worden of deze comparator een kanaal gemeenschappelijk heeft met de vorige (Code \ref{TestParallelleComparatoren}).
+\begin{lstlisting}[caption={Test op parallelle comparatoren},label=TestParallelleComparatoren]
+(a,b) & vorigeComp != 0
+\end{lstlisting}
+Wanneer dit niet het geval is en het dus parallelle comparatoren zijn, kunnen we bijvoorbeeld kiezen om het netwerk weg te gooien waarbij de nieuwe comparator kleiner is dan de vorige.
+
+Tenslotte kunnen we, na het toevoegen van de comparator, de nieuwe uitvoer berekenen door de huidig bijgehouden uitvoer als invoer te gebruiken voor de nieuwe comparator.
+Om de effici\"entie te verhogen kunnen we bij de omzetting van de uitvoer eerder verkregen informatie gebruiken.
+Een comparator is namelijk niet overbodig wanneer er een uitvoer bestaat met een $x$ aantal enen waarvoor geldt dat de comparator deze uitvoer wijzigt.
+Deze informatie kan gebruikt worden om bij de omzetting slechts te beginnen bij uitvoer met het aantal enen groter of gelijk aan $x$.
+%TODO Pseudocode?
 
 \subsection{Snoeien}\label{Snoeien}
 Bij de snoei-stap lopen we over de set $N^n_{k+1}$ en verwijderen we alle netwerken die gesubsumed worden door een ander netwerk in de resterende set.
