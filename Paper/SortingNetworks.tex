@@ -272,7 +272,7 @@ We kunnen dit sneller laten verlopen door eerst te kijken of de comparator al da
 Wanneer twee netwerken, op de volgorde van hun parallelle comparatoren na, gelijk zijn, zoals in figuur \ref{fig1} en \ref{fig2}, zullen deze elkaar subsumen en zal \'e\'en van de twee verwijderd worden.
 Dit kan opgevangen worden in de generatie-stap om zo extra werk in de snoei-stap te vermijden.
 Bij het toevoegen van een nieuwe comparator $(a,b)$ moet er dan gecontroleerd worden of deze comparator een kanaal gemeenschappelijk heeft met de vorige (Code \ref{TestParallelleComparatoren}).
-\begin{lstlisting}[caption={Test op parallelle comparatoren},label=TestParallelleComparatoren]
+\begin{lstlisting}[caption={Test op parallelle comparatoren.},label=TestParallelleComparatoren]
 (a,b) & vorigeComp != 0
 \end{lstlisting}
 Wanneer dit niet het geval is en het dus parallelle comparatoren zijn, kunnen we bijvoorbeeld kiezen om het netwerk weg te gooien waarbij de nieuwe comparator kleiner is dan de vorige.
@@ -284,25 +284,35 @@ Deze informatie kan gebruikt worden om bij de omzetting slechts te beginnen bij 
 %TODO Pseudocode?
 
 \subsection{Snoeien}\label{Snoeien}
-Bij de snoei-stap lopen we over de set $N^n_{k+1}$ en verwijderen we alle netwerken die gesubsumed worden door een ander netwerk in de resterende set.
+Bij de snoei-stap lopen we over de set $N^n_{k+1}$ en verwijderen we alle comparator netwerken die gesubsumed worden door een ander comparator netwerk in de resterende set.
 Om het aflopen van alle permutaties te vermijden, en sneller te beslissen of $C_a \preceq C_b$ met $C_a$ en $C_b$ twee comparator netwerken, voeren we enkele methoden in.
-Zo gebruiken we onder meer lemma \ref{lemma3}, beschreven in de paper van Codish \textit{et al.}\cite{sortingNetworksSize2014}.
-Bij $9$ kanalen wordt de methode $1.07666 \times 10^{13}$ keer uitgevoerd waarbij $1.05438 \times 10^{13}$ keer een beslissing genomen wordt. %TODO
+Zo gebruiken we onder meer lemma \ref{lemma3} en lemma \ref{lemma4}, beschreven in 
+\begin{small}
+\textsc{Twenty-Five Comparators is Optimal when Sorting Nine Inputs (and Twenty-Nine for Ten)}
+\end{small}
+\cite{sortingNetworksSize2014}.
+
+Bij $9$ kanalen wordt lemma \ref{lemma3} $1.07666 \times 10^{13}$ keer nagegaan waarbij $1.05438 \times 10^{13}$ keer een beslissing genomen wordt. %TODO
 \begin{lemma}
-	Wanneer het aantal outputs bij $C_a$ met $x$ $1$'en ($1 \leq x \leq n$) groter is dan bij $C_b$ weten we dat $C_a \npreceq C_b$ met $C_a$ en $C_b$ twee comparator netwerken.
+	Wanneer de uitvoerverzameling bij $C_a$ met $x$ enen ($1 \leq x \leq n$) groter is dan bij $C_b$ weten we dat $C_a \npreceq C_b$ met $C_a$ en $C_b$ twee comparator netwerken.
 \label{lemma3}
 \end{lemma}
-Voor lemma \ref{lemma4} van Codish (\cite{sortingNetworksSize2014}) introduceren we extra informatie over het comparator netwerk, namelijk $w\left(C_a, x, k\right)$ waarbij $x \in \{0,1\}$ en $0\leq k \leq n$.
-Dit representeert de set van posities $i$ waarvoor er een output bestaat in $C_a$ met $k$ $1$'en waarvoor geldt dat op de $i^{de}$ positie van deze output een $x$ voorkomt. Om effici\"ent operaties te kunnen uitvoeren zullen we de posities voorstellen door middel van een bit representatie. Zo zal bijvoorbeeld $w\left(C_a, 1, 2\right) = 0110$ inhouden dat er bij de outputs met twee $1$'en minstens \'e\'en output bestaat met een $1$ op de $2^{de}$ positie, \'e\'en met een $1$ op de $3{de}$ positie en geen enkel met een $1$ op positie $1$ of $4$. Deze informatie voegen we bij elk netwerk toe in de vorm van een array van shorts, $w$. Elk kanaal $k$ van het netwerk $C_a$ vereist dan 4 opeenvolgende indices in $w$, zoals te zien in tabel \ref{tabel3}.
+Voor lemma \ref{lemma4} introduceren we extra informatie over het comparator netwerk, namelijk $w\left(C_a, x, k\right)$ waarbij ${x \in \{0,1\}}$ en $0\leq k \leq n$.
+Dit representeert de set van posities $i$ waarvoor er een uitvoer bestaat in $C_a$ met $k$ enen waarvoor geldt dat op de $i^{de}$ positie van deze uitvoer een $x$ voorkomt.
+Om effici\"ent operaties te kunnen uitvoeren, zullen we de posities voorstellen door middel van een bit representatie.
+Zo zal bijvoorbeeld $w\left(C_a, 1, 2\right) = 0110$ inhouden dat er bij de uitvoerverzameling met twee enen minstens \'e\'en uitvoer bestaat met een $1$ op de $2^{de}$ positie, \'e\'en met een $1$ op de $3^{de}$ positie en geen enkel met een $1$ op positie $1$ of $4$.
+Deze informatie voegen we bij elk netwerk toe in de vorm van een array van shorts, $w$.
+Voor elke hoeveelheid enen ($0 \leq x \leq n$) zullen we zowel $w$ als de grootte van $w$ bijhouden.
+Dit vereist dan, voor elke hoeveelheid enen, vier opeenvolgende indices in $w$, zoals te zien in tabel \ref{tabel3}.
 Deze informatie slaan we voor elk kanaal $k$ op vanaf index\footnote{In \texttt{Java} begint een array met index $0$.} $(k-1) \times 4$.
 \begin{table}[!h]
 	\centering
-	\begin{tabu}{|[1.25pt]l|[1.25pt]c|[1.25pt]c|[1.25pt]c|[1.25pt]}
-	\tabucline[1.25pt]{-}
+	\begin{tabu}{|[1.2pt]l|[1.2pt]c|[1.2pt]c|[1.2pt]c|[1.2pt]}
+	\tabucline[1.2pt]{-}
 	$w\left(C_a, 0, 1\right)$ & $|w\left(C_a, 0, 1\right)|$  & $w\left(C_a, 1, 1\right)$ & $|w\left(C_a, 1, 1\right)|$\\ 
-	\tabucline[1.25pt]{-}
+	\tabucline[1.2pt]{-}
 	\end{tabu} 
-	\caption{De inhoud van $w$ op indices $0-3$ voor kanaal 1.}
+	\caption{De inhoud van $w$ op indices $0-3$ voor \'e\'en 1.}
 	\label{tabel3} 
 \end{table}
 \begin{lemma}

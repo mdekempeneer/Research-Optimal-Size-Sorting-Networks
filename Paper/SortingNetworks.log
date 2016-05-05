@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.29)  5 MAY 2016 14:01
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.29)  5 MAY 2016 14:27
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -827,18 +827,29 @@ Underfull \hbox (badness 10000) in paragraph at lines 220--262
  []
 
 [3]
-Overfull \hbox (15.76875pt too wide) in paragraph at lines 299--304
+Overfull \hbox (15.51874pt too wide) in paragraph at lines 310--315
  [][] 
  []
 
 
-Underfull \hbox (badness 7888) in paragraph at lines 311--313
+Underfull \hbox (badness 1158) in paragraph at lines 300--318
+[]\OT1/ptm/m/n/10 Voor lemma 4[] in-tro-du-ce-ren we ex-tra in-for-ma-tie over
+ []
+
+
+Underfull \hbox (badness 3219) in paragraph at lines 300--318
+\OT1/ptm/m/n/10 het com-pa-ra-tor net-werk, na-me-lijk $\OML/cmm/m/it/10 w []$ 
+\OT1/ptm/m/n/10 waar-bij
+ []
+
+
+Underfull \hbox (badness 7888) in paragraph at lines 322--324
 []\OT1/ptm/m/n/10 De me-thode van lemma 4[] wordt bij $\OT1/cmr/m/n/10 9$ \OT1/
 ptm/m/n/10 ka-na-len
  []
 
 
-Overfull \hbox (10.53934pt too wide) in paragraph at lines 317--319
+Overfull \hbox (10.53934pt too wide) in paragraph at lines 328--330
 []\OT1/ptm/b/n/10 Lemma 5. []$[] \OMS/cmsy/m/n/10 )
  []
 
@@ -846,12 +857,15 @@ Overfull \hbox (10.53934pt too wide) in paragraph at lines 317--319
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 350--368
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 361--379
 []\OT1/ptm/m/n/10 We we-ten na-me-lijk dat als
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 350--368
+Underfull \hbox (badness 10000) in paragraph at lines 361--379
 []$ \OT1/ptm/m/n/10 er bij de ge-per-mu-
  []
 
@@ -859,36 +873,36 @@ Underfull \hbox (badness 10000) in paragraph at lines 350--368
 File: Gen_Prune_Opbouw.png Graphic file (type png)
 
 <use Gen_Prune_Opbouw.png>
-Package pdftex.def Info: Gen_Prune_Opbouw.png used on input line 378.
+Package pdftex.def Info: Gen_Prune_Opbouw.png used on input line 389.
 (pdftex.def)             Requested size: 112.54518pt x 217.56227pt.
 
-Overfull \hbox (11.36873pt too wide) in paragraph at lines 378--379
+Overfull \hbox (11.36873pt too wide) in paragraph at lines 389--390
  [][] 
  []
 
 
-Underfull \hbox (badness 1275) in paragraph at lines 382--390
+Underfull \hbox (badness 1275) in paragraph at lines 393--401
 \OT1/ptm/m/n/10 stap uit-voe-ren en ver-vol-gens
  []
 
 
-Underfull \hbox (badness 2027) in paragraph at lines 382--390
+Underfull \hbox (badness 2027) in paragraph at lines 393--401
 \OT1/ptm/m/n/10 bin-nen de res-te-rende set de
  []
 
 
-Underfull \hbox (badness 1406) in paragraph at lines 382--390
+Underfull \hbox (badness 1406) in paragraph at lines 393--401
 \OML/cmm/m/it/10 k \OT1/cmr/m/n/10 + 1$ \OT1/ptm/m/n/10 com-pa-ra-to-ren waarop
 
  []
 
 
-Underfull \hbox (badness 1796) in paragraph at lines 382--390
+Underfull \hbox (badness 1796) in paragraph at lines 393--401
 \OT1/ptm/m/n/10 ma-ken van een va-ri-a-bele die bij-houdt op welke in-dex
  []
 
 [4 <./Gen_Prune_Opbouw.png>]
-Underfull \hbox (badness 4254) in paragraph at lines 392--392
+Underfull \hbox (badness 4254) in paragraph at lines 403--403
 [][]\OT1/ptm/m/n/9 Bij de \OT1/pcr/m/n/9 Java \OT1/ptm/m/n/9 im-ple-men-ta-tie 
 zul-len we ver-wij-de-ren via
  []
@@ -913,30 +927,31 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 File: Benadering10_paper.png Graphic file (type png)
 
 <use Benadering10_paper.png>
-Package pdftex.def Info: Benadering10_paper.png used on input line 520.
+Package pdftex.def Info: Benadering10_paper.png used on input line 531.
 (pdftex.def)             Requested size: 247.88887pt x 206.23093pt.
 
-Overfull \hbox (3.97762pt too wide) in paragraph at lines 520--521
+Overfull \hbox (3.97762pt too wide) in paragraph at lines 531--532
  [][] 
  []
 
-[5] <Profile_Time_9.png, id=40, 331.99031pt x 136.25906pt>
+
+Underfull \vbox (badness 3471) has occurred while \output is active []
+
+ [5]
+<Profile_Time_9.png, id=40, 331.99031pt x 136.25906pt>
 File: Profile_Time_9.png Graphic file (type png)
 
 <use Profile_Time_9.png>
-Package pdftex.def Info: Profile_Time_9.png used on input line 529.
+Package pdftex.def Info: Profile_Time_9.png used on input line 540.
 (pdftex.def)             Requested size: 247.88887pt x 101.74077pt.
 
-Overfull \hbox (3.97762pt too wide) in paragraph at lines 529--530
+Overfull \hbox (3.97762pt too wide) in paragraph at lines 540--541
  [][] 
  []
 
 
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-
 Package pgfplots Warning: Axis range for axis x is approximately empty; enlargi
-ng it (it is [1.0000000000:1.0000000000]) on input line 576.
+ng it (it is [1.0000000000:1.0000000000]) on input line 587.
 
  [warning /pgfplots/warning/approx empty range enlarged]
 
@@ -956,11 +971,11 @@ Underfull \hbox (badness 2318) in paragraph at lines 27--31
 Here is how much of TeX's memory you used:
  26634 strings out of 493089
  656415 string characters out of 6134842
- 868464 words of memory out of 5000000
+ 868552 words of memory out of 5000000
  29626 multiletter control sequences out of 15000+600000
  32152 words of font info for 81 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 62i,21n,100p,786b,2213s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 62i,21n,100p,731b,2213s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2015/texmf-dist/fonts/enc/dv
 ips/base/8r.enc}</usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts
 /cm/cmex10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/
@@ -976,7 +991,7 @@ fb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr
 /local/texlive/2015/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/tex
 live/2015/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2015/
 texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on SortingNetworks.pdf (7 pages, 263986 bytes).
+Output written on SortingNetworks.pdf (7 pages, 263667 bytes).
 PDF statistics:
  96 PDF objects out of 1000 (max. 8388607)
  65 compressed objects within 1 object stream
