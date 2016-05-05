@@ -281,7 +281,15 @@ Tenslotte kunnen we, na het toevoegen van de comparator, de nieuwe uitvoer berek
 Om de effici\"entie te verhogen kunnen we bij de omzetting van de uitvoer eerder verkregen informatie gebruiken.
 Een comparator is namelijk niet overbodig wanneer er een uitvoer bestaat met een $s$ aantal enen waarvoor geldt dat de comparator deze uitvoer wijzigt.
 Deze informatie kan gebruikt worden om bij de omzetting slechts te beginnen bij uitvoer met het aantal enen gelijk aan $s$.
-%TODO Pseudocode?
+Een algemene structuur van deze code wordt ge\"illustreerd in Code \ref{PseudocodeS}.
+\begin{lstlisting}[caption={Pseudocode - optimalisatie via $s$}, label=PseudocodeS]
+for(short nieuweComp : comparatoren) {
+	int s = vanafAantalEnenWijzigt(netwerk, nieuweComp);
+	if(s != -1) {
+		voegToeAanNetwerk(netwerk, nieuweComp, s)
+	}
+}
+\end{lstlisting}
 
 \subsection{Snoeien}\label{Snoeien}
 Bij de snoei-stap lopen we over de set $N^n_{k+1}$ en verwijderen we alle comparator netwerken die gesubsumed worden door een ander comparator netwerk in de resterende set.
@@ -292,7 +300,7 @@ Zo gebruiken we onder meer lemma \ref{lemma3} en lemma \ref{lemma4}, beschreven 
 \end{small}
 \cite{sortingNetworksSize2014}.
 
-Bij $9$ kanalen wordt lemma \ref{lemma3} $1.07666 \times 10^{13}$ keer nagegaan waarbij $1.05438 \times 10^{13}$ keer een beslissing genomen wordt. %TODO
+Bij $9$ kanalen wordt lemma \ref{lemma3} $1.07666 \times 10^{13}$ keer nagegaan waarbij $1.05438 \times 10^{13}$ keer een beslissing genomen wordt.
 \begin{lemma}
 	Wanneer de uitvoerverzameling bij $C_a$ met $x$ enen ($1 \leq x \leq n$) groter is dan bij $C_b$ weten we dat $C_a \npreceq C_b$ met $C_a$ en $C_b$ twee comparator netwerken.
 \label{lemma3}
@@ -342,7 +350,8 @@ In de plaats daarvan zullen we enkel permutaties afgaan die voldoen aan lemma \r
 Om de mogelijke permutaties bij te houden zullen we gebruik maken van een voorstelling die te zien is in tabel \ref{tabel4}.
 De waarden in een kolom stellen alle mogelijke posities voor die op die plaats kunnen voorkomen.
 Wanneer we tabel  \ref{tabel4} gebruiken om de mogelijke permutaties weer te geven dan zullen we permutatie $4321$ en $1324$  bekomen, waarbij $4321$ een eenheidspermutatie zal voorstellen.
-Bij het begin van het algoritme zullen we starten met tabel \ref{tabel5}, waarna we lemma \ref{lemma5} gebruiken om posities te verwijderen.
+Bij het begin van het algoritme zullen we starten met tabel \ref{tabel5}, deze laat alle $n!$ permutaties toe.
+Hierna gebruiken we lemma \ref{lemma5} om posities uit de kolommen te verwijderen.
 \begin{table}[!h]
 	\centering
 	\begin{tabular}{|c|c|c|c|}
@@ -371,17 +380,17 @@ Bij het begin van het algoritme zullen we starten met tabel \ref{tabel5}, waarna
 
 We weten namelijk dat als \[{\pi\left(outputs\left(C_a\right)\right) \subseteq outputs\left(C_b\right)}\] er bij de gepermuteerde outputs enkel een $1$ kan komen op de plaats waar dit bij $C_b$ ook het geval is.
 Op de plaats waar $C_b$ een $0$ heeft, kunnen dus enkel de posities komen waar $C_a$ een $0$ heeft.
-Nemen we bijvoorbeeld $w\left(C_a,1,1\right) = 0101$ en ${w\left(C_b,1,1\right)=0111}$ dan kunnen we tabel \ref{tabel5} reduceren tot tabel \ref{tabel6}.
+Nemen we bijvoorbeeld $w\left(C_a,1,1\right) = 0101$ en ${w\left(C_b,1,1\right)=0110}$ dan kunnen we tabel \ref{tabel5} reduceren tot tabel \ref{tabel6}.
 We kunnen voor $w\left(C_a, x, k\right)$ deze methode doortrekken voor elke $1 \leq k \leq n$ en voor zowel $x = 0$ als $x = 1$.
 Wanneer we elke kolom bijhouden door een bit representatie kunnen we gemakkelijk de doorsnede van de mogelijke posities nemen na elke berekening voor een bepaalde $k$ en $x$ door middel van de $\&$-operatie. 
 \begin{table}[!h]
 	\centering
 	\begin{tabular}{|c|c|c|c|}
 	\hline
-	2 & 1 & 1 & 1 \\ 
-	4 & 2 & 2 & 2\\ 
-	 & 3 & 3 & 3 \\
-	 & 4 & 4 & 4\\ 
+	2 & 1 & 1 & 2 \\ 
+	4 & 2 & 2 & 4\\ 
+	 & 3 & 3 &  \\
+	 & 4 & 4 & \\ 
 	\hline 
 	\end{tabular}
 	\caption{Een permutatietabel voor 4 kanalen.}
@@ -390,9 +399,10 @@ Wanneer we elke kolom bijhouden door een bit representatie kunnen we gemakkelijk
 
 Wanneer tijdens het algoritme een kolom leeg zou komen te staan, kunnen we het algoritme stopzetten.
 Dit betekent namelijk dat er geen enkele permutatie bestaat die niet door lemma \ref{lemma5} wordt afgekeurd.
-Mocht op het einde een kolom $1$ element hebben, mogen we dit element uit alle andere kolommen verwijderen.
-We kunnen nadien ook nagaan of alle elementen minstens \'e\'enmaal voorkomen in de hele tabel.
+Mocht op het einde een kolom \'e\'en element hebben, mogen we dit element uit alle andere kolommen verwijderen.
+We kunnen nadien ook nog nagaan of alle elementen minstens \'e\'enmaal voorkomen in de hele tabel.
 Tot slot gebruiken we de overblijvende permutatietabel om onze mogelijke permutaties, die aan lemma \ref{lemma5} voldoen, na te gaan. 
+Dit kan onder andere door middel van een recursieve methode.
 
 \subsection{Parallellisatie}\label{Parallellisatie}
 \begin{wrapfigure}{l}{0.20\textwidth}
@@ -402,9 +412,9 @@ Tot slot gebruiken we de overblijvende permutatietabel om onze mogelijke permuta
 	\label{opbouwGenPrune}
 \end{wrapfigure}
 Om het algoritme te laten functioneren met meerdere processoren, zullen we enkele aanpassingen doorvoeren.
-Bij de overgang van $R^n_k$ naar $N^n_{k+1}$ zal elke thread een aantal netwerken uit $R^n_k$ nemen, in ons geval $256$, hierop de genereer-stap uitvoeren en vervolgens binnen de resterende set de snoei-stap uitvoeren.
+Bij de overgang van $R^n_k$ naar $N^n_{k+1}$ zal elke thread een aantal netwerken uit $R^n_k$ nemen, in ons geval $256$, hierop de genereer-stap uitvoeren en vervolgens binnen de resulterende set de snoei-stap uitvoeren.
 Op dat moment beschikt elke thread over een set van netwerken met $k+1$ comparatoren waarop de snoei-stap nog moet worden uitgevoerd ten opzichte van alle andere sets.
-Elke thread zal vervolgens zijn set in een gedeelde lijst in het centraal geheugen plaatsen.
+Elke thread zal vervolgens zijn set in een gedeelde lijst $S^n_{k+1}$ in het centraal geheugen plaatsen.
 Om deze operatie zo effici\"ent mogelijk te maken, vermijden we zowel locks als het moeten vergroten van de lijst. 
 Daarom zullen we in het begin van de cyclus zorgen dat deze lijst groot genoeg is en gebruik maken van een variabele die bijhoudt op welke index een volgend netwerk moet worden bijgevoegd.
 In onze \texttt{Java} implementatie zullen we voor deze variabele een \texttt{AtomicInteger} gebruiken, deze variabele garandeert een atomische \texttt{getAndIncrement(int)} functie.
@@ -414,9 +424,9 @@ Na het toevoegen aan de gedeelde lijst volgt de snoei-stap. Hier zal elke thread
 Door het (hopelijk) vele verwijderen van netwerken ontstaan er veel opeenvolgende lege plaatsen in de lijst\footnote{Bij de \texttt{Java} implementatie zullen we verwijderen via  ``${= null}$''.}.
 Hierdoor zal het algoritme vaak overbodig het netwerk opvragen.
 Om dit aantal, dat groter wordt naarmate het aantal kanalen stijgt, te verminderen, introduceren we een manier om deze opeenvolgende lege indices over te slaan. 
-Telkens wanneer een lege index wordt gedetecteerd door een thread zal de thread het aantal opeenvolgende lege indices tellen en dit aantal opslaan op de eerste lege plaats in deze reeks.
-Wanneer een thread dit getal tegenkomt, kan hij het opgeslagen aantal indices overslaan.
-%TODO Pseudo code
+Telkens wanneer een lege index wordt gedetecteerd door een thread zal deze het aantal opeenvolgende lege indices tellen en dit aantal opslaan op de eerste lege plaats in deze reeks.
+Dit getal stelt dus het aantal opeenvolgende lege plaatsen voor na die index.
+Wanneer een thread dan dit getal tegenkomt, weten we exact hoeveel indices de thread kan overslaan.
 %TODO Big O ??
 %TODO ZIe pagina 4 in paper => definitie 2: Observe that ......
 
@@ -447,23 +457,24 @@ Door het grote aantal netwerken is het testen op subsumes en de effici\"entie va
 	\label{netwerkVerloop9kanalen}
 \end{figure}
 \footnotetext{Voor $10$ kanalen is het aantal netwerken berekend tot en met comparator $13$.} %TODO UPDATE??
+%TODO CHECK VERLEDEN <=> TTTijd
 
 In \texttt{Java} hebben we het voordeel dat we niet expliciet aan geheugenbeheer moeten doen.
 We gaan anderzijds wel enkele maatregelen nemen om de vereiste hoeveelheid geheugen te verlagen.
 E\'en van de mogelijke plaatsen waar we dit kunnen doen, is bij de representatie van een netwerk.
-Wanneer een comparator aan een netwerk wordt toegevoegd is het mogelijk dat een lijst van outputs met $x$~$1$'en ongewijzigd blijft.
+Wanneer een comparator aan een netwerk wordt toegevoegd is het mogelijk dat een lijst van uitvoer sequenties met $s$ enen ongewijzigd blijft.
 Om te vermijden dat we hierdoor meerdere malen dezelfde lijst in het geheugen hebben, zullen we een referentie doorgeven van deze lijst en slechts een nieuwe lijst gebruiken wanneer de lijst gewijzigd wordt.
-Aangezien bij \texttt{Java} een $2$-dimensionale lijst wordt aanzien als een lijst van referenties naar andere lijsten kan de oude referentie gemakkelijk herbruikt worden. 
+Aangezien bij \texttt{Java} een tweedimensionale lijst wordt aanzien als een lijst van referenties naar andere lijsten kan de oude referentie gemakkelijk herbruikt worden. 
 
-Een andere plaats is bij de parallellisatie, hier daalt de hoeveelheid geheugen doordat een thread enerzijds zal snoeien binnen zijn set alvorens de set toe te voegen.
-Anderzijds doordat de genereer- en snoei-stap door elkaar worden uitgevoerd.
+Een andere plaats is bij de parallellisatie, hier daalt de hoeveelheid geheugen doordat een thread enerzijds zal snoeien binnen zijn set alvorens de set toe te voegen aan de gedeelde lijst en anderzijds doordat de genereer- en snoei-stap door elkaar worden uitgevoerd.
 
 Onze \texttt{Java} implementatie gebruikte bij de uitvoering voor $8$ en $9$ kanalen respectievelijk $208$MB en $3951$MB.
 Deze hoeveelheid kan verschillen naargelang de frequentie waarbij de \texttt{Java Virtual Machine} de \textit{Garbage Collection} uitvoert.
+Voor minder dan $8$ kanalen was het geheugen verbruik verwaarloosbaar klein.
 
 \section{Evaluatie}\label{Evaluatie}
 Het beschreven algoritme, ge\"implementeerd in \texttt{Java}, vindt voor $9$ kanalen reeds na $3$ uur en $25$ minuten een oplossing met $25$ comparatoren die gevisualiseerd wordt in figuur~\ref{Sorteernetwerk9kanalen}.
-Dit bevestigt wat reeds geweten was door Codish \textit{et al}.
+Dit bevestigt wat reeds geweten was \cite{sortingNetworksSize2014}.
 \begin{figure}[!h]
 \centering
 \begin{tikzpicture}
@@ -536,7 +547,7 @@ De bekomen resultaten van dit werk zijn afkomstig van het uitvoeren op \'e\'en n
 De uitvoering van het programma voor $10$ kanalen is na $299$~uur\footnote{$12$ dagen en $11$ uur} stopgezet. %TODO Aanpassen naar het effectieve
 De tussentijdse resultaten met betrekking tot de uitvoeringstijd zijn te zien in figuur \ref{tijdverloop10kanalen} en met betrekking tot het aantal netwerken zijn te zien in figuur \ref{netwerkVerloop9kanalen}.
 Voor 10, en dus ook voor 11, kanalen is de \texttt{Java} implementatie met de gebruikte hardware onvoldoende om resultaten binnen een redelijk tijdsbestek te bekomen.
-Gebaseerd op figuur \ref{tijdverloop10kanalen} schatten we dat voor $10$ kanalen meer dan $1500$ dagen\footnote{Berekend op basis van polynomiaal verloop van graad $11$.} vereist zijn. 
+Gebaseerd op figuur \ref{tijdverloop10kanalen} schatten we dat voor $10$ kanalen meer dan $1500$ dagen\footnote{Berekend op basis van een polynomiaal verloop van graad $11$.} vereist zijn. 
 \begin{figure}[!h]
 \centering
 \includegraphics[width = 0.49\textwidth]{Benadering10_paper.png}
@@ -545,6 +556,11 @@ Gebaseerd op figuur \ref{tijdverloop10kanalen} schatten we dat voor $10$ kanalen
 \end{figure}
 
 \subsection{Profilering}
+Via een profilering, zoals in figuur \ref{ProfileTime9}, kunnen we de bottleneck vaststellen met als doel de uitvoeringstijd te verbeteren.
+In dit profiel zien we dat de snoei-methode, de prune-methode in de figuur, duidelijk de bottleneck is.
+In deze methode wordt er door een thread voor elk netwerk in de gedeelde lijst subsumes uitgevoerd met elk netwerk in zijn eigen lijst, zoals beschreven in sectie \ref{Parallellisatie}.
+Wanneer we de uitvoeringstijd willen verbeteren, kunnen we enerzijds proberen deze prune methode te voorkomen zoals bijvoorbeeld in de genereer-stap en anderzijds door deze prune-methode effici\"enter te maken.
+Hier kan bijvoorbeeld onderzoek gedaan worden naar of men al dan niet onder een bepaalde voorwaarde netwerken van de eigen lijst kan overslaan.
 \begin{figure}[!h]
 \centering
 \vspace{10pt}
@@ -552,11 +568,6 @@ Gebaseerd op figuur \ref{tijdverloop10kanalen} schatten we dat voor $10$ kanalen
 \caption{Profile van een parti\"ele uitvoering voor $9$ kanalen.} %TODO
 \label{ProfileTime9}
 \end{figure}
-Via een profilering, zoals in figuur \ref{ProfileTime9}, kunnen we de bottleneck vaststellen met als doel de uitvoeringstijd te verbeteren.
-In dit profiel zien we dat de snoei-methode, de prune-methode in de figuur, duidelijk de bottleneck is.
-In deze methode wordt er door een thread voor elk netwerk in de gedeelde lijst subsumes uitgevoerd met elk netwerk in zijn eigen lijst, zoals beschreven in sectie \ref{Parallellisatie}.
-Wanneer we de uitvoeringstijd willen verbeteren, kunnen we enerzijds proberen deze prune methode te voorkomen zoals bijvoorbeeld in de genereer-stap en anderzijds door deze prune-methode effici\"enter te maken.
-Hier kan bijvoorbeeld onderzoek gedaan worden naar of men al dan niet onder een bepaalde voorwaarde netwerken van de eigen lijst kan overslaan.
 
 \subsection{Beslissingen}
 Door de genereer- en snoei-aanpak mag het totaal aantal te overlopen netwerken dan wel gedaald zijn, de hoeveelheid beslissingen dat er genomen moeten worden blijft nog steeds hoog zoals te zien in figuur \ref{AantalBeslissingen9Kanalen}.
