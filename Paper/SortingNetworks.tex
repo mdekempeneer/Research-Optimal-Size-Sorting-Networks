@@ -60,9 +60,11 @@ Een sorteernetwerk van optimale grootte daarentegen houdt in dat er geen sorteer
 Mochten er geen comparatoren parallel uitgevoerd worden, bekomt men hierdoor het snelste en goedkoopste netwerk.
 Het onderzoek in deze paper spitst zich toe op het bewijzen van optimale grootte.
 
-Voor optimale diepte was het kleinste open probleem het bewijs voor $17$ kanalen, bewezen door de onderzoeksgroep van onder meer Codish\cite{CodishBackAgain}.
+In 1966 bewees het werk van Floyd en Knuth de optimale groottes voor $1 \leq n \leq 8$\cite{FloydKnuth}.
+Voor optimale diepte vond Parberry een bewijs voor $n = 9$ en $n = 10$ waarna in $2014$ Bundala en Z\'avodn\'y er vonden voor $11 \leq n \leq 16$\cite{Parberry,BundalaZavodny}.
+Het volgende kleinste open probleem bij optimale diepte was dan het bewijs voor $17$ kanalen, bewezen door de onderzoeksgroep van onder meer Codish\cite{CodishBackAgain}.
 Voor optimale grootte was dit voor $9$ kanalen\cite{sortingNetworksSize2014}.
-Bij het bewijzen voor deze $9$ kanalen werd ook indirect het bewijs gegeven voor $10$ kanalen. 
+Bij het bewijs voor $9$ kanalen werd ook indirect het bewijs gegeven voor $10$ kanalen. 
 Bij dit bewijs maakten ze gebruik van zowel een genereer- en snoei-aanpak als een \textit{SAT}-aanpak.
 Dit onderzoek bouwt verder op het voorgaande en tracht dichter bij een bewijs voor $11$ kanalen te komen.
 Enkel gebruik makend van de genereer- en snoei-aanpak zal voor $9$ kanalen de optimale grootte bewezen worden in $3$~uur en $26$~minuten op \'e\'en node bestaande uit twee $12$-core ``Haswell'' Xeon E$5$-$2680$v$3$ processoren ($2.5$GHz, $30$MB level $3$ cache met $64$GB RAM) op de rekeninfrastructuur van het Vlaamse Supercomputer Centrum.
@@ -84,7 +86,8 @@ De uitvoer van een comparator netwerk verwijst naar de partieel geordende vector
 De invoer wordt voorgesteld door $\vec{x} = \{x^1_{1} \dots x^n_{1} \} $. 
 
 Een \textit{sorteernetwerk} is een comparator netwerk met als eigenschap dat de uitvoer gesorteerd is ongeacht de invoer.
-Een sorteernetwerk $C^n_k$ van optimale grootte houdt in dat er geen ander sorteernetwerk $C^n_l$ bestaat waarbij $l < k$. %TODO grootte = aantal comparatoren
+De grootte van een comparator netwerk verwijst naar het aantal comparatoren. 
+Een sorteernetwerk $C^n_k$ van optimale grootte houdt dan in dat er geen ander sorteernetwerk $C^n_l$ bestaat waarbij $l < k$.
 Figuur \ref{Werking} is een voorbeeld van een sorteernetwerk waarop ook de werking gedemonstreerd wordt.
 Deze figuur toont ook twee parallelle lagen, bestaande uit enerzijds de eerste en de tweede comparator en anderzijds uit de derde en de vierde.
 Deze zijn respectievelijk $(1,3), (2,4)$ en $(1,2), (3,4)$.
@@ -111,7 +114,7 @@ De optimale grootte van een sorteernetwerk met $n$ kanalen is reeds bewezen tot 
 	\caption{Minimaal aantal comparatoren bij $6 \leq n \leq 12$ kanalen.}
 	\label{tabel1}
 \end{table}
-%TODO Hard enter?
+
 Voor $n > 10$ zijn er bovengrenzen gekend door zowel concrete voorbeelden als de systematische constructie van Batcher \cite{sortingNetworksApplications}. 
 De ondergrenzen werden gevonden door zowel bewijzen als lemma \ref{lemma1} \cite{Voorhis1972}.
 \begin{lemma}
@@ -146,10 +149,9 @@ Deze methode heeft een cyclisch verloop waarbij men bij elke cyclus de set $R^n_
 \end{figure}
 Specifiek zullen we vertrekken van een netwerk zonder comparatoren om te eindigen bij $R^n_k$ bestaande uit \'e\'en sorteernetwerk van optimale grootte.
 Bij de genereer-stap zullen we aan elk netwerk van $R^n_k$ alle mogelijke comparatoren toevoegen zodat $|N^n_{k+1}| = |R^n_{k}| \times \frac{n\left(n-1\right)}{2}$.
-%TODO aanelkaarpraten zin misschien aanpassen)
 Bij de snoei-stap zullen we dan netwerken verwijderen volgens het subsumes principe beschreven in definitie \ref{definitie1}.
 \begin{definitie}[Subsumes] %TODO VRAGEN SUBSUMES => TOM NEDERLANDS/ENGELS
-	We zeggen ``Comparator netwerk $C^n_{k,a}$ subsumes comparator netwerk $C^n_{k,b}$'' wanneer een permuntatie $\pi$ bestaat zodat ${\pi\left(outputs\left(C_{a}\right)\right) \subseteq outputs\left(C_{b}\right)}$. Dit wordt genoteerd als $ C_{a} \preceq C_{b}$ om aan te duiden dat er een permutatie $\pi$ bestaat zodat $C_{a}\leq_\pi C_{b}$. %TODO Vincent weent om dit te kunnen herzien
+	We zeggen ``Comparator netwerk $C^n_{k,a}$ subsumes comparator netwerk $C^n_{k,b}$'' wanneer een permuntatie $\pi$ bestaat zodat ${\pi\left(outputs\left(C_{a}\right)\right) \subseteq outputs\left(C_{b}\right)}$. Dit wordt genoteerd als $ C_{a} \preceq C_{b}$ om aan te duiden dat er een permutatie $\pi$ bestaat zodat $C_{a}\leq_\pi C_{b}$.
 	\label{definitie1}
 \end{definitie}
 \begin{lemma}
@@ -282,6 +284,9 @@ Om de effici\"entie te verhogen kunnen we bij de omzetting van de uitvoer eerder
 Een comparator is namelijk niet overbodig wanneer er een uitvoer bestaat met een $s$ aantal enen waarvoor geldt dat de comparator deze uitvoer wijzigt.
 Deze informatie kan gebruikt worden om bij de omzetting slechts te beginnen bij uitvoer met het aantal enen gelijk aan $s$.
 Een algemene structuur van deze code wordt ge\"illustreerd in Code \ref{PseudocodeS}.
+
+In het ergste geval moeten er aan alle elementen in de set $R^n_k$ alle mogelijke comparatoren worden toegevoegd.
+Dit betekent $\mathcal{O}\left(|R^n_k|\times \frac{n(n-1)}{2} \right)$.
 \begin{lstlisting}[caption={Pseudocode - optimalisatie via $s$}, label=PseudocodeS]
 for(short nieuweComp : comparatoren) {
 	int s = vanafAantalEnenWijzigt(netwerk, nieuweComp);
@@ -314,16 +319,6 @@ Aangezien er geen uitvoer wordt bijgehouden met $0$ enen en $n$ enen zullen we e
 Dit vereist voor elk dan vier opeenvolgende indices in $w^*$, zoals te zien in figuur \ref{tabel3}.
 Deze informatie slaan we voor elke $k$ op vanaf index\footnote{In \texttt{Java} begint een array met index $0$.} $(k-1) \times 4$.
 Wanneer we bij het toevoegen van een comparator $w^*$ herberekenen, kunnen we net zoals bij de omzetting van de uitvoer slechts beginnen bij de uitvoerverzameling met het aantal enen gelijk aan $s$.
-%\begin{table}[!h]
-%	\centering
-%	\begin{tabu}{|[1.2pt]l|[1.2pt]c|[1.2pt]c|[1.2pt]c|[1.2pt]}
-%	\tabucline[1.2pt]{-}
-%	$w\left(C_a, 0, 1\right)$ & $|w\left(C_a, 0, 1\right)|$  & $w\left(C_a, 1, 1\right)$ & $|w\left(C_a, 1, 1\right)|$\\ 
-%	\tabucline[1.2pt]{-}
-%	\end{tabu} 
-%	\caption{De inhoud van $w$ op indices $0-3$ voor \'e\'en 1.}
-%	\label{tabel3} 
-%\end{table}
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width = 0.45\textwidth]{Tabel3_OpbouwW.png}
@@ -403,6 +398,9 @@ Mocht op het einde een kolom \'e\'en element hebben, mogen we dit element uit al
 We kunnen nadien ook nog nagaan of alle elementen minstens \'e\'enmaal voorkomen in de hele tabel.
 Tot slot gebruiken we de overblijvende permutatietabel om onze mogelijke permutaties, die aan lemma \ref{lemma5} voldoen, na te gaan. 
 Dit kan onder andere door middel van een recursieve methode.
+
+In het ergste geval moeten we voor elk element in $N^n_{k+1}$ subsumes nagaan met elk ander element in $N^n_{k+1}$.
+Nemen we voor de kost van een subsumes-test $f(n)$ dan betekent dit $\mathcal{O}\left(|N^n_{k+1}| \times \left(|N^n_{k+1}|-1\right) \times f(n) \right) $.
 
 \subsection{Parallellisatie}\label{Parallellisatie}
 \begin{wrapfigure}{l}{0.20\textwidth}
