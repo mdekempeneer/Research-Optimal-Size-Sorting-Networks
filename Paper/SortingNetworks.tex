@@ -162,7 +162,7 @@ Concreet kunnen we de definitie van subsumes en lemma~\ref{lemma2} beschreven do
 Wanneer een set van netwerken een sorteernetwerk bevat, zal het snoeien van deze set resulteren in het bekomen van het sorteernetwerk.
 Dit gegeven kan gebruikt worden om de eindigheid van het algoritme in te zien.
 
-Om na te gaan dat er een permutatie $\pi$ bestaat zodat ${\pi\left(Outputs\left(C_{a}\right)\right) \subseteq Outputs\left(C_{b}\right)}$, en dus $C_a \preceq C_{b}$, zouden we alle permutaties kunnen overlopen.
+Om na te gaan dat er een permutatie $\pi$ bestaat zodat ${\pi\left(outputs\left(C_{a}\right)\right) \subseteq outputs\left(C_{b}\right)}$, en dus $C_a \preceq C_{b}$, zouden we alle permutaties kunnen overlopen.
 Om deze kostelijke bewerkingen te vermijden en te versnellen, zullen we extra methoden moeten invoeren om sneller beslissingen te maken over het ``subsumen van een ander netwerk''. 
 Deze beslissingen kunnen zowel tijdens de genereer-stap als de snoei-stap plaats vinden.
 
@@ -175,7 +175,8 @@ Tenslotte wordt het geheugengebruik van de implementatie besproken en wordt er m
 \subsection{Representatie van comparator netwerken}\label{RepresentatieVanComparatorNetwerken}
 Bij de representatie van comparator netwerken moeten we rekening houden met het geheugengebruik en de mogelijkheid om effici\"ente bewerkingen te kunnen uitvoeren.
 Concreet zullen we comparatoren voorstellen door een sequentie van bits waarbij twee bits op \'e\'en staan.
-Bijvoorbeeld  $ \left[ 0 1 0 0 1 0 \right]$ stelt de comparator $\left(2,5\right)$ voor bij een netwerk van $6$ kanalen.
+Bijvoorbeeld  $ \left[ 0 1 0 0 0 1\right]$ stelt de comparator $\left(1,5\right)$ voor bij een netwerk van $6$ kanalen.
+Doordat kanaal $1$ rechts geplaatst wordt, komt elk kanaal beter overeen met zijn bitshift\footnote{Bijvoorbeeld een bitshift naar rechts, $\gg$, zal achteraan een aantal nullen verwijderen.}.
 Om de hoeveelheid overbodige bits te beperken, zullen we bij de \texttt{Java} implementatie gebruik maken van shorts\footnote{In \texttt{Java} bestaat een short uit $16$ bits.}.
 Dit is voldoende voor een bewijs tot en met $16$ kanalen.
 Buiten de comparatoren worden ook de mogelijke uitvoer van het netwerk bijgehouden.
@@ -192,6 +193,7 @@ return - Het resultaat bekomen door de bits van de input om te wisselen afhankel
 short swapCompare(short input, short comp) {
 	int channel1 = 31 - Integer.numberOfLeadingZeros(comp);
 	int channel2 = Integer.numberOfTrailingZeros(comp);
+	
 	int firstBit = (input >> channel1) & 1;
 	int secondBit = (input >> channel2) & 1;
 	
@@ -206,11 +208,11 @@ Een voorbeeld van zo een representatie staat in tabel \ref{tabel2}.
 	\begin{tabular}{r|ccc}
 	Comparators & $\left[0011\right]$ & $\left[1010\right]$ & \\ 
 	\hline 
-	Outputs \'e\'en 1& $\left[0001\right]$ & $\left[0100\right]$ & $\left[0010\right]$ \\ 
+	Uitvoer \'e\'en 1& $\left[0001\right]$ & $\left[0100\right]$ & $\left[0010\right]$ \\ 
 	\hline 
-	Outputs twee 1'en &$\left[0011\right]$ & $\left[0101\right]$ & $\left[0110\right]$\\ 
+	Uitvoer twee 1'en &$\left[0011\right]$ & $\left[0101\right]$ & $\left[0110\right]$\\ 
 	\hline 
-	Outputs drie 1'en & $\left[0111\right]$ & $\left[1011\right]$ &  \\ 
+	Uitvoer drie 1'en & $\left[0111\right]$ & $\left[1011\right]$ &  \\ 
 	\end{tabular}
 	\caption{Representatie $C^4_2$: $(1,2)(2,4)$}
 	\label{tabel2}
@@ -305,11 +307,16 @@ Zo gebruiken we onder meer lemma \ref{lemma3} en lemma \ref{lemma4}, beschreven 
 \end{small}
 \cite{sortingNetworksSize2014}.
 
-%TODO aan elkaar praten (refereer naar de paper)
+\begin{figure}[!h]
+	\includegraphics[width=0.45\textwidth]{VoorbeeldLemmas.png}
+	\caption{Voorbeeld van drie comparator netwerken met elk $5$~kanalen en met bijhorende uitvoerverzamelingen.\protect\cite{sortingNetworksSize2014}}
+	\label{VoorbeeldLemmas}
+\end{figure}
+
 Aangezien een permutatie op de uitvoer geen verandering teweegbrengt op vlak van hoeveelheid en ${\pi(outputs(C_a)) \subseteq outputs(C_b)}$ kan het onmogelijk dat ${|outputs(C_a)| > |outputs(C_b)|}$.
 Dit kan worden doorgetrokken naar de uitvoerverzamelingen met hetzelfde aantal enen.
-
-Bij $9$ kanalen wordt lemma \ref{lemma3} $1.07666 \times 10^{13}$ keer nagegaan waarbij $1.05438 \times 10^{13}$ keer een beslissing genomen wordt.
+Zo zien we bijvoorbeeld in figuur \ref{VoorbeeldLemmas} dat $C_2 \npreceq C_3$ want $C_2$ heeft vier uitvoersequenties met twee enen en $C_3$ heeft er slechts drie.
+Dit vormt lemma \ref{lemma3} en wordt bij $9$ kanalen $1.07666 \times 10^{13}$ keer nagegaan waarbij $1.05438 \times 10^{13}$ keer een beslissing genomen wordt.
 \begin{lemma}
 	Wanneer de uitvoerverzameling bij $C_a$ met $x$ enen ($1 \leq x \leq n$) groter is dan bij $C_b$ weten we dat $C_a \npreceq C_b$ met $C_a$ en $C_b$ twee comparator netwerken.
 \label{lemma3}
@@ -334,17 +341,26 @@ Wanneer we bij het toevoegen van een comparator $w^*$ herberekenen, kunnen we ne
 	Wanneer voor een comparator netwerk $C_a$ en $C_b$ met $n$ kanalen geldt dat $|w\left(C_a, x, k\right)| > |w\left(C_b, x, k\right)|$ voor $x \in \{0,1\}$ en $0 \leq k \leq n$ dan $C_a \npreceq C_b$.
 	\label{lemma4}
 \end{lemma}
-De methode van lemma \ref{lemma4} wordt bij $9$ kanalen ${2.22803 \times 10^{11}}$ keer uitgevoerd waarbij $2.05631 \times 10^{11}$ keer een beslissing genomen wordt.
-Dit lemma voorkomt, net zoals lemma \ref{lemma3}, dat er permutaties getest moeten worden.
+Wanneer ${outputs(C_a) \subseteq outputs(C_b)}$ moet gelden dat het aantal posities waar $C_a$ een $0$ heeft kleiner moet zijn of gelijk aan het aantal bij $C_b$.
+Als dit niet het geval is, zou $C_a$ zeker een positie hebben dewelke $C_b$ niet heeft waardoor dus ${outputs(C_a) \nsubseteq outputs(C_b)}$.
+Dit geldt niet alleen voor een $0$ maar ook voor $1$.
+Als we tenslotte inzien dat een permutatie het aantal posities waar zo een waarde ($0$ of $1$) voorkomt niet wijzigt, krijgen we lemma \ref{lemma4}.
+In figuur \ref{VoorbeeldLemmas} is bijvoorbeeld te zien dat $C_3 \npreceq C_1$ want voor de uitvoerverzameling met vier enen geldt dat een $0$ bij $C_3$ op drie plaatsen voorkomt terwijl dit bij $C_1$ slechts op twee plaatsen is.
+Dit vormt lemma \ref{lemma4} dewelke bij een uitvoer voor $9$ kanalen ${2.22803 \times 10^{11}}$ keer wordt uitgevoerd. Hierbij wordt er $2.05631 \times 10^{11}$ keer een beslissing genomen.
+Dit lemma voorkomt, net zoals lemma~\ref{lemma3}, dat er permutaties getest moeten worden.
 
 Als beide lemma's geen uitsluiting bieden, zullen we permutaties moeten nagaan.
 Een na\"ieve methode zou zijn om alle $n!$ permutaties te overlopen.
 In de plaats daarvan zullen we enkel permutaties afgaan die voldoen aan lemma \ref{lemma5}\cite{sortingNetworksSize2014}.
 \begin{lemma}
-	${C_a \preceq C_b  \Rightarrow \pi\left(Outputs\left(C_{a}\right)\right) \subseteq Outputs\left(C_{b}\right)} \Rightarrow \pi\left(w\left(C_a, x, k\right)\right) \subseteq w\left(C_b, x, k\right)$,
+	${C_a \preceq C_b  \Rightarrow \pi\left(outputs\left(C_{a}\right)\right) \subseteq outputs\left(C_{b}\right)} \Rightarrow \pi\left(w\left(C_a, x, k\right)\right) \subseteq w\left(C_b, x, k\right)$,
 	${\forall x \in \{0,1\}, \forall k \in \{1..n\}}$.
 \label{lemma5}
 \end{lemma}
+
+Als ${outputs(C_a) \subseteq outputs(C_b)}$ moet gelden dat alle posities waar een $0$ en een $1$ voorkomt bij $C_a$ dit ook zeker het geval moet zijn bij $C_b$.
+Wanneer dit niet het geval is, zou $C_a$ een uitvoer hebben met een $0$ en een $1$ op een plaats waar $C_b$ dit niet heeft waardoor ${outputs(C_a) \nsubseteq outputs(C_b)}$.
+Deze redenering is het basisidee achter lemma \ref{lemma5}.
 
 Om de mogelijke permutaties bij te houden zullen we gebruik maken van een voorstelling die te zien is in tabel \ref{tabel4}.
 De waarden in een kolom stellen alle mogelijke posities voor die op die plaats kunnen voorkomen.
