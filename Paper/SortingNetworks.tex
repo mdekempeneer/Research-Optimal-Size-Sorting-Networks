@@ -60,9 +60,11 @@ Een sorteernetwerk van optimale grootte daarentegen houdt in dat er geen sorteer
 Mochten er geen comparatoren parallel uitgevoerd worden, bekomt men hierdoor het snelste en goedkoopste netwerk.
 Het onderzoek in deze paper spitst zich toe op het bewijzen van optimale grootte.
 
-Voor optimale diepte was het kleinste open probleem het bewijs voor $17$ kanalen, bewezen door de onderzoeksgroep van onder meer Codish\cite{CodishBackAgain}.
+In 1966 bewees het werk van Floyd en Knuth de optimale groottes voor $1 \leq n \leq 8$\cite{FloydKnuth}.
+Voor optimale diepte vond Parberry een bewijs voor $n = 9$ en $n = 10$ waarna in $2014$ Bundala en Z\'avodn\'y er vonden voor $11 \leq n \leq 16$\cite{Parberry,BundalaZavodny}.
+Het volgende kleinste open probleem bij optimale diepte was dan het bewijs voor $17$ kanalen, bewezen door de onderzoeksgroep van onder meer Codish\cite{CodishBackAgain}.
 Voor optimale grootte was dit voor $9$ kanalen\cite{sortingNetworksSize2014}.
-Bij het bewijzen voor deze $9$ kanalen werd ook indirect het bewijs gegeven voor $10$ kanalen. 
+Bij het bewijs voor $9$ kanalen werd ook indirect het bewijs gegeven voor $10$ kanalen. 
 Bij dit bewijs maakten ze gebruik van zowel een genereer- en snoei-aanpak als een \textit{SAT}-aanpak.
 Dit onderzoek bouwt verder op het voorgaande en tracht dichter bij een bewijs voor $11$ kanalen te komen.
 Enkel gebruik makend van de genereer- en snoei-aanpak zal voor $9$ kanalen de optimale grootte bewezen worden in $3$~uur en $26$~minuten op \'e\'en node bestaande uit twee $12$-core ``Haswell'' Xeon E$5$-$2680$v$3$ processoren ($2.5$GHz, $30$MB level $3$ cache met $64$GB RAM) op de rekeninfrastructuur van het Vlaamse Supercomputer Centrum.
@@ -84,7 +86,8 @@ De uitvoer van een comparator netwerk verwijst naar de partieel geordende vector
 De invoer wordt voorgesteld door $\vec{x} = \{x^1_{1} \dots x^n_{1} \} $. 
 
 Een \textit{sorteernetwerk} is een comparator netwerk met als eigenschap dat de uitvoer gesorteerd is ongeacht de invoer.
-Een sorteernetwerk $C^n_k$ van optimale grootte houdt in dat er geen ander sorteernetwerk $C^n_l$ bestaat waarbij $l < k$. %TODO grootte = aantal comparatoren
+De grootte van een comparator netwerk verwijst naar het aantal comparatoren. 
+Een sorteernetwerk $C^n_k$ van optimale grootte houdt dan in dat er geen ander sorteernetwerk $C^n_l$ bestaat waarbij $l < k$.
 Figuur \ref{Werking} is een voorbeeld van een sorteernetwerk waarop ook de werking gedemonstreerd wordt.
 Deze figuur toont ook twee parallelle lagen, bestaande uit enerzijds de eerste en de tweede comparator en anderzijds uit de derde en de vierde.
 Deze zijn respectievelijk $(1,3), (2,4)$ en $(1,2), (3,4)$.
@@ -111,7 +114,7 @@ De optimale grootte van een sorteernetwerk met $n$ kanalen is reeds bewezen tot 
 	\caption{Minimaal aantal comparatoren bij $6 \leq n \leq 12$ kanalen.}
 	\label{tabel1}
 \end{table}
-%TODO Hard enter?
+
 Voor $n > 10$ zijn er bovengrenzen gekend door zowel concrete voorbeelden als de systematische constructie van Batcher \cite{sortingNetworksApplications}. 
 De ondergrenzen werden gevonden door zowel bewijzen als lemma \ref{lemma1} \cite{Voorhis1972}.
 \begin{lemma}
@@ -146,10 +149,9 @@ Deze methode heeft een cyclisch verloop waarbij men bij elke cyclus de set $R^n_
 \end{figure}
 Specifiek zullen we vertrekken van een netwerk zonder comparatoren om te eindigen bij $R^n_k$ bestaande uit \'e\'en sorteernetwerk van optimale grootte.
 Bij de genereer-stap zullen we aan elk netwerk van $R^n_k$ alle mogelijke comparatoren toevoegen zodat $|N^n_{k+1}| = |R^n_{k}| \times \frac{n\left(n-1\right)}{2}$.
-%TODO aanelkaarpraten zin misschien aanpassen)
 Bij de snoei-stap zullen we dan netwerken verwijderen volgens het subsumes principe beschreven in definitie \ref{definitie1}.
 \begin{definitie}[Subsumes] %TODO VRAGEN SUBSUMES => TOM NEDERLANDS/ENGELS
-	We zeggen ``Comparator netwerk $C^n_{k,a}$ subsumes comparator netwerk $C^n_{k,b}$'' wanneer een permuntatie $\pi$ bestaat zodat ${\pi\left(outputs\left(C_{a}\right)\right) \subseteq outputs\left(C_{b}\right)}$. Dit wordt genoteerd als $ C_{a} \preceq C_{b}$ om aan te duiden dat er een permutatie $\pi$ bestaat zodat $C_{a}\leq_\pi C_{b}$. %TODO Vincent weent om dit te kunnen herzien
+	We zeggen ``Comparator netwerk $C^n_{k,a}$ subsumes comparator netwerk $C^n_{k,b}$'' wanneer een permuntatie $\pi$ bestaat zodat ${\pi\left(outputs\left(C_{a}\right)\right) \subseteq outputs\left(C_{b}\right)}$. Dit wordt genoteerd als $ C_{a} \preceq C_{b}$ om aan te duiden dat er een permutatie $\pi$ bestaat zodat $C_{a}\leq_\pi C_{b}$.
 	\label{definitie1}
 \end{definitie}
 \begin{lemma}
@@ -160,7 +162,7 @@ Concreet kunnen we de definitie van subsumes en lemma~\ref{lemma2} beschreven do
 Wanneer een set van netwerken een sorteernetwerk bevat, zal het snoeien van deze set resulteren in het bekomen van het sorteernetwerk.
 Dit gegeven kan gebruikt worden om de eindigheid van het algoritme in te zien.
 
-Om na te gaan dat er een permutatie $\pi$ bestaat zodat ${\pi\left(Outputs\left(C_{a}\right)\right) \subseteq Outputs\left(C_{b}\right)}$, en dus $C_a \preceq C_{b}$, zouden we alle permutaties kunnen overlopen.
+Om na te gaan dat er een permutatie $\pi$ bestaat zodat ${\pi\left(outputs\left(C_{a}\right)\right) \subseteq outputs\left(C_{b}\right)}$, en dus $C_a \preceq C_{b}$, zouden we alle permutaties kunnen overlopen.
 Om deze kostelijke bewerkingen te vermijden en te versnellen, zullen we extra methoden moeten invoeren om sneller beslissingen te maken over het ``subsumen van een ander netwerk''. 
 Deze beslissingen kunnen zowel tijdens de genereer-stap als de snoei-stap plaats vinden.
 
@@ -173,7 +175,8 @@ Tenslotte wordt het geheugengebruik van de implementatie besproken en wordt er m
 \subsection{Representatie van comparator netwerken}\label{RepresentatieVanComparatorNetwerken}
 Bij de representatie van comparator netwerken moeten we rekening houden met het geheugengebruik en de mogelijkheid om effici\"ente bewerkingen te kunnen uitvoeren.
 Concreet zullen we comparatoren voorstellen door een sequentie van bits waarbij twee bits op \'e\'en staan.
-Bijvoorbeeld  $ \left[ 0 1 0 0 1 0 \right]$ stelt de comparator $\left(2,5\right)$ voor bij een netwerk van $6$ kanalen.
+Bijvoorbeeld  $ \left[ 0 1 0 0 0 1\right]$ stelt de comparator $\left(1,5\right)$ voor bij een netwerk van $6$ kanalen.
+Doordat kanaal $1$ rechts geplaatst wordt, komt elk kanaal beter overeen met zijn bitshift\footnote{Bijvoorbeeld een bitshift naar rechts, $\gg$, zal achteraan een aantal nullen verwijderen.}.
 Om de hoeveelheid overbodige bits te beperken, zullen we bij de \texttt{Java} implementatie gebruik maken van shorts\footnote{In \texttt{Java} bestaat een short uit $16$ bits.}.
 Dit is voldoende voor een bewijs tot en met $16$ kanalen.
 Buiten de comparatoren worden ook de mogelijke uitvoer van het netwerk bijgehouden.
@@ -190,6 +193,7 @@ return - Het resultaat bekomen door de bits van de input om te wisselen afhankel
 short swapCompare(short input, short comp) {
 	int channel1 = 31 - Integer.numberOfLeadingZeros(comp);
 	int channel2 = Integer.numberOfTrailingZeros(comp);
+	
 	int firstBit = (input >> channel1) & 1;
 	int secondBit = (input >> channel2) & 1;
 	
@@ -204,11 +208,11 @@ Een voorbeeld van zo een representatie staat in tabel \ref{tabel2}.
 	\begin{tabular}{r|ccc}
 	Comparators & $\left[0011\right]$ & $\left[1010\right]$ & \\ 
 	\hline 
-	Outputs \'e\'en 1& $\left[0001\right]$ & $\left[0100\right]$ & $\left[0010\right]$ \\ 
+	Uitvoer \'e\'en 1& $\left[0001\right]$ & $\left[0100\right]$ & $\left[0010\right]$ \\ 
 	\hline 
-	Outputs twee 1'en &$\left[0011\right]$ & $\left[0101\right]$ & $\left[0110\right]$\\ 
+	Uitvoer twee 1'en &$\left[0011\right]$ & $\left[0101\right]$ & $\left[0110\right]$\\ 
 	\hline 
-	Outputs drie 1'en & $\left[0111\right]$ & $\left[1011\right]$ &  \\ 
+	Uitvoer drie 1'en & $\left[0111\right]$ & $\left[1011\right]$ &  \\ 
 	\end{tabular}
 	\caption{Representatie $C^4_2$: $(1,2)(2,4)$}
 	\label{tabel2}
@@ -282,6 +286,9 @@ Om de effici\"entie te verhogen kunnen we bij de omzetting van de uitvoer eerder
 Een comparator is namelijk niet overbodig wanneer er een uitvoer bestaat met een $s$ aantal enen waarvoor geldt dat de comparator deze uitvoer wijzigt.
 Deze informatie kan gebruikt worden om bij de omzetting slechts te beginnen bij uitvoer met het aantal enen gelijk aan $s$.
 Een algemene structuur van deze code wordt ge\"illustreerd in Code \ref{PseudocodeS}.
+
+In het ergste geval moeten er aan alle elementen in de set $R^n_k$ alle mogelijke comparatoren worden toegevoegd.
+Dit betekent $\mathcal{O}\left(|R^n_k|\times \frac{n(n-1)}{2} \right)$.
 \begin{lstlisting}[caption={Pseudocode - optimalisatie via $s$}, label=PseudocodeS]
 for(short nieuweComp : comparatoren) {
 	int s = vanafAantalEnenWijzigt(netwerk, nieuweComp);
@@ -300,7 +307,16 @@ Zo gebruiken we onder meer lemma \ref{lemma3} en lemma \ref{lemma4}, beschreven 
 \end{small}
 \cite{sortingNetworksSize2014}.
 
-Bij $9$ kanalen wordt lemma \ref{lemma3} $1.07666 \times 10^{13}$ keer nagegaan waarbij $1.05438 \times 10^{13}$ keer een beslissing genomen wordt.
+\begin{figure}[!h]
+	\includegraphics[width=0.45\textwidth]{VoorbeeldLemmas.png}
+	\caption{Voorbeeld van drie comparator netwerken met elk $5$~kanalen en met bijhorende uitvoerverzamelingen.\protect\cite{sortingNetworksSize2014}}
+	\label{VoorbeeldLemmas}
+\end{figure}
+
+Aangezien een permutatie op de uitvoer geen verandering teweegbrengt op vlak van hoeveelheid en ${\pi(outputs(C_a)) \subseteq outputs(C_b)}$ kan het onmogelijk dat ${|outputs(C_a)| > |outputs(C_b)|}$.
+Dit kan worden doorgetrokken naar de uitvoerverzamelingen met hetzelfde aantal enen.
+Zo zien we bijvoorbeeld in figuur \ref{VoorbeeldLemmas} dat $C_2 \npreceq C_3$ want $C_2$ heeft vier uitvoersequenties met twee enen en $C_3$ heeft er slechts drie.
+Dit vormt lemma \ref{lemma3} en wordt bij $9$ kanalen $1.07666 \times 10^{13}$ keer nagegaan waarbij $1.05438 \times 10^{13}$ keer een beslissing genomen wordt.
 \begin{lemma}
 	Wanneer de uitvoerverzameling bij $C_a$ met $x$ enen ($1 \leq x \leq n$) groter is dan bij $C_b$ weten we dat $C_a \npreceq C_b$ met $C_a$ en $C_b$ twee comparator netwerken.
 \label{lemma3}
@@ -314,16 +330,6 @@ Aangezien er geen uitvoer wordt bijgehouden met $0$ enen en $n$ enen zullen we e
 Dit vereist voor elk dan vier opeenvolgende indices in $w^*$, zoals te zien in figuur \ref{tabel3}.
 Deze informatie slaan we voor elke $k$ op vanaf index\footnote{In \texttt{Java} begint een array met index $0$.} $(k-1) \times 4$.
 Wanneer we bij het toevoegen van een comparator $w^*$ herberekenen, kunnen we net zoals bij de omzetting van de uitvoer slechts beginnen bij de uitvoerverzameling met het aantal enen gelijk aan $s$.
-%\begin{table}[!h]
-%	\centering
-%	\begin{tabu}{|[1.2pt]l|[1.2pt]c|[1.2pt]c|[1.2pt]c|[1.2pt]}
-%	\tabucline[1.2pt]{-}
-%	$w\left(C_a, 0, 1\right)$ & $|w\left(C_a, 0, 1\right)|$  & $w\left(C_a, 1, 1\right)$ & $|w\left(C_a, 1, 1\right)|$\\ 
-%	\tabucline[1.2pt]{-}
-%	\end{tabu} 
-%	\caption{De inhoud van $w$ op indices $0-3$ voor \'e\'en 1.}
-%	\label{tabel3} 
-%\end{table}
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width = 0.45\textwidth]{Tabel3_OpbouwW.png}
@@ -335,17 +341,26 @@ Wanneer we bij het toevoegen van een comparator $w^*$ herberekenen, kunnen we ne
 	Wanneer voor een comparator netwerk $C_a$ en $C_b$ met $n$ kanalen geldt dat $|w\left(C_a, x, k\right)| > |w\left(C_b, x, k\right)|$ voor $x \in \{0,1\}$ en $0 \leq k \leq n$ dan $C_a \npreceq C_b$.
 	\label{lemma4}
 \end{lemma}
-De methode van lemma \ref{lemma4} wordt bij $9$ kanalen ${2.22803 \times 10^{11}}$ keer uitgevoerd waarbij $2.05631 \times 10^{11}$ keer een beslissing genomen wordt.
-Dit lemma voorkomt, net zoals lemma \ref{lemma3}, dat er permutaties getest moeten worden.
+Wanneer ${outputs(C_a) \subseteq outputs(C_b)}$ moet gelden dat het aantal posities waar $C_a$ een $0$ heeft kleiner moet zijn of gelijk aan het aantal bij $C_b$.
+Als dit niet het geval is, zou $C_a$ zeker een positie hebben dewelke $C_b$ niet heeft waardoor dus ${outputs(C_a) \nsubseteq outputs(C_b)}$.
+Dit geldt niet alleen voor een $0$ maar ook voor $1$.
+Als we tenslotte inzien dat een permutatie het aantal posities waar zo een waarde ($0$ of $1$) voorkomt niet wijzigt, krijgen we lemma \ref{lemma4}.
+In figuur \ref{VoorbeeldLemmas} is bijvoorbeeld te zien dat $C_3 \npreceq C_1$ want voor de uitvoerverzameling met vier enen geldt dat een $0$ bij $C_3$ op drie plaatsen voorkomt terwijl dit bij $C_1$ slechts op twee plaatsen is.
+Dit vormt lemma \ref{lemma4} dewelke bij een uitvoer voor $9$ kanalen ${2.22803 \times 10^{11}}$ keer wordt uitgevoerd. Hierbij wordt er $2.05631 \times 10^{11}$ keer een beslissing genomen.
+Dit lemma voorkomt, net zoals lemma~\ref{lemma3}, dat er permutaties getest moeten worden.
 
 Als beide lemma's geen uitsluiting bieden, zullen we permutaties moeten nagaan.
 Een na\"ieve methode zou zijn om alle $n!$ permutaties te overlopen.
 In de plaats daarvan zullen we enkel permutaties afgaan die voldoen aan lemma \ref{lemma5}\cite{sortingNetworksSize2014}.
 \begin{lemma}
-	${C_a \preceq C_b  \Rightarrow \pi\left(Outputs\left(C_{a}\right)\right) \subseteq Outputs\left(C_{b}\right)} \Rightarrow \pi\left(w\left(C_a, x, k\right)\right) \subseteq w\left(C_b, x, k\right)$,
+	${C_a \preceq C_b  \Rightarrow \pi\left(outputs\left(C_{a}\right)\right) \subseteq outputs\left(C_{b}\right)} \Rightarrow \pi\left(w\left(C_a, x, k\right)\right) \subseteq w\left(C_b, x, k\right)$,
 	${\forall x \in \{0,1\}, \forall k \in \{1..n\}}$.
 \label{lemma5}
 \end{lemma}
+
+Als ${outputs(C_a) \subseteq outputs(C_b)}$ moet gelden dat alle posities waar een $0$ en een $1$ voorkomt bij $C_a$ dit ook zeker het geval moet zijn bij $C_b$.
+Wanneer dit niet het geval is, zou $C_a$ een uitvoer hebben met een $0$ en een $1$ op een plaats waar $C_b$ dit niet heeft waardoor ${outputs(C_a) \nsubseteq outputs(C_b)}$.
+Deze redenering is het basisidee achter lemma \ref{lemma5}.
 
 Om de mogelijke permutaties bij te houden zullen we gebruik maken van een voorstelling die te zien is in tabel \ref{tabel4}.
 De waarden in een kolom stellen alle mogelijke posities voor die op die plaats kunnen voorkomen.
@@ -357,7 +372,7 @@ Hierna gebruiken we lemma \ref{lemma5} om posities uit de kolommen te verwijdere
 	\begin{tabular}{|c|c|c|c|}
 	\hline
 	1 & 2 & 2 & 1 \\ 
-	2 & 3 &  &  \\ 
+	2 & 3 &  &  4\\ 
 	4 &  &  &  \\ 
 	\hline 
 	\end{tabular}
@@ -403,6 +418,9 @@ Mocht op het einde een kolom \'e\'en element hebben, mogen we dit element uit al
 We kunnen nadien ook nog nagaan of alle elementen minstens \'e\'enmaal voorkomen in de hele tabel.
 Tot slot gebruiken we de overblijvende permutatietabel om onze mogelijke permutaties, die aan lemma \ref{lemma5} voldoen, na te gaan. 
 Dit kan onder andere door middel van een recursieve methode.
+
+In het ergste geval moeten we voor elk element in $N^n_{k+1}$ subsumes nagaan met elk ander element in $N^n_{k+1}$.
+Nemen we voor de kost van een subsumes-test $f(n)$ dan betekent dit $\mathcal{O}\left(|N^n_{k+1}| \times \left(|N^n_{k+1}|-1\right) \times f(n) \right) $.
 
 \subsection{Parallellisatie}\label{Parallellisatie}
 \begin{wrapfigure}{l}{0.20\textwidth}
@@ -526,7 +544,7 @@ De bekomen resultaten van dit werk zijn afkomstig van het uitvoeren op \'e\'en n
 		ybar=1pt,
 		ymode = log,
 		log basis y = 10,
-		bar width=9pt,
+		bar width=20pt,
 		nodes near coords,
 		point meta=10^y,
 		ymajorgrids = true,

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.29)  5 MAY 2016 19:31
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.29)  6 MAY 2016 11:53
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -789,165 +789,184 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 34.
-
-<NetworkTransparent.png, id=4, 606.01407pt x 280.79906pt>
-File: NetworkTransparent.png Graphic file (type png)
-
-<use NetworkTransparent.png>
-Package pdftex.def Info: NetworkTransparent.png used on input line 94.
-(pdftex.def)             Requested size: 202.3529pt x 93.76083pt.
  [1{/usr/local/texlive/2015/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
 
 
 ]
+<NetworkTransparent.png, id=17, 606.01407pt x 280.79906pt>
+File: NetworkTransparent.png Graphic file (type png)
+
+<use NetworkTransparent.png>
+Package pdftex.def Info: NetworkTransparent.png used on input line 97.
+(pdftex.def)             Requested size: 202.3529pt x 93.76083pt.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 118.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 121.
  [2 <./NetworkTransparent.png>]
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 173.
-LaTeX Font Info:    Try loading font information for OT1+pcr on input line 177.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 175.
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 180.
 
 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
-Overfull \hbox (7.11339pt too wide) in paragraph at lines 237--238
+Overfull \hbox (7.11339pt too wide) in paragraph at lines 241--242
  [][] 
  []
 
 
-Overfull \hbox (7.11339pt too wide) in paragraph at lines 258--259
+Overfull \hbox (7.11339pt too wide) in paragraph at lines 262--263
  [][] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 220--262
+Underfull \hbox (badness 10000) in paragraph at lines 224--266
 [][]
  []
 
-[3] <Tabel3_OpbouwW.png, id=30, 468.24937pt x 30.86531pt>
-File: Tabel3_OpbouwW.png Graphic file (type png)
+[3] <VoorbeeldLemmas.png, id=31, 339.51843pt x 209.28188pt>
+File: VoorbeeldLemmas.png Graphic file (type png)
 
-<use Tabel3_OpbouwW.png>
-Package pdftex.def Info: Tabel3_OpbouwW.png used on input line 329.
+<use VoorbeeldLemmas.png>
+Package pdftex.def Info: VoorbeeldLemmas.png used on input line 311.
+(pdftex.def)             Requested size: 227.64894pt x 140.32349pt.
+
+Underfull \hbox (badness 3635) in paragraph at lines 316--320
+[]\OT1/ptm/m/n/10 Aangezien een per-mu-ta-tie op de uit-voer geen ver-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 316--320
+\OT1/ptm/m/n/10 an-de-ring te-weeg-brengt op vlak van hoe-veel-heid en
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 316--320
+[]$ \OT1/ptm/m/n/10 kan het on-mo-ge-lijk
+ []
+
+<Tabel3_OpbouwW.png, id=32, 468.24937pt x 30.86531pt>
+File: Tabel3_OpbouwW.png Graphic file (type png)
+ <use Tabel3_OpbouwW.png>
+Package pdftex.def Info: Tabel3_OpbouwW.png used on input line 335.
 (pdftex.def)             Requested size: 227.64894pt x 15.0059pt.
 
-Underfull \hbox (badness 1158) in paragraph at lines 308--333
+Underfull \hbox (badness 1158) in paragraph at lines 324--339
 []\OT1/ptm/m/n/10 Voor lemma 4[] in-tro-du-ce-ren we ex-tra in-for-ma-tie over
  []
 
 
-Underfull \hbox (badness 3219) in paragraph at lines 308--333
+Underfull \hbox (badness 3219) in paragraph at lines 324--339
 \OT1/ptm/m/n/10 het com-pa-ra-tor net-werk, na-me-lijk $\OML/cmm/m/it/10 w []$ 
 \OT1/ptm/m/n/10 waar-bij
  []
 
 
-Underfull \hbox (badness 7888) in paragraph at lines 338--340
-[]\OT1/ptm/m/n/10 De me-thode van lemma 4[] wordt bij $\OT1/cmr/m/n/10 9$ \OT1/
-ptm/m/n/10 ka-na-len
- []
-
-
-Overfull \hbox (10.53934pt too wide) in paragraph at lines 345--348
+Overfull \hbox (4.4227pt too wide) in paragraph at lines 356--359
 []\OT1/ptm/b/n/10 Lemma 5. []$[] \OMS/cmsy/m/n/10 )
  []
 
-<Gen_Prune_Opbouw.png, id=31, 225.09094pt x 435.12563pt>
+[4 <./VoorbeeldLemmas.png> <./Tabel3_OpbouwW.png>]
+<Gen_Prune_Opbouw.png, id=37, 225.09094pt x 435.12563pt>
 File: Gen_Prune_Opbouw.png Graphic file (type png)
 
 <use Gen_Prune_Opbouw.png>
-Package pdftex.def Info: Gen_Prune_Opbouw.png used on input line 410.
+Package pdftex.def Info: Gen_Prune_Opbouw.png used on input line 428.
 (pdftex.def)             Requested size: 112.54518pt x 217.56227pt.
 
-Overfull \hbox (11.36873pt too wide) in paragraph at lines 410--411
+Overfull \hbox (11.36873pt too wide) in paragraph at lines 428--429
  [][] 
  []
 
-[4 <./Tabel3_OpbouwW.png>]
-Underfull \hbox (badness 1275) in paragraph at lines 414--422
+
+Underfull \hbox (badness 1275) in paragraph at lines 432--440
 \OT1/ptm/m/n/10 stap uit-voe-ren en ver-vol-gens
  []
 
 
-Underfull \hbox (badness 1406) in paragraph at lines 414--422
+Underfull \hbox (badness 1406) in paragraph at lines 432--440
 \OML/cmm/m/it/10 k \OT1/cmr/m/n/10 + 1$ \OT1/ptm/m/n/10 com-pa-ra-to-ren waarop
 
  []
 
 
-Underfull \hbox (badness 1796) in paragraph at lines 414--422
+Underfull \hbox (badness 1796) in paragraph at lines 432--440
 \OT1/ptm/m/n/10 ma-ken van een va-ri-a-bele die bij-houdt op welke in-dex
  []
 
 
-Underfull \hbox (badness 4254) in paragraph at lines 424--424
+Underfull \hbox (badness 4254) in paragraph at lines 442--442
 [][]\OT1/ptm/m/n/9 Bij de \OT1/pcr/m/n/9 Java \OT1/ptm/m/n/9 im-ple-men-ta-tie 
 zul-len we ver-wij-de-ren via
  []
 
-PGFPlots: reading {netwerkVerloop7kanalen.dat}
-PGFPlots: reading {netwerkVerloop8kanalen.dat}
-PGFPlots: reading {netwerkVerloop9kanalen.dat}
-PGFPlots: reading {netwerkVerloop10kanalen.dat}
-PGFPlots: reading {netwerkVerloop7kanalen.dat}
-PGFPlots: reading {netwerkVerloop8kanalen.dat}
-PGFPlots: reading {netwerkVerloop9kanalen.dat}
-PGFPlots: reading {netwerkVerloop10kanalen.dat}
-Missing character: There is no ; in font nullfont!
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-Missing character: There is no ; in font nullfont!
 [5 <./Gen_Prune_Opbouw.png>]
-<Benadering10_paper.png, id=40, 421.575pt x 316.18124pt>
+PGFPlots: reading {netwerkVerloop7kanalen.dat}
+PGFPlots: reading {netwerkVerloop8kanalen.dat}
+PGFPlots: reading {netwerkVerloop9kanalen.dat}
+PGFPlots: reading {netwerkVerloop10kanalen.dat}
+PGFPlots: reading {netwerkVerloop7kanalen.dat}
+PGFPlots: reading {netwerkVerloop8kanalen.dat}
+PGFPlots: reading {netwerkVerloop9kanalen.dat}
+PGFPlots: reading {netwerkVerloop10kanalen.dat}
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+
+Overfull \hbox (2.48923pt too wide) in paragraph at lines 559--560
+ [][] 
+ []
+
+<Benadering10_paper.png, id=42, 421.575pt x 316.18124pt>
 File: Benadering10_paper.png Graphic file (type png)
 
 <use Benadering10_paper.png>
-Package pdftex.def Info: Benadering10_paper.png used on input line 553.
+Package pdftex.def Info: Benadering10_paper.png used on input line 571.
 (pdftex.def)             Requested size: 247.88887pt x 185.91812pt.
 
-Overfull \hbox (3.97762pt too wide) in paragraph at lines 553--554
+Overfull \hbox (3.97762pt too wide) in paragraph at lines 571--572
  [][] 
  []
 
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-<Profile_Time_9.png, id=41, 331.99031pt x 136.25906pt>
+[6] <Profile_Time_9.png, id=46, 331.99031pt x 136.25906pt>
 File: Profile_Time_9.png Graphic file (type png)
 
 <use Profile_Time_9.png>
-Package pdftex.def Info: Profile_Time_9.png used on input line 567.
+Package pdftex.def Info: Profile_Time_9.png used on input line 585.
 (pdftex.def)             Requested size: 247.88887pt x 101.74077pt.
 
-Overfull \hbox (3.97762pt too wide) in paragraph at lines 567--568
+Overfull \hbox (3.97762pt too wide) in paragraph at lines 585--586
  [][] 
  []
 
-[6 <./Benadering10_paper.png (PNG copy)> <./Profile_Time_9.png>]
 
 Package pgfplots Warning: Axis range for axis x is approximately empty; enlargi
-ng it (it is [1.0000000000:1.0000000000]) on input line 609.
+ng it (it is [1.0000000000:1.0000000000]) on input line 627.
 
  [warning /pgfplots/warning/approx empty range enlarged]
+[7 <./Benadering10_paper.png (PNG copy)> <./Profile_Time_9.png>]
 (./SortingNetworks.bbl
-Underfull \hbox (badness 2608) in paragraph at lines 20--24
+Underfull \hbox (badness 10000) in paragraph at lines 11--14
+[]\OT1/ptm/m/n/10 Daniel Bundala and
+ []
+
+
+Underfull \hbox (badness 1097) in paragraph at lines 11--14
+\OT1/ptm/m/n/10 Jakub Zavodny.  Op-ti-mal sor-ting net-works.  \OT1/ptm/m/it/10
+ CoRR\OT1/ptm/m/n/10 ,
+ []
+
+
+Underfull \hbox (badness 5832) in paragraph at lines 25--29
 []\OT1/ptm/m/n/10 Michael Co-dish, Lu[]^^Ps Cruz-Filipe,
  []
 
-
-Underfull \hbox (badness 2318) in paragraph at lines 27--31
-[]\OT1/ptm/m/n/10 Michael Co-dish, Luis Cruz-Filipe,
- []
-
-) [7] (./SortingNetworks.aux) ) 
+) [8] (./SortingNetworks.aux) ) 
 Here is how much of TeX's memory you used:
- 26646 strings out of 493089
- 656660 string characters out of 6134842
- 869542 words of memory out of 5000000
- 29637 multiletter control sequences out of 15000+600000
+ 26653 strings out of 493089
+ 656753 string characters out of 6134842
+ 866428 words of memory out of 5000000
+ 29643 multiletter control sequences out of 15000+600000
  32152 words of font info for 81 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  62i,21n,100p,731b,2213s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -961,15 +980,16 @@ r10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7
 .pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pf
 b></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb
 ></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb><
-/usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.p
-fb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr
-/local/texlive/2015/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/tex
-live/2015/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2015/
-texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on SortingNetworks.pdf (7 pages, 278823 bytes).
+/usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></u
+sr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb
+></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/l
+ocal/texlive/2015/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texli
+ve/2015/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2015/te
+xmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on SortingNetworks.pdf (8 pages, 302759 bytes).
 PDF statistics:
- 96 PDF objects out of 1000 (max. 8388607)
- 65 compressed objects within 1 object stream
+ 104 PDF objects out of 1000 (max. 8388607)
+ 70 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 38 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 43 words of extra memory for PDF output out of 10000 (max. 10000000)
 
