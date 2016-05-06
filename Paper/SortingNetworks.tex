@@ -305,6 +305,10 @@ Zo gebruiken we onder meer lemma \ref{lemma3} en lemma \ref{lemma4}, beschreven 
 \end{small}
 \cite{sortingNetworksSize2014}.
 
+%TODO aan elkaar praten (refereer naar de paper)
+Aangezien een permutatie op de uitvoer geen verandering teweegbrengt op vlak van hoeveelheid en ${\pi(outputs(C_a)) \subseteq outputs(C_b)}$ kan het onmogelijk dat ${|outputs(C_a)| > |outputs(C_b)|}$.
+Dit kan worden doorgetrokken naar de uitvoerverzamelingen met hetzelfde aantal enen.
+
 Bij $9$ kanalen wordt lemma \ref{lemma3} $1.07666 \times 10^{13}$ keer nagegaan waarbij $1.05438 \times 10^{13}$ keer een beslissing genomen wordt.
 \begin{lemma}
 	Wanneer de uitvoerverzameling bij $C_a$ met $x$ enen ($1 \leq x \leq n$) groter is dan bij $C_b$ weten we dat $C_a \npreceq C_b$ met $C_a$ en $C_b$ twee comparator netwerken.
@@ -352,7 +356,7 @@ Hierna gebruiken we lemma \ref{lemma5} om posities uit de kolommen te verwijdere
 	\begin{tabular}{|c|c|c|c|}
 	\hline
 	1 & 2 & 2 & 1 \\ 
-	2 & 3 &  &  \\ 
+	2 & 3 &  &  4\\ 
 	4 &  &  &  \\ 
 	\hline 
 	\end{tabular}
@@ -524,7 +528,7 @@ De bekomen resultaten van dit werk zijn afkomstig van het uitvoeren op \'e\'en n
 		ybar=1pt,
 		ymode = log,
 		log basis y = 10,
-		bar width=9pt,
+		bar width=20pt,
 		nodes near coords,
 		point meta=10^y,
 		ymajorgrids = true,
