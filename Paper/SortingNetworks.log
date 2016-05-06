@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.29)  6 MAY 2016 11:53
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.29)  6 MAY 2016 15:15
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -913,7 +913,7 @@ PGFPlots: reading {netwerkVerloop10kanalen.dat}
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 
-Overfull \hbox (2.48923pt too wide) in paragraph at lines 559--560
+Overfull \hbox (2.48923pt too wide) in paragraph at lines 560--561
  [][] 
  []
 
@@ -921,10 +921,10 @@ Overfull \hbox (2.48923pt too wide) in paragraph at lines 559--560
 File: Benadering10_paper.png Graphic file (type png)
 
 <use Benadering10_paper.png>
-Package pdftex.def Info: Benadering10_paper.png used on input line 571.
+Package pdftex.def Info: Benadering10_paper.png used on input line 572.
 (pdftex.def)             Requested size: 247.88887pt x 185.91812pt.
 
-Overfull \hbox (3.97762pt too wide) in paragraph at lines 571--572
+Overfull \hbox (3.97762pt too wide) in paragraph at lines 572--573
  [][] 
  []
 
@@ -932,18 +932,26 @@ Overfull \hbox (3.97762pt too wide) in paragraph at lines 571--572
 File: Profile_Time_9.png Graphic file (type png)
 
 <use Profile_Time_9.png>
-Package pdftex.def Info: Profile_Time_9.png used on input line 585.
+Package pdftex.def Info: Profile_Time_9.png used on input line 586.
 (pdftex.def)             Requested size: 247.88887pt x 101.74077pt.
 
-Overfull \hbox (3.97762pt too wide) in paragraph at lines 585--586
+Overfull \hbox (3.97762pt too wide) in paragraph at lines 586--587
  [][] 
  []
 
 
 Package pgfplots Warning: Axis range for axis x is approximately empty; enlargi
-ng it (it is [1.0000000000:1.0000000000]) on input line 627.
+ng it (it is [1.0000000000:1.0000000000]) on input line 628.
 
  [warning /pgfplots/warning/approx empty range enlarged]
+
+Package pgfplots Warning: Axis range for axis x is approximately empty; enlargi
+ng it (it is [1.0000000000:1.0000000000]) on input line 663.
+
+ [warning /pgfplots/warning/approx empty range enlarged]
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
 [7 <./Benadering10_paper.png (PNG copy)> <./Profile_Time_9.png>]
 (./SortingNetworks.bbl
 Underfull \hbox (badness 10000) in paragraph at lines 11--14
@@ -963,13 +971,13 @@ Underfull \hbox (badness 5832) in paragraph at lines 25--29
 
 ) [8] (./SortingNetworks.aux) ) 
 Here is how much of TeX's memory you used:
- 26653 strings out of 493089
- 656753 string characters out of 6134842
- 866428 words of memory out of 5000000
- 29643 multiletter control sequences out of 15000+600000
+ 26672 strings out of 493089
+ 657132 string characters out of 6134842
+ 866420 words of memory out of 5000000
+ 29662 multiletter control sequences out of 15000+600000
  32152 words of font info for 81 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 62i,21n,100p,731b,2213s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 62i,21n,100p,731b,2203s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2015/texmf-dist/fonts/enc/dv
 ips/base/8r.enc}</usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts
 /cm/cmex10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/
@@ -986,7 +994,7 @@ sr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb
 ocal/texlive/2015/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texli
 ve/2015/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2015/te
 xmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on SortingNetworks.pdf (8 pages, 302759 bytes).
+Output written on SortingNetworks.pdf (8 pages, 304887 bytes).
 PDF statistics:
  104 PDF objects out of 1000 (max. 8388607)
  70 compressed objects within 1 object stream

@@ -538,7 +538,7 @@ De bekomen resultaten van dit werk zijn afkomstig van het uitvoeren op \'e\'en n
 \centering
 \begin{tikzpicture} 
 	\begin{axis}[
-		ylabel = Tijd (miliseconde),
+		ylabel = Tijd (milliseconde),
 		xlabel = Aantal kanalen,
 		enlargelimits=0.15,
 		ybar=1pt,
@@ -548,13 +548,14 @@ De bekomen resultaten van dit werk zijn afkomstig van het uitvoeren op \'e\'en n
 		nodes near coords,
 		point meta=10^y,
 		ymajorgrids = true,
-		legend pos = north west
+		legend pos = north west,
+		legend image code/.code={ \draw[#1, draw=none] (0cm,-0.1cm) rectangle (0.6cm,0.1cm);}
 		]
 \addplot
 	coordinates {(5, 25.331106) (6, 61.339344) (7, 245.313463) (8, 5804.849367) (9, 12366987.991024)};	
 \addplot
 	coordinates {(9, 1101480000)};
-\legend{Dekempeneer \& Derkinderen, \cite{sortingNetworksSize2014}};
+\legend{Dekempeneer \& Derkinderen, Eerder werk};
 \end{axis}
 \end{tikzpicture}
 \caption{Tijdsmetingen voor uitvoer bij $5$ tot en met $9$ kanalen.}
@@ -569,11 +570,11 @@ Gebaseerd op figuur \ref{tijdverloop10kanalen} schatten we dat voor $10$ kanalen
 \begin{figure}[!h]
 \centering
 \includegraphics[width = 0.49\textwidth]{Benadering10_paper.png}
-\caption{Tijdsverloop $10$ kanalen tot en met de  $13^{de}$ comparator en benadering van tijdsverloop tot en met de $16^{de}$ comparator.}
+\caption{Tijdsverloop $10$ kanalen tot en met de  $13^{de}$ comparator en benadering van tijdsverloop tot en met de $16^{de}$ comparator, de vermoedelijke piek.}
 \label{tijdverloop10kanalen}
 \end{figure}
 
-\subsection{Profilering}
+\subsection{Profilering}\label{Profilering}
 Via een profilering, zoals in figuur \ref{ProfileTime9}, kunnen we de bottleneck vaststellen met als doel de uitvoeringstijd te verbeteren.
 In dit profiel zien we dat de snoei-methode, de prune-methode in de figuur, duidelijk de bottleneck is.
 In deze methode wordt er door een thread voor elk netwerk in de gedeelde lijst subsumes uitgevoerd met elk netwerk in zijn eigen lijst, zoals beschreven in sectie \ref{Parallellisatie}.
@@ -629,6 +630,42 @@ Tijdens de opbouw gebeurt deze beslissing wanneer er geen geschikte permutatie b
 \caption{Aantal beslissingen bij een uitvoer voor $9$ kanalen.}
 \label{AantalBeslissingen9Kanalen}
 \end{figure}
+
+In figuur \ref{AantalSnoeiBeslissingen9Kanalen} wordt er specifieker gekeken naar de beslissingen in de snoei-stap.
+Hier zien we dat lemma \ref{lemma3} het grootste aantal beslissingen maakt.
+Dit is deels te wijten aan het feit dat deze als eerste wordt nagegaan in de implementatie.
+Het is dan ook belangrijk dat dit lemma effici\"ent wordt ge\"implementeerd.
+Er zou nog onderzoek gedaan kunnen worden naar of we dit lemma al da niet kunnen gebruiken om netwerken in de gedeelde lijst over te slagen, zoals reeds vermeld in sectie \ref{Profilering}.
+Zo zou bijvoorbeeld de set van elke thread na het intern snoeien gesorteerd kunnen worden volgens een bepaald argument alvorens deze toe te voegen aan de gedeelde lijst.
+Vervolgens zou men dan via dit argument kunnen beslissen om al dan niet een bepaald aantal netwerken in de gedeelde lijst over te slaan.
+\begin{figure}[!h]
+\centering
+      \begin{tikzpicture}
+          \begin{axis}[
+              ybar,
+              ymode = log,
+			log basis y = 10,
+              ymajorgrids,
+              yminorgrids,
+              bar width=30pt,
+              ylabel=Aantal beslissingen,
+              xticklabels={},
+              xtick=\empty,
+              nodes near coords align={vertical},
+			legend image code/.code={ \draw[#1, draw=none] (0cm,-0.1cm) rectangle (0.6cm,0.1cm);},              
+              %legend style={font=\tiny}
+              ]
+
+              \addplot+[error bars/.cd, y dir=both, y explicit] coordinates{ (1,10543800000000)};
+              \addplot+[error bars/.cd, y dir=both, y explicit] coordinates{ (1,102068000000)};
+              \addplot+[error bars/.cd, y dir=both, y explicit] coordinates{ (1,103563000000)};
+             \legend{lemma \ref{lemma3}, lemma \ref{lemma4}: $x = 0$, lemma \ref{lemma4}: $x = 1$}
+          \end{axis}
+      \end{tikzpicture}
+\caption{Aantal beslissingen tijdens het snoeien bij een uitvoer voor $9$ kanalen.}
+\label{AantalSnoeiBeslissingen9Kanalen}
+\end{figure}
+
 
 \section{Conclusies}
 Onze implementatie van de genereer- en snoei-aanpak van Codish \textit{et al} zorgde voor een bewijs voor $9$ kanalen na $3$~uur en $26$~min, een versnelling ten opzichte van de eerdere $305$~uur.
