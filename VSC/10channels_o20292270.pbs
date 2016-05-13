@@ -17,3 +17,45 @@ Cycle complete with 10 comps and size 105331 took 54304 ms
 Cycle complete with 11 comps and size 544952 took 1079551 ms
 Cycle complete with 12 comps and size 2625382 took 22804439 ms
 Cycle complete with 13 comps and size 11054969 took 434782476 ms
+========================================================================
+Epilogue args:
+Date: Mon May  9 06:01:03 CEST 2016
+Allocated nodes:
+r8i0n10
+r8i0n10
+r8i0n10
+r8i0n10
+r8i0n10
+r8i0n10
+r8i0n10
+r8i0n10
+r8i0n10
+r8i0n10
+r8i0n10
+r8i0n10
+r8i0n10
+r8i0n10
+r8i0n10
+r8i0n10
+r8i0n10
+r8i0n10
+r8i0n10
+r8i0n10
+r8i0n10
+r8i0n10
+r8i0n10
+r8i0n10
+Job ID: 20292270.hpc-p-svcs-10.icts.hpc.kuleuven.be
+User ID: vsc31479
+Group ID: vsc31479
+Job Name: 10channels.pbs
+Session ID: 26654
+Resource List: neednodes=1:ppn=24:haswell,nodes=1:ppn=24:haswell,pmem=2500mb,walltime=299:00:00
+Resources Used: cput=6335:06:20,energy_used=0,mem=17161896kb,vmem=21003520kb,walltime=299:00:04
+Queue Name: q21d
+Account String: 
+-------------------------------------------------------------------------
+time: 1076404
+nodes: 1
+procs: 24
+account: default_project
