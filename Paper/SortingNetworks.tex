@@ -576,7 +576,7 @@ Gebaseerd op Figuur~\ref{tijdverloop10kanalen} schatten we dat voor $10$ kanalen
 \subsection{Profilering}\label{Profilering}
 Via een profilering, zoals in Figuur \ref{ProfileTime9}, kunnen we de bottleneck vaststellen met als doel de uitvoeringstijd te verbeteren.
 In dit profiel zien we dat de snoei-methode, de prune-methode in de figuur, duidelijk de bottleneck is.
-In deze methode wordt er door een thread voor elk netwerk in de gedeelde lijst subsumes uitgevoerd met elk netwerk in zijn eigen lijst, zoals beschreven in sectie \ref{Parallellisatie}.
+In deze methode wordt er door een thread voor elk netwerk in de gedeelde lijst subsumes testen uitgevoerd met elk netwerk in zijn eigen lijst, zoals beschreven in Sectie \ref{Parallellisatie}.
 Wanneer we de uitvoeringstijd willen verbeteren, kunnen we enerzijds proberen deze prune methode te voorkomen zoals bijvoorbeeld in de genereer-stap en anderzijds door deze prune-methode effici\"enter te maken.
 Hier kan bijvoorbeeld onderzoek gedaan worden naar of men al dan niet onder een bepaalde voorwaarde netwerken van de eigen lijst kan overslaan.
 \begin{figure}[!h]
