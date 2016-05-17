@@ -588,15 +588,15 @@ Hier kan bijvoorbeeld onderzoek gedaan worden naar of men al dan niet onder een 
 \end{figure}
 
 \subsection{Beslissingen}
-Door de genereer- en snoei-aanpak mag het totaal aantal te overlopen netwerken dan wel gedaald zijn, de hoeveelheid beslissingen dat er genomen moeten worden blijft nog steeds hoog zoals te zien in Figuur \ref{AantalBeslissingen9Kanalen}.
+Door de genereer- en snoei-aanpak mag het totaal aantal te overlopen netwerken dan wel gedaald zijn, de hoeveelheid beslissingen die genomen moeten worden blijft nog steeds hoog zoals te zien in Figuur \ref{AantalBeslissingen9Kanalen}.
 In deze figuur zien we dat de meeste beslissingen genomen worden tijdens het snoeien.
-Er moet echter wel een onderscheid gemaakt worden in het soort van beslissingen.
+Er moet echter wel een onderscheid gemaakt worden tussen de soorten van beslissingen.
 De beslissingen genomen in de genereer-stap zijn beslissingen die het genereren van een netwerk voorkomen en zijn gebaseerd op redundante comparatoren.
 Deze beslissingen zorgen voor minder netwerken in de gedeelde lijst en dus voor zowel minder snoei-operaties als geheugenverbruik.
 
 De beslissingen genomen in de snoei-stap daarentegen, zijn beslissingen die enkel voorkomen dat er permutaties moeten worden opgebouwd om na te gaan of $C_a \preceq C_b$ geldt.
 Deze zorgen er dus niet voor dat een netwerk uit de gedeelde lijst verdwijnt, enkel dat er niet al te veel tijd gespendeerd wordt aan het onnodig nagaan van permutaties.
-Hier wordt onder meer Lemma~\ref{lemma3} en Lemma~\ref{lemma4} gebruikt.
+Hier worden onder meer Lemma~\ref{lemma3} en Lemma~\ref{lemma4} gebruikt.
 
 Vervolgens zijn er nog de beslissingen die genomen worden tijdens de opbouw van de mogelijke permutaties en tijdens het aflopen van deze permutaties.
 Tijdens de opbouw gebeurt deze beslissing wanneer er geen geschikte permutatie bestaat doordat de permutatietabel een lege kolom bevat.
@@ -632,10 +632,10 @@ Tijdens de opbouw gebeurt deze beslissing wanneer er geen geschikte permutatie b
 
 In Figuur \ref{AantalSnoeiBeslissingen9Kanalen} wordt er specifieker gekeken naar de beslissingen in de snoei-stap.
 Hier zien we dat Lemma \ref{lemma3} het grootste aantal beslissingen maakt.
-Dit is deels te wijten aan het feit dat deze als eerste wordt nagegaan in de implementatie.
+Dit is deels te wijten aan het feit dat het als eerste wordt nagegaan in de implementatie.
 Het is dan ook belangrijk dat dit lemma effici\"ent wordt ge\"implementeerd.
-Er zou nog onderzoek gedaan kunnen worden naar of we dit lemma al da niet kunnen gebruiken om netwerken in de gedeelde lijst over te slagen, zoals reeds vermeld in sectie \ref{Profilering}.
-Zo zou bijvoorbeeld de set van elke thread na het intern snoeien gesorteerd kunnen worden volgens een bepaald argument alvorens deze toe te voegen aan de gedeelde lijst.
+Er zou nog onderzoek gedaan kunnen worden naar of we dit lemma al dan niet kunnen gebruiken om netwerken in de gedeelde lijst over te slaan, zoals reeds vermeld in Sectie \ref{Profilering}.
+Zo zou bijvoorbeeld de verzameling van elke thread na het intern snoeien gesorteerd kunnen worden volgens een bepaald argument alvorens ze toe te voegen aan de gedeelde lijst.
 Vervolgens zou men dan via dit argument kunnen beslissen om al dan niet een bepaald aantal netwerken in de gedeelde lijst over te slaan.
 \begin{figure}[!h]
 \centering
