@@ -52,14 +52,14 @@ Comparatornetwerken bestaan uit zowel kanalen als comparatoren.
 De kanalen dienen voor invoer van data en de comparatoren, dewelke elk twee kanalen verbinden, zorgen voor de operaties op deze data.
 Een comparator zal namelijk de data verkregen van de twee verbonden kanalen vergelijken en gesorteerd terugplaatsen op deze twee kanalen.
 Dit zorgt ervoor dat een datasequentie ingevoerd bij een comparatornetwerk er partieel gesorteerd zal uitkomen.
-Sorteernetwerken daarentegen zijn comparatornetwerken waarvoor geldt dat bij elke mogelijke invoer de uitvoer een volledig gesorteerde sequentie is.
-Wanneer twee of meerdere opeenvolgende comparatoren geen gemeenschappelijk kanaal hebben, worden deze aanschouwd als een parallelle laag. 
+Sorteernetwerken zijn comparatornetwerken waarvoor geldt dat bij elke mogelijke invoer de uitvoer een volledig gesorteerde sequentie is.
+Wanneer twee of meer opeenvolgende comparatoren geen gemeenschappelijk kanaal hebben, worden deze aanschouwd als een parallelle laag. 
 
 Voor sorteernetwerken is er zowel onderzoek naar optimale diepte als optimale grootte.
 Een sorteernetwerk van optimale diepte houdt in dat er geen sorteernetwerk bestaat met even veel kanalen maar met minder parallelle lagen.
 Dit betekent dat, mits elke comparator in een parallelle laag parallel uitgevoerd wordt, men het snelst mogelijke netwerk bekomt.
 Een sorteernetwerk van optimale grootte daarentegen houdt in dat er geen sorteernetwerk bestaat met even veel kanalen maar met minder comparatoren.
-Mochten er geen comparatoren parallel uitgevoerd worden, bekomt men hierdoor het snelste en goedkoopste netwerk.
+Mochten comparatoren niet parallel uitgevoerd kunnen worden, bekomt men hierdoor het snelste en goedkoopste netwerk.
 Het onderzoek in deze paper spitst zich toe op het bewijzen van optimale grootte.
 
 In 1966 bewees het werk van Floyd en Knuth de optimale groottes voor $1 \leq n \leq 8$ \cite{FloydKnuth}.
@@ -74,8 +74,9 @@ Dit is een verbetering van $194$~uur ten opzichte van de \textit{SAT}-aanpak en 
 De resultaten van dit eerder werk zijn beide bekomen door een parallelle uitvoer op $144$ Intel E$8400$ cores ($3.0$GHz) met elk $2$ threads.
 
 De volgende sectie licht de relevante concepten en het probleem toe.
-Vervolgens wordt in sectie \ref{VoorgesteldeOplossing} de voorgestelde oplossing beschreven, deze omvat onder meer de genereer- en snoei-aanpak, de representatie van een comparatornetwerk en de parallellisatie.
-Tenslotte wordt er ge\"eindigd met een evaluatie in sectie \ref{Evaluatie}.
+Vervolgens wordt in Sectie \ref{VoorgesteldeOplossing} de voorgestelde oplossing beschreven.
+Deze omvat onder meer de genereer- en snoei-aanpak, de representatie van een comparatornetwerk en de parallellisatie.
+Tenslotte wordt er ge\"eindigd met een evaluatie in Sectie \ref{Evaluatie}.
 
 \section{Probleemstelling}
 Een \textit{comparatornetwerk} $C^n_k$ bestaat uit $n$ kanalen en $k$ \textit{comparatoren}.
@@ -309,6 +310,7 @@ Zo gebruiken we onder meer Lemma \ref{lemma3} en Lemma \ref{lemma4}, beschreven 
  \cite{sortingNetworksSize2014}.
 
 \begin{figure}[!h]
+	\centering
 	\includegraphics[width=0.45\textwidth]{VoorbeeldLemmas.png}
 	\caption{Voorbeeld van drie comparatornetwerken met elk $5$~kanalen en met bijhorende uitvoerverzamelingen.\protect\cite{sortingNetworksSize2014}}
 	\label{VoorbeeldLemmas}
