@@ -204,7 +204,7 @@ short swapCompare(short input, short comp) {
 \end{lstlisting}
 
 In de \texttt{Java} implementatie kiezen we er voor om een comparatornetwerk voor te stellen door een tweedimensionale array van shorts, short[][], en laten we de rij van $n$ nullen en $n$ enen  weg.
-Een voorbeeld van zo een representatie staat in tabel \ref{tabel2}.
+Een voorbeeld van zo een representatie staat in Tabel \ref{tabel2}.
 \begin{table}[!h]
 	\centering
 	\begin{tabular}{r|ccc}
@@ -303,11 +303,7 @@ for(short nieuweComp : comparatoren) {
 \subsection{Snoeien}\label{Snoeien}
 Bij de snoei-stap lopen we over de set $N^n_{k+1}$ en verwijderen we alle comparatornetwerken die gesubsumed worden door een ander comparatornetwerk in de resterende set.
 Om het aflopen van alle permutaties te vermijden, en sneller te beslissen of $C_a \preceq C_b$ met $C_a$ en $C_b$ twee comparatornetwerken, voeren we enkele methoden in.
-Zo gebruiken we onder meer Lemma \ref{lemma3} en Lemma \ref{lemma4}, beschreven in 
-\begin{small}
-\textsc{Twenty-Five Comparators is Optimal when Sorting Nine Inputs (and Twenty-Nine for Ten)}
-\end{small}
- \cite{sortingNetworksSize2014}.
+Zo gebruiken we onder meer Lemma \ref{lemma3} en Lemma \ref{lemma4}, beschreven door Codish \textit{et al.} \cite{sortingNetworksSize2014}.
 
 \begin{figure}[!h]
 	\centering
@@ -316,7 +312,7 @@ Zo gebruiken we onder meer Lemma \ref{lemma3} en Lemma \ref{lemma4}, beschreven 
 	\label{VoorbeeldLemmas}
 \end{figure}
 
-Aangezien een permutatie op de uitvoer geen verandering teweegbrengt op vlak van hoeveelheid en ${\pi(outputs(C_a)) \subseteq outputs(C_b)}$ kan het onmogelijk dat ${|outputs(C_a)| > |outputs(C_b)|}$.
+Aangezien een permutatie op de uitvoer geen verandering teweegbrengt op vlak van de hoeveelheid uitvoer en ${\pi(outputs(C_a)) \subseteq outputs(C_b)}$ kan het onmogelijk dat ${|outputs(C_a)| > |outputs(C_b)|}$.
 Dit kan worden doorgetrokken naar de uitvoerverzamelingen met hetzelfde aantal enen.
 Zo zien we bijvoorbeeld in Figuur \ref{VoorbeeldLemmas} dat $C_2 \npreceq C_3$ want $C_2$ heeft vier uitvoersequenties met twee enen en $C_3$ heeft er slechts drie.
 Dit vormt Lemma \ref{lemma3} en wordt bij $9$ kanalen $1.07666 \times 10^{13}$ keer nagegaan waarbij $1.05438 \times 10^{13}$ keer een beslissing genomen wordt.
@@ -327,7 +323,7 @@ Dit vormt Lemma \ref{lemma3} en wordt bij $9$ kanalen $1.07666 \times 10^{13}$ k
 Voor Lemma \ref{lemma4} introduceren we extra informatie over het comparatornetwerk, namelijk $w\left(C_a, x, k\right)$ waarbij ${x \in \{0,1\}}$ en $0\leq k \leq n$.
 Dit representeert de set van posities $i$ waarvoor er een uitvoer bestaat in $C_a$ met $k$ enen waarvoor geldt dat op de $i^{de}$ positie van deze uitvoer een $x$ voorkomt.
 Om effici\"ent operaties te kunnen uitvoeren, zullen we de posities voorstellen door middel van een bit representatie.
-Zo zal bijvoorbeeld $w\left(C_a, 1, 2\right) = 0110$ inhouden dat er bij de uitvoerverzameling met twee enen minstens \'e\'en uitvoer bestaat met een $1$ op de $2^{de}$ positie, \'e\'en met een $1$ op de $3^{de}$ positie en geen enkel met een $1$ op positie $1$ of $4$.
+Zo zal bijvoorbeeld $w\left(C_a, 1, 2\right) = 0110$ inhouden dat er bij de uitvoerverzameling met twee enen minstens \'e\'en uitvoer bestaat met een $1$ op de $2^{de}$ positie, minstens \'e\'en met een $1$ op de $3^{de}$ positie en geen enkel met een $1$ op positie $1$ of $4$.
 Deze informatie voegen we bij elk netwerk toe in de vorm van een array van shorts, $w^*$.
 Aangezien er geen uitvoer wordt bijgehouden met $0$ enen en $n$ enen zullen we enkel voor $k \geq 1 $ en $k \leq n-1$ zowel $w$ als de grootte van $w$ bijhouden.
 Dit vereist voor elk dan vier opeenvolgende indices in $w^*$, zoals te zien in Figuur \ref{tabel3}.
@@ -341,7 +337,7 @@ Wanneer we bij het toevoegen van een comparator $w^*$ herberekenen, kunnen we ne
 \end{figure}
 
 \begin{lemma}
-	Wanneer voor een comparatornetwerk $C_a$ en $C_b$ met $n$ kanalen geldt dat $|w\left(C_a, x, k\right)| > |w\left(C_b, x, k\right)|$ voor $x \in \{0,1\}$ en $0 \leq k \leq n$ dan $C_a \npreceq C_b$.
+	Wanneer voor comparatornetwerken $C_a$ en $C_b$ met $n$ kanalen geldt dat $|w\left(C_a, x, k\right)| > |w\left(C_b, x, k\right)|$ voor $x \in \{0,1\}$ en $0 \leq k \leq n$ dan $C_a \npreceq C_b$.
 	\label{lemma4}
 \end{lemma}
 Wanneer ${outputs(C_a) \subseteq outputs(C_b)}$ moet gelden dat het aantal posities waar $C_a$ een $0$ heeft kleiner moet zijn of gelijk aan het aantal bij $C_b$.
@@ -365,10 +361,11 @@ Als ${outputs(C_a) \subseteq outputs(C_b)}$ moet gelden dat alle posities waar e
 Wanneer dit niet het geval is, zou $C_a$ een uitvoer hebben met een $0$ en een $1$ op een plaats waar $C_b$ dit niet heeft waardoor ${outputs(C_a) \nsubseteq outputs(C_b)}$.
 Deze redenering is het basisidee achter Lemma \ref{lemma5}.
 
-Om de mogelijke permutaties bij te houden, zullen we gebruik maken van een voorstelling die te zien is in tabel \ref{tabel4}.
+Om de mogelijke permutaties bij te houden, zullen we gebruik maken van een voorstelling die te zien is in Tabel \ref{tabel4}.
 De waarden in een kolom stellen alle mogelijke posities voor die op die plaats kunnen voorkomen.
-Wanneer we tabel  \ref{tabel4} gebruiken om de mogelijke permutaties weer te geven dan zullen we permutatie $4321$ en $1324$  bekomen, waarbij $4321$ een eenheidspermutatie zal voorstellen.
-Bij het begin van het algoritme zullen we starten met tabel \ref{tabel5}, deze laat alle $n!$ permutaties toe.
+Wanneer we Tabel  \ref{tabel4} gebruiken om de mogelijke permutaties weer te geven dan zullen we permutatie $4321$ en $1324$  bekomen, waarbij $4321$ een eenheidspermutatie zal voorstellen.
+Bij het begin van het algoritme zullen we starten met Tabel \ref{tabel5}.
+Deze laat alle $n!$ permutaties toe.
 Hierna gebruiken we Lemma \ref{lemma5} om posities uit de kolommen te verwijderen.
 \begin{table}[!h]
 	\centering
@@ -398,7 +395,7 @@ Hierna gebruiken we Lemma \ref{lemma5} om posities uit de kolommen te verwijdere
 
 We weten namelijk dat als \[{\pi\left(outputs\left(C_a\right)\right) \subseteq outputs\left(C_b\right)}\] er bij de gepermuteerde uitvoer enkel een $1$ kan komen op de plaats waar dit bij $C_b$ ook het geval is.
 Op de plaats waar $C_b$ een $0$ heeft, kunnen dus enkel de posities komen waar $C_a$ een $0$ heeft.
-Nemen we bijvoorbeeld $w\left(C_a,1,1\right) = 0101$ en ${w\left(C_b,1,1\right)=0110}$ dan kunnen we tabel \ref{tabel5} reduceren tot tabel \ref{tabel6}.
+Nemen we bijvoorbeeld $w\left(C_a,1,1\right) = 0101$ en ${w\left(C_b,1,1\right)=0110}$ dan kunnen we Tabel \ref{tabel5} reduceren tot Tabel \ref{tabel6}.
 We kunnen voor $w\left(C_a, x, k\right)$ deze methode doortrekken voor elke $1 \leq k \leq n$ en voor zowel $x = 0$ als $x = 1$.
 Wanneer we elke kolom bijhouden door een bit representatie kunnen we gemakkelijk de doorsnede van de mogelijke posities nemen na elke berekening voor een bepaalde $k$ en $x$ door middel van de $\&$-operatie. 
 \begin{table}[!h]
