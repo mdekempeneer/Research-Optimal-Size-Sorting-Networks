@@ -117,7 +117,7 @@ De optimale grootte van een sorteernetwerk met $n$ kanalen is reeds bewezen tot 
 \end{table}
 
 Voor $n > 10$ zijn er bovengrenzen gekend door zowel concrete voorbeelden als de systematische constructie van Batcher \cite{sortingNetworksApplications}. 
-De ondergrenzen werden gevonden door zowel bewijzen als lemma \ref{lemma1} \cite{Voorhis1972}.
+De ondergrenzen werden gevonden door zowel bewijzen als Lemma \ref{lemma1} \cite{Voorhis1972}.
 \begin{lemma}
 	$S(n+1) \geq S(n) + \lceil \log_2(n) \rceil, \forall n \geq 1$\\
 	waarbij geldt dat $S(n)$ gelijk is aan het aantal comparatoren in een sorteernetwerk van optimale grootte met $n$ kanalen.
@@ -159,7 +159,7 @@ Bij de snoei-stap zullen we dan netwerken verwijderen volgens het subsumes princ
 	Wanneer voor comparatornetwerk $C^n_{k,a}, C^n_{k,b}$ en $C$ geldt dat $ C_{a} \preceq C_{b}$ en er bestaat een sorteernetwerk gevormd door de concatenatie van $C_b$ en $C$ van grootte $m$ dan bestaat er ook een sorteernetwerk gevormd door de concatenatie van $C_a$ en $C'$ van grootte $m$.
 	\label{lemma2}
 \end{lemma}
-Concreet kunnen we de definitie van subsumes en lemma~\ref{lemma2} beschreven door Codish \textit{et al.} gebruiken om in te zien dat we netwerken die gesubsumed worden door andere netwerken kunnen verwijderen \cite{sortingNetworksSize2014}.
+Concreet kunnen we de definitie van subsumes en Lemma~\ref{lemma2} beschreven door Codish \textit{et al.} gebruiken om in te zien dat we netwerken die gesubsumed worden door andere netwerken kunnen verwijderen \cite{sortingNetworksSize2014}.
 Wanneer een set van netwerken een sorteernetwerk bevat, zal het snoeien van deze set resulteren in het bekomen van het sorteernetwerk.
 Dit gegeven kan gebruikt worden om de eindigheid van het algoritme in te zien.
 
@@ -302,7 +302,7 @@ for(short nieuweComp : comparatoren) {
 \subsection{Snoeien}\label{Snoeien}
 Bij de snoei-stap lopen we over de set $N^n_{k+1}$ en verwijderen we alle comparatornetwerken die gesubsumed worden door een ander comparatornetwerk in de resterende set.
 Om het aflopen van alle permutaties te vermijden, en sneller te beslissen of $C_a \preceq C_b$ met $C_a$ en $C_b$ twee comparatornetwerken, voeren we enkele methoden in.
-Zo gebruiken we onder meer lemma \ref{lemma3} en lemma \ref{lemma4}, beschreven in 
+Zo gebruiken we onder meer Lemma \ref{lemma3} en Lemma \ref{lemma4}, beschreven in 
 \begin{small}
 \textsc{Twenty-Five Comparators is Optimal when Sorting Nine Inputs (and Twenty-Nine for Ten)}
 \end{small}
@@ -317,12 +317,12 @@ Zo gebruiken we onder meer lemma \ref{lemma3} en lemma \ref{lemma4}, beschreven 
 Aangezien een permutatie op de uitvoer geen verandering teweegbrengt op vlak van hoeveelheid en ${\pi(outputs(C_a)) \subseteq outputs(C_b)}$ kan het onmogelijk dat ${|outputs(C_a)| > |outputs(C_b)|}$.
 Dit kan worden doorgetrokken naar de uitvoerverzamelingen met hetzelfde aantal enen.
 Zo zien we bijvoorbeeld in Figuur \ref{VoorbeeldLemmas} dat $C_2 \npreceq C_3$ want $C_2$ heeft vier uitvoersequenties met twee enen en $C_3$ heeft er slechts drie.
-Dit vormt lemma \ref{lemma3} en wordt bij $9$ kanalen $1.07666 \times 10^{13}$ keer nagegaan waarbij $1.05438 \times 10^{13}$ keer een beslissing genomen wordt.
+Dit vormt Lemma \ref{lemma3} en wordt bij $9$ kanalen $1.07666 \times 10^{13}$ keer nagegaan waarbij $1.05438 \times 10^{13}$ keer een beslissing genomen wordt.
 \begin{lemma}
 	Wanneer de uitvoerverzameling bij $C_a$ met $x$ enen ($1 \leq x \leq n$) groter is dan bij $C_b$ weten we dat $C_a \npreceq C_b$ met $C_a$ en $C_b$ twee comparatornetwerken.
 \label{lemma3}
 \end{lemma}
-Voor lemma \ref{lemma4} introduceren we extra informatie over het comparatornetwerk, namelijk $w\left(C_a, x, k\right)$ waarbij ${x \in \{0,1\}}$ en $0\leq k \leq n$.
+Voor Lemma \ref{lemma4} introduceren we extra informatie over het comparatornetwerk, namelijk $w\left(C_a, x, k\right)$ waarbij ${x \in \{0,1\}}$ en $0\leq k \leq n$.
 Dit representeert de set van posities $i$ waarvoor er een uitvoer bestaat in $C_a$ met $k$ enen waarvoor geldt dat op de $i^{de}$ positie van deze uitvoer een $x$ voorkomt.
 Om effici\"ent operaties te kunnen uitvoeren, zullen we de posities voorstellen door middel van een bit representatie.
 Zo zal bijvoorbeeld $w\left(C_a, 1, 2\right) = 0110$ inhouden dat er bij de uitvoerverzameling met twee enen minstens \'e\'en uitvoer bestaat met een $1$ op de $2^{de}$ positie, \'e\'en met een $1$ op de $3^{de}$ positie en geen enkel met een $1$ op positie $1$ of $4$.
@@ -345,14 +345,14 @@ Wanneer we bij het toevoegen van een comparator $w^*$ herberekenen, kunnen we ne
 Wanneer ${outputs(C_a) \subseteq outputs(C_b)}$ moet gelden dat het aantal posities waar $C_a$ een $0$ heeft kleiner moet zijn of gelijk aan het aantal bij $C_b$.
 Als dit niet het geval is, zou $C_a$ zeker een positie hebben dewelke $C_b$ niet heeft waardoor dus ${outputs(C_a) \nsubseteq outputs(C_b)}$.
 Dit geldt niet alleen voor $0$ maar ook voor $1$.
-Als we tenslotte inzien dat een permutatie het aantal posities waar zo een waarde ($0$ of $1$) voorkomt niet wijzigt, krijgen we lemma \ref{lemma4}.
+Als we tenslotte inzien dat een permutatie het aantal posities waar zo een waarde ($0$ of $1$) voorkomt niet wijzigt, krijgen we Lemma \ref{lemma4}.
 In Figuur \ref{VoorbeeldLemmas} is bijvoorbeeld te zien dat $C_3 \npreceq C_1$ want voor de uitvoerverzameling met vier enen geldt dat een $0$ bij $C_3$ op drie plaatsen voorkomt terwijl dit bij $C_1$ slechts op twee plaatsen is.
-Dit vormt lemma \ref{lemma4} dewelke bij een uitvoer voor $9$ kanalen ${2.22803 \times 10^{11}}$ keer wordt uitgevoerd. Hierbij wordt er $2.05631 \times 10^{11}$ keer een beslissing genomen.
-Dit lemma voorkomt, net zoals lemma~\ref{lemma3}, dat er permutaties getest moeten worden.
+Dit vormt Lemma \ref{lemma4} dewelke bij een uitvoer voor $9$ kanalen ${2.22803 \times 10^{11}}$ keer wordt uitgevoerd. Hierbij wordt er $2.05631 \times 10^{11}$ keer een beslissing genomen.
+Dit lemma voorkomt, net zoals Lemma~\ref{lemma3}, dat er permutaties getest moeten worden.
 
 Als beide lemma's geen uitsluiting bieden, zullen we permutaties moeten nagaan.
 Een na\"ieve methode zou zijn om alle $n!$ permutaties te overlopen.
-In de plaats daarvan zullen we enkel permutaties afgaan die voldoen aan lemma \ref{lemma5} \cite{sortingNetworksSize2014}.
+In de plaats daarvan zullen we enkel permutaties afgaan die voldoen aan Lemma \ref{lemma5} \cite{sortingNetworksSize2014}.
 \begin{lemma}
 	${C_a \preceq C_b  \Rightarrow \pi\left(outputs\left(C_{a}\right)\right) \subseteq outputs\left(C_{b}\right)} \Rightarrow \pi\left(w\left(C_a, x, k\right)\right) \subseteq w\left(C_b, x, k\right)$,
 	${\forall x \in \{0,1\}, \forall k \in \{1..n\}}$.
@@ -361,13 +361,13 @@ In de plaats daarvan zullen we enkel permutaties afgaan die voldoen aan lemma \r
 
 Als ${outputs(C_a) \subseteq outputs(C_b)}$ moet gelden dat alle posities waar een $0$ en een $1$ voorkomt bij $C_a$ dit ook zeker het geval moet zijn bij $C_b$.
 Wanneer dit niet het geval is, zou $C_a$ een uitvoer hebben met een $0$ en een $1$ op een plaats waar $C_b$ dit niet heeft waardoor ${outputs(C_a) \nsubseteq outputs(C_b)}$.
-Deze redenering is het basisidee achter lemma \ref{lemma5}.
+Deze redenering is het basisidee achter Lemma \ref{lemma5}.
 
 Om de mogelijke permutaties bij te houden, zullen we gebruik maken van een voorstelling die te zien is in tabel \ref{tabel4}.
 De waarden in een kolom stellen alle mogelijke posities voor die op die plaats kunnen voorkomen.
 Wanneer we tabel  \ref{tabel4} gebruiken om de mogelijke permutaties weer te geven dan zullen we permutatie $4321$ en $1324$  bekomen, waarbij $4321$ een eenheidspermutatie zal voorstellen.
 Bij het begin van het algoritme zullen we starten met tabel \ref{tabel5}, deze laat alle $n!$ permutaties toe.
-Hierna gebruiken we lemma \ref{lemma5} om posities uit de kolommen te verwijderen.
+Hierna gebruiken we Lemma \ref{lemma5} om posities uit de kolommen te verwijderen.
 \begin{table}[!h]
 	\centering
 	\begin{tabular}{|c|c|c|c|}
@@ -414,10 +414,10 @@ Wanneer we elke kolom bijhouden door een bit representatie kunnen we gemakkelijk
 \end{table}
 
 Wanneer tijdens het algoritme een kolom leeg zou komen te staan, kunnen we het algoritme stopzetten.
-Dit betekent namelijk dat er geen enkele permutatie bestaat die niet door lemma \ref{lemma5} wordt afgekeurd.
+Dit betekent namelijk dat er geen enkele permutatie bestaat die niet door Lemma \ref{lemma5} wordt afgekeurd.
 Mocht op het einde een kolom \'e\'en element hebben, mogen we dit element uit alle andere kolommen verwijderen.
 We kunnen nadien ook nog nagaan of alle elementen minstens \'e\'enmaal voorkomen in de hele tabel.
-Tot slot gebruiken we de overblijvende permutatietabel om onze mogelijke permutaties, die aan lemma \ref{lemma5} voldoen, na te gaan. 
+Tot slot gebruiken we de overblijvende permutatietabel om onze mogelijke permutaties, die aan Lemma \ref{lemma5} voldoen, na te gaan. 
 Dit kan onder andere door middel van een recursieve methode.
 
 In het ergste geval moeten we voor elk element in $N^n_{k+1}$ subsumes nagaan met elk ander element in $N^n_{k+1}$.
@@ -595,7 +595,7 @@ Deze beslissingen zorgen voor minder netwerken in de gedeelde lijst en dus voor 
 
 De beslissingen genomen in de snoei-stap daarentegen, zijn beslissingen die enkel voorkomen dat er permutaties moeten worden opgebouwd om na te gaan of $C_a \preceq C_b$ geldt.
 Deze zorgen er dus niet voor dat een netwerk uit de gedeelde lijst verdwijnt, enkel dat er niet al te veel tijd gespendeerd wordt aan het onnodig nagaan van permutaties.
-Hier wordt onder meer lemma~\ref{lemma3} en lemma~\ref{lemma4} gebruikt.
+Hier wordt onder meer Lemma~\ref{lemma3} en Lemma~\ref{lemma4} gebruikt.
 
 Vervolgens zijn er nog de beslissingen die genomen worden tijdens de opbouw van de mogelijke permutaties en tijdens het aflopen van deze permutaties.
 Tijdens de opbouw gebeurt deze beslissing wanneer er geen geschikte permutatie bestaat doordat de permutatietabel een lege kolom bevat.
@@ -630,7 +630,7 @@ Tijdens de opbouw gebeurt deze beslissing wanneer er geen geschikte permutatie b
 \end{figure}
 
 In Figuur \ref{AantalSnoeiBeslissingen9Kanalen} wordt er specifieker gekeken naar de beslissingen in de snoei-stap.
-Hier zien we dat lemma \ref{lemma3} het grootste aantal beslissingen maakt.
+Hier zien we dat Lemma \ref{lemma3} het grootste aantal beslissingen maakt.
 Dit is deels te wijten aan het feit dat deze als eerste wordt nagegaan in de implementatie.
 Het is dan ook belangrijk dat dit lemma effici\"ent wordt ge\"implementeerd.
 Er zou nog onderzoek gedaan kunnen worden naar of we dit lemma al da niet kunnen gebruiken om netwerken in de gedeelde lijst over te slagen, zoals reeds vermeld in sectie \ref{Profilering}.
@@ -657,7 +657,7 @@ Vervolgens zou men dan via dit argument kunnen beslissen om al dan niet een bepa
               \addplot+[error bars/.cd, y dir=both, y explicit] coordinates{ (1,10543800000000)};
               \addplot+[error bars/.cd, y dir=both, y explicit] coordinates{ (1,102068000000)};
               \addplot+[error bars/.cd, y dir=both, y explicit] coordinates{ (1,103563000000)};
-             \legend{lemma \ref{lemma3}, lemma \ref{lemma4}: $x = 0$, lemma \ref{lemma4}: $x = 1$}
+             \legend{Lemma \ref{lemma3}, Lemma \ref{lemma4}: $x = 0$, Lemma \ref{lemma4}: $x = 1$}
           \end{axis}
       \end{tikzpicture}
 \caption{Aantal beslissingen tijdens het snoeien bij een uitvoer voor $9$ kanalen.}

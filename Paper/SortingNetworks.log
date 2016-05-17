@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.29)  17 MAY 2016 17:26
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.29)  17 MAY 2016 17:33
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -802,7 +802,12 @@ Package pdftex.def Info: NetworkTransparent.png used on input line 98.
 (pdftex.def)             Requested size: 202.3529pt x 93.76083pt.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 122.
- [2 <./NetworkTransparent.png>]
+
+Underfull \hbox (badness 3536) in paragraph at lines 162--165
+[]\OT1/ptm/m/n/10 Concreet kun-nen we de de-fi-ni-tie van sub-su-mes en
+ []
+
+[2 <./NetworkTransparent.png>]
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 176.
 LaTeX Font Info:    Try loading font information for OT1+pcr on input line 181.
@@ -860,11 +865,6 @@ File: Tabel3_OpbouwW.png Graphic file (type png)
  <use Tabel3_OpbouwW.png>
 Package pdftex.def Info: Tabel3_OpbouwW.png used on input line 336.
 (pdftex.def)             Requested size: 227.64894pt x 15.0059pt.
-
-Underfull \hbox (badness 1158) in paragraph at lines 325--340
-[]\OT1/ptm/m/n/10 Voor lemma 4[] in-tro-du-ce-ren we ex-tra in-for-ma-tie over
- []
-
 
 Underfull \hbox (badness 8075) in paragraph at lines 325--340
 \OT1/ptm/m/n/10 het com-pa-ra-tor-net-werk, na-me-lijk $\OML/cmm/m/it/10 w []$ 
@@ -1003,7 +1003,7 @@ sr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb
 ocal/texlive/2015/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texli
 ve/2015/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2015/te
 xmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on SortingNetworks.pdf (8 pages, 304858 bytes).
+Output written on SortingNetworks.pdf (8 pages, 304947 bytes).
 PDF statistics:
  104 PDF objects out of 1000 (max. 8388607)
  70 compressed objects within 1 object stream
