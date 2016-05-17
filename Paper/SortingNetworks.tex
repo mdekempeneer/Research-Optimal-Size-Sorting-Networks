@@ -84,10 +84,10 @@ Een comparator $\left(i, j\right)$ verbindt twee verschillende kanalen $i$ en $j
 We nemen $x_l^m$ als waarde op kanaal $m$ net voor comparator $l$.
 Deze waarde is een element uit een totaal geordende set en is deel van de oorspronkelijke invoer. 
 De $l^{de}$ comparator  vergelijkt de huidige waarden van beide kanalen en plaatst de kleinste waarde op kanaal $i$ en de grootste waarde op kanaal $j$ zodat $x_{l+1}^i = \min(x_l^i,x_l^j)$ en $x_{l+1}^j = \max(x_l^i,x_l^j)$.
-De uitvoer van een comparatornetwerk verwijst naar de partieel geordende vector $\vec{x} = \{x^1_{k+1} \dots x^n_{k+1} \} $.
+De uitvoer van een comparatornetwerk is de partieel geordende vector $\vec{x} = \{x^1_{k+1} \dots x^n_{k+1} \} $.
 De invoer wordt voorgesteld door $\vec{x} = \{x^1_{1} \dots x^n_{1} \} $. 
 
-Een \textit{sorteernetwerk} is een comparatornetwerk met als eigenschap dat de uitvoer gesorteerd is ongeacht de invoer.
+Een \textit{sorteernetwerk} is een comparatornetwerk met als eigenschap dat de uitvoer gesorteerd is voor elke invoer.
 De grootte van een comparatornetwerk verwijst naar het aantal comparatoren. 
 Een sorteernetwerk $C^n_k$ van optimale grootte houdt dan in dat er geen ander sorteernetwerk $C^n_l$ bestaat waarbij $l < k$.
 Figuur \ref{Werking} is een voorbeeld van een sorteernetwerk waarop ook de werking gedemonstreerd wordt.
@@ -102,7 +102,7 @@ De parallelle lagen bestaan uit comparatoren die geen kanaal gemeenschappelijk h
 \end{figure}
 
 Om te onderzoeken of een comparatornetwerk een sorteernetwerk is, kunnen we gebruik maken van het \textit{nul - \'e\'en principe}. 
-Dit principe, zoals beschreven volgens Knuth \cite{Knuth3}, stelt dat om na te gaan of een comparatornetwerk met $n$ kanalen een sorteernetwerk is, er enkel nagegaan moet worden dat alle $2^n$ mogelijke sequenties van $n$ nullen en enen gesorteerd worden.
+Dit principe, zoals beschreven volgens Knuth \cite{Knuth3}, stelt dat om na te gaan of een comparatornetwerk met $n$ kanalen een sorteernetwerk is, er enkel nagegaan moet worden of alle $2^n$ mogelijke sequenties van $n$ nullen en enen gesorteerd worden.
 De optimale grootte van een sorteernetwerk met $n$ kanalen is reeds bewezen tot en met $n \leq 10$ (Tabel \ref{tabel1} \cite{sortingNetworksSize2014}).
 \begin{table}[h!]
 	\centering
