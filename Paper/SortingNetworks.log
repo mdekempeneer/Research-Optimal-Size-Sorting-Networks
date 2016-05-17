@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.29)  7 MAY 2016 10:22
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.29)  17 MAY 2016 17:26
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -811,6 +811,10 @@ LaTeX Font Info:    Try loading font information for OT1+pcr on input line 181.
 (/usr/local/texlive/2015/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
 Overfull \hbox (7.11339pt too wide) in paragraph at lines 242--243
  [][] 
  []
@@ -823,6 +827,11 @@ Overfull \hbox (7.11339pt too wide) in paragraph at lines 263--264
 
 Underfull \hbox (badness 10000) in paragraph at lines 225--267
 [][]
+ []
+
+
+Underfull \hbox (badness 1215) in paragraph at lines 270--276
+\OT1/ptm/m/n/10 pa-ra-tor-net-werk is een com-pa-ra-tor die,
  []
 
 [3] <VoorbeeldLemmas.png, id=31, 339.51843pt x 209.28188pt>
@@ -857,8 +866,8 @@ Underfull \hbox (badness 1158) in paragraph at lines 325--340
  []
 
 
-Underfull \hbox (badness 3219) in paragraph at lines 325--340
-\OT1/ptm/m/n/10 het com-pa-ra-tor net-werk, na-me-lijk $\OML/cmm/m/it/10 w []$ 
+Underfull \hbox (badness 8075) in paragraph at lines 325--340
+\OT1/ptm/m/n/10 het com-pa-ra-tor-net-werk, na-me-lijk $\OML/cmm/m/it/10 w []$ 
 \OT1/ptm/m/n/10 waar-bij
  []
 
@@ -901,7 +910,6 @@ Underfull \hbox (badness 4254) in paragraph at lines 443--443
 zul-len we ver-wij-de-ren via
  []
 
-[5 <./Gen_Prune_Opbouw.png>]
 PGFPlots: reading {netwerkVerloop7kanalen.dat}
 PGFPlots: reading {netwerkVerloop8kanalen.dat}
 PGFPlots: reading {netwerkVerloop9kanalen.dat}
@@ -911,6 +919,7 @@ PGFPlots: reading {netwerkVerloop8kanalen.dat}
 PGFPlots: reading {netwerkVerloop9kanalen.dat}
 PGFPlots: reading {netwerkVerloop10kanalen.dat}
 Missing character: There is no ; in font nullfont!
+[5 <./Gen_Prune_Opbouw.png>]
 Missing character: There is no ; in font nullfont!
 
 Overfull \hbox (2.48923pt too wide) in paragraph at lines 558--559
@@ -971,10 +980,10 @@ Underfull \hbox (badness 5832) in paragraph at lines 25--29
 
 ) [8] (./SortingNetworks.aux) ) 
 Here is how much of TeX's memory you used:
- 26672 strings out of 493089
- 657132 string characters out of 6134842
- 865500 words of memory out of 5000000
- 29662 multiletter control sequences out of 15000+600000
+ 26667 strings out of 493089
+ 657064 string characters out of 6134842
+ 867400 words of memory out of 5000000
+ 29657 multiletter control sequences out of 15000+600000
  32152 words of font info for 81 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  62i,21n,100p,731b,2203s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -994,7 +1003,7 @@ sr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb
 ocal/texlive/2015/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texli
 ve/2015/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2015/te
 xmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on SortingNetworks.pdf (8 pages, 305682 bytes).
+Output written on SortingNetworks.pdf (8 pages, 304858 bytes).
 PDF statistics:
  104 PDF objects out of 1000 (max. 8388607)
  70 compressed objects within 1 object stream
