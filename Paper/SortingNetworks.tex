@@ -482,10 +482,11 @@ Wanneer een comparator aan een netwerk wordt toegevoegd, is het mogelijk dat een
 Om te vermijden dat we hierdoor meerdere malen dezelfde lijst in het geheugen hebben, zullen we een referentie doorgeven van deze lijst en slechts een nieuwe lijst gebruiken wanneer de lijst gewijzigd wordt.
 Aangezien bij \texttt{Java} een tweedimensionale lijst wordt aanzien als een lijst van referenties naar andere lijsten kan de oude referentie gemakkelijk hergebruikt worden. 
 
-Een andere plaats is bij de parallellisatie, hier daalt de hoeveelheid geheugen doordat een thread enerzijds zal snoeien binnen zijn set alvorens de set toe te voegen aan de gedeelde lijst en anderzijds doordat de genereer- en snoei-stap door elkaar worden uitgevoerd.
+Een andere plaats is bij de parallellisatie.
+Hier daalt de hoeveelheid geheugen doordat een thread enerzijds zal snoeien binnen zijn set alvorens de set toe te voegen aan de gedeelde lijst en anderzijds doordat de genereer- en snoei-stap door elkaar worden uitgevoerd.
 
 Onze \texttt{Java} implementatie gebruikte bij de uitvoering voor $8$ en $9$ kanalen respectievelijk $208$MB en $3951$MB.
-Deze hoeveelheid kan verschillen naargelang de frequentie waarbij de \texttt{Java Virtual Machine} de \textit{Garbage Collection} uitvoert.
+De exacte hoeveelheid verschilt naargelang de frequentie waarmee de \texttt{Java Virtual Machine} de \textit{Garbage Collection} uitvoert.
 Voor minder dan $8$ kanalen was het geheugen verbruik verwaarloosbaar klein.
 
 \section{Evaluatie}\label{Evaluatie}
