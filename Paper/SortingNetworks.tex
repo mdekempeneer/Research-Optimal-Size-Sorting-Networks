@@ -490,8 +490,8 @@ De exacte hoeveelheid verschilt naargelang de frequentie waarmee de \texttt{Java
 Voor minder dan $8$ kanalen was het geheugen verbruik verwaarloosbaar klein.
 
 \section{Evaluatie}\label{Evaluatie}
-Het beschreven algoritme, ge\"implementeerd in \texttt{Java}, vindt voor $9$ kanalen reeds na $3$ uur en $25$ minuten een oplossing met $25$ comparatoren die gevisualiseerd wordt in Figuur~\ref{Sorteernetwerk9kanalen}.
-Dit bevestigt wat reeds geweten was \cite{sortingNetworksSize2014}.
+Onze \texttt{Java}-implementatie van het beschreven algoritme vindt voor $9$ kanalen reeds na $3$ uur en $25$ minuten een oplossing met $25$ comparatoren die gevisualiseerd wordt in Figuur~\ref{Sorteernetwerk9kanalen}.
+Dit bevestigt het gekende resultaat \cite{sortingNetworksSize2014}.
 \begin{figure}[!h]
 \centering
 \begin{tikzpicture}
@@ -530,8 +530,8 @@ Dit bevestigt wat reeds geweten was \cite{sortingNetworksSize2014}.
 \label{Sorteernetwerk9kanalen}
 \end{figure}
 
-De tijdsmetingen voor het vinden van een sorteernetwerk van optimale grootte van $5$ tot en met $9$ kanalen zijn te zien op Figuur \ref{Tijdsresultaten}.
-Op deze figuur is ook de tijdsmeting van eerder werk te zien, ongeveer $12$ dagen $17$ uur en $58$ minuten \cite{sortingNetworksSize2014}.
+De tijdsmetingen voor het vinden van een sorteernetwerk van optimale grootte van $5$ tot en met $9$ kanalen zijn te zien in Figuur \ref{Tijdsresultaten}.
+In deze figuur is ook de tijdsmeting van eerder werk te zien, ongeveer $12$ dagen $17$ uur en $58$ minuten \cite{sortingNetworksSize2014}.
 De bekomen resultaten van dit werk zijn afkomstig van het uitvoeren op \'e\'en node bestaande uit twee $12$-core ``Haswell'' Xeon E$5$-$2680$v$3$ processoren ($2.5$GHz, $30$MB level $3$ cache met $64$GB RAM) op de rekeninfrastructuur van het Vlaamse Supercomputer Centrum.
 \begin{figure}[!h]
 \centering
@@ -554,7 +554,7 @@ De bekomen resultaten van dit werk zijn afkomstig van het uitvoeren op \'e\'en n
 	coordinates {(5, 25.331106) (6, 61.339344) (7, 245.313463) (8, 5804.849367) (9, 12366987.991024)};	
 \addplot
 	coordinates {(9, 1101480000)};
-\legend{Dekempeneer \& Derkinderen, Eerder werk};
+\legend{Dekempeneer \& Derkinderen, \cite{sortingNetworksSize2014}};
 \end{axis}
 \end{tikzpicture}
 \caption{Tijdsmetingen voor uitvoer bij $5$ tot en met $9$ kanalen.}
