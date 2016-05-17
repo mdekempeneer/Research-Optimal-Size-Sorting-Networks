@@ -175,16 +175,16 @@ Bijkomend zullen we een manier geven in Sectie \ref{Parallellisatie} om het proc
 %Tenslotte wordt het geheugengebruik van de implementatie besproken en wordt er een manier aangeboden om deze nog verder te beperken.
 
 \subsection{Representatie van comparatornetwerken}\label{RepresentatieVanComparatorNetwerken}
-Bij de representatie van comparatornetwerken moeten we rekening houden met het geheugengebruik en de mogelijkheid om effici\"ente bewerkingen te kunnen uitvoeren.
+Bij de representatie van comparatornetwerken moeten we rekening houden met het geheugengebruik en de mogelijkheid om effici\"ente bewerkingen uit te kunnen voeren.
 Concreet zullen we comparatoren voorstellen door een sequentie van bits waarbij twee bits op \'e\'en staan.
 Bijvoorbeeld  $ \left[ 0 1 0 0 0 1\right]$ stelt de comparator $\left(1,5\right)$ voor bij een netwerk van $6$ kanalen.
-Doordat kanaal $1$ rechts geplaatst wordt, komt elk kanaal beter overeen met zijn bitshift\footnote{Bijvoorbeeld een bitshift naar rechts, $\gg$, zal achteraan een aantal nullen verwijderen.}.
+Doordat kanaal $1$ rechts geplaatst wordt, komt elk kanaal overeen met zijn bitshift\footnote{Bijvoorbeeld een bitshift naar rechts, $\gg$, zal achteraan een aantal nullen verwijderen.}.
 Om de hoeveelheid overbodige bits te beperken, zullen we bij de \texttt{Java} implementatie gebruik maken van shorts\footnote{In \texttt{Java} bestaat een short uit $16$ bits.}.
 Dit is voldoende voor een bewijs tot en met $16$ kanalen.
-Buiten de comparatoren worden ook de mogelijke uitvoer van het netwerk bijgehouden.
+Buiten de comparatoren wordt ook de mogelijke uitvoer van het netwerk bijgehouden.
 Aangezien het nul-\'e\'en-principe stelt dat enkel sequenties van nullen en enen getest moeten worden, kunnen we de uitvoer opdelen per aantal enen.
-Voor een netwerk zonder comparatoren betekent dit $2^n$ mogelijke uitvoer sequenties.
-Dit aantal zal echter dalen naarmate er meer en meer comparatoren worden toegevoegd om uiteindelijk te eindigen met slechts $n$ uitvoer sequenties.
+Voor een netwerk zonder comparatoren betekent dit $2^n$ mogelijke uitvoersequenties.
+Dit aantal zal echter dalen naarmate er meer en meer comparatoren worden toegevoegd om uiteindelijk te eindigen met slechts $n$ uitvoersequenties.
 Door de gekozen representatie van invoer en comparatoren kunnen we Code \ref{SwapCompare} gebruiken om de uitvoer van een comparator te bepalen gegeven een bepaalde invoer.
 \begin{lstlisting}[caption={swapCompare},label=SwapCompare]
 /**
@@ -285,7 +285,7 @@ Wanneer dit niet het geval is en het dus parallelle comparatoren zijn, kunnen we
 
 Tenslotte kunnen we, na het toevoegen van de comparator, de nieuwe uitvoer berekenen door de huidig bijgehouden uitvoer als invoer te gebruiken voor de nieuwe comparator.
 Om de effici\"entie te verhogen kunnen we bij de omzetting van de uitvoer eerder verkregen informatie gebruiken.
-Een comparator is namelijk niet overbodig wanneer er een uitvoer bestaat met een $s$ aantal enen waarvoor geldt dat de comparator deze uitvoer wijzigt.
+Een comparator is namelijk niet overbodig wanneer er een uitvoer bestaat met $s$ enen waarvoor geldt dat de comparator deze uitvoer wijzigt.
 Deze informatie kan gebruikt worden om bij de omzetting slechts te beginnen bij uitvoer met het aantal enen gelijk aan $s$.
 Een algemene structuur van deze code wordt ge\"illustreerd in Code \ref{PseudocodeS}.
 
@@ -480,7 +480,7 @@ Door het grote aantal netwerken is het testen op subsumes en de effici\"entie va
 In \texttt{Java} hebben we het voordeel dat we niet expliciet aan geheugenbeheer moeten doen.
 We gaan anderzijds wel enkele maatregelen nemen om de vereiste hoeveelheid geheugen te verlagen.
 E\'en van de mogelijke plaatsen waar we dit kunnen doen, is bij de representatie van een netwerk.
-Wanneer een comparator aan een netwerk wordt toegevoegd, is het mogelijk dat een lijst van uitvoer sequenties met $s$ enen ongewijzigd blijft.
+Wanneer een comparator aan een netwerk wordt toegevoegd, is het mogelijk dat een lijst van uitvoersequenties met $s$ enen ongewijzigd blijft.
 Om te vermijden dat we hierdoor meerdere malen dezelfde lijst in het geheugen hebben, zullen we een referentie doorgeven van deze lijst en slechts een nieuwe lijst gebruiken wanneer de lijst gewijzigd wordt.
 Aangezien bij \texttt{Java} een tweedimensionale lijst wordt aanzien als een lijst van referenties naar andere lijsten kan de oude referentie gemakkelijk hergebruikt worden. 
 

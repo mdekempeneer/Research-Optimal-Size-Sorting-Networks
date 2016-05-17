@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.29)  17 MAY 2016 17:57
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.29)  17 MAY 2016 18:04
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -982,7 +982,7 @@ Underfull \hbox (badness 5832) in paragraph at lines 25--29
 Here is how much of TeX's memory you used:
  26667 strings out of 493089
  657064 string characters out of 6134842
- 867397 words of memory out of 5000000
+ 866399 words of memory out of 5000000
  29657 multiletter control sequences out of 15000+600000
  32152 words of font info for 81 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1003,7 +1003,7 @@ sr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb
 ocal/texlive/2015/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texli
 ve/2015/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2015/te
 xmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on SortingNetworks.pdf (8 pages, 303018 bytes).
+Output written on SortingNetworks.pdf (8 pages, 302995 bytes).
 PDF statistics:
  105 PDF objects out of 1000 (max. 8388607)
  70 compressed objects within 1 object stream
