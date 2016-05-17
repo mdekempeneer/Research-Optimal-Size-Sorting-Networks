@@ -25,26 +25,29 @@
 \renewcommand{\lstlistingname}{Code}
 
 \title{Optimalisatie van het Bewijs\\ `Sorteernetwerken van Optimale Grootte bij 9 Kanalen'}
-%\author{Mathias Dekempeneer\\Bachelor Informatica\\Katholieke Universiteit Leuven \\mathias.dekempeneer@student.kuleuven.be
-%\And
-%Vincent Derkinderen\\Bachelor Informatica\\Katholieke Universiteit Leuven \\vincent.derkinderen@student.kuleuven.be}
-\author{x\\Bachelor Informatica\\Katholieke Universiteit Leuven \\x@student.kuleuven.be
+\author{Mathias Dekempeneer\\Bachelor Informatica\\Katholieke Universiteit Leuven \\mathias.dekempeneer@student.kuleuven.be
 \And
-x\\Bachelor Informatica\\Katholieke Universiteit Leuven \\x@student.kuleuven.be}
+Vincent Derkinderen\\Bachelor Informatica\\Katholieke Universiteit Leuven \\vincent.derkinderen@student.kuleuven.be}
+%\author{x\\Bachelor Informatica\\Katholieke Universiteit Leuven \\x@student.kuleuven.be
+%\And
+%x\\Bachelor Informatica\\Katholieke Universiteit Leuven \\x@student.kuleuven.be}
 
 \begin{document}
 
 \maketitle
 
 \begin{abstract}
-Verdergaand op eerder werk wordt het algoritme beschreven door de onderzoeksgroep van onder meer Codish omtrent sorteernetwerken van optimale grootte gereproduceerd\cite{sortingNetworksSize2014}.
-Het doel van deze reproductie bestaat erin om bij te dragen tot een betere uitvoeringstijd om verder onderzoek mogelijk te maken.
-Net als bij
-\begin{small}
-\textsc{Twenty-Five Comparators is Optimal when Sorting Nine Inputs (and Twenty-Nine for Ten)}
-\end{small}
-maakt de implementatie gebruik van een \textit{genereer- en snoei-methode}.
-De resulterende code bewijst de optimale grootte voor $9$ kanalen in $3$~uur en $26$~minuten en zet zo een stap dichter naar een uitvoering voor $10$ en $11$ kanalen.
+Een sorteernetwerk is een netwerk bestaande uit enkele \textit{compare-and-swap} elementen.
+Deze netwerken kunnen gebruikt worden om data van een vaste grootte te sorteren en bieden een formeel model voor sorteeralgoritmen waarbij de volgorde van de compare-and-swap operaties onafhankelijk zijn van de te sorteren data.
+
+%Verdergaand op eerder werk wordt het algoritme beschreven door de onderzoeksgroep van onder meer Codish omtrent sorteernetwerken van optimale grootte gereproduceerd\cite{sortingNetworksSize2014}.
+%Het doel van deze reproductie bestaat erin om bij te dragen tot een betere uitvoeringstijd om verder onderzoek mogelijk te maken.
+%Net als bij
+%\begin{small}
+%\textsc{Twenty-Five Comparators is Optimal when Sorting Nine Inputs (and Twenty-Nine for Ten)}
+%\end{small}
+%maakt de implementatie gebruik van een \textit{genereer- en snoei-methode}.
+%De resulterende code bewijst de optimale grootte voor $9$ kanalen in $3$~uur en $26$~minuten en zet zo een stap dichter naar een uitvoering voor $10$ en $11$ kanalen.
 \end{abstract}
 
 \section{Introductie}
@@ -184,7 +187,7 @@ Buiten de comparatoren worden ook de mogelijke uitvoer van het netwerk bijgehoud
 Aangezien het nul-\'e\'en-principe stelt dat enkel sequenties van nullen en enen getest moeten worden, kunnen we de uitvoer opdelen per aantal enen.
 Voor een netwerk zonder comparatoren betekent dit $2^n$ mogelijke uitvoer sequenties.
 Dit aantal zal echter dalen naarmate er meer en meer comparatoren worden toegevoegd om uiteindelijk te eindigen met slechts $n$ uitvoer sequenties.
-Door de gekozen representatie van invoer en comparatoren kunnen we Code \ref{SwapCompare}\footnote{Zie appendix \ref{UitlegCode} voor de uitleg over het return-statement.} gebruiken om de uitvoer van een comparator te bepalen gegeven een bepaalde invoer.
+Door de gekozen representatie van invoer en comparatoren kunnen we Code \ref{SwapCompare} gebruiken om de uitvoer van een comparator te bepalen gegeven een bepaalde invoer.
 \begin{lstlisting}[caption={swapCompare},label=SwapCompare]
 /**
 input - De invoer voor de comparator.
@@ -674,14 +677,6 @@ Er zou nog extra werk geleverd kunnen worden omtrent het effici\"ent overlopen v
 Graag willen we Professor Dr. Ir. Tom Schrijvers bedanken voor zijn begeleiding doorheen dit onderzoek.\\
 De rekeninfrastructuur en dienstverlening gebruikt in dit werk, werd voorzien door het VSC (Vlaams Supercomputer Centrum), gefinancierd door het FWO en de Vlaamse regering - departement EWI.
 Bijgevolg willen we de onderzoeksgroep \textit{DTAI} bedanken voor de aangeboden credits voor deze rekeninfrastructuur.
-
-\appendix
-\section{Uitleg code}\label{UitlegCode}
-In Code \ref{toekenningsmethode} zien we een manier om een waarde toe te kennen afhankelijk van een conditie.
-Wanneer in het voorbeeld de conditie waar is, zal \texttt{waarde1} worden teruggegeven en \texttt{waarde2} in het andere geval.
-\begin{lstlisting}[caption=Speciale toekenningsstructuur, label=toekenningsmethode]
-(conditie) ? waarde1 : waarde 2;
-\end{lstlisting}
 
 \bibliographystyle{named}
 \bibliography{SortingNetworks}
