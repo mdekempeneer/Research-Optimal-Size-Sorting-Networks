@@ -435,7 +435,8 @@ Op dat moment beschikt elke thread over een set van netwerken met $k+1$ comparat
 Elke thread zal vervolgens zijn set in een gedeelde lijst $S^n_{k+1}$ in het centraal geheugen plaatsen.
 Om deze operatie zo effici\"ent mogelijk te maken, vermijden we zowel locks als het moeten vergroten van de lijst. 
 Daarom zullen we in het begin van de cyclus zorgen dat deze lijst groot genoeg is en gebruik maken van een variabele die bijhoudt op welke index een volgend netwerk moet worden bijgevoegd.
-In onze \texttt{Java} implementatie zullen we voor deze variabele een \texttt{AtomicInteger} gebruiken, deze variabele garandeert een atomische \texttt{getAndIncrement(int)} functie.
+In onze \texttt{Java} implementatie zullen we voor deze variabele een \texttt{AtomicInteger} gebruiken.
+Deze variabele garandeert een atomische \texttt{getAndIncrement(int)} functie.
 Een thread kan deze functie gebruiken om voldoende plaats in de lijst op te eisen voor zijn set door de grootte van zijn set mee te geven als parameter.
 
 Na het toevoegen aan de gedeelde lijst volgt de snoei-stap. Hier zal elke thread subsumes moeten nagaan tussen alle netwerken in zijn set en elk ander reeds toegevoegd netwerk.
