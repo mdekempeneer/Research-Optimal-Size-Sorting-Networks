@@ -24,15 +24,17 @@
 \lstset{frame=tb, language=Java, aboveskip=3mm, belowskip=3mm, showstringspaces=false, columns=flexible, basicstyle={\small\ttfamily}, numbers=none, numberstyle=\tiny\color{gray}, keywordstyle=\color{blue}, commentstyle=\color{dkgreen}, stringstyle=\color{mauve}, breaklines=true, breakatwhitespace=true, tabsize=1}
 \renewcommand{\lstlistingname}{Code}
 
-\title{Sorteernetwerken van Optimale Grootte}%\thanks{Dankwoord}} %TODO Originelere titel?
-\author{Mathias Dekempeneer\\Bachelor Informatica\\Katholieke Universiteit Leuven \\mathias.dekempeneer@student.kuleuven.be
+\title{Optimalisatie van het Bewijs\\ `Sorteernetwerken van Optimale Grootte bij 9 Kanalen'}
+%\author{Mathias Dekempeneer\\Bachelor Informatica\\Katholieke Universiteit Leuven \\mathias.dekempeneer@student.kuleuven.be
+%\And
+%Vincent Derkinderen\\Bachelor Informatica\\Katholieke Universiteit Leuven \\vincent.derkinderen@student.kuleuven.be}
+\author{x\\Bachelor Informatica\\Katholieke Universiteit Leuven \\x@student.kuleuven.be
 \And
-Vincent Derkinderen\\Bachelor Informatica\\Katholieke Universiteit Leuven \\vincent.derkinderen@student.kuleuven.be}
+x\\Bachelor Informatica\\Katholieke Universiteit Leuven \\x@student.kuleuven.be}
 
 \begin{document}
 
 \maketitle
-%TODO check dat elke caption eindigt op een punt! 
 
 \begin{abstract}
 Verdergaand op eerder werk wordt het algoritme beschreven door de onderzoeksgroep van onder meer Codish omtrent sorteernetwerken van optimale grootte gereproduceerd\cite{sortingNetworksSize2014}.
@@ -55,7 +57,7 @@ Wanneer twee of meerdere opeenvolgende comparatoren geen gemeenschappelijk kanaa
 
 Voor sorteernetwerken is er zowel onderzoek naar optimale diepte als optimale grootte.
 Een sorteernetwerk van optimale diepte houdt in dat er geen sorteernetwerk bestaat met even veel kanalen maar met minder parallelle lagen.
-Dit betekent dat, mits elke comparator in een parellelle laag parallel uitgevoerd wordt, men het snelst mogelijke netwerk bekomt.
+Dit betekent dat, mits elke comparator in een parallelle laag parallel uitgevoerd wordt, men het snelst mogelijke netwerk bekomt.
 Een sorteernetwerk van optimale grootte daarentegen houdt in dat er geen sorteernetwerk bestaat met even veel kanalen maar met minder comparatoren.
 Mochten er geen comparatoren parallel uitgevoerd worden, bekomt men hierdoor het snelste en goedkoopste netwerk.
 Het onderzoek in deze paper spitst zich toe op het bewijzen van optimale grootte.
@@ -75,7 +77,6 @@ De volgende sectie licht de relevante concepten en het probleem toe.
 Vervolgens wordt in sectie \ref{VoorgesteldeOplossing} de voorgestelde oplossing beschreven, deze omvat onder meer de genereer- en snoei-aanpak, de representatie van een comparator netwerk en de parallellisatie.
 Tenslotte wordt er ge\"eindigd met een evaluatie in sectie \ref{Evaluatie}.
 
-%TODO enkele getallen rond grootte orde van het probleem
 \section{Probleemstelling}
 Een \textit{comparator netwerk} $C^n_k$ bestaat uit $n$ kanalen en $k$ \textit{comparatoren}.
 Een comparator $\left(i, j\right)$ verbindt twee verschillende kanalen $i$ en $j$ waarbij $0 < i < j \leq n$.
@@ -144,14 +145,14 @@ Deze methode heeft een cyclisch verloop waarbij men bij elke cyclus de set $R^n_
 	  \path (A) edge [bend left] node {genereer} (B)
 	  		  (B) edge [bend left] node {snoei} (A);
 	\end{tikzpicture}
-	\caption{Genereer en snoei principe}
+	\caption{Genereer- en snoei-principe}
 	\label{GenereerSnoei}
 \end{figure}
 Specifiek zullen we vertrekken van een netwerk zonder comparatoren om te eindigen bij $R^n_k$ bestaande uit \'e\'en sorteernetwerk van optimale grootte.
 Bij de genereer-stap zullen we aan elk netwerk van $R^n_k$ alle mogelijke comparatoren toevoegen zodat $|N^n_{k+1}| = |R^n_{k}| \times \frac{n\left(n-1\right)}{2}$.
 Bij de snoei-stap zullen we dan netwerken verwijderen volgens het subsumes principe beschreven in definitie \ref{definitie1}.
-\begin{definitie}[Subsumes] %TODO VRAGEN SUBSUMES => TOM NEDERLANDS/ENGELS
-	We zeggen ``Comparator netwerk $C^n_{k,a}$ subsumes comparator netwerk $C^n_{k,b}$'' wanneer een permuntatie $\pi$ bestaat zodat ${\pi\left(outputs\left(C_{a}\right)\right) \subseteq outputs\left(C_{b}\right)}$. Dit wordt genoteerd als $ C_{a} \preceq C_{b}$ om aan te duiden dat er een permutatie $\pi$ bestaat zodat $C_{a}\leq_\pi C_{b}$.
+\begin{definitie}[Subsumes] 
+	We zeggen ``Comparator netwerk $C^n_{k,a}$ subsumes comparator netwerk $C^n_{k,b}$'' wanneer een permutatie $\pi$ bestaat zodat ${\pi\left(outputs\left(C_{a}\right)\right) \subseteq outputs\left(C_{b}\right)}$. Dit wordt genoteerd als $ C_{a} \preceq C_{b}$ om aan te duiden dat er een permutatie $\pi$ bestaat zodat $C_{a}\leq_\pi C_{b}$.
 	\label{definitie1}
 \end{definitie}
 \begin{lemma}
@@ -170,7 +171,7 @@ In de volgende subsecties zal de voorgestelde oplossing specifieker beschreven w
 In subsectie \ref{RepresentatieVanComparatorNetwerken} wordt beschreven hoe effici\"ent de informatie van een comparator netwerk kan worden opgeslagen.
 Vervolgens zal in subsectie \ref{Genereren} en \ref{Snoeien} zowel de opbouw van de genereer- en snoei-methode als de extra beslismethoden toegelicht worden.
 Bijkomend zullen we een manier geven in subsectie \ref{Parallellisatie} om het proces te parallelliseren zonder al te veel locks.
-Tenslotte wordt het geheugengebruik van de implementatie besproken en wordt er manier aangeboden om deze nog verder te beperken.
+Tenslotte wordt het geheugengebruik van de implementatie besproken en wordt er een manier aangeboden om deze nog verder te beperken.
 
 \subsection{Representatie van comparator netwerken}\label{RepresentatieVanComparatorNetwerken}
 Bij de representatie van comparator netwerken moeten we rekening houden met het geheugengebruik en de mogelijkheid om effici\"ente bewerkingen te kunnen uitvoeren.
@@ -343,7 +344,7 @@ Wanneer we bij het toevoegen van een comparator $w^*$ herberekenen, kunnen we ne
 \end{lemma}
 Wanneer ${outputs(C_a) \subseteq outputs(C_b)}$ moet gelden dat het aantal posities waar $C_a$ een $0$ heeft kleiner moet zijn of gelijk aan het aantal bij $C_b$.
 Als dit niet het geval is, zou $C_a$ zeker een positie hebben dewelke $C_b$ niet heeft waardoor dus ${outputs(C_a) \nsubseteq outputs(C_b)}$.
-Dit geldt niet alleen voor een $0$ maar ook voor $1$.
+Dit geldt niet alleen voor $0$ maar ook voor $1$.
 Als we tenslotte inzien dat een permutatie het aantal posities waar zo een waarde ($0$ of $1$) voorkomt niet wijzigt, krijgen we lemma \ref{lemma4}.
 In figuur \ref{VoorbeeldLemmas} is bijvoorbeeld te zien dat $C_3 \npreceq C_1$ want voor de uitvoerverzameling met vier enen geldt dat een $0$ bij $C_3$ op drie plaatsen voorkomt terwijl dit bij $C_1$ slechts op twee plaatsen is.
 Dit vormt lemma \ref{lemma4} dewelke bij een uitvoer voor $9$ kanalen ${2.22803 \times 10^{11}}$ keer wordt uitgevoerd. Hierbij wordt er $2.05631 \times 10^{11}$ keer een beslissing genomen.
@@ -362,7 +363,7 @@ Als ${outputs(C_a) \subseteq outputs(C_b)}$ moet gelden dat alle posities waar e
 Wanneer dit niet het geval is, zou $C_a$ een uitvoer hebben met een $0$ en een $1$ op een plaats waar $C_b$ dit niet heeft waardoor ${outputs(C_a) \nsubseteq outputs(C_b)}$.
 Deze redenering is het basisidee achter lemma \ref{lemma5}.
 
-Om de mogelijke permutaties bij te houden zullen we gebruik maken van een voorstelling die te zien is in tabel \ref{tabel4}.
+Om de mogelijke permutaties bij te houden, zullen we gebruik maken van een voorstelling die te zien is in tabel \ref{tabel4}.
 De waarden in een kolom stellen alle mogelijke posities voor die op die plaats kunnen voorkomen.
 Wanneer we tabel  \ref{tabel4} gebruiken om de mogelijke permutaties weer te geven dan zullen we permutatie $4321$ en $1324$  bekomen, waarbij $4321$ een eenheidspermutatie zal voorstellen.
 Bij het begin van het algoritme zullen we starten met tabel \ref{tabel5}, deze laat alle $n!$ permutaties toe.
@@ -393,7 +394,7 @@ Hierna gebruiken we lemma \ref{lemma5} om posities uit de kolommen te verwijdere
 \label{tabel5}
 \end{table}
 
-We weten namelijk dat als \[{\pi\left(outputs\left(C_a\right)\right) \subseteq outputs\left(C_b\right)}\] er bij de gepermuteerde outputs enkel een $1$ kan komen op de plaats waar dit bij $C_b$ ook het geval is.
+We weten namelijk dat als \[{\pi\left(outputs\left(C_a\right)\right) \subseteq outputs\left(C_b\right)}\] er bij de gepermuteerde uitvoer enkel een $1$ kan komen op de plaats waar dit bij $C_b$ ook het geval is.
 Op de plaats waar $C_b$ een $0$ heeft, kunnen dus enkel de posities komen waar $C_a$ een $0$ heeft.
 Nemen we bijvoorbeeld $w\left(C_a,1,1\right) = 0101$ en ${w\left(C_b,1,1\right)=0110}$ dan kunnen we tabel \ref{tabel5} reduceren tot tabel \ref{tabel6}.
 We kunnen voor $w\left(C_a, x, k\right)$ deze methode doortrekken voor elke $1 \leq k \leq n$ en voor zowel $x = 0$ als $x = 1$.
@@ -445,8 +446,6 @@ Om dit aantal, dat groter wordt naarmate het aantal kanalen stijgt, te verminder
 Telkens wanneer een lege index wordt gedetecteerd door een thread zal deze het aantal opeenvolgende lege indices tellen en dit aantal opslaan op de eerste lege plaats in deze reeks.
 Dit getal stelt dus het aantal opeenvolgende lege plaatsen voor na die index.
 Wanneer een thread dan dit getal tegenkomt, weten we exact hoeveel indices de thread kan overslaan.
-%TODO Big O ??
-%TODO ZIe pagina 4 in paper => definitie 2: Observe that ......
 
 \subsection{Geheugen}\label{Geheugen}
 Door het grote aantal netwerken is het testen op subsumes en de effici\"entie van de datastructuren van groot belang. In figuur \ref{netwerkVerloop9kanalen} zien we dat dit aantal voor $9$ kanalen kan oplopen tot meer dan $900000$ netwerken. Bij het stijgen van het aantal kanalen wordt dan ook het geheugenbeheer des te belangrijker.
@@ -474,15 +473,14 @@ Door het grote aantal netwerken is het testen op subsumes en de effici\"entie va
 	\caption{Aantal resterende netwerken na het uitvoeren van genereer en snoei bij toevoegen van de $k^{de}$ comparator.}
 	\label{netwerkVerloop9kanalen}
 \end{figure}
-\footnotetext{Voor $10$ kanalen is het aantal netwerken berekend tot en met comparator $13$.} %TODO UPDATE??
-%TODO CHECK VERLEDEN <=> TTTijd
+\footnotetext{Voor $10$ kanalen is het aantal netwerken berekend tot en met comparator $13$.}
 
 In \texttt{Java} hebben we het voordeel dat we niet expliciet aan geheugenbeheer moeten doen.
 We gaan anderzijds wel enkele maatregelen nemen om de vereiste hoeveelheid geheugen te verlagen.
 E\'en van de mogelijke plaatsen waar we dit kunnen doen, is bij de representatie van een netwerk.
-Wanneer een comparator aan een netwerk wordt toegevoegd is het mogelijk dat een lijst van uitvoer sequenties met $s$ enen ongewijzigd blijft.
+Wanneer een comparator aan een netwerk wordt toegevoegd, is het mogelijk dat een lijst van uitvoer sequenties met $s$ enen ongewijzigd blijft.
 Om te vermijden dat we hierdoor meerdere malen dezelfde lijst in het geheugen hebben, zullen we een referentie doorgeven van deze lijst en slechts een nieuwe lijst gebruiken wanneer de lijst gewijzigd wordt.
-Aangezien bij \texttt{Java} een tweedimensionale lijst wordt aanzien als een lijst van referenties naar andere lijsten kan de oude referentie gemakkelijk herbruikt worden. 
+Aangezien bij \texttt{Java} een tweedimensionale lijst wordt aanzien als een lijst van referenties naar andere lijsten kan de oude referentie gemakkelijk hergebruikt worden. 
 
 Een andere plaats is bij de parallellisatie, hier daalt de hoeveelheid geheugen doordat een thread enerzijds zal snoeien binnen zijn set alvorens de set toe te voegen aan de gedeelde lijst en anderzijds doordat de genereer- en snoei-stap door elkaar worden uitgevoerd.
 
@@ -527,7 +525,7 @@ Dit bevestigt wat reeds geweten was \cite{sortingNetworksSize2014}.
 \draw[thick] (15/\x,6/\x) -- (15/\x,7/\x);
 \draw[thick] (16/\x,7/\x) -- (16/\x,8/\x);
 \end{tikzpicture}
-\caption{Sorteernetwerk 9 kanalen, 25 comparatoren}
+\caption{Het gevonden sorteernetwerk van optimale grootte bij 9 kanalen met 25 comparatoren.}
 \label{Sorteernetwerk9kanalen}
 \end{figure}
 
@@ -563,7 +561,7 @@ De bekomen resultaten van dit werk zijn afkomstig van het uitvoeren op \'e\'en n
 \end{figure}
 
 \subsection{Benadering 10 en 11 kanalen}
-De uitvoering van het programma voor $10$ kanalen is na $299$~uur\footnote{$12$ dagen en $11$ uur} stopgezet. %TODO Aanpassen naar het effectieve
+De uitvoering van het programma voor $10$ kanalen is na $299$~uur\footnote{$12$ dagen en $11$ uur} stopgezet.
 De tussentijdse resultaten met betrekking tot de uitvoeringstijd zijn te zien in figuur \ref{tijdverloop10kanalen} en met betrekking tot het aantal netwerken zijn te zien in figuur \ref{netwerkVerloop9kanalen}.
 Voor 10, en dus ook voor 11, kanalen is de \texttt{Java} implementatie met de gebruikte hardware onvoldoende om resultaten binnen een redelijk tijdsbestek te bekomen.
 Gebaseerd op figuur \ref{tijdverloop10kanalen} schatten we dat voor $10$ kanalen meer dan $1500$ dagen\footnote{Berekend op basis van een polynomiaal verloop van graad $11$.} vereist zijn. 
@@ -584,7 +582,7 @@ Hier kan bijvoorbeeld onderzoek gedaan worden naar of men al dan niet onder een 
 \centering
 \vspace{10pt}
 \includegraphics[width=0.49\textwidth]{Profile_Time_9.png}
-\caption{Profile van een parti\"ele uitvoering voor $9$ kanalen.} %TODO
+\caption{Profiel van een parti\"ele uitvoering voor $9$ kanalen.}
 \label{ProfileTime9}
 \end{figure}
 
@@ -666,7 +664,6 @@ Vervolgens zou men dan via dit argument kunnen beslissen om al dan niet een bepa
 \label{AantalSnoeiBeslissingen9Kanalen}
 \end{figure}
 
-
 \section{Conclusies}
 Onze implementatie van de genereer- en snoei-aanpak van Codish \textit{et al} zorgde voor een bewijs voor $9$ kanalen na $3$~uur en $26$~min, een versnelling ten opzichte van de eerdere $305$~uur.
 Het is echter niet snel genoeg voor een bewijs van $10$ kanalen, deze zou bij benadering meer dan $1500$ dagen duren.
@@ -686,9 +683,7 @@ Wanneer in het voorbeeld de conditie waar is, zal \texttt{waarde1} worden terugg
 (conditie) ? waarde1 : waarde 2;
 \end{lstlisting}
 
-
 \bibliographystyle{named}
 \bibliography{SortingNetworks}
 
 \end{document}
-
