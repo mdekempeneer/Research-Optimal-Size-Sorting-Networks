@@ -53,7 +53,8 @@ De kanalen dienen voor invoer van data en de comparatoren, dewelke elk twee kana
 De operatie van een comparator bestaat eruit om de data verkregen van de twee verbonden kanalen te vergelijken en gesorteerd terug te plaatsen op deze twee kanalen.
 Dit zorgt ervoor dat een datasequentie ingevoerd bij een comparatornetwerk er partieel gesorteerd zal uitkomen.
 Sorteernetwerken zijn comparatornetwerken waarvoor geldt dat bij elke mogelijke invoer de uitvoer een volledig gesorteerde sequentie is.
-Wanneer twee of meer opeenvolgende comparatoren geen gemeenschappelijk kanaal hebben, worden deze aanschouwd als een parallelle laag. 
+Wanneer twee of meer opeenvolgende comparatoren geen gemeenschappelijk kanaal hebben, worden deze aanschouwd als een parallelle laag.
+De gebruikte terminologie wordt uitvoerig besproken in Sectie \ref{terminologie}.
 
 Voor sorteernetwerken is er zowel onderzoek naar optimale diepte als optimale grootte.
 Een sorteernetwerk van optimale diepte houdt in dat er geen sorteernetwerk bestaat met even veel kanalen maar met minder (parallelle) lagen.
@@ -67,17 +68,15 @@ Voor optimale diepte vond Parberry een bewijs voor $n = 9$ en $n = 10$ waarna in
 Het volgende kleinste open probleem bij optimale diepte was dan het bewijs voor $17$ kanalen, bewezen door de onderzoeksgroep van onder meer Codish \cite{CodishBackAgain}.
 Voor optimale grootte is het meest recent opgeloste open probleem het bewijs voor $9$ en $10$ kanalen \cite{sortingNetworksSize2014}.
 Bij dit bewijs, voor $9$ kanalen, maakten ze gebruik van zowel een genereer- en snoei-aanpak als een \textit{SAT}-aanpak. 
-De bewezen grootte voor $9$ kanalen droeg dan direct bij aan een bewijs voor $10$ kanalen. Het bewijs voor $9$ kanalen is bekomen door een parallelle uitvoer op $144$ Intel E$8400$ cores ($3.0$GHz) met elk $2$ threads. Enkel gebruik makend %TODO aanelkaar?
-van de genereer- en snoei-aanpak eindigde dit bewijs in $305$ uur, voor de bijkomstige \textit{SAT}-aanpak duurde het slechts $197$ uur. 
+De bewezen grootte voor $9$ kanalen droeg dan direct bij aan een bewijs voor $10$ kanalen. Het bewijs voor $9$ kanalen is bekomen door een parallelle uitvoer op $144$ Intel E$8400$ cores ($3.0$GHz) met elk $2$ threads.
+Enkel gebruik makend van de genereer- en snoei-aanpak eindigde dit bewijs in $305$ uur, voor de bijkomstige \textit{SAT}-aanpak duurde het slechts $197$ uur. 
 Dit onderzoek bouwt verder op hun voorgaand werk en tracht dichter bij een bewijs voor $11$ kanalen te komen.
 Enkel gebruik makend van de genereer- en snoei-aanpak zal door onze implementatie voor $9$ kanalen de optimale grootte bewezen worden in $3$~uur en $26$~minuten op \'e\'en node bestaande uit twee $12$-core ``Haswell'' Xeon E$5$-$2680$v$3$ processoren ($2.5$GHz, $30$MB level $3$ cache met $64$GB RAM) op de rekeninfrastructuur van het Vlaamse Supercomputer Centrum.
 
+De voorgestelde oplossing wordt besproken in Sectie \ref{VoorgesteldeOplossing} en ge\"evalueerd in Sectie~\ref{Evaluatie}.
 De bijdrage van deze paper is, met betrekking tot het algoritme dat enkel gebruik maakt van een genereer- en snoei-aanpak, een reductie van de uitvoeringstijd van $305$~uur naar $3$~uur en $26$~minuten.
-
-De volgende sectie licht de relevante concepten en het probleem toe.
-Vervolgens wordt in Sectie \ref{VoorgesteldeOplossing} de voorgestelde oplossing beschreven.
-Deze omvat onder meer de genereer- en snoei-aanpak, de representatie van een comparatornetwerk en de parallellisatie.
-Tenslotte wordt er ge\"eindigd met een evaluatie in Sectie \ref{Evaluatie}.
+%
+%De probleemstelling, en dus ons doel, wordt toegelicht in de volgende sectie.
 
 \section{Probleemstelling}\label{probleemstelling}
 Het bewijs van Codish \textit{et al.} \cite{sortingNetworksSize2014} omtrent de optimale grootte van een sorteernetwerk van invoergrootte $9$ maakt zowel gebruik van een genereer- en snoei-aanpak als een \textit{SAT}-aanpak.
@@ -104,7 +103,7 @@ De parallelle lagen bestaan uit comparatoren die geen kanaal gemeenschappelijk h
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width=0.4\textwidth]{NetworkTransparent.png} 
-	\caption{Voorbeeld van een sorteernetwerk bestaande uit $4$~kanalen en $5$~comparatoren.}
+	\caption{Voorbeeld van een sorteernetwerk bestaande uit $4$~kanalen (horizontale lijnen) en $5$~comparatoren (verticale lijnen). De verschillende lijnen stellen de data voor die doorheen het netwerk propageert.}
 	\label{Werking}
 \end{figure}
 
@@ -323,7 +322,8 @@ Zo gebruiken we onder meer Lemma \ref{lemma3} en Lemma \ref{lemma4}, beschreven 
 Aangezien een permutatie op de uitvoer geen verandering teweegbrengt op vlak van de hoeveelheid uitvoer en ${\pi(outputs(C_a)) \subseteq outputs(C_b)}$ kan het onmogelijk dat ${|outputs(C_a)| > |outputs(C_b)|}$.
 Dit kan worden doorgetrokken naar de uitvoerverzamelingen met hetzelfde aantal enen.
 Zo zien we bijvoorbeeld in Figuur \ref{VoorbeeldLemmas} dat $C_2 \npreceq C_3$ want $C_2$ heeft vier uitvoersequenties met twee enen en $C_3$ heeft er slechts drie.
-Dit vormt Lemma \ref{lemma3} en wordt bij $9$ kanalen $1.07666 \times 10^{13}$ keer nagegaan waarbij $1.05438 \times 10^{13}$ keer een beslissing genomen wordt.
+Dit vormt Lemma \ref{lemma3} en wordt bij het uitvoeren van ons algoritme voor $9$ kanalen $1.07666 \times 10^{13}$ keer nagegaan.
+In $97.9\%$ van de gevallen wordt op basis van dit lemma beslist dat voor netwerken $C_a$ en $C_b$ geldt dat $C_a \npreceq C_b$.
 \begin{lemma}
 	Wanneer de uitvoerverzameling bij $C_a$ met $x$ enen ($1 \leq x \leq n$) groter is dan bij $C_b$ weten we dat $C_a \npreceq C_b$ met $C_a$ en $C_b$ twee comparatornetwerken.
 \label{lemma3}
@@ -353,7 +353,7 @@ Als dit niet het geval is, zou $C_a$ zeker een positie hebben dewelke $C_b$ niet
 Dit geldt niet alleen voor $0$ maar ook voor $1$.
 Als we tenslotte inzien dat een permutatie het aantal posities waar zo een waarde ($0$ of $1$) voorkomt niet wijzigt, krijgen we Lemma \ref{lemma4}.
 In Figuur \ref{VoorbeeldLemmas} is bijvoorbeeld te zien dat $C_3 \npreceq C_1$ want voor de uitvoerverzameling met vier enen geldt dat een $0$ bij $C_3$ op drie plaatsen voorkomt terwijl dit bij $C_1$ slechts op twee plaatsen is.
-Dit vormt Lemma \ref{lemma4} dewelke bij een uitvoer voor $9$ kanalen ${2.22803 \times 10^{11}}$ keer wordt uitgevoerd. Hierbij wordt er $2.05631 \times 10^{11}$ keer een beslissing genomen.
+Dit vormt Lemma \ref{lemma4} dewelke bij een uitvoer voor $9$ kanalen ${2.22803 \times 10^{11}}$ keer wordt uitgevoerd. Hierbij wordt er in $92.3\%$ van de gevallen beslist dat voor netwerken $C_a$ en $C_b$ geldt dat $C_a \npreceq C_b$.
 Dit lemma voorkomt, net zoals Lemma~\ref{lemma3}, dat er permutaties getest moeten worden.
 
 Als beide lemma's geen uitsluiting bieden, zullen we permutaties moeten nagaan.
@@ -455,48 +455,6 @@ Telkens wanneer een lege index wordt gedetecteerd door een thread zal deze het a
 Dit getal stelt dus het aantal opeenvolgende lege plaatsen voor na die index.
 Wanneer een thread dan dit getal tegenkomt, weten we exact hoeveel indices de thread kan overslaan.
 
-\subsection{Geheugen}\label{Geheugen}
-Door het grote aantal netwerken is het testen op subsumes en de effici\"entie van de datastructuren van groot belang. In Figuur \ref{netwerkVerloop9kanalen} zien we dat dit aantal voor $9$ kanalen kan oplopen tot meer dan $900000$ netwerken. Bij het stijgen van het aantal kanalen wordt dan ook het geheugenbeheer des te belangrijker.
-\begin{figure}[!h]
-	\centering
-	\begin{tikzpicture}
-		\begin{axis} [
-			xlabel={Aantal comparatoren},
-			ylabel={Aantal netwerken},
-			ymode = log,
-			log basis y = 10,
-			legend pos = north west,
-			ymajorgrids=true]
-		\addplot [only marks, green] file {netwerkVerloop7kanalen.dat};
-		\addplot [only marks, blue] file {netwerkVerloop8kanalen.dat};
-		\addplot [only marks, red] file {netwerkVerloop9kanalen.dat};
-		\addplot [only marks, cyan] file {netwerkVerloop10kanalen.dat};
-		\addplot [smooth, green] file {netwerkVerloop7kanalen.dat};
-		\addplot [smooth, blue] file {netwerkVerloop8kanalen.dat};
-		\addplot [smooth, red] file {netwerkVerloop9kanalen.dat};
-		\addplot [smooth, cyan] file {netwerkVerloop10kanalen.dat};
-		\legend{7 kanalen, 8 kanalen, 9 kanalen, 10 kanalen\footnotemark};
-		\end{axis}
-	\end{tikzpicture}
-	\caption{Aantal resterende netwerken na het uitvoeren van genereer en snoei bij toevoegen van de $k^{de}$ comparator.}
-	\label{netwerkVerloop9kanalen}
-\end{figure}
-\footnotetext{Voor $10$ kanalen is het aantal netwerken berekend tot en met comparator $13$.}
-
-In \texttt{Java} hebben we het voordeel dat we niet expliciet aan geheugenbeheer moeten doen.
-We gaan anderzijds wel enkele maatregelen nemen om de vereiste hoeveelheid geheugen te verlagen.
-E\'en van de mogelijke plaatsen waar we dit kunnen doen, is bij de representatie van een netwerk.
-Wanneer een comparator aan een netwerk wordt toegevoegd, is het mogelijk dat een lijst van uitvoersequenties met $s$ enen ongewijzigd blijft.
-Om te vermijden dat we hierdoor meerdere malen dezelfde lijst in het geheugen hebben, zullen we een referentie doorgeven van deze lijst en slechts een nieuwe lijst gebruiken wanneer de lijst gewijzigd wordt.
-Aangezien bij \texttt{Java} een tweedimensionale lijst wordt aanzien als een lijst van referenties naar andere lijsten kan de oude referentie gemakkelijk hergebruikt worden. 
-
-Een andere plaats is bij de parallellisatie.
-Hier daalt de hoeveelheid geheugen doordat een thread enerzijds zal snoeien binnen zijn set alvorens de set toe te voegen aan de gedeelde lijst en anderzijds doordat de genereer- en snoei-stap door elkaar worden uitgevoerd.
-
-Onze \texttt{Java} implementatie gebruikte bij de uitvoering voor $8$ en $9$ kanalen respectievelijk $208$MB en $3951$MB.
-De exacte hoeveelheid verschilt naargelang de frequentie waarmee de \texttt{Java Virtual Machine} de \textit{Garbage Collection} uitvoert.
-Voor minder dan $8$ kanalen was het geheugen verbruik verwaarloosbaar klein.
-
 \section{Evaluatie}\label{Evaluatie}
 Onze \texttt{Java}-implementatie van het beschreven algoritme vindt voor $9$ kanalen reeds na $3$ uur en $25$ minuten een oplossing met $25$ comparatoren die gevisualiseerd wordt in Figuur~\ref{Sorteernetwerk9kanalen}.
 Dit bevestigt het gekende resultaat \cite{sortingNetworksSize2014}.
@@ -581,6 +539,48 @@ Gebaseerd op Figuur~\ref{tijdverloop10kanalen} schatten we dat voor $10$ kanalen
 \label{tijdverloop10kanalen}
 \end{figure}
 
+\subsection{Geheugen}\label{Geheugen}
+Door het grote aantal netwerken is het testen op subsumes en de effici\"entie van de datastructuren van groot belang. In Figuur \ref{netwerkVerloop9kanalen} zien we dat dit aantal voor $9$ kanalen kan oplopen tot meer dan $900000$ netwerken. Bij het stijgen van het aantal kanalen wordt dan ook het geheugenbeheer des te belangrijker.
+\begin{figure}[!h]
+	\centering
+	\begin{tikzpicture}
+		\begin{axis} [
+			xlabel={Aantal comparatoren},
+			ylabel={Aantal netwerken},
+			ymode = log,
+			log basis y = 10,
+			legend pos = north west,
+			ymajorgrids=true]
+		\addplot [only marks, green] file {netwerkVerloop7kanalen.dat};
+		\addplot [only marks, blue] file {netwerkVerloop8kanalen.dat};
+		\addplot [only marks, red] file {netwerkVerloop9kanalen.dat};
+		\addplot [only marks, cyan] file {netwerkVerloop10kanalen.dat};
+		\addplot [smooth, green] file {netwerkVerloop7kanalen.dat};
+		\addplot [smooth, blue] file {netwerkVerloop8kanalen.dat};
+		\addplot [smooth, red] file {netwerkVerloop9kanalen.dat};
+		\addplot [smooth, cyan] file {netwerkVerloop10kanalen.dat};
+		\legend{7 kanalen, 8 kanalen, 9 kanalen, 10 kanalen\footnotemark};
+		\end{axis}
+	\end{tikzpicture}
+	\caption{Aantal resterende netwerken na het uitvoeren van genereer en snoei bij toevoegen van de $k^{de}$ comparator.}
+	\label{netwerkVerloop9kanalen}
+\end{figure}
+\footnotetext{Voor $10$ kanalen is het aantal netwerken berekend tot en met comparator $13$.}
+
+In \texttt{Java} hebben we het voordeel dat we niet expliciet aan geheugenbeheer moeten doen.
+We gaan anderzijds wel enkele maatregelen nemen om de vereiste hoeveelheid geheugen te verlagen.
+E\'en van de mogelijke plaatsen waar we dit kunnen doen, is bij de representatie van een netwerk.
+Wanneer een comparator aan een netwerk wordt toegevoegd, is het mogelijk dat een lijst van uitvoersequenties met $s$ enen ongewijzigd blijft.
+Om te vermijden dat we hierdoor meerdere malen dezelfde lijst in het geheugen hebben, zullen we een referentie doorgeven van deze lijst en slechts een nieuwe lijst gebruiken wanneer de lijst gewijzigd wordt.
+Aangezien bij \texttt{Java} een tweedimensionale lijst wordt aanzien als een lijst van referenties naar andere lijsten kan de oude referentie gemakkelijk hergebruikt worden. 
+
+Een andere plaats is bij de parallellisatie.
+Hier daalt de hoeveelheid geheugen doordat een thread enerzijds zal snoeien binnen zijn set alvorens de set toe te voegen aan de gedeelde lijst en anderzijds doordat de genereer- en snoei-stap door elkaar worden uitgevoerd.
+
+Onze \texttt{Java} implementatie gebruikte bij de uitvoering voor $8$ en $9$ kanalen respectievelijk $208$MB en $3951$MB.
+De exacte hoeveelheid verschilt naargelang de frequentie waarmee de \texttt{Java Virtual Machine} de \textit{Garbage Collection} uitvoert.
+Voor minder dan $8$ kanalen was het geheugen verbruik verwaarloosbaar klein.
+
 \subsection{Profilering}\label{Profilering}
 Via een profilering, zoals in Figuur \ref{ProfileTime9}, kunnen we de bottleneck vaststellen met als doel de uitvoeringstijd te verbeteren.
 In dit profiel zien we dat de snoei-methode, de prune-methode in de figuur, duidelijk de bottleneck is.
@@ -598,6 +598,7 @@ Hier kan bijvoorbeeld onderzoek gedaan worden naar of men al dan niet onder een 
 \subsection{Beslissingen}
 Door de genereer- en snoei-aanpak mag het totaal aantal te overlopen netwerken dan wel gedaald zijn, de hoeveelheid beslissingen die genomen moeten worden blijft nog steeds hoog zoals te zien in Figuur \ref{AantalBeslissingen9Kanalen}.
 In deze figuur zien we dat de meeste beslissingen genomen worden tijdens het snoeien.
+Met beslissingen bedoelen we beslissingen over het al dan niet gelden van $C_a \preceq C_b$.
 Er moet echter wel een onderscheid gemaakt worden tussen de soorten van beslissingen.
 De beslissingen genomen in de genereer-stap zijn beslissingen die het genereren van een netwerk voorkomen en zijn gebaseerd op redundante comparatoren.
 Deze beslissingen zorgen voor minder netwerken in de gedeelde lijst en dus voor zowel minder snoei-operaties als geheugenverbruik.
