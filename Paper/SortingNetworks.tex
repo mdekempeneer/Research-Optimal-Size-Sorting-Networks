@@ -38,14 +38,14 @@ Vincent Derkinderen\\Bachelor Informatica\\Katholieke Universiteit Leuven \\vinc
 
 \begin{abstract}
 Een \textit{sorteernetwerk} is een netwerk bestaande uit \textit{compare-and-swap} elementen.
-Deze netwerken kunnen gebruikt worden als algoritme om data van een vaste grootte te sorteren.
-%Wanneer de hoeveelheid en de volgorde van de compare-and-swap operaties enkel afhankelijk is van de grootte van de data spreekt men van een \textit{data-oblivious algoritme}.
-%Sorteernetwerken bieden een formeel model voor sorteeralgoritmen die data-oblivious zijn.
+Deze netwerken kunnen gebruikt worden om data met een vaste invoergrootte te sorteren.
 Om een zo effici\"ent (en goedkoop) mogelijk netwerk te bekomen wordt er gezocht naar een netwerk met zo weinig mogelijk elementen.
-De optimale hoeveelheid is reeds bewezen voor invoerdata tot en met grootte $9$ en $10$.
-Het algoritme voor het bewijs van invoer grootte~$9$ \cite{sortingNetworksSize2014} gebruikt een genereer- en snoei-methode dewelke deze paper zal reproduceren en optimaliseren.
-Voor een bewijs van invoer grootte~$9$ wordt de uitvoeringstijd gereduceerd van $305$~uur naar $3$~uur en $26$~minuten en zet zo een stap dichter naar een uitvoering voor $10$ en $11$ kanalen.
+Het minimaal aantal elementen is reeds bewezen voor invoerdata tot en met grootte $9$ en $10$.
+Het algoritme voor het bewijs van invoergrootte~$9$ \cite{sortingNetworksSize2014} gebruikt een genereer- en snoei-methode dewelke deze paper zal reproduceren en optimaliseren.
+Voor een bewijs van invoer grootte~$9$ wordt de uitvoeringstijd gereduceerd van $305$~uur naar $3$~uur en {$26$~minuten} en wordt zo een stap dichter gezet naar een uitvoering voor $10$ en $11$ kanalen.
 \end{abstract}
+
+%TODO Ergens in abstract nog computer-assisted proof gebruiken?
 
 \section{Introductie}
 Comparatornetwerken bestaan uit zowel kanalen als comparatoren.
@@ -59,19 +59,22 @@ Voor sorteernetwerken is er zowel onderzoek naar optimale diepte als optimale gr
 Een sorteernetwerk van optimale diepte houdt in dat er geen sorteernetwerk bestaat met even veel kanalen maar met minder parallelle lagen.
 Dit betekent dat, mits elke comparator in een parallelle laag parallel uitgevoerd wordt, men het snelst mogelijke netwerk bekomt.
 Een sorteernetwerk van optimale grootte daarentegen houdt in dat er geen sorteernetwerk bestaat met even veel kanalen maar met minder comparatoren.
+% Hierdoor bekomt men het goedkoopste netwerk en tevens, wanneer de comparatoren niet parallel uitgevoerd worden, het snelste netwerk.
+% Hierdoor bekomt men zowel het goedkoopste netwerk alsook, wanneer de comparatoren niet parallel uitgevoerd worden, het snelste netwerk.
 Mochten comparatoren niet parallel uitgevoerd kunnen worden, bekomt men hierdoor het snelste en goedkoopste netwerk.
 Het onderzoek in deze paper spitst zich toe op het bewijzen van optimale grootte.
 
 In 1966 bewees het werk van Floyd en Knuth de optimale groottes voor $1 \leq n \leq 8$ \cite{FloydKnuth}.
 Voor optimale diepte vond Parberry een bewijs voor $n = 9$ en $n = 10$ waarna in $2014$ Bundala en Z\'avodn\'y er vonden voor $11 \leq n \leq 16$ \cite{Parberry,BundalaZavodny}.
 Het volgende kleinste open probleem bij optimale diepte was dan het bewijs voor $17$ kanalen, bewezen door de onderzoeksgroep van onder meer Codish \cite{CodishBackAgain}.
-Voor optimale grootte was dit voor $9$ kanalen \cite{sortingNetworksSize2014}.
-Bij het bewijs voor $9$ kanalen werd ook indirect het bewijs gegeven voor $10$ kanalen. 
-Bij dit bewijs maakten ze gebruik van zowel een genereer- en snoei-aanpak als een \textit{SAT}-aanpak.
-Dit onderzoek bouwt verder op het voorgaande en tracht dichter bij een bewijs voor $11$ kanalen te komen.
-Enkel gebruik makend van de genereer- en snoei-aanpak zal voor $9$ kanalen de optimale grootte bewezen worden in $3$~uur en $26$~minuten op \'e\'en node bestaande uit twee $12$-core ``Haswell'' Xeon E$5$-$2680$v$3$ processoren ($2.5$GHz, $30$MB level $3$ cache met $64$GB RAM) op de rekeninfrastructuur van het Vlaamse Supercomputer Centrum.
-Dit is een verbetering van $194$~uur ten opzichte van de \textit{SAT}-aanpak en $302$ uur ten opzichte van de genereer- en snoei-aanpak.
-De resultaten van dit eerder werk zijn beide bekomen door een parallelle uitvoer op $144$ Intel E$8400$ cores ($3.0$GHz) met elk $2$ threads.
+Voor optimale grootte is het meest recent opgeloste open probleem het bewijs voor $9$ en $10$ kanalen \cite{sortingNetworksSize2014}.
+Bij dit bewijs, voor $9$ kanalen, maakten ze gebruik van zowel een genereer- en snoei-aanpak als een \textit{SAT}-aanpak. 
+De bewezen grootte voor $9$ kanalen droeg dan direct bij aan een bewijs voor $10$ kanalen. Het bewijs voor $9$ kanalen is bekomen door een parallelle uitvoer op $144$ Intel E$8400$ cores ($3.0$GHz) met elk $2$ threads. Enkel gebruik makend %TODO aanelkaar?
+van de genereer- en snoei-aanpak eindigde dit bewijs in $305$ uur, voor de bijkomstige \textit{SAT}-aanpak duurde het slechts $197$ uur. 
+Dit onderzoek bouwt verder op hun voorgaand werk en tracht dichter bij een bewijs voor $11$ kanalen te komen.
+Enkel gebruik makend van de genereer- en snoei-aanpak zal door onze implementatie voor $9$ kanalen de optimale grootte bewezen worden in $3$~uur en $26$~minuten op \'e\'en node bestaande uit twee $12$-core ``Haswell'' Xeon E$5$-$2680$v$3$ processoren ($2.5$GHz, $30$MB level $3$ cache met $64$GB RAM) op de rekeninfrastructuur van het Vlaamse Supercomputer Centrum.
+
+De bijdrage van deze paper is, met betrekking tot het algoritme dat enkel gebruik maakt van een genereer- en snoei-aanpak, een reductie van de uitvoeringstijd van $305$~uur naar $3$~uur en $26$~minuten.
 
 De volgende sectie licht de relevante concepten en het probleem toe.
 Vervolgens wordt in Sectie \ref{VoorgesteldeOplossing} de voorgestelde oplossing beschreven.
