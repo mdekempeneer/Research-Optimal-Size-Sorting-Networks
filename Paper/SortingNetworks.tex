@@ -50,18 +50,16 @@ Voor een bewijs van invoer grootte~$9$ wordt de uitvoeringstijd gereduceerd van 
 \section{Introductie}
 Comparatornetwerken bestaan uit zowel kanalen als comparatoren.
 De kanalen dienen voor invoer van data en de comparatoren, dewelke elk twee kanalen verbinden, zorgen voor de operaties op deze data.
-Een comparator zal namelijk de data verkregen van de twee verbonden kanalen vergelijken en gesorteerd terugplaatsen op deze twee kanalen.
+De operatie van een comparator bestaat eruit om de data verkregen van de twee verbonden kanalen te vergelijken en gesorteerd terug te plaatsen op deze twee kanalen.
 Dit zorgt ervoor dat een datasequentie ingevoerd bij een comparatornetwerk er partieel gesorteerd zal uitkomen.
 Sorteernetwerken zijn comparatornetwerken waarvoor geldt dat bij elke mogelijke invoer de uitvoer een volledig gesorteerde sequentie is.
 Wanneer twee of meer opeenvolgende comparatoren geen gemeenschappelijk kanaal hebben, worden deze aanschouwd als een parallelle laag. 
 
 Voor sorteernetwerken is er zowel onderzoek naar optimale diepte als optimale grootte.
-Een sorteernetwerk van optimale diepte houdt in dat er geen sorteernetwerk bestaat met even veel kanalen maar met minder parallelle lagen.
+Een sorteernetwerk van optimale diepte houdt in dat er geen sorteernetwerk bestaat met even veel kanalen maar met minder (parallelle) lagen.
 Dit betekent dat, mits elke comparator in een parallelle laag parallel uitgevoerd wordt, men het snelst mogelijke netwerk bekomt.
 Een sorteernetwerk van optimale grootte daarentegen houdt in dat er geen sorteernetwerk bestaat met even veel kanalen maar met minder comparatoren.
-% Hierdoor bekomt men het goedkoopste netwerk en tevens, wanneer de comparatoren niet parallel uitgevoerd worden, het snelste netwerk.
-% Hierdoor bekomt men zowel het goedkoopste netwerk alsook, wanneer de comparatoren niet parallel uitgevoerd worden, het snelste netwerk.
-Mochten comparatoren niet parallel uitgevoerd kunnen worden, bekomt men hierdoor het snelste en goedkoopste netwerk.
+Hierdoor bekomt men zowel het goedkoopste netwerk alsook, wanneer de comparatoren niet parallel uitgevoerd worden, het snelste netwerk.
 Het onderzoek in deze paper spitst zich toe op het bewijzen van optimale grootte.
 
 In 1966 bewees het werk van Floyd en Knuth de optimale groottes voor $1 \leq n \leq 8$ \cite{FloydKnuth}.
@@ -81,7 +79,13 @@ Vervolgens wordt in Sectie \ref{VoorgesteldeOplossing} de voorgestelde oplossing
 Deze omvat onder meer de genereer- en snoei-aanpak, de representatie van een comparatornetwerk en de parallellisatie.
 Tenslotte wordt er ge\"eindigd met een evaluatie in Sectie \ref{Evaluatie}.
 
-\section{Probleemstelling}
+\section{Probleemstelling}\label{probleemstelling}
+Het bewijs van Codish \textit{et al.} \cite{sortingNetworksSize2014} omtrent de optimale grootte van een sorteernetwerk van invoergrootte $9$ maakt zowel gebruik van een genereer- en snoei-aanpak als een \textit{SAT}-aanpak.
+Het algoritme met de \textit{SAT}-aanpak maakt ook deels gebruik van de genereer- en snoei-aanpak.
+Met als doel een bewijs te vinden voor invoergrootte $11$ is de beslissing gemaakt om deze genereer- en snoei-aanpak te optimaliseren.
+We zullen ons enkel hierop toespitsen.
+
+\section{Terminologie}\label{terminologie}
 Een \textit{comparatornetwerk} $C^n_k$ bestaat uit $n$ kanalen en $k$ \textit{comparatoren}.
 Een comparator $\left(i, j\right)$ verbindt twee verschillende kanalen $i$ en $j$ waarbij $0 < i < j \leq n$.
 We nemen $x_l^m$ als waarde op kanaal $m$ net voor comparator $l$.
@@ -122,6 +126,7 @@ De optimale grootte van een sorteernetwerk met $n$ kanalen is reeds bewezen tot 
 
 Voor $n > 10$ zijn er bovengrenzen gekend door zowel concrete voorbeelden als de systematische constructie van Batcher \cite{sortingNetworksApplications}. 
 De ondergrenzen werden gevonden door zowel bewijzen als Lemma \ref{lemma1} \cite{Voorhis1972}.
+Zo hebben bijvoorbeeld Codish \textit{et al.} de optimale grootte voor $10$ kanalen bewezen via de optimale grootte voor $9$ kanalen en Lemma \ref{lemma1}.
 \begin{lemma}
 	$S(n+1) \geq S(n) + \lceil \log_2(n) \rceil, \forall n \geq 1$\\
 	waarbij geldt dat $S(n)$ gelijk is aan het aantal comparatoren in een sorteernetwerk van optimale grootte met $n$ kanalen.
