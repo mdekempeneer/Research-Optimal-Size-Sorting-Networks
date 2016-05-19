@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.29)  18 MAY 2016 21:41
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.29)  19 MAY 2016 11:57
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -913,12 +913,17 @@ Overfull \hbox (2.48923pt too wide) in paragraph at lines 525--526
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<Benadering10_paper.png, id=42, 421.575pt x 316.18124pt>
-File: Benadering10_paper.png Graphic file (type png)
 
-<use Benadering10_paper.png>
-Package pdftex.def Info: Benadering10_paper.png used on input line 537.
-(pdftex.def)             Requested size: 247.88887pt x 185.91812pt.
+Underfull \hbox (badness 10000) in paragraph at lines 534--534
+[][]\OT1/ptm/m/n/9 Berekend op ba-sis van een Gaus-sisch ver-loop:
+ []
+
+<Benadering10_Gaussisch.png, id=42, 377.91188pt x 295.1025pt>
+File: Benadering10_Gaussisch.png Graphic file (type png)
+
+<use Benadering10_Gaussisch.png>
+Package pdftex.def Info: Benadering10_Gaussisch.png used on input line 537.
+(pdftex.def)             Requested size: 247.88887pt x 193.57047pt.
 
 Overfull \hbox (3.97762pt too wide) in paragraph at lines 537--538
  [][] 
@@ -939,8 +944,8 @@ Missing character: There is no ; in font nullfont!
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[6 <./Benadering10_paper.png (PNG copy)>]
-<Profile_Time_9.png, id=47, 331.99031pt x 136.25906pt>
+[6 <./Benadering10_Gaussisch.png>]
+<Profile_Time_9.png, id=53, 331.99031pt x 136.25906pt>
 File: Profile_Time_9.png Graphic file (type png)
 
 <use Profile_Time_9.png>
@@ -953,10 +958,6 @@ Overfull \hbox (3.97762pt too wide) in paragraph at lines 593--594
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-
-Underfull \vbox (badness 1448) has occurred while \output is active []
-
 
 
 Package pgfplots Warning: Axis range for axis x is approximately empty; enlargi
@@ -987,8 +988,8 @@ Underfull \hbox (badness 5832) in paragraph at lines 25--29
 ) [8] (./SortingNetworks.aux) ) 
 Here is how much of TeX's memory you used:
  26665 strings out of 493089
- 657061 string characters out of 6134842
- 856207 words of memory out of 5000000
+ 657081 string characters out of 6134842
+ 856356 words of memory out of 5000000
  29657 multiletter control sequences out of 15000+600000
  30428 words of font info for 79 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -997,22 +998,27 @@ Here is how much of TeX's memory you used:
 ips/base/8r.enc}</usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts
 /cm/cmex10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/
 cm/cmmi10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmmi7.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/
-cmmi9.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cm
-r10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7
-.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pf
-b></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb
-></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb><
-/usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></u
-sr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb
-></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/l
-ocal/texlive/2015/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texli
-ve/2015/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2015/te
-xmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on SortingNetworks.pdf (8 pages, 304311 bytes).
+m/cmmi5.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/
+cmmi7.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cm
+mi9.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr1
+0.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.p
+fb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb>
+</usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></u
+sr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/
+local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/l
+ocal/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/loc
+al/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local
+/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/t
+exlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local/tex
+live/2015/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local
+/texlive/2015/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive
+/2015/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2015/texm
+f-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2015/texmf-dist/fon
+ts/type1/urw/times/utmri8a.pfb>
+Output written on SortingNetworks.pdf (8 pages, 333063 bytes).
 PDF statistics:
- 105 PDF objects out of 1000 (max. 8388607)
- 70 compressed objects within 1 object stream
+ 126 PDF objects out of 1000 (max. 8388607)
+ 85 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  43 words of extra memory for PDF output out of 10000 (max. 10000000)
 
