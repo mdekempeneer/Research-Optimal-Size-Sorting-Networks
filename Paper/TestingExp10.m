@@ -53,5 +53,6 @@ set(gca,'YScale','log')
 ylabel('Uitvoeringstijd (dagen)')
 xlabel('Comparator')
 hold on
+grid on
 plot((2:25), f3((2:25)), 'r.-');
-%legend('Benadering 10 kanalen, t.e.m. comparator 16', 'Model 9 kanalen.');
+legend('Benadering 10 kanalen, t.e.m. comparator 16', 'Model 9 kanalen.');
