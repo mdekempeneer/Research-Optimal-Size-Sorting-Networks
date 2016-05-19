@@ -159,10 +159,12 @@ Deze methode heeft een cyclisch verloop waarbij men bij elke cyclus de set $R^n_
 Specifiek zullen we vertrekken van een netwerk zonder comparatoren om te eindigen bij $R^n_k$ bestaande uit \'e\'en sorteernetwerk van optimale grootte.
 Bij de genereer-stap zullen we aan elk netwerk van $R^n_k$ alle mogelijke comparatoren toevoegen zodat $|N^n_{k+1}| = |R^n_{k}| \times \frac{n\left(n-1\right)}{2}$.
 Bij de snoei-stap zullen we dan netwerken verwijderen volgens het subsumes principe beschreven in Definitie \ref{definitie1}.
+Deze definitie toont dat voor elk netwerk het algoritme een uitvoerverzameling, $outputs$, moet bijhouden.
 \begin{definitie}[Subsumes] 
-	We zeggen ``Comparatornetwerk $C^n_{k,a}$ subsumes comparatornetwerk $C^n_{k,b}$'' wanneer een permutatie $\pi$ bestaat zodat ${\pi\left(outputs\left(C_{a}\right)\right) \subseteq outputs\left(C_{b}\right)}$. Dit wordt genoteerd als $C_{a} \preceq C_{b}$ om aan te duiden dat er een permutatie $\pi$ bestaat zodat $C_{a}\leq_\pi C_{b}$.
+	We zeggen ``Comparatornetwerk $C^n_{k,a}$\footnote{$C^n_{k,a}$ wordt doorheen de tekst afgekort door $C_a$.} subsumes comparatornetwerk $C^n_{k,b}$'' wanneer een permutatie $\pi$ bestaat zodat ${\pi\left(outputs\left(C_{a}\right)\right) \subseteq outputs\left(C_{b}\right)}$. Dit wordt genoteerd als $C_{a} \preceq C_{b}$ om aan te duiden dat er een permutatie $\pi$ bestaat zodat $C_{a}\leq_\pi C_{b}$.
 	\label{definitie1}
 \end{definitie}
+\newpage
 \begin{lemma}
 	Wanneer voor comparatornetwerk $C^n_{k,a}, C^n_{k,b}$ en $C$ geldt dat $ C_{a} \preceq C_{b}$ en er bestaat een sorteernetwerk gevormd door de concatenatie van $C_b$ en $C$ van grootte $m$ dan bestaat er ook een sorteernetwerk gevormd door de concatenatie van $C_a$ en $C'$ van grootte $m$.
 	\label{lemma2}
@@ -191,7 +193,9 @@ Dit is voldoende voor een bewijs tot en met $16$ kanalen.
 Buiten de comparatoren wordt ook de mogelijke uitvoer van het netwerk bijgehouden.
 Aangezien het nul-\'e\'en-principe stelt dat enkel sequenties van nullen en enen getest moeten worden, kunnen we de uitvoer opdelen per aantal enen.
 Voor een netwerk zonder comparatoren betekent dit $2^n$ mogelijke uitvoersequenties.
-Dit aantal zal echter dalen naarmate er meer en meer comparatoren worden toegevoegd om uiteindelijk te eindigen met slechts $n$ uitvoersequenties.
+Het toevoegen van een comparator kan er mogelijk voor zorgen dat een uitvoer hetzelfde wordt als een andere uitvoer.
+Hierdoor zal het aantal mogelijke uitvoersequenties dalen naarmate er meer en meer comparatoren worden toegevoegd.
+Aangezien een gesorteerde uitvoer ongewijzigd blijft, eindigen we met $n$ unieke uitvoersequenties.
 Door de gekozen representatie van invoer en comparatoren kunnen we Code \ref{SwapCompare} gebruiken om de uitvoer van een comparator te bepalen gegeven een bepaalde invoer.
 \begin{lstlisting}[caption={swapCompare},label=SwapCompare]
 /**
@@ -212,6 +216,7 @@ short swapCompare(short input, short comp) {
 
 In de \texttt{Java} implementatie kiezen we er voor om een comparatornetwerk voor te stellen door een tweedimensionale array van shorts, short[][], en laten we de rij van $n$ nullen en $n$ enen  weg.
 Een voorbeeld van zo een representatie staat in Tabel \ref{tabel2}.
+Hier zien we dat comparatoren slechts twee bits hebben en dat er een opdeling (in rijen) is van de uitvoer op basis van aantal enen.
 \begin{table}[!h]
 	\centering
 	\begin{tabular}{rr|ccc}
@@ -315,7 +320,7 @@ Zo gebruiken we onder meer Lemma \ref{lemma3} en Lemma \ref{lemma4}, beschreven 
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width=0.45\textwidth]{VoorbeeldLemmas.png}
-	\caption{Voorbeeld van drie comparatornetwerken met elk $5$~kanalen en met bijhorende uitvoerverzamelingen.\protect\cite{sortingNetworksSize2014}}
+	\caption{Voorbeeld van drie comparatornetwerken met elk $5$~kanalen en met bijhorende uitvoerverzamelingen \protect\cite{sortingNetworksSize2014}. Elke gesorteerde uitvoer is weggelaten.}
 	\label{VoorbeeldLemmas}
 \end{figure}
 

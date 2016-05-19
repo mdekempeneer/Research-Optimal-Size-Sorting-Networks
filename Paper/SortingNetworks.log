@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.29)  19 MAY 2016 11:57
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.29)  19 MAY 2016 14:51
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -802,111 +802,110 @@ Package pdftex.def Info: NetworkTransparent.png used on input line 105.
 (pdftex.def)             Requested size: 202.3529pt x 93.76083pt.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 130.
-
-Underfull \hbox (badness 3536) in paragraph at lines 170--173
+ [2 <./NetworkTransparent.png>]
+Underfull \hbox (badness 3536) in paragraph at lines 172--175
 []\OT1/ptm/m/n/10 Concreet kun-nen we de de-fi-ni-tie van sub-su-mes en
  []
 
-[2 <./NetworkTransparent.png>]
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 184.
-LaTeX Font Info:    Try loading font information for OT1+pcr on input line 189.
-
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 186.
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 191.
 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
-Overfull \hbox (7.11339pt too wide) in paragraph at lines 250--251
+Overfull \hbox (7.11339pt too wide) in paragraph at lines 255--256
  [][] 
  []
 
 
-Overfull \hbox (7.11339pt too wide) in paragraph at lines 271--272
+Overfull \hbox (7.11339pt too wide) in paragraph at lines 276--277
  [][] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 233--275
+Underfull \hbox (badness 10000) in paragraph at lines 238--280
 [][]
  []
 
 
-Underfull \hbox (badness 1215) in paragraph at lines 278--284
+Underfull \hbox (badness 1215) in paragraph at lines 283--289
 \OT1/ptm/m/n/10 pa-ra-tor-net-werk is een com-pa-ra-tor die,
  []
 
-[3] <VoorbeeldLemmas.png, id=31, 289.08pt x 200.24812pt>
+[3] <VoorbeeldLemmas.png, id=33, 289.08pt x 200.24812pt>
 File: VoorbeeldLemmas.png Graphic file (type png)
 
 <use VoorbeeldLemmas.png>
-Package pdftex.def Info: VoorbeeldLemmas.png used on input line 317.
+Package pdftex.def Info: VoorbeeldLemmas.png used on input line 322.
 (pdftex.def)             Requested size: 227.64894pt x 157.69318pt.
 
-Underfull \hbox (badness 1371) in paragraph at lines 322--327
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+Underfull \hbox (badness 1371) in paragraph at lines 327--332
 []\OT1/ptm/m/n/10 Aangezien een per-mu-ta-tie op de uit-voer geen ver-an-
  []
 
-<Tabel3_OpbouwW.png, id=32, 468.24937pt x 30.86531pt>
+<Tabel3_OpbouwW.png, id=34, 468.24937pt x 30.86531pt>
 File: Tabel3_OpbouwW.png Graphic file (type png)
  <use Tabel3_OpbouwW.png>
-Package pdftex.def Info: Tabel3_OpbouwW.png used on input line 342.
+Package pdftex.def Info: Tabel3_OpbouwW.png used on input line 347.
 (pdftex.def)             Requested size: 227.64894pt x 15.0059pt.
 
-Underfull \hbox (badness 8075) in paragraph at lines 331--346
+Underfull \hbox (badness 8075) in paragraph at lines 336--351
 \OT1/ptm/m/n/10 het com-pa-ra-tor-net-werk, na-me-lijk $\OML/cmm/m/it/10 w []$ 
 \OT1/ptm/m/n/10 waar-bij
  []
 
 [4 <./VoorbeeldLemmas.png> <./Tabel3_OpbouwW.png>]
-Overfull \hbox (4.4227pt too wide) in paragraph at lines 363--366
+Overfull \hbox (4.4227pt too wide) in paragraph at lines 368--371
 []\OT1/ptm/b/n/10 Lemma 5. []$[] \OMS/cmsy/m/n/10 )
  []
 
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-<Gen_Prune_Opbouw.png, id=38, 225.09094pt x 435.12563pt>
+<Gen_Prune_Opbouw.png, id=40, 225.09094pt x 435.12563pt>
 File: Gen_Prune_Opbouw.png Graphic file (type png)
 
 <use Gen_Prune_Opbouw.png>
-Package pdftex.def Info: Gen_Prune_Opbouw.png used on input line 436.
+Package pdftex.def Info: Gen_Prune_Opbouw.png used on input line 441.
 (pdftex.def)             Requested size: 112.54518pt x 217.56227pt.
 
-Overfull \hbox (11.36873pt too wide) in paragraph at lines 436--437
+Overfull \hbox (11.36873pt too wide) in paragraph at lines 441--442
  [][] 
  []
 
 
-Underfull \hbox (badness 1275) in paragraph at lines 440--449
+Underfull \hbox (badness 1275) in paragraph at lines 445--454
 \OT1/ptm/m/n/10 stap uit-voe-ren en ver-vol-gens
  []
 
 
-Underfull \hbox (badness 1406) in paragraph at lines 440--449
+Underfull \hbox (badness 1406) in paragraph at lines 445--454
 \OML/cmm/m/it/10 k \OT1/cmr/m/n/10 + 1$ \OT1/ptm/m/n/10 com-pa-ra-to-ren waarop
 
  []
 
 
-Underfull \hbox (badness 1796) in paragraph at lines 440--449
+Underfull \hbox (badness 1796) in paragraph at lines 445--454
 \OT1/ptm/m/n/10 ma-ken van een va-ri-a-bele die bij-houdt op welke in-dex
  []
 
-
-Underfull \hbox (badness 4254) in paragraph at lines 451--451
+[5 <./Gen_Prune_Opbouw.png>]
+Underfull \hbox (badness 4254) in paragraph at lines 456--456
 [][]\OT1/ptm/m/n/9 Bij de \OT1/pcr/m/n/9 Java \OT1/ptm/m/n/9 im-ple-men-ta-tie 
 zul-len we ver-wij-de-ren via
  []
 
-[5 <./Gen_Prune_Opbouw.png>]
-Underfull \hbox (badness 1052) in paragraph at lines 459--498
+
+Underfull \hbox (badness 1052) in paragraph at lines 464--503
 \OT1/ptm/m/n/10 Onze \OT1/pcr/m/n/10 Java\OT1/ptm/m/n/10 -implementatie van het
  be-schre-ven al-go-ritme
  []
 
 Missing character: There is no ; in font nullfont!
 
-Overfull \hbox (2.48923pt too wide) in paragraph at lines 525--526
+Overfull \hbox (2.48923pt too wide) in paragraph at lines 530--531
  [][] 
  []
 
@@ -914,23 +913,20 @@ Overfull \hbox (2.48923pt too wide) in paragraph at lines 525--526
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 534--534
+Underfull \hbox (badness 10000) in paragraph at lines 539--539
 [][]\OT1/ptm/m/n/9 Berekend op ba-sis van een Gaus-sisch ver-loop:
  []
 
-<Benadering10_Gaussisch.png, id=42, 377.91188pt x 295.1025pt>
+<Benadering10_Gaussisch.png, id=44, 377.91188pt x 295.1025pt>
 File: Benadering10_Gaussisch.png Graphic file (type png)
 
 <use Benadering10_Gaussisch.png>
-Package pdftex.def Info: Benadering10_Gaussisch.png used on input line 537.
+Package pdftex.def Info: Benadering10_Gaussisch.png used on input line 542.
 (pdftex.def)             Requested size: 247.88887pt x 193.57047pt.
 
-Overfull \hbox (3.97762pt too wide) in paragraph at lines 537--538
+Overfull \hbox (3.97762pt too wide) in paragraph at lines 542--543
  [][] 
  []
-
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 PGFPlots: reading {netwerkVerloop7kanalen.dat}
 PGFPlots: reading {netwerkVerloop8kanalen.dat}
@@ -942,31 +938,31 @@ PGFPlots: reading {netwerkVerloop9kanalen.dat}
 PGFPlots: reading {netwerkVerloop10kanalen.dat}
 Missing character: There is no ; in font nullfont!
 
-LaTeX Warning: `!h' float specifier changed to `!ht'.
+Underfull \vbox (badness 1783) has occurred while \output is active []
 
-[6 <./Benadering10_Gaussisch.png>]
-<Profile_Time_9.png, id=53, 331.99031pt x 136.25906pt>
+ [6 <./Benadering10_Gaussisch.png>] <Profile_Time_9.png, id=54, 331.99031pt x 1
+36.25906pt>
 File: Profile_Time_9.png Graphic file (type png)
 
 <use Profile_Time_9.png>
-Package pdftex.def Info: Profile_Time_9.png used on input line 593.
+Package pdftex.def Info: Profile_Time_9.png used on input line 598.
 (pdftex.def)             Requested size: 247.88887pt x 101.74077pt.
 
-Overfull \hbox (3.97762pt too wide) in paragraph at lines 593--594
+Overfull \hbox (3.97762pt too wide) in paragraph at lines 598--599
  [][] 
  []
 
 
+Package pgfplots Warning: Axis range for axis x is approximately empty; enlargi
+ng it (it is [1.0000000000:1.0000000000]) on input line 641.
+
+ [warning /pgfplots/warning/approx empty range enlarged]
+
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
 Package pgfplots Warning: Axis range for axis x is approximately empty; enlargi
-ng it (it is [1.0000000000:1.0000000000]) on input line 636.
-
- [warning /pgfplots/warning/approx empty range enlarged]
-
-Package pgfplots Warning: Axis range for axis x is approximately empty; enlargi
-ng it (it is [1.0000000000:1.0000000000]) on input line 671.
+ng it (it is [1.0000000000:1.0000000000]) on input line 676.
 
  [warning /pgfplots/warning/approx empty range enlarged]
 [7 <./Profile_Time_9.png>] (./SortingNetworks.bbl
@@ -989,7 +985,7 @@ Underfull \hbox (badness 5832) in paragraph at lines 25--29
 Here is how much of TeX's memory you used:
  26665 strings out of 493089
  657081 string characters out of 6134842
- 856356 words of memory out of 5000000
+ 854799 words of memory out of 5000000
  29657 multiletter control sequences out of 15000+600000
  30428 words of font info for 79 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -999,26 +995,27 @@ ips/base/8r.enc}</usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts
 /cm/cmex10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/
 cm/cmmi10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/c
 m/cmmi5.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/
-cmmi7.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cm
-mi9.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr1
-0.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.p
-fb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb>
-</usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></u
-sr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/
-local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/l
-ocal/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/loc
-al/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local
-/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/t
-exlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local/tex
-live/2015/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local
-/texlive/2015/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive
-/2015/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2015/texm
-f-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2015/texmf-dist/fon
-ts/type1/urw/times/utmri8a.pfb>
-Output written on SortingNetworks.pdf (8 pages, 333063 bytes).
+cmmi6.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cm
+mi7.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi
+9.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.
+pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb
+></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></
+usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr
+/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/lo
+cal/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/loc
+al/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local
+/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/t
+exlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/tex
+live/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local/texli
+ve/2015/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/t
+exlive/2015/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2
+015/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2015/texmf-
+dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2015/texmf-dist/fonts
+/type1/urw/times/utmri8a.pfb>
+Output written on SortingNetworks.pdf (8 pages, 341712 bytes).
 PDF statistics:
- 126 PDF objects out of 1000 (max. 8388607)
- 85 compressed objects within 1 object stream
+ 130 PDF objects out of 1000 (max. 8388607)
+ 88 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  43 words of extra memory for PDF output out of 10000 (max. 10000000)
 
