@@ -160,7 +160,7 @@ Specifiek zullen we vertrekken van een netwerk zonder comparatoren om te eindige
 Bij de genereer-stap zullen we aan elk netwerk van $R^n_k$ alle mogelijke comparatoren toevoegen zodat $|N^n_{k+1}| = |R^n_{k}| \times \frac{n\left(n-1\right)}{2}$.
 Bij de snoei-stap zullen we dan netwerken verwijderen volgens het subsumes principe beschreven in Definitie \ref{definitie1}.
 \begin{definitie}[Subsumes] 
-	We zeggen ``Comparatornetwerk $C^n_{k,a}$ subsumes comparatornetwerk $C^n_{k,b}$'' wanneer een permutatie $\pi$ bestaat zodat ${\pi\left(outputs\left(C_{a}\right)\right) \subseteq outputs\left(C_{b}\right)}$. Dit wordt genoteerd als $ C_{a} \preceq C_{b}$ om aan te duiden dat er een permutatie $\pi$ bestaat zodat $C_{a}\leq_\pi C_{b}$.
+	We zeggen ``Comparatornetwerk $C^n_{k,a}$ subsumes comparatornetwerk $C^n_{k,b}$'' wanneer een permutatie $\pi$ bestaat zodat ${\pi\left(outputs\left(C_{a}\right)\right) \subseteq outputs\left(C_{b}\right)}$. Dit wordt genoteerd als $C_{a} \preceq C_{b}$ om aan te duiden dat er een permutatie $\pi$ bestaat zodat $C_{a}\leq_\pi C_{b}$.
 	\label{definitie1}
 \end{definitie}
 \begin{lemma}
@@ -336,7 +336,7 @@ Deze informatie voegen we bij elk netwerk toe in de vorm van een array van short
 Aangezien er geen uitvoer wordt bijgehouden met $0$ enen en $n$ enen zullen we enkel voor $k \geq 1 $ en $k \leq n-1$ zowel $w$ als de grootte van $w$ bijhouden.
 Dit vereist voor elk dan vier opeenvolgende indices in $w^*$, zoals te zien in Figuur \ref{tabel3}.
 Deze informatie slaan we voor elke $k$ op vanaf index\footnote{In \texttt{Java} begint een array met index $0$.} $(k-1) \times 4$.
-Wanneer we bij het toevoegen van een comparator $w^*$ herberekenen, kunnen we net zoals bij de omzetting van de uitvoer slechts beginnen bij de uitvoerverzameling met het aantal enen gelijk aan $s$.
+Wanneer we bij het toevoegen van een comparator $w^*$ herberekenen, kunnen we net zoals bij de omzetting van de uitvoer slechts beginnen bij de uitvoerverzameling met het aantal enen gelijk aan $s$ (zie Code \ref{PseudocodeS}).
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width = 0.45\textwidth]{Tabel3_OpbouwW.png}
@@ -498,7 +498,7 @@ Dit bevestigt het gekende resultaat \cite{sortingNetworksSize2014}.
 
 De tijdsmetingen voor het vinden van een sorteernetwerk van optimale grootte van $5$ tot en met $9$ kanalen zijn te zien in Figuur \ref{Tijdsresultaten}.
 In deze figuur is ook de tijdsmeting van eerder werk te zien, ongeveer $12$ dagen $17$ uur en $58$ minuten \cite{sortingNetworksSize2014}.
-De bekomen resultaten van dit werk zijn afkomstig van het uitvoeren op \'e\'en node bestaande uit twee $12$-core ``Haswell'' Xeon E$5$-$2680$v$3$ processoren ($2.5$GHz, $30$MB level $3$ cache met $64$GB RAM) op de rekeninfrastructuur van het Vlaamse Supercomputer Centrum.
+De bekomen resultaten van ons werk zijn afkomstig van het uitvoeren op \'e\'en node bestaande uit twee $12$-core ``Haswell'' Xeon E$5$-$2680$v$3$ processoren ($2.5$GHz, $30$MB level $3$ cache met $64$GB RAM) op de rekeninfrastructuur van het Vlaamse Supercomputer Centrum.
 \begin{figure}[!h]
 \centering
 \begin{tikzpicture} 
@@ -540,7 +540,7 @@ Gebaseerd op Figuur~\ref{tijdverloop10kanalen} schatten we dat voor $10$ kanalen
 \end{figure}
 
 \subsection{Geheugen}\label{Geheugen}
-Door het grote aantal netwerken is het testen op subsumes en de effici\"entie van de datastructuren van groot belang. In Figuur \ref{netwerkVerloop9kanalen} zien we dat dit aantal voor $9$ kanalen kan oplopen tot meer dan $900000$ netwerken. Bij het stijgen van het aantal kanalen wordt dan ook het geheugenbeheer des te belangrijker.
+Door het grote aantal netwerken is het effici\"ent testen van ${C_a \preceq C_b}$ en de effici\"entie van de datastructuren van groot belang. In Figuur \ref{netwerkVerloop9kanalen} zien we dat dit aantal voor $9$ kanalen kan oplopen tot meer dan $900000$ netwerken. Bij het stijgen van het aantal kanalen wordt dan ook het geheugenbeheer des te belangrijker.
 \begin{figure}[!h]
 	\centering
 	\begin{tikzpicture}
@@ -579,7 +579,7 @@ Hier daalt de hoeveelheid geheugen doordat een thread enerzijds zal snoeien binn
 
 Onze \texttt{Java} implementatie gebruikte bij de uitvoering voor $8$ en $9$ kanalen respectievelijk $208$MB en $3951$MB.
 De exacte hoeveelheid verschilt naargelang de frequentie waarmee de \texttt{Java Virtual Machine} de \textit{Garbage Collection} uitvoert.
-Voor minder dan $8$ kanalen was het geheugen verbruik verwaarloosbaar klein.
+Voor minder dan $8$ kanalen was het geheugengebruik verwaarloosbaar klein.
 
 \subsection{Profilering}\label{Profilering}
 Via een profilering, zoals in Figuur \ref{ProfileTime9}, kunnen we de bottleneck vaststellen met als doel de uitvoeringstijd te verbeteren.
