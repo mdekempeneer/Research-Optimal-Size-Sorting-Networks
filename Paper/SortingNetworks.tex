@@ -214,14 +214,14 @@ In de \texttt{Java} implementatie kiezen we er voor om een comparatornetwerk voo
 Een voorbeeld van zo een representatie staat in Tabel \ref{tabel2}.
 \begin{table}[!h]
 	\centering
-	\begin{tabular}{r|ccc}
-	Comparators & $\left[0011\right]$ & $\left[1010\right]$ & \\ 
+	\begin{tabular}{rr|ccc}
+	\multicolumn{2}{r|}{Comparators} & $\left[0011\right]$ & $\left[1010\right]$ & \\ 
 	\hline 
-	Uitvoer \'e\'en 1& $\left[0001\right]$ & $\left[0100\right]$ & $\left[0010\right]$ \\ 
-	\hline 
-	Uitvoer twee 1'en &$\left[0011\right]$ & $\left[0101\right]$ & $\left[0110\right]$\\ 
-	\hline 
-	Uitvoer drie 1'en & $\left[0111\right]$ & $\left[1011\right]$ &  \\ 
+	& \'e\'en 1& $\left[0001\right]$ & $\left[0100\right]$ & $\left[0010\right]$ \\ 
+	\cline{2-5}
+	Uitvoer & twee 1'en &$\left[0011\right]$ & $\left[0101\right]$ & $\left[0110\right]$\\ 
+	\cline{2-5}
+	&drie 1'en & $\left[0111\right]$ & $\left[1011\right]$ &  \\ 
 	\end{tabular}
 	\caption{Representatie $C^4_2$: $(1,2)(2,4)$}
 	\label{tabel2}
@@ -531,11 +531,11 @@ De bekomen resultaten van dit werk zijn afkomstig van het uitvoeren op \'e\'en n
 De uitvoering van het programma voor $10$ kanalen is na $299$~uur\footnote{$12$ dagen en $11$ uur} stopgezet.
 De tussentijdse resultaten met betrekking tot de uitvoeringstijd zijn te zien in Figuur \ref{tijdverloop10kanalen} en met betrekking tot het aantal netwerken zijn te zien in Figuur \ref{netwerkVerloop9kanalen}.
 Voor 10, en dus ook voor 11, kanalen is de \texttt{Java} implementatie met de gebruikte hardware onvoldoende om resultaten binnen een redelijk tijdsbestek te bekomen.
-Gebaseerd op Figuur~\ref{tijdverloop10kanalen} schatten we dat voor $10$ kanalen meer dan $1500$ dagen\footnote{Berekend op basis van een polynomiaal verloop van graad $11$.} vereist zijn. 
+Gebaseerd op Figuur~\ref{tijdverloop10kanalen} schatten we dat voor $10$ kanalen meer dan $5800$ dagen\footnote{Berekend op basis van een Gaussisch verloop: ${f(x) = 3.559\times10^{5}\times e^{-\left(\frac{x-21.05}{2.409}\right)^2}}$} vereist zijn. 
 \begin{figure}[!h]
 \centering
 \includegraphics[width = 0.49\textwidth]{Benadering10_Gaussisch.png}
-\caption{Tijdsverloop voor $10$ kanalen tot en met de  $13^{de}$ comparator en benadering van tijdsverloop tot en met de $16^{de}$ comparator, de vermoedelijke piek.}
+\caption{Tijdsverloop voor $10$ kanalen tot en met de  $13^{de}$ comparator en benadering van tijdsverloop tot en met de $16^{de}$ comparator, de vermoedelijke piek. Ter illustratie tonen we ook het tijdsverloop voor $9$ kanalen.}
 \label{tijdverloop10kanalen}
 \end{figure}
 
