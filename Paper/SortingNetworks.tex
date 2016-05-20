@@ -413,11 +413,12 @@ Hierna gebruiken we Lemma \ref{lemma5} om posities uit de kolommen te verwijdere
 
 We weten namelijk dat als \[{\pi\left(outputs\left(C_a\right)\right) \subseteq outputs\left(C_b\right)}\] er bij de gepermuteerde uitvoer enkel een $1$ kan komen op de plaats waar dit bij $C_b$ ook het geval is.
 Op de plaats waar $C_b$ een $0$ heeft, kunnen dus enkel de posities komen waar $C_a$ een $0$ heeft.
-Nemen we bijvoorbeeld $w\left(C_a,1,1\right) = 0101$ en ${w\left(C_b,1,1\right)=0110}$ dan kunnen we Tabel \ref{tabel5} reduceren tot Tabel \ref{tabel6}.
+Nemen we bijvoorbeeld $w\left(C_a,1,1\right) = 0101$ en ${w\left(C_b,1,1\right)=0110}$.
 Aangezien we weten dat $w\left(C_b,1,1\right) = 0110$, weten we dat op zowel op de eerste als de vierde plaats nooit een $1$ voorkomt.
 Wanneer we een permutatie uitvoeren op een uitvoer van $C_a$ mag op die plaats dus nooit een $1$ terechtkomen na de permutatie.
 Door $w\left(C_a,1,1\right) = 0101$ weten we dat op de tweede en vierde plaats geen $1$ voorkomt.
 Bijgevolg kan op de eerste en vierde plaats (kolom) enkel positie $2$ en $4$ voorkomen.
+Zo kunnen we Tabel \ref{tabel5} reduceren tot Tabel \ref{tabel6}.
 We kunnen voor $w\left(C_a, x, k\right)$ deze methode doortrekken voor elke $1 \leq k \leq n$ en voor zowel $x = 0$ als $x = 1$.
 Wanneer we elke kolom bijhouden door een bit representatie kunnen we gemakkelijk de doorsnede van de mogelijke posities nemen na elke berekening voor een bepaalde $k$ en $x$ door middel van de $\&$-operatie. 
 \begin{table}[!h]
@@ -656,6 +657,7 @@ Tijdens de opbouw gebeurt deze beslissing wanneer er geen geschikte permutatie b
       \end{tikzpicture}
 \caption{Aantal beslissingen bij een uitvoer voor $9$ kanalen.}
 \label{AantalBeslissingen9Kanalen}
+\vspace{-10pt}
 \end{figure}
 
 In Figuur \ref{AantalSnoeiBeslissingen9Kanalen} wordt er specifieker gekeken naar de beslissingen in de snoei-stap.
@@ -691,6 +693,7 @@ Vervolgens zou men dan via dit argument kunnen beslissen om al dan niet een bepa
       \end{tikzpicture}
 \caption{Aantal beslissingen tijdens het snoeien bij een uitvoer voor $9$ kanalen.}
 \label{AantalSnoeiBeslissingen9Kanalen}
+\vspace{-10pt}
 \end{figure}
 
 \section{Conclusies}

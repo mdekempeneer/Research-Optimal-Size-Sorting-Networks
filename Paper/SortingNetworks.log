@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.29)  20 MAY 2016 10:02
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.29)  20 MAY 2016 10:10
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -868,39 +868,39 @@ Overfull \hbox (4.4227pt too wide) in paragraph at lines 370--373
 File: Gen_Prune_Opbouw.png Graphic file (type png)
 
 <use Gen_Prune_Opbouw.png>
-Package pdftex.def Info: Gen_Prune_Opbouw.png used on input line 453.
+Package pdftex.def Info: Gen_Prune_Opbouw.png used on input line 454.
 (pdftex.def)             Requested size: 112.54518pt x 217.56227pt.
 
-Overfull \hbox (11.36873pt too wide) in paragraph at lines 453--454
+Overfull \hbox (11.36873pt too wide) in paragraph at lines 454--455
  [][] 
  []
 
 
-Underfull \hbox (badness 1275) in paragraph at lines 457--466
+Underfull \hbox (badness 1275) in paragraph at lines 458--467
 \OT1/ptm/m/n/10 stap uit-voe-ren en ver-vol-gens
  []
 
 
-Underfull \hbox (badness 1406) in paragraph at lines 457--466
+Underfull \hbox (badness 1406) in paragraph at lines 458--467
 \OML/cmm/m/it/10 k \OT1/cmr/m/n/10 + 1$ \OT1/ptm/m/n/10 com-pa-ra-to-ren waarop
 
  []
 
 [5 <./Gen_Prune_Opbouw.png>]
-Underfull \hbox (badness 4254) in paragraph at lines 468--468
+Underfull \hbox (badness 4254) in paragraph at lines 469--469
 [][]\OT1/ptm/m/n/9 Bij de \OT1/pcr/m/n/9 Java \OT1/ptm/m/n/9 im-ple-men-ta-tie 
 zul-len we ver-wij-de-ren via
  []
 
 
-Underfull \hbox (badness 1052) in paragraph at lines 476--515
+Underfull \hbox (badness 1052) in paragraph at lines 477--516
 \OT1/ptm/m/n/10 Onze \OT1/pcr/m/n/10 Java\OT1/ptm/m/n/10 -implementatie van het
  be-schre-ven al-go-ritme
  []
 
 Missing character: There is no ; in font nullfont!
 
-Overfull \hbox (2.48923pt too wide) in paragraph at lines 544--545
+Overfull \hbox (2.48923pt too wide) in paragraph at lines 545--546
  [][] 
  []
 
@@ -908,7 +908,7 @@ Overfull \hbox (2.48923pt too wide) in paragraph at lines 544--545
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 553--553
+Underfull \hbox (badness 10000) in paragraph at lines 554--554
 [][]\OT1/ptm/m/n/9 Berekend op ba-sis van een Gaus-sisch ver-loop:
  []
 
@@ -916,10 +916,10 @@ Underfull \hbox (badness 10000) in paragraph at lines 553--553
 File: Benadering10_Gaussisch.png Graphic file (type png)
 
 <use Benadering10_Gaussisch.png>
-Package pdftex.def Info: Benadering10_Gaussisch.png used on input line 556.
+Package pdftex.def Info: Benadering10_Gaussisch.png used on input line 557.
 (pdftex.def)             Requested size: 247.88887pt x 193.3579pt.
 
-Overfull \hbox (3.97762pt too wide) in paragraph at lines 556--557
+Overfull \hbox (3.97762pt too wide) in paragraph at lines 557--558
  [][] 
  []
 
@@ -942,16 +942,16 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 File: Profile_Time_9.png Graphic file (type png)
 
 <use Profile_Time_9.png>
-Package pdftex.def Info: Profile_Time_9.png used on input line 612.
+Package pdftex.def Info: Profile_Time_9.png used on input line 613.
 (pdftex.def)             Requested size: 247.88887pt x 101.74077pt.
 
-Overfull \hbox (3.97762pt too wide) in paragraph at lines 612--613
+Overfull \hbox (3.97762pt too wide) in paragraph at lines 613--614
  [][] 
  []
 
 
 Package pgfplots Warning: Axis range for axis x is approximately empty; enlargi
-ng it (it is [1.0000000000:1.0000000000]) on input line 655.
+ng it (it is [1.0000000000:1.0000000000]) on input line 656.
 
  [warning /pgfplots/warning/approx empty range enlarged]
 
@@ -959,7 +959,7 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
 Package pgfplots Warning: Axis range for axis x is approximately empty; enlargi
-ng it (it is [1.0000000000:1.0000000000]) on input line 690.
+ng it (it is [1.0000000000:1.0000000000]) on input line 692.
 
  [warning /pgfplots/warning/approx empty range enlarged]
 [7 <./Benadering10_Gaussisch.png> <./Profile_Time_9.png>]
@@ -1010,7 +1010,7 @@ exlive/2015/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2
 015/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2015/texmf-
 dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2015/texmf-dist/fonts
 /type1/urw/times/utmri8a.pfb>
-Output written on SortingNetworks.pdf (8 pages, 344672 bytes).
+Output written on SortingNetworks.pdf (8 pages, 344655 bytes).
 PDF statistics:
  130 PDF objects out of 1000 (max. 8388607)
  88 compressed objects within 1 object stream
