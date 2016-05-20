@@ -140,7 +140,7 @@ Voor $9$ kanalen en $24$ comparatoren betekent dit $2.245 \times 10^{37}$ versch
 Deze grote hoeveelheid maakt het overlopen van alle netwerken niet aantrekkelijk.
 Om dit aantal te reduceren zullen we gebruik maken van symmetrie\"en waardoor we bepaalde netwerken reeds kunnen verwijderen bij het aanmaken.
 
-We gebruiken de \textit{genereer- en snoei-methode} zoals beschreven door Codish \textit{et al.} (sectie 3, \cite{sortingNetworksSize2014}).
+We gebruiken de \textit{genereer- en snoei-methode} zoals beschreven door Codish \textit{et al.} (Sectie 3, \cite{sortingNetworksSize2014}).
 Deze methode heeft een cyclisch verloop waarbij men bij elke cyclus de set $R^n_k$ uitbreidt naar $N^n_{k+1}$ om vervolgens te snoeien en de set $R^n_{k+1}$ te bekomen (Figuur \ref{GenereerSnoei}).
 \begin{figure}[!h]
 	\centering
@@ -166,7 +166,7 @@ Deze definitie toont dat voor elk netwerk het algoritme een uitvoerverzameling, 
 \end{definitie}
 \newpage
 \begin{lemma}
-	Wanneer voor comparatornetwerk $C^n_{k,a}, C^n_{k,b}$ en $C$ geldt dat $ C_{a} \preceq C_{b}$ en er bestaat een sorteernetwerk gevormd door de concatenatie van $C_b$ en $C$ van grootte $m$ dan bestaat er ook een sorteernetwerk gevormd door de concatenatie van $C_a$ en $C'$ van grootte $m$.
+	Wanneer voor comparatornetwerk $C^n_{k,a}$, $C^n_{k,b}$, $C$ en $C'$ geldt dat $ C_{a} \preceq C_{b}$ en er bestaat een sorteernetwerk gevormd door de concatenatie van $C_b$ en $C$ van grootte $m$ dan bestaat er ook een sorteernetwerk gevormd door de concatenatie van $C_a$ en $C'$ van grootte $m$.
 	\label{lemma2}
 \end{lemma}
 Concreet kunnen we de definitie van subsumes en Lemma~\ref{lemma2} gebruiken om in te zien dat we netwerken die gesubsumed worden door andere netwerken kunnen verwijderen \cite{sortingNetworksSize2014}.
@@ -474,7 +474,7 @@ Dit getal stelt dus het aantal opeenvolgende lege plaatsen voor na die index.
 Wanneer een thread dan dit getal tegenkomt, weten we exact hoeveel indices de thread kan overslaan.
 
 \section{Evaluatie}\label{Evaluatie}
-Onze \texttt{Java}-implementatie van het beschreven algoritme vindt voor $9$ kanalen reeds na $3$ uur en $25$ minuten een oplossing met $25$ comparatoren die gevisualiseerd wordt in Figuur~\ref{Sorteernetwerk9kanalen}.
+Onze \texttt{Java}-implementatie van het beschreven algoritme vindt voor $9$ kanalen reeds na $3$ uur en $26$ minuten een oplossing met $25$ comparatoren die gevisualiseerd wordt in Figuur~\ref{Sorteernetwerk9kanalen}.
 Dit bevestigt het gekende resultaat \cite{sortingNetworksSize2014}.
 \begin{figure}[!h]
 \centering
@@ -621,7 +621,7 @@ In deze figuur zien we dat de meeste beslissingen genomen worden tijdens het sno
 Met beslissingen bedoelen we beslissingen over het al dan niet gelden van $C_a \preceq C_b$.
 Er moet echter wel een onderscheid gemaakt worden tussen de soorten van beslissingen.
 De beslissingen genomen in de genereer-stap zijn beslissingen die het genereren van een netwerk voorkomen en zijn gebaseerd op redundante comparatoren.
-Deze beslissingen zorgen voor minder netwerken in de gedeelde lijst en dus voor zowel minder snoei-operaties als geheugenverbruik.
+Deze beslissingen zorgen voor minder netwerken in de gedeelde lijst en dus voor zowel minder snoei-operaties als geheugengebruik.
 
 De beslissingen genomen in de snoei-stap daarentegen, zijn beslissingen die enkel voorkomen dat er permutaties moeten worden opgebouwd om na te gaan of $C_a \preceq C_b$ geldt.
 Deze zorgen er dus niet voor dat een netwerk uit de gedeelde lijst verdwijnt, enkel dat er niet al te veel tijd gespendeerd wordt aan het onnodig nagaan van permutaties.
@@ -699,7 +699,7 @@ Vervolgens zou men dan via dit argument kunnen beslissen om al dan niet een bepa
 \section{Conclusies}
 Onze implementatie van de genereer- en snoei-aanpak van Codish \textit{et al.} zorgde voor een bewijs voor $9$ kanalen na $3$~uur en $26$~min, een versnelling ten opzichte van de eerdere $305$~uur.
 Het is echter niet snel genoeg voor een bewijs van $10$ kanalen.
-Dit zou bij benadering meer dan $1500$ dagen duren.
+Dit zou bij benadering meer dan $5800$ dagen duren.
 Bijgevolg blijft het bewijs voor het sorteernetwerk van optimale grootte voor $11$ kanalen een open probleem.
 Er zou nog extra werk geleverd kunnen worden omtrent het effici\"ent overlopen van alle comparatornetwerken alsook het bruikbaar maken voor meerdere nodes.
 
