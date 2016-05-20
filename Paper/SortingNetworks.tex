@@ -409,6 +409,7 @@ Hierna gebruiken we Lemma \ref{lemma5} om posities uit de kolommen te verwijdere
 	\caption{Een permutatietabel in het begin van het algoritme voor 4 kanalen.}
 \label{tabel5}
 \end{table}
+\vspace{-5pt}
 
 We weten namelijk dat als \[{\pi\left(outputs\left(C_a\right)\right) \subseteq outputs\left(C_b\right)}\] er bij de gepermuteerde uitvoer enkel een $1$ kan komen op de plaats waar dit bij $C_b$ ook het geval is.
 Op de plaats waar $C_b$ een $0$ heeft, kunnen dus enkel de posities komen waar $C_a$ een $0$ heeft.
@@ -420,6 +421,7 @@ Bijgevolg kan op de eerste en vierde plaats (kolom) enkel positie $2$ en $4$ voo
 We kunnen voor $w\left(C_a, x, k\right)$ deze methode doortrekken voor elke $1 \leq k \leq n$ en voor zowel $x = 0$ als $x = 1$.
 Wanneer we elke kolom bijhouden door een bit representatie kunnen we gemakkelijk de doorsnede van de mogelijke posities nemen na elke berekening voor een bepaalde $k$ en $x$ door middel van de $\&$-operatie. 
 \begin{table}[!h]
+	\vspace{-5pt}	
 	\centering
 	\begin{tabular}{|c|c|c|c|}
 	\hline
@@ -432,6 +434,7 @@ Wanneer we elke kolom bijhouden door een bit representatie kunnen we gemakkelijk
 	\caption{Een permutatietabel voor 4 kanalen.}
 	\label{tabel6}
 \end{table}
+\vspace{-5pt}
 
 Wanneer tijdens het algoritme een kolom leeg zou komen te staan, kunnen we het algoritme stopzetten.
 Dit betekent namelijk dat er geen enkele permutatie bestaat die niet door Lemma \ref{lemma5} wordt afgekeurd.
