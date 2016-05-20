@@ -1,0 +1,43 @@
+﻿Review Formulier (max 1 blz.) (Docent)
+
+Titel paper : Optimalisatie van het Bewijs ‘Sorteernetwerken van Optimale Grootte bij 9 Kanalen’
+Auteur paper : Mathias Dekempeneer, Vincent Derkinderen
+
+Een drietal zwakke punten:
+
+1. Zwakke opbouw van de tekst.
+
+Lees “How to write a great research paper” en volg de daarin gegeven richtlijnen over het structuren van je abstract en tekst.
+http://research.microsoft.com/en-us/um/people/simonpj/papers/giving-a-talk/giving-a-talk.htm
+
+Een abstract en een paper moet een verhaallijn bevatten waarin de opeenvolgende stukken tekst consistent op elkaar volgen. 
+Dwz dat je niet alleen feitelijke informatie opstapelt, maar dat je zeer goed uitlegt en motiveert waarom je de informatie geeft. 
+De abstract is in jullie geval zeer slecht. Hij dropt de lezer in het midden van het verhaal.
+Ook zet de inleiding niet voldoende expliciet in de verf wat jullie bijdrage is. Je moet echt letterlijk zeggen “Onze bijdrage is …” of iets dergelijks.
+
+
+We hebben “How to write a great research paper” gelezen/bekeken en het heeft ons geholpen bij het herstructureren. (bv Bij de inleiding hadden we op het einde In sectie ... en in sectie ...)
+De abstract is volledig herschreven en de inleiding is ook aangepast zoals bv op het einde. We hebben tevens in de inleiding "De bijdrage van deze paper is..." toegevoegd.
+
+2. Het taalgebruik kan beter. Zie nota’s op kopie.
+
+Suggesties toegepast. Bedankt voor de feedback.
+
+3. Helaas is geen nieuw resultaat bekomen. Dat zou de kers op de taart geweest zijn.
+
+
+Inhoudelijke vragen &
+suggesties voor verbetering:
+
+* Fig 4: Het lijkt evident dat elke cel telkens de gesorteerde output bevat.
+       Is deze dan niet overbodig en levert het iets op om deze weg te laten?
+* Het is niet duidelijk wat jullie bedoelen met “een beslissing”.
+* Figuur 10: welke reden is er om aan te nemen dat de curve polynomiaal is? Is het niet meer aangewezen om een exponentiele te nemen?
+
+* We hebben deze weggelaten zoals gevraagd.
+* We hebben bij de evaluatie verduidelijkt wat een "beslissing" is en enkele eerdere vermeldingen van "beslissing" verwijderd.
+* Goed punt, we hadden al eerder exponentieel geprobeerd maar deze leken geen goede benadering te geven. 
+We hebben het 'probleem' herbekeken en hebben besloten om een Gaussische curve te gebruiken. Deze maakte het mogelijk om bv de data van 9 kanalen perfect 'te fitten'.
+
+
+Hartelijk bedankt voor de feedback!
