@@ -311,7 +311,7 @@ for(short nieuweComp : comparatoren) {
 	}
 }
 \end{lstlisting}
-
+\vspace{-6pt}
 \subsection{Snoeien}\label{Snoeien}
 Bij de snoei-stap lopen we over de set $N^n_{k+1}$ en verwijderen we alle comparatornetwerken die gesubsumed worden door een ander comparatornetwerk in de resterende set.
 Om het aflopen van alle permutaties te vermijden, en sneller te beslissen of $C_a \preceq C_b$ met $C_a$ en $C_b$ twee comparatornetwerken, voeren we enkele methoden in.
@@ -343,10 +343,12 @@ Dit vereist voor elk dan vier opeenvolgende indices in $w^*$, zoals te zien in F
 Deze informatie slaan we voor elke $k$ op vanaf index\footnote{In \texttt{Java} begint een array met index $0$.} $(k-1) \times 4$.
 Wanneer we bij het toevoegen van een comparator $w^*$ herberekenen, kunnen we net zoals bij de omzetting van de uitvoer slechts beginnen bij de uitvoerverzameling met het aantal enen gelijk aan $s$ (zie Code \ref{PseudocodeS}).
 \begin{figure}[!h]
+	\vspace{-5pt}
 	\centering
 	\includegraphics[width = 0.45\textwidth]{Tabel3_OpbouwW.png}
 	\caption{De inhoud van $w^*$ op indices $0-3$ voor $k = 1$.}
 	\label{tabel3} 
+	\vspace{-10pt}
 \end{figure}
 
 \begin{lemma}
@@ -381,6 +383,7 @@ Bij het begin van het algoritme zullen we starten met Tabel \ref{tabel5}.
 Deze laat alle $n!$ permutaties toe.
 Hierna gebruiken we Lemma \ref{lemma5} om posities uit de kolommen te verwijderen.
 \begin{table}[!h]
+	\vspace{-5pt}
 	\centering
 	\begin{tabular}{|c|c|c|c|}
 	\hline
@@ -410,6 +413,10 @@ Hierna gebruiken we Lemma \ref{lemma5} om posities uit de kolommen te verwijdere
 We weten namelijk dat als \[{\pi\left(outputs\left(C_a\right)\right) \subseteq outputs\left(C_b\right)}\] er bij de gepermuteerde uitvoer enkel een $1$ kan komen op de plaats waar dit bij $C_b$ ook het geval is.
 Op de plaats waar $C_b$ een $0$ heeft, kunnen dus enkel de posities komen waar $C_a$ een $0$ heeft.
 Nemen we bijvoorbeeld $w\left(C_a,1,1\right) = 0101$ en ${w\left(C_b,1,1\right)=0110}$ dan kunnen we Tabel \ref{tabel5} reduceren tot Tabel \ref{tabel6}.
+Aangezien we weten dat $w\left(C_b,1,1\right) = 0110$, weten we dat op zowel op de eerste als de vierde plaats nooit een $1$ voorkomt.
+Wanneer we een permutatie uitvoeren op een uitvoer van $C_a$ mag op die plaats dus nooit een $1$ terechtkomen na de permutatie.
+Door $w\left(C_a,1,1\right) = 0101$ weten we dat op de tweede en vierde plaats geen $1$ voorkomt.
+Bijgevolg kan op de eerste en vierde plaats (kolom) enkel positie $2$ en $4$ voorkomen.
 We kunnen voor $w\left(C_a, x, k\right)$ deze methode doortrekken voor elke $1 \leq k \leq n$ en voor zowel $x = 0$ als $x = 1$.
 Wanneer we elke kolom bijhouden door een bit representatie kunnen we gemakkelijk de doorsnede van de mogelijke posities nemen na elke berekening voor een bepaalde $k$ en $x$ door middel van de $\&$-operatie. 
 \begin{table}[!h]
@@ -438,6 +445,7 @@ Nemen we voor de kost van een subsumes-test $f(n)$ dan betekent dit $\mathcal{O}
 
 \subsection{Parallellisatie}\label{Parallellisatie}
 \begin{wrapfigure}{l}{0.20\textwidth}
+	\vspace{-15pt}
 	\centering
 	\includegraphics[scale=0.5]{Gen_Prune_Opbouw.png}
 	\caption{Opbouw parallelle genereer \& snoei}
@@ -696,9 +704,5 @@ Bijgevolg willen we de onderzoeksgroep \textit{DTAI} bedanken voor de aangeboden
 
 \bibliographystyle{named}
 \bibliography{SortingNetworks}
-
-\newpage
-\appendix
-\section{Test}
 
 \end{document}
