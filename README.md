@@ -1,4 +1,4 @@
-# WV_SortingNetworks
+# Research Optimal Size Sorting Networks
 
 <DL>
 
