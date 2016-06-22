@@ -2,27 +2,48 @@
 
 <DL>
 
-<DT>Instructies</DT>
-<i>('argName' : arg : comment)</i>
+<DT>Instructions</DT>
+Arguments that should be used when executing the code.
+<br><i>('argName' : arg : comment)</i>
 	
 <DT>SortingNetworksParallel:</DT>
 &ltn&gt &ltk&gt &ltinnerSize&gt &ltThreadPercentage&gt
-<br>n : #channels
-<br>k : #comparator upperBound
-<br>innerSize : The amount of networks a thread takes to generate on.
-<br>ThreadPercentage: The percentage of threads used. Used with the Java getAvailableProcessors().
+<br>n : #channels (e.g. 8)
+<br>k : #comparator : The maximum amount of comparators to calculate to, the upperBound. (e.g. 19)
+<br>innerSize : :The amount of networks a thread takes to generate on. (e.g. 256)
+<br>ThreadPercentage : : The percentage of threads used, [0-1]. Used with the Java getAvailableProcessors(). (e.g. 1)
+<br>
+<br>Using the input it will output a comparator network. This network will be a sorting network of optimal size when the comparator upperBound is high enough. Any output will be in a bit format. (e.g. 5 = 0..0101 = comparator (1 3))
 
 <DT>SortingNetworksGenerator:</DT>
-'JFileChooser' : &ltn&gt &ltk&gt : n = #channels, k = #comparators </br>
-'path' : &ltn&gt &ltk&gt &ltpath&gt : n = #channels, k = #comparators, path = path to output saveFile
+<b>JFileChooser</b> : &ltn&gt &ltk&gt 
+<br>n : #channels
+<br>k : #comparators
+<br><b>path</b> : &ltn&gt &ltk&gt &ltpath&gt 
+<br>n : #channels
+<br>k : #comparators
+<br>path : path to output saveFile
 
 <DT>SortingNetworksTester:</DT>
-'File' : -f &ltpath&gt : path = path to input loadFile (results append behind each network line.) </br>
-'Network Arg' : -n &ltn&gt &ltk&gt (&ltchannel1_1&gt , &ltchannel2_1&gt)(&ltchannel1_2&gt,&ltchannel2_2&gt)... : n = #channels, n = #comparators, channel1_1 = first channel of comparator 1, channel2_1 = second channel of comparator 1,... </br>
-'JFileChooser' : : Chose file to test using FileChooser
+<b>File</b> : -f &ltpath&gt
+<br>path : path to input loadFile (results append behind each network line.)
+<br><b>Network Arg</b> : -n &ltn&gt comp1,comp2,comp3,...
+<br>n : #channels
+<br>k : #comparators,
+<br>comp1 : first comparator. (e.g. 5 = 0...0101 = (1 3))
+<br>comp2 : second comparator.
+<br><b>JFileChooser</b> : : Chose file to test using FileChooser
+<br>
+<br>Will output true if the given network is a sorting network, false otherwise.
 
 <DT>SortingNetworksVisualizer:</DT>
-'File' : -f(p) &ltpath&gt : path = path to input loadFile, optional p = save image. </br>
-'Network Arg' : -n(p) &ltn&gt &ltk&gt (&ltchannel1_1&gt, &ltchannel2_1&gt)(&ltchannel1_2&gt,&ltchannel2_2&gt)... : n = #channels, n = #comparators, channel1_1 = first channel of comparator 1, channel2_1 = second channel of comparator 1,..., optional p = save image. </br>
+<b>File</b> : -fp &ltpath&gt / -f &ltpath&gt
+<br>path : path to input loadFile, the p is optional = save image.
+<br><b>Network Arg</b> : -n(p) &ltn&gt &ltk&gt (&ltchannel1_1&gt, &ltchannel2_1&gt)(&ltchannel1_2&gt,&ltchannel2_2&gt)...
+<br>n : #channels
+<br>k : #comparators
+<br>channel1_1 : first channel of comparator 1
+<br>channel2_1 : second channel of comparator 1
+<br>Again, the p is optional = save image </br>
 
 </DL>
