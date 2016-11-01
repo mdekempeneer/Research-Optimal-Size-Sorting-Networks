@@ -1,5 +1,6 @@
 # Research Optimal Size Sorting Networks
 
+## Paper: [Research Optimal Size Sorting Networks](https://github.com/mdekempeneer/Research-Optimal-Size-Sorting-Networks/blob/master/Paper/SortingNetworks_DekempeneerDerkinderen_finaal.pdf)
 <DL>
 
 <DT>Instructions</DT>
